@@ -8,7 +8,11 @@ class Auth {
   // check to see if the localStorage item passed to the function is valid and set
   validateAuth(auth) {
       if (auth != 1) {
+        if(window.location.href != SITE_URL_PROTOCOL){
+        console.log(SITE_URL_PROTOCOL);
         window.location.replace(SITE_URL_PROTOCOL);
+        return true;
+        }
       } else {
         document.querySelector("body").style.display = "block";
         setUserInfo ( window.getUserInfo() );
@@ -22,7 +26,7 @@ class Auth {
     localStorage.removeItem("auth_user_lcms");
     localStorage.removeItem("auth_data_lcms");
     localStorage.removeItem("system_rights");
-    window.location.replace(SITE_URL_PROTOCOL+"/login");
+    window.location.replace(SITE_URL_PROTOCOL+"login");
   }
 }
 const auth = new Auth();
