@@ -1,0 +1,152 @@
+<div class="card">
+  <div class="card-body">
+    <form data-n="form">
+      <div
+        class="row dynamic-group-container"
+        data-n-element="dynamic-field-container"
+        data-n-count="1"
+      >
+        <div class="col-md-12 dynamic-group" data-n-id="1">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="fName"
+                placeholder="First Name"
+              />
+            </div>
+            <div class="col-md-6 mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="lName"
+                placeholder="Last Name"
+              />
+            </div>
+            <div class="col-md-6 mb-3">
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                placeholder="Email"
+              />
+            </div>
+            <div class="col-md-6 mb-3">
+              <input
+                type="number"
+                class="form-control"
+                id="phone-no"
+                placeholder="Phone No"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="d-grid gap-2 col-4 mx-auto mt-2">
+          <button
+            type="button"
+            class="btn btn-light"
+            data-n-trigger="add-dynamic-field"
+          >
+            + Add Field
+          </button>
+        </div>
+      </div>
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>
+<style>
+  .dynamic-group-container {
+    padding: 10px;
+  }
+  .dynamic-group {
+    padding-top: 30px;
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+    border: 1px solid var(--cui-input-border-color, #b1b7c1);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border-radius: 0.25rem;
+    background: #fbfbfb;
+  }
+</style>
+<script type="javascript">
+  document.querySelector("[data-n-trigger='add-dynamic-field']").onclick = function(el){
+
+    <!-- Update Dynamic Field Count Start -->
+        const closestForm = el.target.closest("form");
+
+        const dynamicFieldGroup = closestForm.querySelector("[data-n-element='dynamic-field-container']");
+        const dynamicFieldCount = dynamicFieldGroup.getAttribute("data-n-count");
+        const dynamicFieldNewCount = parseInt(dynamicFieldCount) + 1;
+
+        dynamicFieldGroup.setAttribute("data-n-count", dynamicFieldNewCount);
+    <!-- Update Dynamic Field Total End -->
+
+    <!-- Main Div Start -->
+        const dynamicGroupDiv = document.createElement("div");
+        dynamicGroupDiv.setAttribute("class", "col-md-12 dynamic-group");
+        dynamicGroupDiv.setAttribute("data-n-id", dynamicFieldNewCount);
+    <!-- Main Div End -->
+
+    <!-- Row Start -->
+        var row = document.createElement("div");
+        row.setAttribute("class", "row");
+    <!-- Row End -->
+
+    <!-- First Name Start -->
+      const firstNameInput = renderInput("text", "First Name");
+      row.appendChild(firstNameInput);
+    <!-- First Name End -->
+
+    <!-- Last Name Start -->
+      const lastNameInput = renderInput("text", "Last Name");
+      row.appendChild(lastNameInput);
+    <!-- Last Name End -->
+
+    <!-- Last Name Start -->
+    const emailInput = renderInput("email", "Email");
+    row.appendChild(emailInput);
+    <!-- Last Name End -->
+
+    <!-- Last Name Start -->
+    const phoneNoInput = renderInput("number", "Phone No");
+    row.appendChild(phoneNoInput);
+    <!-- Last Name End -->
+
+    dynamicGroupDiv.appendChild(row);
+
+    var addMoreButton = document.querySelector("[data-n-trigger='add-dynamic-field']").parentElement;
+    addMoreButton.insertAdjacentElement("beforebegin", dynamicGroupDiv);
+
+  };
+
+
+  const renderInput = (type, placeholder, labelText, containerClass ="col-md-6 mb-3") => {
+    var div =  document.createElement("div");
+    div.setAttribute("class", containerClass);
+
+    if(labelText){
+      var label =  document.createElement("label");
+      label.setAttribute("class", "form-label");
+      label.innerText = labelText;
+
+      div.appendChild(label);
+    }
+
+    var input =  document.createElement("input");
+    input.setAttribute("type", type);
+    input.setAttribute("class", "form-control");
+    input.setAttribute("placeholder", placeholder);
+
+    div.appendChild(input);
+
+    return div;
+  }
+
+
+  //console.log(document.getElementById("n-admin"))
+</script>

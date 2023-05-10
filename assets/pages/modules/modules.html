@@ -1,0 +1,572 @@
+<div class="container-fluid" style="display:none;">
+    <div class="row">
+      <div class="col-12">
+        <div class="c-align d-flex align-center justify-cotent-center">
+          <div>
+            <div class="round"><img src="../assets/images/course-1.svg" alt="Modules" /></div>
+            <h4>Create your first modules</h4>
+            <span class="orange-btn nbtn">
+              <button class="add-case"><i class="fas fa-plus"></i> Create Modules</button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--popup start-->
+  <div id="createchapter" class="overlay" style="display:none;">
+    <div class="popup pt-3">
+      <h4 class="mb-3" id="create_chapter_text">Add a new chapter</h4>
+      <span class="close">×</span>
+      <form method="post" id="frmNewCase" name="frmNewCase" enctype="multipart/form-data">
+        <input type="hidden" name="case_id" id="case_id" value="">
+        <div class="row">
+          <div class="col-md-12 mb-3">
+              <div class="form-floating">
+                <input type="text" id="case_name" name="case_name" class="form-control cm-capitalize" placeholder=" ">
+                <label for="case_name">Name of the Chapter</label>
+              </div>
+          </div>
+
+          <div class="col-md-12 mb-3">
+            <div class="form-floating">
+              <select class="sort-select form-control" id="chapter_id" name="chapter_id">
+                <option value="">Select Chapter</option>
+              </select>
+              <label for="chapter_id" data-title="Select Chapter" data-caption="Select">Select</label>
+            </div>
+          </div>
+          <div class="col-md-12 mb-3">
+            <div class="form-floating">
+              <input type="text" id="case_description" name="description" class="form-control counter"
+                placeholder=" " maxlength="1024" minlength="4"/>
+              <span class="charcounter">0 Char</span>
+              <label for="description">One line description</label>
+            </div>
+          </div>
+          <div class="col-md-12 mb-3">
+            <label for="tags2" class="tags2-label d-none">Add a tag</label>
+            <select class="form-control tags2" id="tags2" name="tags[]" multiple="multiple" style="width:100%"></select>
+          </div>
+        </div>
+      </form>
+
+        <div class="row">
+          <div class="col-12 pt-3 pb-3 wauto">  <span class="orange-btn nbtn">
+            <button class="add-case_save" id="create_chapter_save_text">Create</button>
+            </span> </div>
+        </div>
+    </div>
+  </div>
+
+  <!--popup end-->
+
+  <!--Chapter list start-->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 title-head mb-3">
+        <h2>Modules 
+        <dfn data-info="Lorem ipsum dolor sit amet, perspiciatis consectetur dolor."><i class="fas fa-info-circle"></i></dfn></h2>
+        <span class="orange-btn nbtn">
+          <button class="add-case"><i class="fas fa-plus"></i> Create Modules</button>
+        </span>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+        <div class="white-bg title-head p-3">
+            <div class="container-fluid p-0">
+                <div class="row">
+                <div class="col-lg-4 col-md-4">
+                  <div class="searchbar">
+                    <h4>List of Modules 
+                    <a class="btn btn-sm btn-danger btnReset d-none" style="position:relative;top:2px;float:right">Reset</a>
+                    <dfn data-info="Lorem ipsum dolor sit amet, perspiciatis consectetur dolor."><i class="fas fa-info-circle"></i></dfn></h4>
+                  </div>
+                </div>
+                <div class="col-lg-8 col-md-8 top-btn">
+                    <div class="container p-0">
+                        <div class="row">
+                        <div class="col-lg-6 col-md-6">
+                          <div class="topsearch relative">
+                          <input class="form-control form-control-dark w-100" type="text" placeholder="Search here" aria-label="Search" id="searchText">
+                          <i class="fas fa-search"></i> </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3">
+                        <div class="dropdown-select">
+                          <select class="sort-select" id="chapter_list" name="chapter_list">
+                            <option value="">Select Chapters</option>
+                          </select>
+                      </div>                        
+                        </div>
+                       <div class="col-lg-3 col-md-3">
+                          <div class="dropdown-select">
+                        <select class="form-control sort-select" id="status">
+                          <option value="">Select Status</option>
+                          <option value="0">Recent</option>
+                          <option value="1">Completed</option>
+                          <option value="2">Onhold</option>
+                          <option value="3">To do</option>
+                        </select>
+                      </div>
+                        </div>
+                  </div>
+                   </div>
+
+                </div>                
+              </div>
+            </div>
+              </div>
+            </div>
+      <div class="whitebg col-md-12">
+        <div class="container-fluid p-0">
+          <div class="table-section">
+              <table class="table table-bordered responsive">
+                <thead>
+                  <tr>
+                    <th><div class="form-check">
+                      <input class="form-check-input parentcheck" name="chk" type="checkbox" value="" id="myCheck" onclick="selects();">
+                      <label class="form-check-label" for="myCheck" role="button">
+                      </label>
+                    </div></th>
+                    <th>CHAPTER ID</th>                
+                    <th>NAME OF THE CHAPTER</th>
+                    <th>CASE TITLE</th>
+                    <th>COURSE NAME</th>
+                    <th>ACTIONS</th>
+                  </tr>
+                </thead>
+                <tbody id="listData">
+                  <tr>
+                    <td colspan="6">
+                      <div class="alert text-center">Loading...</div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div id="pagination-container"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Chapter list end-->
+   <!--popup start-->
+  <div id="create-chapter" class="overlay" style="display: block;">
+    <div class="popup medium-popup">
+      
+      <a class="close" href="#">×</a>
+      <div class="row">
+        <div class="col-md-5 br-right">
+          <h4 class="mb-3">List of Modules</h4>
+          <div class="row">
+            <div class="col-md-6">
+                <div class="topsearch relative mb-3">
+                <input class="form-control form-control-dark w-100" type="text" placeholder="Search here" aria-label="Search">
+                <i class="fas fa-search"></i> </div>
+            </div>
+            <div class="col-md-6">
+              <div class="dropdown-select">
+                <select class="form-control sort-select">
+                  <option value="Project1">Categories</option>
+                  <option value="Project2">Modules1</option>
+                  <option value="Project2">Modules2</option>
+                  <option value="Project3">Modules3</option>
+                  <option value="Project4">Modules4</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          
+          <div id="ccard" class="chapter-card">
+            <div class="role-content mb-3" onclick="cardlist(this)">
+              <h4>Module A</h4>
+              <p>Lorem ipsum dolor sit amet, consectetur adip ipsum dolor sit amet, consectetur adip...</p>
+              <span class="chk">
+                <input type="checkbox" class="form-check-input" id="remember01">
+                <label for="remember01" class="form-label"></label>
+              </span>             
+            </div>
+            <div class="role-content mb-3" onclick="cardlist(this)">
+              <h4>Module B</h4>
+              <p>Lorem ipsum dolor sit amet, consectetur adip ipsum dolor sit amet, consectetur adip...</p>  
+              <span class="chk">
+                <input type="checkbox" class="form-check-input" id="remember02">
+                <label for="remember02" class="form-label"></label>
+              </span>          
+            </div>
+            <div class="role-content mb-3" onclick="cardlist(this)">
+              <h4>Module C</h4>
+              <p>Lorem ipsum dolor sit amet, consectetur adip ipsum dolor sit amet, consectetur adip...</p>
+              <span class="chk">
+                <input type="checkbox" class="form-check-input" id="remember03">
+                <label for="remember03" class="form-label"></label>
+              </span>            
+            </div>
+            <div class="role-content mb-3" onclick="cardlist(this)">
+              <h4>Module D</h4>
+              <p>Lorem ipsum dolor sit amet, consectetur adip ipsum dolor sit amet, consectetur adip...</p>
+              <span class="chk">
+                <input type="checkbox" class="form-check-input" id="remember04">
+                <label for="remember04" class="form-label"></label>
+              </span>                         
+            </div>
+          </div>          
+        </div>
+        <div class="col-md-7">
+          <h4 class="mb-3">List of Chapters</h4>
+          <div class="chapter-list">
+            <ul class="mb-2 h-100">
+              <li>Chapter1 
+                <span>
+                  <input type="checkbox" class="form-check-input" id="remember1">
+                  <label for="remember1" class="form-label"></label>
+                </span>
+              </li>
+              <li>Chapter2 
+                <span>
+                  <input type="checkbox" class="form-check-input" id="remember2">
+                  <label for="remember2" class="form-label"></label>
+                </span>
+              </li>
+              <li>Chapter3 
+                <span>
+                  <input type="checkbox" class="form-check-input" id="remember3">
+                  <label for="remember3" class="form-label"></label>
+                </span>
+              </li> 
+              <li>Chapter4 
+                <span>
+                  <input type="checkbox" class="form-check-input" id="remember4">
+                  <label for="remember4" class="form-label"></label>
+                </span>
+              </li> 
+              <li>Chapter5 
+                <span>
+                  <input type="checkbox" class="form-check-input" id="remember5">
+                  <label for="remember5" class="form-label"></label>
+                </span>
+              </li> 
+              <li>Chapter6 
+                <span>
+                  <input type="checkbox" class="form-check-input" id="remember6">
+                  <label for="remember6" class="form-label"></label>
+                </span>
+              </li>       
+            </ul>
+          </div> 
+          <div class="col-12 pt-3 pb-3 wauto"> <span class="border-btn nbtn"><a href="#">
+            <button id="add-role-cancel">Create Chapter</button>
+            </a></span> <span class="orange-btn nbtn"><a href="#">
+            <button id="add-role">Add selected Chapter</button>
+            </a></span> </div>         
+        </div>
+        </div>
+      </div>
+    </div>
+   <!--popup end-->
+   
+<script>
+
+  function doSearch(){
+    var queryPara = '?self=';
+    if($("#searchText").val()) {
+      queryPara += "&search=" + $("#searchText").val();
+    }
+    //chapter_list
+    if($("#chapter_list").val()) {
+      queryPara += "&chapter_id=" + $("#chapter_list").val();
+    }
+    //status
+    if($("#status").val()) {
+      queryPara += "&status=" + $("#status").val();
+    }
+
+    $('#pagination-container').pagination({
+      dataSource: API_CONTENT_URL + '/chapter_topic_assignments/' + queryPara,
+      locator: 'data',
+      totalNumberLocator: function(response) {
+        return response.total;
+      },
+      alias: {
+        pageNumber: 'page',
+        pageSize: 'per_page'
+      },  
+      pageSize: 6,
+      ajax: {
+        beforeSend: function(request) {
+          request.setRequestHeader("Authorization", "Bearer " + getUserInfo().access_token);
+        },
+        complete: function(jqXHR, textStatus) {
+          if (jqXHR.status === 200 || jqXHR.readyState === 0 || jqXHR.status === 0) {
+            return false; // do nothing
+          } else if (jqXHR && (jqXHR.status === 403)) {
+            window.location.href = SITE_URL_PROTOCOL;
+          } else if (jqXHR.status === 401) {
+            alert("Session Expired, Please login again.");
+            window.location.href = SITE_URL_PROTOCOL;
+          } else {
+            alert("Session Expired, Please login again.");
+          }
+        },    
+      },
+      callback: function(data, pagination) {
+        var html = template(data);
+        $('#listData').html(html);
+
+        $("#myCheck").prop("checked", false);
+        // loadAlertModal();
+        $("input[name='chk']").on("click", function (e) {
+          var isFalse_mod = false;
+          var checked_length_mod = 0;
+          $("input[name='chk']:not(.parentcheck)").each( function () {
+            if($(this).is(":checked") == true) {
+              isFalse_mod = true;
+              checked_length_mod++;
+            }else{
+              console.log(checked_length_mod);
+            }
+          });
+          console.log(checked_length_mod);
+          if(checked_length_mod < $("input[name='chk']:not(.parentcheck)").length){
+            isFalse_mod = false;
+          }
+          if(!isFalse_mod) {
+            //parentcheck
+            $("#myCheck").prop("checked", false);
+          }else{
+            $("#myCheck").prop("checked", true);
+          }
+        });
+      }
+    });
+
+  }
+  
+  function template(data) {
+    var html = '';
+    var sno = 0;
+    if(data.length > 0) {
+      $.each(data, function(index, item) {
+        sno = sno + 1;
+        html += '<tr>';
+        html += `
+        <td>
+          <div class="form-check">
+            <input class="form-check-input" name="chk" type="checkbox" value="`+ item.id +`" id="chk_`+ item.id +`">
+            <label class="form-check-label" for="chk_`+ item.id +`" role="button"> </label>
+          </div>
+        </td>
+        `;
+        html += '<td><span class="badge bg-success gridTaskID">#'+ item.chapter_short_code +'</span></td>';
+        html += '<td>'+ item.chapter_name +'</td>';
+        html += '<td>'+ item.case_name +'</td>';
+        html += '<td>'+ item.course_name +'</td>';
+        
+        //html += '<td>'+ getStatus(item.status) +'</td>';
+        html += `
+          <td class="text-center">
+          <div class="dropdown ahide">
+            <button class="btn dropdown-toggle dbtn btn-light" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-ellipsis-v"></i></button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton3">`;
+            
+        if(item.status == '0' || item.status == '1' || item.status == '2' || item.status == '4') {
+          html += `<li><a class="dropdown-item" onClick="getModuleDetails('${item.id}')">&nbsp;Edit</a></li>`;
+        } else {
+          html += `<li><a class="dropdown-item disabled">&nbsp;Edit</a></li>`;
+        }
+    
+        html += `<li>`;
+    
+        if(item.status == '0' || item.status == '1') {
+          html += `<a id="disabled_` + item.id + `" data-name="`+item.name+`" data-url="`+item.id+`" class="dropdown-item mDisabled">&nbsp;Disable</a>`;
+        } else if(item.status == '2') {
+          html += `<a id="enabled_` + item.id + `" data-name="`+item.name+`" data-url="`+item.id+`" class="dropdown-item mEnabled">&nbsp;Enabled</a>`;
+        } else {
+          html += `<a class="dropdown-item disabled">&nbsp;Disable<a>`;
+        }
+    
+        html += `</li><li>`;
+        
+        if(item.status == '2' || item.status == '3') {
+          html += `<a class="dropdown-item disabled">&nbsp;Delete<a>`;
+        } else {
+          html += `<a href="#mAlert" id="delete_` + item.id + `"  data-bs-toggle="modal" data-bs-target="#mAlert" data-name="`+item.name+`" data-url="`+item.id+`/"
+                     class="dropdown-item">&nbsp;Delete</a>`;
+        }
+        html += `</li>
+            </ul>
+          </div>
+          </td>
+        `;
+        html += '</tr>';
+      });
+    } else {
+      html += '<tr>';
+      html += `
+      <td>
+        <div class="form-check">
+          <input class="form-check-input" name="chk" type="checkbox" value="0" id="chk_0" disabled>
+          <label class="form-check-label" for="chk_0"> </label>
+        </div>
+      </td>
+      `;
+      html += '<td colspan="6" class="text-center">';
+      html += '<span class="text-danger">'+ window.language.no_record_found +'</span>';
+      html += '</td>';
+      html += '</tr>';
+    }
+    html += '';
+    return html;
+  }
+
+  function cardlist(e){
+    var elems = document.querySelector(".cardactive");
+    if(elems !==null){
+      elems.classList.remove("cardactive");
+    }
+    e.classList.add('cardactive');
+  }
+  
+ /* $("input[name='chk']").on("click", function (e) {
+    var isFalse_mod = false;
+    $("input[name='chk']:not(.parentcheck)").each( function () {
+      if($(this).is(":checked") == true) {
+        isFalse_mod = true;
+      }
+    });
+    if(!isFalse_mod) {
+      //parentcheck
+      $("#myCheck").prop("checked", false);
+    }
+  });*/
+  $( document ).ready(function() {
+
+      $.validator.addMethod("pattern", function (value, element, param) {
+        if (this.optional(element)) { return true; }
+        if (typeof param === "string") {
+          param = new RegExp("^(?:" + param + ")$");
+        }
+        return param.test(value);
+      }, "Check your inputs");
+      var frmvalidatorfrm = $("#frmNewCase").validate({
+        rules: {
+          case_name: { required: true, minlength: 1, maxlength: 256 },
+          description: { required: true, minlength: 1, maxlength: 256 },
+          case_type: { required: true },
+          assign_to: { required: true },
+        },
+        messages: {
+          case_name: {
+            required: "Please enter a Case Name",
+            minlength: "Your case name must consist of at least 1 characters",
+            maxlength: "Your case name must consist of max of 256 characters",
+          },
+          description: {
+            required: "Please enter a description",
+            minlength: "Description must consist of at least 1 characters",
+            maxlength: "Description must consist of max of 20 characters",
+          },
+          case_type: { required: "Please select the Case type" },
+          assign_to: { required: "Please select Assign To" },
+        },
+        errorElement: "em",
+        errorPlacement: function (error, element) {
+          error.addClass("help-block");
+          if (element.prop("type") === "checkbox") {
+            error.insertAfter(element.parent("label"));
+          } else {
+            error.insertAfter(element);
+          }
+        },
+        highlight: function (element, errorClass, validClass) {
+          $(element).addClass("is-invalid");
+        },
+        unhighlight: function (element, errorClass, validClass) {
+          $(element).removeClass("is-invalid");
+        }
+      });
+  
+    $(".add-case").click(function(){
+      $( '#frmNewCase' ).each(function(){
+          this.reset();
+          frmvalidatorfrm.resetForm();
+          $('#frmNewCase .form-control').removeClass('is-invalid');
+      });
+      var tags_empty = [];
+      $("#tags2").html("");
+      $("#tags2").val(tags_empty).change();
+      $("#createchapter").addClass("overlay_target");
+      $("#createchapter").attr("style","display:block");
+      $("#create_chapter_text").text("Create Chapter");
+      $("#create_chapter_save_text").text("Create");
+    });
+    $(".close").click(function(){
+      $("#createchapter").removeClass("overlay_target");
+      $("#createchapter").attr("style","display:none");
+    })
+    
+    
+    $(".btnReset").on("click", function(){
+      $("#status, #chapter_list, #searchText").val(null);
+      doSearch();
+      setTimeout(function() {
+        $(".btnReset").addClass("d-none");
+      }, 500);
+    });
+    $(".fa-search").on("click", function(){ 
+      $(".btnReset").removeClass("d-none");
+      doSearch(); 
+    });
+    $("#status, #chapter_list").on("change", function(){ doSearch(); $(".btnReset").removeClass("d-none");});
+    
+
+    //load the courses list
+    $.ajax({
+      url: API_CONTENT_URL + '/chapters_list/',
+      type: 'get',
+      dataType: 'json',
+      headers: {
+        "Authorization": "Bearer " + getUserInfo().access_token,
+        "Content-Type": "application/json"
+      },
+      success:function(response){
+        $("#chapter_list, #chapter_id").empty();
+        $("#chapter_list, #chapter_id").append("<option value=''>Select Chapter</option>");
+        $.each( response, function( i, val ) {
+          $("#chapter_list, #chapter_id").append("<option value='"+val.id+"'>"+val.name+"</option>");
+        });
+      },
+      error: function(error){
+        console.log(error);
+      }
+    });
+  
+    if($( "#pagination-container" ).length > 0) {
+      doSearch();
+    }
+
+  });
+  
+  async function getModuleDetails(moduleID) {
+    /*
+    if(processRights("modules") === false) {
+      toastr.error(window.language.error_no_access);
+      return false;
+    }
+    */
+    $("#app-admin").load(
+      `${SITE_URL_PROTOCOL}/assets/pages/modules/moduleslist.html`,
+      function (resp, status, xhr) {
+        if (status == "success" && xhr.status == 200) {
+        } else {
+          console.log("Something error happend");
+        }
+      }
+    );
+  }
+</script>
+  

@@ -1,0 +1,1302 @@
+<!--<script type="text/javascript">
+  if(processRights("task") === false) {
+    toastr.error(window.language.error_no_access);
+    $("#dashboard_page").click();
+  }
+</script>-->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 title-head mb-3">
+      <div class="row w-100">
+        <div class="col-md-6">
+          <h2>Tasks <dfn data-info="Lorem ipsum dolor sit amet, perspiciatis consectetur dolor."><i class="fas fa-info-circle"></i></dfn></h2>
+        </div>
+        <div class="col-md-6 p-0 side-btn">
+          <ul>
+            <li> <span class="border-btn or-btn"> <a data-flinkto="task" href="task/task" style="background: #d8d4d4;"><i class="fa fa-table"></i></a> </span> <span class="border-btn or-btn"> <a data-flinkto="taskcalendar" href="task/taskcalendar"><i class="far fa-calendar"></i></a> </span> </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="task-tbox"> <img src="../assets/images/tbox1.jpg" alt="" >
+        <div>
+          <h4 id="finished_task_count">0</h4>
+          <p>Finished Task</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="task-tbox"> <img src="../assets/images/tbox2.jpg" alt="" >
+        <div>
+          <h4 id="onhold_task_count">0</h4>
+          <p>Onhold Task</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="task-tbox"> <img src="../assets/images/tbox3.jpg" alt="" >
+        <div>
+          <h4 id="active_task_count">0</h4>
+          <p>Active Task</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="white-bg title-head p-3">
+        <div class="container-fluid p-0">
+        <div class="row">
+          <div class="col-lg-4 col-md-4">
+            <div class="searchbar">
+              <h4>List of Tasks 
+              <a class="btn btn-sm btn-danger btnReset d-none" style="position:relative;top:2px;float:right">Reset</a>
+              <dfn data-info="Lorem ipsum dolor sit amet, perspiciatis consectetur dolor."><i class="fas fa-info-circle"></i></dfn></h4>
+            </div>
+          </div>
+          <div class="col-lg-8 col-md-8 top-btn">
+            <div class="row">
+              <div class="col-lg-6 col-md-6">
+                <div class="topsearch relative">
+                  <input class="form-control form-control-dark w-100" type="text" placeholder="Search here" aria-label="Search" id="searchText">
+                  <i class="fas fa-search"></i> 
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3">
+                <div class="dropdown-select">
+                  <select class="sort-select" id="courses_list" name="courses_list">
+                    <option value="">Select Courses</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3">
+                <div class="dropdown-select">
+                  <select class="form-control sort-select" id="status">
+                    <option value="">Status</option>
+                    <!--<option value="0">New</option>-->
+                    <option value="1">Active</option>
+                    <option value="2">InActive</option>
+                    <option value="3">Delete</option>
+                    <option value="4">Completed</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> 
+        </div>
+      </div>
+    </div>
+    <div class="whitebg col-md-12">
+      <div class="container-fluid p-0 task_table">
+        <div class="tabs white-bg p-3 mt-3">
+          <input type="radio" class="btnRadio" name="tabs" id="tabone" checked="checked">
+          <label for="tabone">My Tasks</label>
+          <div class="tab p-0">
+            <div class="table-section">
+              <table class="table table-bordered responsive" style="table-layout:fixed;">
+                <thead>
+                  <tr>
+                   <!-- <th>
+                      <div class="form-check">
+                        <input class="form-check-input parentcheck" name="chk" type="checkbox" value="flexCheckDefault1" id="myCheck" onClick="selects()">
+                        <label class="form-check-label" for="myCheck"> </label>
+                      </div>
+                    </th>-->
+                    <th>TASK ID</th>
+                    <th>NAME OF THE TASK</th>
+                    <th>ASSIGNED TO</th>
+                    <th>ASSIGNED BY</th>
+                    <th>END DATE</th>
+                    <th>STATUS</th>
+                    <th class="text-center">ACTIONS</th>
+                  </tr>
+                </thead>
+                <tbody id="data-assignedTo">
+                  <tr>
+                    <td colspan="7">
+                      <div class="alert text-center">Loading...</div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <!--<div id="pagination-container-to"></div>-->
+
+              <div class="container-fluid pagination-cont">
+                <div id="pagination-container-to" class="certificate_pagination"></div>
+                <div id="pagination-container-goto" class="goto_page"><span class="goto_page_text">Go to page</span>
+                <input type="number" value="" id="go_to_page" maxlength="3" min="1">
+                <a class="goto_go" onclick="goto_pageCall('pagination-container-to', 'go_to_page');"><span>Go<i class="fa fa-angle-right" aria-hidden="true"></i>
+                </span></a></div>
+              </div>
+            </div>
+          </div>
+          <input type="radio" class="btnRadio" name="tabs" id="tabtwo">
+          <label for="tabtwo">Assigned By Me</label>
+          <div class="tab p-0">
+            <div class="table-section">
+              <table class="table table-bordered responsive">
+                <thead>
+                  <tr>
+                    <!--<th><div class="form-check">
+                        <input class="form-check-input parentcheck" name="chk" type="checkbox" value="" id="myCheckBy" onClick="selects()" >
+                        <label class="form-check-label" for="myCheck"> </label>
+                      </div></th>-->
+                    <th>TASK ID</th>
+                    <th>NAME OF THE TASK</th>
+                    <th>ASSIGNED TO</th>
+                    <th>ASSIGNED BY</th>
+                    <th>END DATE</th>
+                    <th>STATUS</th>
+                    <th class="text-center">ACTIONS</th>
+                  </tr>
+                </thead>
+                <tbody id="data-assignedBy">
+                  <tr>
+                    <td colspan="7">
+                      <div class="alert text-center">Loading...</div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <!--<div id="pagination-container-by"></div>-->
+
+              <div class="container-fluid pagination-cont">
+                <div id="pagination-container-by" class="certificate_pagination"></div>
+                <div id="pagination-container-goto" class="goto_page"><span class="goto_page_text">Go to page</span>
+                <input type="number" value="" id="go_to_page2" maxlength="3" min="1">
+                <a class="goto_go" onclick="goto_pageCall('pagination-container-by', 'go_to_page2');"><span>Go<i class="fa fa-angle-right" aria-hidden="true"></i>
+                </span></a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  function getTask_counts(param_task){
+    $.ajax({
+      url: API_CONTENT_URL + '/task_count'+param_task,
+      type: 'get',
+      dataType: 'json',
+      headers: {"Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token},
+      success:function(response){
+        $("#active_task_count").html(response.active_task_count);
+        $("#onhold_task_count").html(response.onhold_task_count);
+        $("#finished_task_count").html(response.finished_task_count);
+      },
+      error: function(error) {
+        if (error.status === 401) {
+          alert("Session Expired, Please login again.");
+          logoutSession();
+        }
+      }
+    });
+  }
+  function doSearchTask(){
+    $('.btnRadio').each(function(index, element) {
+      console.log('afaf');
+      if($(element).prop("checked")) {
+        if($(element).prop("id") == "tabone") {
+          var param_task = "?self=1&is_calendar=false";
+          getTask_counts(param_task);
+          gridAssigned("pagination-container-to", "data-assignedTo", "assigned_to", "true");
+        } else {
+          var param_task = "?self=0&is_calendar=false";
+          getTask_counts(param_task);
+          gridAssigned("pagination-container-by", "data-assignedBy", "assigned_by", "false");        
+        }
+      }
+    });
+  }
+  
+  $( document ).ready(function() {
+   // var param_task = "?self=1&is_calendar=false";
+   // getTask_counts(param_task);
+    $(".btnReset").on("click", function(){
+      $("#status, #courses_list, #searchText").val(null);
+      doSearchTask();
+      setTimeout(function() {
+        $(".btnReset").addClass("d-none");
+      }, 500);
+    });
+    $(".fa-search").on("click", function(){ 
+      $(".btnReset").removeClass("d-none");
+      doSearchTask(); 
+    });
+    $("#status, #courses_list").on("change", function(){ doSearchTask(); $(".btnReset").removeClass("d-none");});
+    $("#searchText").on("blur", function(){ 
+      if($(this).val().trim() != ""){
+        doSearchTask();
+        $(".btnReset").removeClass("d-none"); 
+      }else{
+        doSearchTask();
+        if($("#status").val() != "" || $("#courses_list").val() != ""){
+          $(".btnReset").removeClass("d-none");
+        }
+      }
+    });
+    $('.btnRadio').click(function(){ doSearchTask(); });
+    /*if(processRights("Add Comments") === false) {
+      $('#content_message').css('pointer-events','none');
+    } */
+    if(processRights("Write Content") === false) {
+      $('#files_task').css('pointer-events','none');
+    } 
+    /*if(processRights("Add Audio") === false || processRights("Add Slide") === false || processRights("Add Video") === false) {
+      $('#user_message').css('pointer-events','none');
+    }*/
+    if(processRights("Add Comments") === false) {
+      $('#user_message').css('display','none');
+    }
+    //load the courses list
+    $.ajax({
+      url: API_CONTENT_URL + '/course_list/',
+      type: 'get',
+      dataType: 'json',
+      headers: {
+        "Authorization": "Bearer " + getUserInfo().access_token,
+        "Content-Type": "application/json"
+      },
+      success:function(response){
+        $("#courses_list").empty();
+        $("#courses_list").append("<option value=''>Select Courses</option>");
+        $.each( response, function( i, val ) {
+          $("#courses_list").append("<option value='"+val.id+"'>"+val.name+"</option>");
+        });
+      },
+      error: function(error) {
+        if (error.status === 401) {
+          alert("Session Expired, Please login again.");
+          logoutSession();
+        }
+        console.log(error);
+      }
+    });
+    
+    if($( "#pagination-container-to" ).length > 0) {
+      gridAssigned("pagination-container-to", "data-assignedTo", "assigned_to", "true");
+    }
+  
+    var param_task = "?self=1&is_calendar=false";
+    getTask_counts(param_task);
+
+    var search_data_memberlist_inp = document.getElementById("searchText");
+    search_data_memberlist_inp.addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        $(".btnReset").removeClass("d-none");
+        doSearchTask();
+      }
+    });
+  });
+  
+  function gridAssigned(tagID, htmlID, assignTOBY, selfPart){
+    var queryPara = '?self=' + selfPart;
+    //check for search field
+    if($("#searchText").val()) {
+      queryPara += "&search=" + $("#searchText").val();
+    }
+    //courses_list
+    if($("#courses_list").val()) {
+      queryPara += "&course_id=" + $("#courses_list").val();
+    }
+    //status
+    if($("#status").val()) {
+      queryPara += "&status=" + $("#status").val();
+    }
+  
+    $('#' + tagID).pagination({
+      dataSource: API_CONTENT_URL + '/task/' + queryPara,
+      locator: 'data',
+      totalNumberLocator: function(response) {
+      setTimeout(function() {
+        $(".paginationjs-prev").attr("data-num", "1");
+        $(".paginationjs-next").attr("data-num", response.total_pages);
+        if(tagID == "pagination-container-to"){
+          $("#go_to_page").attr("min", 1);
+          $("#go_to_page").attr("max", response.total_pages);
+        }else{
+          $("#go_to_page2").attr("min", 1);
+          $("#go_to_page2").attr("max", response.total_pages);
+        }
+      }, 500);
+        return response.total;
+      },
+      alias: {
+        pageNumber: 'page',
+        pageSize: 'per_page'
+      },  
+      pageSize: 6,
+      ajax: {
+        beforeSend: function(request) {
+          request.setRequestHeader("Authorization", "Bearer " + getUserInfo().access_token);
+        },
+        complete: function(jqXHR, textStatus) {
+          if (jqXHR.status === 200 || jqXHR.readyState === 0 || jqXHR.status === 0) {
+            return false; // do nothing
+          } else if (jqXHR && (jqXHR.status === 403)) {
+            //window.location.href = SITE_URL_PROTOCOL;
+            logoutSession();
+          } else if (jqXHR.status === 401) {
+            alert("Session Expired, Please login again.");
+            //window.location.href = SITE_URL_PROTOCOL;
+            logoutSession();
+          } else {
+            alert("Session Expired, Please login again.");
+          }
+        },    
+      },
+      callback: function(data, pagination) {
+        if(pagination.totalNumber < 7){
+          $("#pagination-container-to").hide();
+          $("#pagination-container-by").hide();
+        }else{
+          $("#pagination-container-to").show();
+          $("#pagination-container-by").show();
+        }
+        var html = template(data, assignTOBY);
+        $('#' + htmlID).html(html);
+        loadAlertModal();
+      }
+    });
+  }
+  
+  /* 
+    Pagination 
+    Function: pagination->template
+    Description: on fly change the appearance  
+  */
+  function template(data, tagTOBY) {
+    var html = '';
+    if(data.length > 0) {
+      $.each(data, function(index, item) {
+        html += '<tr>';
+        
+        /*html += `
+        <td>
+          <div class="form-check">
+            <input class="form-check-input" name="chk" type="checkbox" value="`+ item.id +`" id="chk_`+ item.id +`">
+            <label class="form-check-label" for="chk_`+ item.id +`"> </label>
+          </div>
+        </td>
+        `;*/
+          var dots = "";
+          if(item.name.length > 75){
+            dots = "...";
+          }
+          html += '<td><span class="badge bg-success gridTaskID">#'+ item.id +'</span></td>';
+          if(item.case_id && item.case_module_id){
+            html += '<td class="wrap navigate_refresh" href="cases/caselistlevel" data-page_from="task" data-flinkto="caselistlevel" data-case_id="'+item.case_id+'" data-case_module_id="'+item.case_module_id+'" role="button">'+ item.name.substring(0, 75)+dots +'</td>';
+          }else if(item.case_id){
+            html += '<td class="wrap navigate_refresh" href="cases/caselist" data-page_from="task" data-flinkto="caselist" data-case_id="'+item.case_id+'" role="button">'+ item.name.substring(0, 75)+dots +'</td>';
+          }else if(item.chapter_id && item.chapter_topic_id){
+            html += '<td class="wrap navigate_refresh" href="chapter/chapterlistlevel" data-page_from="task" data-flinkto="chapterlistlevel" data-chapter_id="'+item.chapter_id+'" data-chapter_topic_id="'+item.chapter_topic_id+'" role="button">'+ item.name.substring(0, 75)+dots +'</td>';
+          }else if(item.chapter_id){
+            html += '<td class="wrap navigate_refresh" href="chapters/chapterslist" data-page_from="task" data-flinkto="chapterslist" data-chapter_id="'+item.chapter_id+'" role="button">'+ item.name.substring(0, 75)+dots.substring(0, 75)+dots +'</td>';
+          }else if(item.course_id && item.module_id){
+            html += '<td class="wrap navigate_refresh" href="courses/courseslistlevel" data-page_from="task" data-flinkto="courseslistlevel" data-cid="'+item.course_id+'" data-module_id="'+item.module_id+'" role="button">'+ item.name.substring(0, 75)+dots +'</td>';
+          }else if(item.course_id){
+            html += '<td class="wrap navigate_refresh" href="course/course" data-page_from="task" data-flinkto="course" data-cid="'+item.course_id+'" role="button">'+ item.name.substring(0, 75)+dots +'</td>';
+          }
+        html += '<td>'+ item['assigned_to'] +'</td>';
+        html += '<td>'+ item['assigned_by'] +'</td>';
+        html += '<td>'+ item.end_date +'</td>';
+        html += '<td>'+ getStatus(item.status) +'</td>';
+        html += `
+          <td class="text-center">
+          <div class="dropdown ahide">
+            <button class="btn dropdown-toggle dbtn btn-light" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-ellipsis-v"></i></button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton3">`;
+    
+        if(item.status == '0' || item.status == '1' || item.status == '2' || item.status == '4') {
+          html += `<li><a class="dropdown-item" onClick="getTaskDetails(${item.id})">&nbsp;Edit</a></li>`;
+        } else {
+          html += `<li><a class="dropdown-item disabled">&nbsp;Edit</a></li>`;
+        }
+    
+        html += `<li>`;
+    
+        if(item.status == '0' || item.status == '1') {
+          html += `<a id="disabled_` + item.id + `" data-name="`+item.name+`" data-url="`+item.id+`" class="dropdown-item mDisabledTask">&nbsp;Disable</a>`;
+        } else if(item.status == '2') {
+          html += `<a id="enabled_` + item.id + `" data-name="`+item.name+`" data-url="`+item.id+`" class="dropdown-item mEnabledTask">&nbsp;Enable</a>`;
+        } else {
+          html += `<a class="dropdown-item disabled">&nbsp;Disable<a>`;
+        }
+    
+        html += `</li><li>`;
+        
+        if(item.status == '2' || item.status == '3') {
+          if(getUserInfo().role == "Admin"){
+            html += `<a class="dropdown-item disabled">&nbsp;Delete<a>`;
+          }
+        } else {
+          if(getUserInfo().role == "Admin"){
+            html += `<a href="#mAlertTask" id="delete_` + item.id + `"  data-bs-toggle="modal" data-bs-target="#mAlertTask" data-name="`+item.name+`" data-url="`+item.id+`/"
+                     class="dropdown-item">&nbsp;Delete</a>`;
+          }
+        }
+        html += `</li>
+            </ul>
+          </div>
+          </td>
+        `;
+        html += '</tr>';
+      });
+    } else {
+      html += '<tr>';
+      html += `
+      <td>
+        <div class="form-check">
+          <input class="form-check-input" name="chk" type="checkbox" value="0" id="chk_0" disabled>
+          <label class="form-check-label" for="chk_0"> </label>
+        </div>
+      </td>
+      `;
+      html += '<td colspan="6" class="text-center">';
+      html += '<span class="text-danger">'+ window.language.no_record_found +'</span>';
+      html += '</td>';
+      html += '</tr>';
+    }
+    html += '';
+    return html;
+  }
+  
+  function getStatus(sCode){
+    /* 0 - New, 1 - Active,  2 - Inactive, 3 - Delete, 4 - completed */
+    switch(sCode) {
+      case 0:
+        return '<span class="badge bg-primary">New</span>';    
+        break;
+      case 1:
+        return '<span class="badge bg-info">Active</span>';
+        break;
+      case 2:
+        return '<span class="badge bg-warning">InActive</span>';    
+        break;
+      case 3:
+        return '<span class="badge bg-danger">Delete</span>';    
+        break;
+      case 4:
+        return '<span class="badge bg-success">Completed</span>';    
+        break;
+      default:
+        return '<span class="badge bg-primary">None</span>';    
+        break;
+    }
+  }
+  $(document).ready(function(){
+  //function loadAlertModal(){
+    $('#mAlertTask').on('shown.bs.modal', function (event) {
+      var button = $(event.relatedTarget);
+      var recipientID = button.data('url');
+      var name = button.data('name');
+      var modal = $(this);
+      modal.find('.modal-content input').val(recipientID);
+      modal.find('.modal-content #mAlertName').html("Are you sure you want to delete task '"+name+"' ?");
+      $("#mAlertCanceltask").focus();
+      //mAlertDelete
+      //mAlertCancel
+      $(document).on('click', '#mAlertCanceltask', function() {
+        $(document).off('click', '#mAlertCanceltask');
+        $(document).off('click', '#mAlertDeletetask');
+      });
+      
+    });
+    
+      $("#mAlertDeletetask").click(function() {
+        var url = $("#mAlertURL").val();
+        $.ajax({
+          url: API_CONTENT_URL + '/task/' + url,
+          type: 'PATCH',
+          data: JSON.stringify({
+            "status": 3
+          }),
+          headers: {
+            "Authorization": "Bearer " + getUserInfo().access_token,
+            "Content-Type": "application/json"
+          },
+          success:function(response){
+            $("#mAlertCanceltask").click();
+            toastr.success("Task Deleted successfully");
+            doSearchTask();
+          },
+          error: function(error) {
+            toastr.error("Response Error: " + error.message);
+            console.log(error);
+          }
+        });
+      });
+    //hidden.bs.modal 
+    $('#mAlertTask').on('hidden.bs.modal', function (event) {
+      $(document).off('click', '#mAlertCanceltask');
+      $(document).off('click', '#mAlertDeletetask');
+      var modal = $(this);
+      modal.find('.modal-content input').val(null);
+      modal.find('.modal-content #mAlertName').html("Loading...");
+    });
+    
+    $(".task_table").on("click", ".mDisabledTask", function(){
+      var url = $(this).data("url");
+      $.ajax({
+        url: API_CONTENT_URL + '/task/' + url + '/',
+        type: 'PATCH',
+        data: JSON.stringify({
+          "status": 2
+        }),
+        headers: {
+          "Authorization": "Bearer " + getUserInfo().access_token,
+          "Content-Type": "application/json"
+        },
+        success:function(response){
+          toastr.success("Task Disabled successfully");
+          doSearchTask();
+        },
+        error: function(error) {
+          toastr.error("Response Error: " + error.message);
+          console.log(error);
+        }
+      });
+    });
+    
+    //mEnabledTask
+    $(".task_table").on("click", ".mEnabledTask", function(){
+      var url = $(this).data("url");
+      $.ajax({
+        url: API_CONTENT_URL + '/task/' + url + '/',
+        type: 'PATCH',
+        data: JSON.stringify({
+          "status": 1
+        }),
+        headers: {
+          "Authorization": "Bearer " + getUserInfo().access_token,
+          "Content-Type": "application/json"
+        },
+        success:function(response){
+          toastr.success("Task Enabled successfully");
+          doSearchTask();
+        },
+        error: function(error) {
+          toastr.error("Response Error: " + error.message);
+          console.log(error);
+        }
+      });
+    });
+  $("#myCheck").prop("checked", false);
+  $("input[name='chk']").on("click", function (e) {
+    var isFalse = false;
+    var checked_length = 0;
+    $("input[name='chk']:not(.parentcheck)").each( function () {
+      if($(this).is(":checked") == true) {
+        isFalse = true;
+        checked_length++;
+      }
+    });
+    console.log(checked_length);
+    if(checked_length < $("input[name='chk']:not(.parentcheck)").length){
+      isFalse = false;
+    }
+    if(!isFalse) {
+      //parentcheck
+      $("#myCheck").prop("checked", false);
+    }else{
+      $("#myCheck").prop("checked", true);
+    }
+  });
+  
+  });
+
+
+function checkdate(){
+  var start_date = $("#start_date_task").val();
+  if(start_date){
+    $("#end_date_task").attr("min", start_date);
+  }
+  var end_date   = $("#end_date_task").val();
+  if(start_date !== '' && end_date !== ''){
+    var sdate = new Date(start_date[2], start_date[1] - 1, start_date[0]);
+    var edate = new Date(end_date[2], end_date[1] - 1, end_date[0]);
+    if (start_date > end_date){
+        $("#end_date_task").val("");
+          toastr.error("End Date should be greater than start date");
+    }
+  }
+}
+function getStatusTask(sCode){
+  /*
+    1 - Active
+    2 - On hold
+    3 - Done
+  */
+  switch(sCode) {
+    case 1:
+      return `<span class="s-active active" data-status="1" >
+                <a onclick="change_status(this)" style="background: #2C5AAC;color: #fff;" data-status="1">Active</a>
+              </span>
+              <span class="s-onhold" data-status="2">
+                <a onclick="change_status(this)" data-status="2">On hold</a>
+              </span>
+              <span class="s-done" data-status="4">
+                <a onclick="change_status(this)" data-status="4">Done</a>
+              </span>`;    
+      break;
+    case 2:
+      return `<span class="s-active" data-status="1">
+                <a href="#" data-status="1" onclick="change_status(this)">Active</a>
+              </span>
+              <span class="s-onhold active" data-status="2">
+                <a href="#" style="background: #ffc107;color: #fff;" data-status="2" onclick="change_status(this)">On hold</a>
+              </span>
+              <span class="s-done" data-status="4">
+                <a href="#" data-status="4" onclick="change_status(this)">Done</a>
+              </span>`;
+      break;
+    case 4:
+      return `<span class="s-active" data-status="1">
+                <a href="#" data-status="1" onclick="change_status(this)">Active</a>
+              </span>
+              <span class="s-onhold" data-status="2">
+                <a href="#" data-status="2" onclick="change_status(this)">On hold</a>
+              </span>
+              <span class="s-done active" data-status="4">
+                <a href="#" style="background: #108842;color: #fff;" data-status="4" onclick="change_status(this)">Done</a>
+              </span>`;    
+      break;
+    default:
+      return '<span class="badge bg-primary">None</span>';    
+      break;
+  }
+}
+function change_status(e){
+  var task_status = getStatusTask(parseInt(e.dataset.status));
+  $("#det_task_status").empty();
+  $("#user_message").empty();
+  $("#det_task_status").html(task_status);
+}
+function getTaskDetails(id){
+ // $("#content_message").val("");
+  $("#files_task").val("");
+  $("#user_message").val("");
+  $("#taskdetails").addClass("overlay_target");
+    $.ajax({
+      url: API_CONTENT_URL + '/task/'+ id + '/',
+      type: 'get',
+      dataType: 'json',
+      headers: {
+        "Authorization": "Bearer " + getUserInfo().access_token,
+        "Content-Type": "application/json"
+      },
+      success:function(response){
+        //console.log(response);
+        $("#det_task_id").text("");
+        $("#det_task_name").val("");
+        $("#created_dateTime").text("");
+        $("#start_date_task").val("");
+        $("#end_date_task").val("");
+        $("#task_id").val("");
+        $("#module_id").val("");
+        $("#course_id").val("");
+        $("#case_module_id").val("");
+        $("#case_id").val("");
+        $("#chapter_id").val("");
+        $("#chapter_topic_id").val("");
+        $("#det_task_status").html("");
+        $(".default_option li").empty();
+        $("#user_comments").empty();
+        //$("#content_message").val("");
+        $("#user_message").val("");
+        $("#task_breadcrumb").empty();
+        var task_det = response.task_detail;
+        $("#det_task_id").text("#"+task_det.id);
+        $("#det_task_name").val(task_det.name);
+        var created_date = new Date(task_det.created_on);
+        var created_dateTime = created_date.toLocaleString([], {year: "numeric",month: "2-digit", day: "2-digit", hour: '2-digit', minute:'2-digit'});
+        $("#created_dateTime").text(created_dateTime);
+        var start_date = task_det.start_date;
+        var end_date = task_det.end_date;
+        $("#start_date_task").val(start_date);
+        $("#end_date_task").val(end_date);
+
+        /*$("#start_date_task").attr("min", start_date);
+        $("#end_date_task").attr("min", start_date);
+        $("#start_date_task").attr("max", end_date);
+        $("#end_date_task").attr("max", end_date);*/
+
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0 so need to add 1 to make it 1!
+        var yyyy = today.getFullYear();
+        if(dd<10){
+          dd='0'+dd
+        } 
+        if(mm<10){
+          mm='0'+mm
+        } 
+        today = yyyy+'-'+mm+'-'+dd;
+        $("#start_date_task").attr("min", today);
+        if(start_date){
+          $("#end_date_task").attr("min", start_date);
+        }else{
+          $("#end_date_task").attr("min", today);
+        }   
+        $("#task_id").val(task_det.id);
+        if(task_det.module_id){
+          $("#module_id").val(task_det.module_id);
+        }
+        if(task_det.course_id){
+          $("#course_id").val(task_det.course_id);
+        }
+        if(task_det.case_id){
+          $("#case_id").val(task_det.case_id);
+        }
+        if(task_det.case_module_id){
+          $("#case_module_id").val(task_det.case_module_id);
+        }
+        if(task_det.chapter_id){
+          $("#chapter_id").val(task_det.chapter_id);
+        }
+        if(task_det.chapter_topic_id){
+          $("#chapter_topic_id").val(task_det.chapter_topic_id);
+        }
+        var task_status = getStatusTask(task_det.status);
+        $("#det_task_status").html(task_status);
+        var currentele = "";
+        if(task_det.priority == "0"){
+          var priority_name = "High";
+          var priority_class = "high";
+          currentele += `<div class="option ${priority_class}" data-priority="0" id="assign_priority">
+                        <div class="icon"></div>
+                        <p>${priority_name}</p>
+                      </div>`;
+        }else if(task_det.priority == "1"){
+          var priority_name = "Medium";
+          var priority_class = "medium";
+          currentele += `<div class="option ${priority_class}" data-priority="1" id="assign_priority">
+                        <div class="icon"></div>
+                        <p>${priority_name}</p>
+                      </div>`;
+        }else{
+          var priority_name = "Low";
+          var priority_class = "low";
+          currentele += `<div class="option ${priority_class}" data-priority="2" id="assign_priority">
+                        <div class="icon"></div>
+                        <p>${priority_name}</p>
+                      </div>`;
+        }
+        $(".default_option li").html(currentele);
+        if(response.available_assignees.length > 0){
+          get_member(task_det.assigned_to, task_det.assignee, response.available_assignees);
+        }
+        /*if(response.module_content.length > 0){
+            $("#content_message").val(response.module_content[0].content);
+        }*/
+        if(response.module_comments.length > 0){
+          var member_comments_html = "";
+            $.each( response.module_comments, function( i, val ) {
+              member_comments_html += `<h4>${val.commented_member_name}<span>&nbsp;&nbsp;${val.commented_date}</span></h4>
+                            <div class="add-comment"> 
+                              <p>${val.comments}</p>
+                            </div>`;
+            });
+          $("#user_comments").html(member_comments_html);
+        }
+        if(response.breadcrumbs.length > 0){
+          var breadcrumb_html = "";
+            $.each( response.breadcrumbs, function( i, val ) {
+              breadcrumb_html += `<small>${val}</small>`;
+            });
+          $("#task_breadcrumb").html(breadcrumb_html);
+        }
+      },
+      error: function(error) {
+        toastr.error("Response Error: " + error.message);
+        console.log(error);
+      }
+    });
+}
+function get_member(assigned_to, assignee, available_assignees){
+  $(".drop-down .button").empty();
+  $(".select-list-1").empty();
+   var assignee_html = "";
+      $.each( available_assignees, function( i, val ) {
+        if(assignee && assignee == val.id){
+          assignee_html +='<span style="background-image:none;" data-member_id="'+val.id+'" id="assign_member">'+val.first_name+' '+val.last_name+'</span><a href="javascript:void(0);" class="select-list-link"><i class="fas fa-angle-down"></i></a>';
+          $(".select-list-1").append('<li class="clsAnchor active" style="overflow: hidden; display: none;" data-member_id="'+val.id+'"><span value="n'+(i+1)+'" class="n'+(i+1)+'" style="background-image:none" onclick="selectUser(this);">'+val.first_name+' '+val.last_name+'</span></li>');
+        }else{
+          $(".select-list-1").append('<li class="clsAnchor" style="overflow: hidden; display: none;" data-member_id="'+val.id+'"><span value="n'+(i+1)+'" class="n'+(i+1)+'" style="background-image:none" onclick="selectUser(this);">'+val.first_name+' '+val.last_name+'</span></li>');
+        }
+      });
+      if(assignee_html == ""){
+        assignee_html += '<span style="background-image:none;" id="assign_member">Assign Member</span><a href="javascript:void(0);" class="select-list-link"><i class="fas fa-angle-down"></i></a>';
+      }
+      $(".drop-down .button").html(assignee_html);
+}
+function selectUser(e){
+ var dd_text = $(e).text();   
+ var dd_val = $(e).attr('value');
+ var member_id = $(e).parent().attr("data-member_id"); 
+ $('.drop-down .button').html('<span data-member_id="'+member_id+'" id="assign_member">' + dd_text + '</span>' + '<a href="javascript:void(0);" class="select-list-link" data-member_id="'+member_id+'"><i class="fas fa-angle-down"></i></a>');       
+ $('.drop-down .select-list-1 span').parent().removeClass('active');     
+ $(this).parent().addClass('active');      
+ $('.drop-down select[name=options]').val( dd_val );  
+ $('.drop-down .select-list-1 li').slideUp();   
+}
+$(document).ready(function(){
+
+  $("#add-role-cancel").on("click", function() {
+    $("#taskdetails").removeClass("overlay_target");
+    doSearchTask();
+  });
+  $( "#add-role-close").on("click", function() {
+    $("#taskdetails").removeClass("overlay_target");
+    doSearchTask();
+  });
+  $("#UpdateTask").on("click", function() {
+    //var content_message = $("#content_message").val();
+    var user_message = $("#user_message").val();
+    var task_id = $("#task_id").val();
+    var course_id = $("#course_id").val();
+    var module_id = $("#module_id").val();
+    var case_id = $("#case_id").val();
+    var case_module_id = $("#case_module_id").val();
+    var chapter_id = $("#chapter_id").val();
+    var chapter_topic_id = $("#chapter_topic_id").val();
+    var start_date = $("#start_date_task").val();
+    var end_date = $("#end_date_task").val();
+    var status = $('#det_task_status span.active').attr('data-status');
+    var priority = $("#assign_priority").attr("data-priority");
+    var assign_to = $("#assign_member").attr("data-member_id");
+    var task_name = $("#det_task_name").val();
+    var todayDate = new Date().toISOString().slice(0, 10);
+    var formData = new FormData();
+    var error_status = 1;
+    if(start_date == ""){
+      toastr.error("Start Date should not be empty");
+      error_status = 0;
+    }
+    if(end_date == ""){
+      toastr.error("End Date should not be empty");
+      error_status = 0;
+    }
+    if(assign_to == "" || assign_to == undefined){
+      toastr.error("Select Assigned To");
+      error_status = 0;
+    }
+    if(user_message == ""){
+     // toastr.error("Add a Comment");
+      //error_status = 0;
+    }
+    if(error_status == 0){
+      return false;
+    }
+    /*if(content_message !== ''){
+      update_content(content_message, task_id, course_id, module_id);
+    }*/
+    if(user_message !== ''){
+      update_comments(user_message, task_id, course_id, module_id, case_id, case_module_id, chapter_id, chapter_topic_id);
+    }
+    var formData_file = new FormData();
+    formData.append("assignee", assign_to);
+    formData.append("start_date", start_date);
+    formData.append("end_date", end_date);
+    formData.append("status", status);
+    formData.append("priority", priority);
+    formData.append("course_id", course_id);
+    formData.append("MCStatus", "1");
+    formData.append("assigned_by", getUserInfo().id);
+    formData.append("comment", user_message);
+    formData.append("name", task_name);
+    formData.append("id", task_id);
+    formData.append("module_id", module_id);
+    var attachment_URL = API_CONTENT_URL + "/module_attachment/";
+    $.each($('input[name^="task_file"]')[0].files, function(i, file) {
+          formData_file.append("attachment", file);
+          formData_file.append("attachment_type", file.type);
+          formData_file.append("attachment_name", file.name);
+          formData_file.append("created_date", todayDate);
+          formData_file.append("status", 0);
+          if(course_id){
+            attachment_URL = API_CONTENT_URL + "/module_attachment/";
+            formData_file.append("course_id", course_id);
+            if(module_id){
+              formData_file.append("module_id", module_id);
+            }
+          }
+          if(case_id){
+            attachment_URL = API_CONTENT_URL + "/case_module_attachments/";
+            formData_file.append("case_id", case_id);
+            if(case_module_id){
+              formData_file.append("case_module_id", case_module_id);
+            }
+          }
+          if(chapter_id){
+            attachment_URL = API_CONTENT_URL + "/chapter_topic_attachments/";
+            formData_file.append("chapter_id", chapter_id);
+            if(chapter_topic_id){
+              formData_file.append("chapter_topic_id", chapter_topic_id);
+            }
+          }
+          formData_file.append("id", task_id);
+          update_attachment(formData_file, attachment_URL);
+          formData.append("attachment", file);
+          formData.append("attachment_type", file.type);
+    });
+    $.ajax({
+        url: API_CONTENT_URL + "/task/"+task_id+"/",
+        method: "PUT",
+        type: 'PUT', // For jQuery < 1.9
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: formData,
+        headers: {
+            "Authorization" : "Bearer " + getUserInfo().access_token
+        },
+        success: function(response){
+          toastr.success("Task Updated successfully.");
+          doSearchTask();
+          $("#taskdetails").removeClass("overlay_target");
+        },
+        error: function(error) {
+            toastr.error("Response Error: " + error.message);
+            console.log(error);
+        }
+    });
+  });
+});
+function update_attachment(formData, URL){
+  $.ajax({
+    url: URL,
+    method: "POST",
+    type: 'POST', // For jQuery < 1.9
+    cache: false,
+    contentType: false,
+    processData: false,
+    data: formData,
+    headers: {
+      "Authorization" : "Bearer " + getUserInfo().access_token
+    },
+    success: function(response){
+      //toastr.success("File uploaded successfully.");
+    },
+    error: function(error) {
+      toastr.error("Response Error: " + error.message);
+      console.log(error);
+    }
+  });
+}
+/*function update_content(content_message, task_id, course_id, module_id){
+  if(module_id){
+    var content_data = {
+      "id": task_id,
+      "course_id": course_id,
+      "module_id": module_id,
+      "content": content_message,
+      "revision_label":""
+    }
+  }else{
+    var content_data = {
+      "id": task_id,
+      "course_id": course_id,
+      "content": content_message,
+      "revision_label":""
+    }
+  }
+  $.ajax({
+    url: API_CONTENT_URL + "/course_content/",
+    type: "POST",
+    data: JSON.stringify(content_data),
+    headers: {"Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token},
+    success:function(response){
+      //toastr.success("Content has been saved.");
+    }
+  });
+}*/
+function update_comments(user_message, task_id, course_id, module_id, case_id, case_module_id, chapter_id, chapter_topic_id){
+  var URL = API_CONTENT_URL + "/module_comments/";
+    var formData = new FormData();
+    if(course_id){
+      URL = API_CONTENT_URL + "/module_comments/";
+      formData.append("course_id",  course_id);
+      if(module_id){
+        formData.append("module_id",  module_id);
+      }
+    }
+    if(case_id){
+      URL = API_CONTENT_URL + "/case_module_comments/";
+      formData.append("case_id",  case_id);
+      if(case_module_id){
+        formData.append("case_module_id",  case_module_id);
+      }
+    }
+    if(chapter_id){
+      URL = API_CONTENT_URL + "/chapter_topic_comments/";
+      formData.append("chapter_id",  chapter_id);
+      if(chapter_topic_id){
+        formData.append("chapter_topic_id",  chapter_topic_id);
+      }
+    }
+    formData.append("id", task_id);
+    formData.append("comments", user_message);
+    $.ajax({
+        url: URL,
+        type: 'POST', // For jQuery < 1.9
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: formData,
+        headers: {
+            "Authorization" : "Bearer " + getUserInfo().access_token
+        },
+        success: function(response){
+          //toastr.success("Comment saved Successfully.");
+        },
+        error: function(error) {
+            toastr.error("Response Error: " + error.message);
+            console.log(error);
+        }
+    });
+}
+</script>
+
+<!--<div id="taskdetails" class="overlay" style="visibility: visible !important;opacity:inherit !important;">-->
+  <div id="taskdetails" class="overlay">
+    <div class="popup medium-popup p-0"> <a class="close" href="#" id="add-role-close">&times;</a>
+      <input type="hidden" id="task_id" value="">
+      <input type="hidden" id="course_id" value="">
+      <input type="hidden" id="module_id" value="">
+      <input type="hidden" id="case_id" value="">
+      <input type="hidden" id="case_module_id" value="">
+      <input type="hidden" id="chapter_id" value="">
+      <input type="hidden" id="chapter_topic_id" value="">
+      <input type="hidden" id="det_task_name" value="">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="white p-3">
+            <div class="row">
+              <div class="col-md-7">
+                <div class="tp-text mb-3"> <span class="obg" id="det_task_id"></span> <span class="gborder" id="task_breadcrumb">  </span> </div>
+              </div>
+              <div class="col-md-5 taskbtn">
+                <span class="border-btn nbtn"><a href="#">
+                  <button id="add-role-cancel">Cancel</button>
+                  </a></span> <span class="orange-btn nbtn">
+                  <button id="UpdateTask">Update Task</button>
+                  </span> 
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="assign-details p-0 pt-3 pb-3">
+                  <h4>Details</h4>
+                  <div class="row mt-3 mb-3">
+                    <div class="col-md-6">
+                      <h6>Assigned To</h6>
+                      <div class="drop-down">
+                        <select name="options" id="det_assignee_opt">
+                          <option class="nl" value="nl">Harsha</option>
+                          <option class="n2" value="n2">Anil</option>
+                          <option class="n3" value="n3">Vishal</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-6 priority">
+                      <h6>Priority</h6>
+                      <div class="select_wrap">
+                          <ul class="default_option">
+                            <li>
+                              <div class="option high" data-priority="0" id="assign_priority">
+                                <div class="icon"></div>
+                                <p>High</p>
+                              </div>
+                            </li>
+                          </ul>
+                          <ul class="select_ul">
+                            <li>
+                              <div class="option high" data-priority="0">
+                                <div class="icon"></div>
+                                <p>High</p>
+                              </div>
+                            </li>
+                            <li>
+                              <div class="option medium" data-priority="1">
+                                <div class="icon"></div>
+                                <p>Medium</p>
+                              </div>
+                            </li>
+                            <li>
+                              <div class="option low" data-priority="2">
+                                <div class="icon"></div>
+                                <p>Low</p>
+                              </div>
+                            </li>                    
+                          </ul>
+                        </div>
+                    </div>
+                  </div>                  
+                  <div class="row mt-3 mb-3">                    
+                    <div class="col-md-6 date">
+                      <h6>Start Date</h6>
+                      <div class="dropdown-date">
+                        <input type="date" id="start_date_task" name="start"
+                                   value=""
+                                   min="" max="" onchange="checkdate();">
+                      </div>
+                    </div>
+                    <div class="col-md-6 date">
+                      <h6>End Date</h6>
+                      <div class="dropdown-date">
+                        <input type="date" id="end_date_task" name="end"
+                                   value=""
+                                   min="" max=""  onchange="checkdate();">
+                      </div>
+                    </div>
+                  </div>                  
+                  <div class="row mt-3 mb-3">
+                    <div class="col-md-4 assign-status-icon">
+                      <h6>Status</h6>
+                    </div>
+                    <div class="col-md-8 status p-0" id="det_task_status"> <span class="s-active"><a href="#">Active</a></span> <span class="s-onhold"><a href="#">On hold</a></span> <span class="s-done"><a href="#">Done</a></span> </div>
+                  </div>
+                  <div class="row mt-3 mb-3">
+                    <div class="col-md-12">
+                      <div class="mb-3 buttonupload">
+                        <label for="files" class="btn"></label>
+                        <input id="files_task" type="file" class="form-control" name="task_file">
+                      </div>
+                    </div>
+                  </div>                   
+                </div>
+              </div>
+            </div>           
+            <h4 class="mb-4">Comments</h4>
+            <div class="col-md-12 mb-3 comments" id="user_comments">    
+            </div>        
+          </div>
+          <div class="white-bg box-shadow p-3 comment-box">
+            <div class="col-md-12 mb-3 comments">
+              <div class="add-comment"> <!--<img src="../assets/images/Ellipse10.png">-->
+                <textarea class="form-control" placeholder="Add a comment" id="user_message"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+</div>
+
+<script>
+  $(".default_option").click(function () {
+    $(this).parent().toggleClass("active");
+  });
+  
+  $(".select_ul li").click(function () {
+    var currentele = $(this).html();
+    $(".default_option li").html(currentele);
+    var priority = $(this).find(".option").attr("data-priority");
+    $(".default_option li .option").attr("data-priority", priority);
+    $(".default_option li .option").attr("id", "assign_priority");
+    $(this).parents(".select_wrap").removeClass("active");
+  });  
+</script>
+<script>
+  jQuery().ready(function() {   
+ /* Custom select design */     
+ jQuery('.drop-down').append('<div class="button"></div>');     
+ jQuery('.drop-down').append('<ul class="select-list select-list-1"></ul>');     
+ /*jQuery('.drop-down select option').each(function() {   
+ var bg = jQuery(this).css('background-image');     
+ jQuery('.select-list-1').append('<li class="clsAnchor"><span value="' + jQuery(this).val() + '" class="' + jQuery(this).attr('class') + '" style=background-image:' + bg + '>' + jQuery(this).text() + '</span></li>');    
+ });  */   
+ //jQuery('.drop-down .button').html('<span style=background-image:' + jQuery('.drop-down select').find(':selected').css('background-image') + '>' + jQuery('.drop-down select').find(':selected').text() + '</span>' + '<a href="javascript:void(0);" class="select-list-link"><i class="fas fa-angle-down"></i></a>');    
+ /*jQuery('.drop-down ul li').each(function() {    
+ if (jQuery(this).find('span').text() == jQuery('.drop-down select').find(':selected').text()) {   
+ jQuery(this).addClass('active');        
+ }       
+ });   
+ jQuery('.drop-down .select-list-1 span').on('click', function() 
+ {
+ var dd_text = jQuery(this).text();   
+ var dd_img = jQuery(this).css('background-image');  
+ var dd_val = jQuery(this).attr('value');    
+ jQuery('.drop-down .button').html('<span style=background-image:' + dd_img + '>' + dd_text + '</span>' + '<a href="javascript:void(0);" class="select-list-link"><i class="fas fa-angle-down"></i></a>');       
+ jQuery('.drop-down .select-list-1 span').parent().removeClass('active');     
+ jQuery(this).parent().addClass('active');      
+ $('.drop-down select[name=options]').val( dd_val );  
+ $('.drop-down .select-list-1 li').slideUp();      
+ }); */       
+ jQuery('.drop-down .button').on('click','a.select-list-link', function() 
+ {       
+ jQuery('.drop-down ul li').slideToggle();   
+ });      
+ /* End */        
+
+    var dtToday = new Date();
+
+    var month = dtToday.getMonth();
+    var day = dtToday.getDate();
+    var year = dtToday.getFullYear();
+    if(month < 10)
+        month = '0' + month.toString();
+    if(day < 10)
+        day = '0' + day.toString();
+
+    var maxDate = day + '-' + month + '-' + year;    
+    $('#start').attr('min', maxDate);
+ }); 
+ </script>
+ 
+<div id="mAlertTask" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mAlertCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+      <a class="close" data-bs-dismiss="modal" style="text-align: right;padding-right: 10px;">×</a>
+      <div class="modal-body">
+        <form method="get" class="pop-form">
+          <div class="row">
+            <div class="col-md-12 text-center mb-2"> <img src="../assets/images/delete.png" style="width: 25%;"> </div>
+            <div class="col-md-12 text-center mb-2" id="">
+              <input type="hidden" id="mAlertURL" value="" />
+              <p id="mAlertName">Are you sure you want to delete it?</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 pt-3 pb-3 wauto text-center"> 
+            <span class="dborder-btn nbtn">
+              <button type="button" id="mAlertCanceltask" class="btn btn-default" data-bs-dismiss="modal">No</button>
+            </span> 
+            <span class="danger-btn nbtn">
+              <button type="button" id="mAlertDeletetask" class="btn btn-danger delete_call_fun" data-cid="" data-module_id="">Yes, Delete</button>
+            </span>
+            </div>
+          </div>
+        </form>
+      </div>
+     <!-- <div class="modal-header">
+        <h6 class="modal-title"><span id="mAlertName"></span></h6>
+        <a class="close" data-bs-dismiss="modal">×</a>
+      </div>
+      <div class="modal-body text-center">
+        <div class="col-md-12 text-center mb-2"> <img src="../assets/images/delete.png" alt="Delete"> </div>
+        <input type="hidden" id="mAlertURL" value="" />
+        <p>Are you sure you want to delete it?</p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <span class="dborder-btn nbtn">
+          <button type="button" id="mAlertCanceltask" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+        </span>
+        <span class="danger-btn nbtn">
+          <button type="button" id="mAlertDeletetask" class="btn btn-danger">Yes Delete</button>
+        </span>
+      </div>-->
+    </div>
+  </div>
+</div>

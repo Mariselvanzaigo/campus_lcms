@@ -1,0 +1,731 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="create_course">Create course</h5>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+
+  <form method="post" class="" id="frmNewCourses" name="frmNewCourses" enctype="multipart/form-data">
+    <input type="hidden" name="platform_id" id="platform_id" value="1e4758ac-8077-42e6-b9d9-11b0de0df37d">
+    <input type="hidden" name="course_id" id="course_id" value="">
+    <div class="row">
+      <div class="col-md-12 mb-3">
+        <div class="form-floating">
+          <input type="text" id="coursesName" name="coursesName" class="form-control cm-capitalize"
+            placeholder="Name of the course">
+          <label for="coursesName">Course Name</label>
+        </div>
+      </div>
+      <div class="col-md-12 mb-3">
+        <div class="form-floating">
+          <input type="text" id="coursesID" name="coursesID" class="form-control cm-replaceSpace"
+            placeholder="Course ID Prefix">
+          <!--<label for="coursesID">CAS ID</label>-->
+          <label for="coursesID">Course ID</label>
+        </div>
+      </div>
+      <div class="col-md-12 mb-3">
+        <div class="form-floating">
+          <input type="text" id="kite_id" name="kite_id" class="form-control cm-replaceSpace"
+            placeholder="Kite ID"  onkeypress="return /[0-9]/i.test(event.key)">
+          <label for="kite_id">Kite ID</label>
+        </div>
+      </div>
+      <div class="col-md-12 mb-2">
+        <div class="form-floating">
+          <select class="sort-select form-select" id="category" name="category">
+            <option value="">Category</option>
+          </select>
+          <label for="category" data-title="Select category" data-caption="Select">Select</label>
+        </div>
+      </div>
+
+      <div class="col-md-12 mb-2">
+        <div class="form-floating">
+          <select class="sort-select form-select" id="subCategory" name="subCategory">
+            <option value="">Sub Category</option>
+          </select>
+          <label for="subCategory" data-title="Select subcategory" data-caption="Select">Select</label>
+        </div>
+      </div>
+
+      <div class="col-md-12 mb-3 course_file_input_box">
+        <label class="custom-file">
+          <input type="file" id="courseFile" name="courseFile[]" multiple class="form-control"
+            placeholder="Design documents">
+          <span class="filename">Design documents</span>
+        </label>
+      </div>
+<!--
+      <div class="col-md-12 mb-3">
+        <label class="custom-file"><div class="input_file_box filename"><input type="file" id="courseFile" name="courseFile[]" multiple class="form-control" placeholder="Design documents">Design documents</div>
+        </label>
+      </div>
+-->
+      <div class="col-md-12 mb-3" id="course_attachment">
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <div class="form-floating">
+          <input type="date" id="start_date" name="start_date" class="form-control" placeholder="Start Date"
+            onblur="if(this.value!==''){this.className='form-control hasdate'}" onchange="checkdate();">
+          <label for="start_date">Start Date</label>
+        </div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <div class="form-floating">
+          <input type="date" id="end_date" name="end_date" class="form-control" placeholder="End Date"
+            onblur="if(this.value!==''){this.className='form-control hasdate'}" onchange="checkdate();">
+          <label for="end_date">End Date</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+
+      <div class="col-md-12 mb-3">
+        <div class="form-floating">
+          <select class="sort-select form-select" id="member" name="member">
+            <option value="">Member</option>
+          </select>
+          <label for="member" data-title="Assign Member" data-caption="Assign">Assign Project Manager</label>
+        </div>
+      </div>
+
+      <div class="col-md-12 mb-3">
+        <label for="tags" class="tags-label d-none">Add a tags</label>
+        <select class="form-control tags" id="tags" name="tags[]" multiple="multiple" style="width:100%"></select>
+      </div>
+      <div class="col-md-12 mb-3">
+        <div class="form-floating">
+          <input type="text" id="description" name="description" class="form-control counter"
+            placeholder="One line description" maxlength="256" minlength="4"/>
+          <span class="charcounter">256 Char(s)</span>
+          <label for="description">One line description</label>
+        </div>
+      </div>
+    </div>
+  </form>
+
+</div>
+<div class="modal-footer">
+  <span class="custom-btn nbtn">
+    <button type="button" class="btn btn-success" id="saveCoursesNew">Create & New</button>
+  </span>
+  <span class="orange-btn nbtn">
+    <button type="button" class="btn btn-primary" id="saveCoursesClose">Create & Close</button>
+  </span>
+</div>
+<script type="text/javascript">
+  var subCategory = {};
+  var frmvalidatorfrm;
+
+  $(document).ready(function () {
+    $("#start_date").attr("min", new Date().toISOString().split("T")[0]);
+    $('.cm-capitalize').each(function () { $(this).capitalize(); });
+    $('.cm-uppercase').each(function () { $(this).upperCase(); });
+    $('.cm-replaceSpace').each(function () { $(this).replaceSpace(); });
+
+    $(".form-select").each(function (index, element) {
+      const $this = $(this);
+      $this.on("change", (event) => {
+        const $this = $(event.currentTarget);
+        if ($this.val()) {
+          $this.next("label").html($this.next("label").data("title"));
+        } else {
+          $this.next("label").html($this.next("label").data("caption"));
+        }
+      });
+    });
+    /*$('.counter').keyup(function () {
+      var cuChar = $(this).val().length;
+      $("span.charcounter").html(cuChar + " Char(s)");
+    });*/
+    $("#coursesName").on("blur", function () {
+      var str = $(this).val();
+      var acpref = str.substring(0, 4);
+      $("#coursesID").val(acpref.str_replace(' ', '-').toUpperCase());
+      getTagSuggest(str);
+    });
+
+    var URL = API_CONTENT_URL + "/tags/";
+    var $tagsControl = $('.tags').select2({
+      dropdownParent: $('#addCourses'),
+      placeholder: "Add a tag",
+      dropdownCssClass: "select2Font",
+      tokenSeparators: [','],
+      tags: true,
+      multiple: true,
+      allowClear: true,
+      ajax: {
+        url: URL,
+        dataType: 'json',
+        type: "GET",
+        headers: { "Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token },
+        quietMillis: 50,
+        data: function (params) {
+          return {
+            term: $.trim(params.term)
+          };
+        },
+        processResults: function (data) {
+          return {
+            results: $.map(data, function (item) {
+              return {
+                text: item,
+                id: item
+              }
+            })
+          };
+        },
+        cache: true,
+      },
+      createTag: function (params) {
+        var term = $.trim(params.term);
+        if (term === '') {
+          return null;
+        }
+        return {
+          id: term,
+          text: term,
+          newTag: true
+        };
+      },
+      maximumSelectionLength: 64,
+      minimumInputLength: 3,
+      maximumInputLength: 256,
+      formatSelectionTooBig: function (limit) {
+        return "Too many selected items, Only 64 tags allowed."
+      },
+      formatNoMatches: "add new tag and hit ENTER-KEY",
+      escapeMarkup: function (markup) {
+        return markup;
+      }
+    });
+
+    $("input:file").change(function () {
+      //var fappend = 'Design documents';
+      var fappend = '';
+      for (var i = 0; i < this.files.length; i++) {
+        var fileName = this.files[i].name;
+        fappend += '<span class="name attach_file">' + fileName.replace("C:\\fakepath\\", '') + '<span class="btn-close pos_btn-close" onclick=removeAttachemntCourse(this);></span></span>';
+      }
+      if (i > 5) {
+        $("#courseFile").val(null);
+        //$(".filename").html("Design documents");
+        alert("Only 5 files accepted!");
+        return false;
+      } else {
+        $(".attach_file").remove();
+        $(".course_file_input_box").append(fappend);
+      }
+    });
+
+    //load the category data
+    var SelectedCategoryId = selectedSubCategoryId = "";
+    getCategory(SelectedCategoryId, subCategory, selectedSubCategoryId);
+
+    $.ajax({
+      url: API_BASE_URL + '/sub_category/',
+      type: 'get',
+      dataType: 'json',
+      headers: { "Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token },
+      success: function (response) {
+        $.each(response, function (i, val) {
+          if (typeof (subCategory[val.category_id]) === "undefined") {
+            subCategory[val.category_id] = [];
+          }
+          subCategory[val.category_id].push(val);
+        });
+      }
+    });
+    var member_id = "";
+    getAssignMember(member_id);
+
+    $("#category").on("change", function () {
+      $("#subCategory").empty();
+      $("#subCategory").append("<option value=''>Sub Category</option>");
+      $("#subCategory").next("label").html($("#subCategory").next("label").data("caption"));
+      if ($(this).val()) {
+        var resp = subCategory[$(this).val()];
+        if (typeof (resp) === "undefined") {
+          console.log("subcategory not found: " + $(this).find("option:selected").text());
+        } else {
+          $.each(resp, function (i, val) {
+            $("#subCategory").append("<option value='" + val.id + "'>" + val.name + "</option>");
+          });
+        }
+      }
+    });
+
+
+  var editCourseId = window.sharedEditCourseId;
+  if(editCourseId !== ""){
+      $("#saveCoursesNew").css("display","none");
+      $("#saveCoursesClose").text("Update");
+      $("#create_course").text("Edit Course");
+      $("#course_id").val(editCourseId);
+      $.ajax({
+        url: API_CONTENT_URL + '/course/' + editCourseId +'/',
+        type: 'get',
+        dataType: 'json',
+        headers: { "Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token },
+        success: function (response) {
+          console.log(response);
+          if(response.id){
+            $("#start_date").val(response.start_date);
+            $("#end_date").val(response.end_date);
+            $("#coursesName").val(response.name);
+            $("#coursesID").val(response.course_id_prefix);
+            console.log('response.kite_id', response.kite_id);
+            if(response.kite_id == 0 || response.kite_id == null){
+              $("#kite_id").val("");
+            }else{
+              $("#kite_id").val(response.kite_id);
+              /*$.ajax({
+                url: API_CONTENT_URL + '/next_kite_id/',
+                type: 'get',
+                dataType: 'json',
+                headers: {"Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token},
+                success:function(response){
+                  //console.log('next_kite_id',response);
+                  $("#kite_id").val(response.kite_id);
+                },
+                error: function(error) {
+                        if (error.status === 401) {
+                          alert("Session Expired, Please login again.");
+                          logoutSession();
+                        }
+                  console.log(error);
+                }
+              });*/
+            }
+            $("#description").val(response.description);
+            if(response.description) {
+              var cuChar = Number(256) - $("#description").val().length;
+              $("#description").next("span.charcounter").html(cuChar + " Char(s)");
+            }
+            if(response.category_id){
+              getCategory(response.category_id, subCategory, response.sub_category_id);
+            }
+            if(response.assignee.member_id){
+              getAssignMember(response.assignee.member_id);
+            }
+            if(response.attachments.length > 0){
+                var course_attachments_html = "";
+                var base_img_url = `${API_CONTENT_URL}`;
+                response.attachments.forEach(function (element, index) {
+                    var file_type = element.attachment_type.split('/')[0];
+                    if(file_type === 'image' || file_type === 'video' || file_type === 'audio' || file_type === 'application'){
+                      
+                        if(element.attachment != null && element.attachment.substring(0, 7) != "/media/"){
+                          base_img_url = '';
+                        }
+                        course_attachments_html += `<li class="has-children is-open" style="list-style:none;">
+                                        <ul class="acnav__list wbg br-10">
+                                          <li class="has-children">
+                                            <div class="acnav__label acnav__label--level2">
+                                              <div class="accordionlist">
+                                                <div class="row">
+                                                  <div class="col-md-12 acc-text">`;
+                        if(element.attachment_type.split('/')[0] === 'image'){
+                              course_attachments_html +=`<img class="w-100"src="${base_img_url}${element.attachment}" alt="${element.attachment_name}">`;
+                        }else if(element.attachment_type.split('/')[0] === 'video'){
+                            course_attachments_html +=`<video id='video' controls preload='none' width="600" poster=""><source id='mp4' src="${base_img_url}${element.attachment}" type='video/mp4' /><p>Your user agent does not support the HTML5 Video element.</p></video>`;
+                        }else if(element.attachment_type.split('/')[0] === 'audio'){
+                            course_attachments_html +=`<audio controls><source src="${base_img_url}${element.attachment}" type="audio/mpeg">Your browser does not support the audio element.</audio>`;
+                        }else if(element.attachment_type.split('/')[0] === 'application'){
+                          var mathcount = Math.floor(Math.random() * 1000);
+                           course_attachments_html +=`<object data="${base_img_url}${element.attachment}" type="${element.attachment_type}"><iframe id="${element.id}" src='https://docs.google.com/gview?url=${base_img_url}${element.attachment}&embedded=true&ignore=${mathcount}' width='100%' height='500px' frameborder='1'><a href="${base_img_url}${element.attachment}&embedded=true&ignore=${mathcount}">Download Document</a></iframe></object>
+                           <p>If this browser does not support file. Please download the File to view it: <a href="${base_img_url}${element.attachment}" target="_blank">Download File</a>.</p>`;
+                        }
+                        course_attachments_html +=`</div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </li>
+                                        </ul>
+                                      </li>`;
+                    }
+              });
+              $("#course_attachment").append(course_attachments_html);
+            }
+            if(response.tags.length > 0){
+              var tag_array_2 = [];
+              $.each(response.tags, function (i, val) {
+                tag_array_2.push(decodeHtml(val.tag_name));
+              })
+              var tags_empty = [];
+              if (tag_array_2) {
+                $("#tags").html("");
+                $("#tags").val(tags_empty).change();
+                $.each(tag_array_2, function (i, val) {
+                  $("#tags").append("<option value='" + val + "'>" + val + "</option>");
+                });
+                $("#tags").val(tag_array_2).change();
+              }
+            }
+
+          }
+        },
+        error: function (error) {
+          if (error.status === 401) {
+            alert("Session Expired, Please login again.");
+            logoutSession();
+          }
+          toastr.error("Response Error: " + error.message);
+          console.log(error);
+        }
+      });
+  }else{
+    $.ajax({
+      url: API_CONTENT_URL + '/next_kite_id/',
+      type: 'get',
+      dataType: 'json',
+      headers: {"Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token},
+      success:function(response){
+        //console.log('next_kite_id',response);
+        $("#kite_id").val(response.kite_id);
+      },
+      error: function(error) {
+              if (error.status === 401) {
+                alert("Session Expired, Please login again.");
+                logoutSession();
+              }
+        console.log(error);
+      }
+    });
+  }
+
+function decodeHtml(html) {
+    var txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
+}
+    /*LATER USE*/
+    /* ============================================================ */
+    /*
+    $("#category").on("change", function() {
+      $("#subCategory").empty();
+      if($(this).val()) {
+        console.log("Changes request :"  + $(this).val());
+        $.ajax({
+          url: API_BASE_URL + '/subcategory/',
+          type: 'get',
+          dataType: 'json',
+          success:function(response){
+            $("#subCategory").empty();
+            $("#subCategory").append("<option value=''>Select Sub Category</option>");
+            $.each( response, function( i, val ) {
+              $("#subCategory").append("<option value='"+val.id+"'>"+val.name+"</option>");
+            });
+          }
+        });
+      }
+    });
+    */
+    /* ============================================================ */
+    //subCategory
+
+    $.validator.addMethod("pattern", function (value, element, param) {
+      if (this.optional(element)) { return true; }
+      if (typeof param === "string") {
+        param = new RegExp("^(?:" + param + ")$");
+      }
+      return param.test(value);
+    }, "Check your inputs");
+    var frmvalidatorfrm = $("#frmNewCourses").validate({
+      rules: {
+        coursesName: { required: true, minlength: 1, maxlength: 256 },
+        coursesID: { required: true, minlength: 1, maxlength: 20 },
+        category: { required: true },
+        courseFile: { required: true },
+        start_date: { required: true },
+        end_date: { required: true },
+        member: { required: true },
+        description: { required: true, minlength: 4, maxlength: 256 },
+        kite_id: { required: true, number: true, min: 1, max: 4294967295 },
+      },
+      messages: {
+        coursesName: {
+          required: "Please enter a Course Name",
+          minlength: "Your course name must consist of at least 1 characters",
+          maxlength: "Your course name must consist of max of 256 characters",
+        },
+        coursesID: {
+          required: "Please enter a Course ID Prefix",
+          minlength: "Course ID Prefix must consist of at least 1 characters",
+          maxlength: "Course ID Prefix must consist of max of 20 characters",
+        },
+        kite_id: {
+          required: "Please enter a Kite ID",
+          number: "Kite ID must be a number",
+          min: "Kite ID must consist of at least 1 characters",
+          max: "Ensure this value is less than or equal to 4294967295.",
+        },
+        category: { required: "Please select the category" },
+        courseFile: { required: "Please upload attachment" },
+        start_date: { required: "Please select starting date" },
+        end_date: { required: "Please select ending date" },
+        member: { required: "Please select member" },
+        description: {
+          required: "Please enter a Description",
+          minlength: "Description must consist of at least 4 characters",
+          maxlength: "Description must consist of max of 256 characters",
+        },
+      },
+      errorElement: "em",
+      errorPlacement: function (error, element) {
+        error.addClass("help-block");
+        if (element.prop("type") === "checkbox") {
+          error.insertAfter(element.parent("label"));
+        } else {
+          error.insertAfter(element);
+        }
+      },
+      highlight: function (element, errorClass, validClass) {
+        //$( element ).parents( ".col-md-12" ).addClass( "has-error" ).removeClass( "has-success" );
+        $(element).addClass("is-invalid");
+      },
+      unhighlight: function (element, errorClass, validClass) {
+        //$( element ).parents( ".col-md-12" ).addClass( "has-success" ).removeClass( "has-error" );
+        $(element).removeClass("is-invalid");
+      }
+    });
+
+    $("#saveCoursesClose, #saveCoursesNew").on("click", function () {
+      var isValidForm = frmvalidatorfrm.form();
+      if (isValidForm) {
+        if ($("#tags").val().length === 0) {
+          alert("Tags field cannot empty please choice atleast one tag!");
+          return false;
+        }
+        $("#saveCoursesClose").prop('disabled', true);
+        $("#saveCoursesNew").prop('disabled', true);
+        var tags = $("#tags").val().join(",");
+        var formData = new FormData();
+        formData.append("course_id_prefix", $("#coursesID").val());
+        formData.append("kite_id", $("#kite_id").val());
+        formData.append("name", $("#coursesName").val());
+        formData.append("description", $("#description").val());
+        formData.append("platform_id", $("#platform_id").val());
+        formData.append("category_id", $("#category").val());
+        formData.append("sub_category_id", $("#subCategory").val());
+        formData.append("member_id", $("#member").val());
+        formData.append("start_date", $("#start_date").val());
+        formData.append("end_date", $("#end_date").val());
+        formData.append("status", 0);
+        formData.append("MCStatus", 1);
+        formData.append("tags", tags);
+        formData.append("category_name", $("#category").find("option:selected").text());
+        formData.append("sub_category_name", $("#subCategory").find("option:selected").text());
+        $.each($('input[name^="courseFile"]')[0].files, function (i, file) {
+          formData.append("attachments[" + i + "]", file, file.name);
+        });
+        var parameter = "";
+        //get_pagination(parameter);
+        if ($(this).prop("id") === "saveCoursesClose") {
+          var course_id_update = $("#course_id").val();
+          if(course_id_update != ""){
+            ajaxUpdateCourse(formData, course_id_update);
+          }else{
+            ajaxSaveCourse(formData, false);
+          }
+        } else {
+          ajaxSaveCourse(formData, true);
+        }
+      }
+    });
+
+  });
+  function getCategory(SelectedCategoryId, subCategory, selectedSubCategoryId){
+
+    $.ajax({
+      url: API_BASE_URL + '/category/',
+      type: 'get',
+      dataType: 'json',
+      headers: { "Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token },
+      success: function (response) {
+        $("#category").empty();
+        $("#category").append("<option value=''>Category</option>");
+        $.each(response, function (i, val) {
+            $("#category").append("<option value='" + val.id + "'>" + val.name + "</option>");
+        });
+        if(SelectedCategoryId){
+          $("#category option[value='"+SelectedCategoryId+"']").prop('selected', true);
+        }
+      }
+    });
+     // $("#myselect option[data-value='" + response.val +"']").attr("selected","selected");
+    if(SelectedCategoryId){
+      setTimeout(function(){      
+        var resp = subCategory[SelectedCategoryId];
+        $("#subCategory").empty();
+        $("#subCategory").append("<option value=''>Sub Category</option>");
+        $("#subCategory").next("label").html($("#subCategory").next("label").data("caption"));
+          if (typeof (resp) === "undefined") {
+            console.log("subcategory not found: " + $("#category").find("option:selected").text());
+          } else {
+            $.each(resp, function (i, val) {
+              $("#subCategory").append("<option value='" + val.id + "'>" + val.name + "</option>");
+            });
+            if(selectedSubCategoryId){
+              $("#subCategory option[value='"+selectedSubCategoryId+"']").prop('selected', true);
+            }
+          }
+      }, 1000)
+    }
+  }
+  function getAssignMember(member_id){
+
+      $.ajax({
+        url: API_BASE_URL + '/mem_category_list/' + encodeURI("Define Course"),
+        type: 'get',
+        dataType: 'json',
+        headers: { "Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token },
+        success: function (response) {
+          $("#member").empty();
+          $("#member").append("<option value=''>Member</option>");
+          $.each(response.data, function (i, val) {
+            $("#member").append("<option value='" + val.id + "'>" + val.first_name + " " + val.last_name + "</option>");
+          });
+          if(member_id){
+              $("#member option[value='"+member_id+"']").prop('selected', true);
+          }
+        }
+      });
+  }
+  function ajaxSaveCourse(formData, openNew) {
+    $.ajax({
+      url: API_CONTENT_URL + "/course/",
+      method: "POST",
+      type: 'POST', // For jQuery < 1.9
+      cache: false,
+      contentType: false,
+      processData: false,
+      data: formData,
+      headers: {
+        "Authorization": "Bearer " + getUserInfo().access_token
+      },
+      success: function (response) {
+
+        $("#saveCoursesClose").removeAttr("disabled");
+        $("#saveCoursesNew").removeAttr("disabled");
+        toastr.success("New course information was successfully saved.");
+        $('#addCourses').modal('hide');
+        if (openNew) {
+          const container = document.getElementById("addCourses");
+          const modal = new bootstrap.Modal(container);
+          var url = `${SITE_URL_PROTOCOL}/assets/pages/courses/new_courses.html?t=` + Math.floor(Date.now() / 1000);
+          $('.modal-content').load(url, function (result) {
+            modal.show();
+            var parameter = "";
+            get_pagination(parameter);
+          });
+        }else{ 
+        $('#courses_page').trigger('click');
+        }
+
+      },
+      error: function (error) {
+        if (error.status === 401) {
+          alert("Session Expired, Please login again.");
+          logoutSession();
+        }
+        $("#saveCoursesClose").removeAttr("disabled");
+        $("#saveCoursesNew").removeAttr("disabled");
+        toastr.error("Response Error: " + error.message);
+        console.log(error);
+      }
+    });
+  }
+
+  function ajaxUpdateCourse(formData, course_id_update) {
+    $.ajax({
+      url: API_CONTENT_URL + "/course/"+course_id_update+"/",
+      method: "PUT",
+      type: 'PUT', // For jQuery < 1.9
+      cache: false,
+      contentType: false,
+      processData: false,
+      data: formData,
+      headers: {
+        "Authorization": "Bearer " + getUserInfo().access_token
+      },
+      success: function (response) {
+        $("#saveCoursesClose").removeAttr("disabled");
+        $("#saveCoursesNew").removeAttr("disabled");
+        toastr.success("Course information was successfully updated.");
+        $('#addCourses').modal('hide');
+        $('#courses_page').trigger('click');
+        var parameter = "";
+        get_pagination(parameter);
+      },
+      error: function (error) {
+        if (error.status === 401) {
+          alert("Session Expired, Please login again.");
+          logoutSession();
+        }
+        $("#saveCoursesClose").removeAttr("disabled");
+        $("#saveCoursesNew").removeAttr("disabled");
+        toastr.error("Response Error: " + error.message);
+        console.log(error);
+      }
+    });
+  }
+  function getTagSuggest(qString) {
+    $.ajax({
+      url: encodeURI(API_CONTENT_URL + '/suggest/tags/?term=' + qString),
+      type: 'get',
+      dataType: 'json',
+      headers: { "Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token },
+      success: function (response) {
+        var tags = response.tags;
+        var tags_empty = [];
+        if (tags) {
+          $("#tags").html("");
+          $("#tags").val(tags_empty).change();
+          $.each(tags, function (i, val) {
+            $("#tags").append("<option value='" + val + "'>" + val + "</option>");
+          });
+          $("#tags").val(tags).change();
+        }
+      }
+    });
+  }
+  function checkdate(){
+    var start_date = $("#start_date").val();
+    if(start_date){
+      $("#addCourses #end_date").attr("min", start_date);
+    }
+    var end_date   = $("#end_date").val();
+    if(start_date !== '' && end_date !== ''){
+      var sdate = new Date(start_date[2], start_date[1] - 1, start_date[0]);
+      var edate = new Date(end_date[2], end_date[1] - 1, end_date[0]);
+      if (start_date > end_date){
+          $("#end_date").val("");
+            toastr.error("End Date should be greater than start date");
+      }
+    }
+  }
+
+    //To Display character length in add Case description
+    $('.counter').keyup(function () {
+      var cuChar = Number(256) -$(this).val().length;
+      $("span.charcounter").html(cuChar + " Char(s)");
+    });
+    function removeAttachemntCourse(e){
+        var dt = new DataTransfer();
+        var input = document.getElementById('courseFile');
+        e.parentElement.remove();
+        var { files } = input;
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            if (file.name !== e.parentElement.textContent){
+              dt.items.add(file);
+            }
+            input.files = dt.files;
+        }
+    }
+</script>

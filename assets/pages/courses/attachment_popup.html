@@ -1,0 +1,433 @@
+
+<div class="row course_module_details">
+  <div class="acnav__list wbg br-10" style="background:right;width: 97%;">
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+  <div class="col-md-12 p-3" style="padding-top: 0rem !important;">
+    <div class="course_module_content" id="course_module_attachment" style="overflow-y: scroll;height: 400px;overflow-x: hidden;display: none;">
+
+      <div class="col-md-12">  
+        <div class="row">      
+          <div class="col-md-2"> 
+            <label for="attachment_url" style="padding: 10px 0px 0px 19px;">Media URL</label>       
+          </div>
+          <div class="col-md-8"> 
+            <input type="text" class="form-control" id="attachment_url" placeholder="https://">
+          </div>
+          <div class="col-md-2"> 
+            <!--<input type="button" class="form-control" id="save_attachment_url" value="Save" onclick="save_attachment_url();">-->
+            <span class="orange-btn" >
+              <button id="save_attachment_url" class="editor_sub-btn mt-1" onclick="save_attachment_url();">Save</button>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <p style="text-align:center;margin-top: 10px;">OR</p>
+      </div>
+      <div id="dropzone" style="margin-top: -67px;">
+        <form id="demo-upload2" class="dropzone needsclick" enctype="multipart/form-data" action="/ajax_file_upload_handler/">
+          <div id="upload-2-queue" class="queue pt-3 uploaded_display"></div>
+          <div id="upload-2-dropzone"></div>
+
+          <div id="preview-template" style="display: none;">
+            <div class="dz-preview dz-file-preview">
+              <div class="dz-image"><img data-dz-thumbnail=""></div>
+              <div class="dz-details">
+                <div class="dz-size">
+                  <span data-dz-size=""></span>
+                </div>
+                <div class="dz-filename">
+                  <span data-dz-name=""></span>
+                </div>
+              </div>
+              <div class="dz-progress">
+                <span class="dz-upload" data-dz-uploadprogress=""></span>
+              </div>
+              <div class="dz-error-message">
+                <span data-dz-errormessage=""></span>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="tab p-0">
+      <div class="table-section">
+        <div class="row">
+          <div class="">
+            <div class="white-bg col-md-12 p-3 br-5">
+              <section class="nav-wrap course-inner"> 
+                <nav class="acnav" role="navigation"> 
+                  <div id="course_module_content" class="list-unstyled"></div>
+                </nav>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>                                    
+</div>
+<input type="hidden" id="course_param">
+<script type="text/javascript">
+  var xhrPool = [];
+  $(document).ready(function(){
+
+  if(processRights("Add Audio") === false && processRights("Add Slide") === false && processRights("Add Video") === false){
+    $("#demo-upload2").attr("style", "display:none;");
+  }
+  setTimeout(function(){
+    var cid = document.getElementById("course_param").getAttribute("data-cid");
+    var module_id = document.getElementById("course_param").getAttribute("data-module_id");
+    var show_input = document.getElementById("course_param").getAttribute("data-show_input");
+    let chapter_id = document.getElementById("course_param").getAttribute("data-chapter_id");
+    let chapter_topic_id = document.getElementById("course_param").getAttribute("data-chapter_topic_id");
+    if(show_input == "true"){
+       $("#course_module_attachment").attr("style", "display:block");
+    }else{
+       $("#course_module_attachment").attr("style", "display:none");
+    }
+    get_module_details(cid, module_id);
+  }, 0);
+  var acceptedFiles = "";
+  if(processRights("Add Audio") === true){
+    acceptedFiles += "audio/mp3,audio/wav,";
+  }
+  if(processRights("Add Slide") === true){
+    acceptedFiles += "image/jpeg,image/png,image/gif,image/jpg,application/pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.ods,.odp,.odt,.rtf,";
+  }
+  if(processRights("Add Video") === true){
+    acceptedFiles += "video/mp4,video/mkv,video/avi,";
+  }
+  acceptedFiles = acceptedFiles.replace(/,\s*$/, "");
+  
+    console.log(acceptedFiles);
+
+    var error_display = 0;
+    var dropzone2 = new Dropzone('#demo-upload2', {
+        previewTemplate: document.querySelector('#preview-template').innerHTML,
+        parallelUploads: 2,
+        thumbnailHeight: 120,
+        thumbnailWidth: 120,
+        maxFilesize: 3,
+        filesizeBase: 1000,
+        acceptedFiles: acceptedFiles,
+        init: function ()  {
+            this.on("error", function (file, message) {
+                var split_str = acceptedFiles.split(",");
+                if (split_str.indexOf(file.type) === -1) {
+                  toastr.error("File type not supported.");
+                  error_display++;
+                  this.removeFile(file);
+                  return true;
+                }
+                if(message.substring(0,16) == "You can't upload" ){
+                  toastr.error("File type not supported.");
+                  error_display++;
+                  this.removeFile(file);
+                  return true;
+                }
+                if (file.size > this.options.maxFilesize * 1000 * 1000) {
+                    toastr.error("File size is too big, Max file size allowed is 3MB");
+                    error_display++;
+                    this.removeFile(file);
+                    return true;
+                }
+            }); 
+        },
+        thumbnail: function(file, dataUrl) {
+            if (file.size > this.options.maxFilesize * 1000 * 1000 && error_display == 0) {
+                toastr.error("File size is too big, Max file size allowed is 3MB");
+                return true;
+            }
+            if (file.previewElement) {
+              file.previewElement.classList.remove("dz-file-preview");
+              var images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
+              for (var i = 0; i < images.length; i++) {
+                  var thumbnailElement = images[i];
+                  thumbnailElement.alt = file.name;
+                  thumbnailElement.src = dataUrl;
+              }
+              file.previewElement.classList.add("dz-image-preview");
+            }
+        }
+
+    });
+    var minSteps = 6,
+        maxSteps = 60,
+        timeBetweenSteps = 100,
+        bytesPerStep = 100000;
+    dropzone2.uploadFiles = function(files) {
+      console.log(files);
+        var self = this;
+        var cid = document.getElementById("course_param").getAttribute("data-cid");
+        var module_id = document.getElementById("course_param").getAttribute("data-module_id");
+        var formData = new FormData();
+        var todayDate = new Date().toISOString().slice(0, 10);
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            var ext = file.name.split('.').pop();
+            if(file.type.split('/')[0] !== 'image' && file.type.split('/')[0] !== 'video')
+
+            if(ext=="pdf" || ext=="docx" || ext=="doc" || ext=="rtf" || ext=="odp" || ext=="ods" || ext=="odt" || ext=="ppt" || ext=="xls" || ext=="xlsx"){
+              if (ext == "pdf") {
+                  $(file.previewElement).find(".dz-image img").attr("src", `${SITE_URL_PROTOCOL}assets/images/pdf-thumbnail.png`);
+              } else if (ext.indexOf("doc") != -1) {
+                  $(file.previewElement).find(".dz-image img").attr("src", `${SITE_URL_PROTOCOL}assets/images/doc-thumbnail.png`);
+              } else if (ext.indexOf("docx") != -1) {
+                  $(file.previewElement).find(".dz-image img").attr("src", `${SITE_URL_PROTOCOL}assets/images/doc-thumbnail.png`);
+              } else if (ext.indexOf("xls") != -1) {
+                  $(file.previewElement).find(".dz-image img").attr("src", `${SITE_URL_PROTOCOL}assets/images/excel-thumbnail.png`);
+              } else if (ext.indexOf("ppt") != -1) {
+                  $(file.previewElement).find(".dz-image img").attr("src", `${SITE_URL_PROTOCOL}assets/images/ppt-thumbnail.png`);
+              } else if (ext.indexOf("rtf") != -1) {
+                  $(file.previewElement).find(".dz-image img").attr("src", `${SITE_URL_PROTOCOL}assets/images/rtf-thumbnail.png`);
+              } else{
+                  $(file.previewElement).find(".dz-image img").attr("src", `${SITE_URL_PROTOCOL}assets/images/doc-thumbnail.png`);
+              }
+            }
+            formData.append("attachment", file);
+            formData.append("attachment_type", file.type);
+            formData.append("attachment_name", file.name);
+            formData.append("created_date", todayDate);
+            formData.append("status", 0);
+            formData.append("module_id", module_id);
+            formData.append("course_id", cid);
+            $.ajax({
+              url: API_CONTENT_URL + "/module_attachment/",
+              method: "POST",
+              type: 'POST', // For jQuery < 1.9
+              cache: false,
+              contentType: false,
+              processData: false,
+              data: formData,
+              headers: {
+                "Authorization" : "Bearer " + getUserInfo().access_token
+              },
+              beforeSend: function(jqXHR) { xhrPool.push(jqXHR); },
+              success: function(response, textStatus, jqXHR){
+                updateCountsSelectedModule("");
+                get_module_details(cid, module_id);
+                toastr.success("File uploaded successfully.");
+                console.log(response);
+              },
+              error: function(error) {
+                //toastr.error("Response Error: " + error.message);
+                console.log(error);
+              }
+            });
+            totalSteps = Math.round(Math.min(maxSteps, Math.max(minSteps, file.size / bytesPerStep)));
+
+            for (var step = 0; step < totalSteps; step++) {
+                var duration = timeBetweenSteps * (step + 1);
+                setTimeout(function(file, totalSteps, step) {
+                    return function() {
+                        file.upload = {
+                            progress: 100 * (step + 1) / totalSteps,
+                            total: file.size,
+                            bytesSent: (step + 1) * file.size / totalSteps
+                        };
+                        self.emit('uploadprogress', file, file.upload.progress, file.upload.bytesSent);
+                        if (file.upload.progress == 100) {
+                            file.status = Dropzone.SUCCESS;
+                            self.emit("success", file, 'success', null);
+                            self.emit("complete", file);
+                            self.processQueue();
+                        }
+                    };
+                }(file, totalSteps, step), duration);
+            }
+        }
+    }
+  });
+
+function get_module_details(cid, module_id){
+
+    var show_input = document.getElementById("course_param").getAttribute("data-show_input");
+    if(show_input == "true"){
+      var URL = API_CONTENT_URL + '/module/'+module_id;
+    }else if(show_input == "false-chapter"){
+      var URL = API_CONTENT_URL + '/chapter_topic_attachments/?chapter_topic_id='+module_id;
+    }else{
+      var URL = API_CONTENT_URL + '/case_module_attachments/?case_module_id='+module_id;
+    }
+    $.ajax({
+      url: URL,
+      type: 'get',
+      dataType: 'json',
+      headers: {"Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token},
+      beforeSend: function(jqXHR) { xhrPool.push(jqXHR); },
+      success:function(response){
+          var module_attachments_html = "";
+          if(response.module_attachments){
+            var module_attachments = response.module_attachments;
+          }else{
+            var module_attachments = response;
+          }
+          if(module_attachments.length > 0){
+              module_attachments.forEach(function (element, index) {
+                var base_img_url = `${API_CONTENT_URL}`;
+                if(element.attachment != null && element.attachment.substring(0, 7) != "/media/"){
+                  base_img_url = '';
+                }
+                  var file_type = element.attachment_type.split('/')[0];
+                  if(file_type === 'image' || file_type === 'video' || file_type === 'audio' || file_type === 'application'){
+                      module_attachments_html += `<li class="has-children is-open">
+                                      <ul class="acnav__list acnav__list--level2 wbg br-10">
+                                        <li class="has-children">
+                                          <div class="acnav__label acnav__label--level2">
+                                            <div class="accordionlist">
+                                              <div class="row">
+                                                <div class="col-md-12 acc-text img-wrap" id="element${element.id}">`;
+                                                if(show_input == "true"){
+                                                  module_attachments_html += `<span class="attachment_delete" data-attachment_id="${element.id}" onclick="delete_attachment_course_pop('${element.id}', 'module_attachment')"></span>`;
+                                                }else if(show_input == "false-chapter"){
+                                                  //module_attachments_html += `<span class="attachment_delete" data-attachment_id="${element.id}" onclick="delete_attachment_course_pop('${element.id}', 'chapter_topic_attachments')"></span>`;
+                                                }else{
+                                                  //module_attachments_html += `<span class="attachment_delete" data-attachment_id="${element.id}" onclick="delete_attachment_course_pop('${element.id}', 'case_module_attachments')"></span>`;
+                                                }
+                      if(element.attachment_type.split('/')[0] === 'image'){
+                            module_attachments_html +=`<img class="w-100"src="${base_img_url}${element.attachment}" alt="${element.attachment_name}">`;
+                      }else if(element.attachment_type.split('/')[0] === 'video'){
+                          module_attachments_html +=`<video class="player" id='video' controls="controls" preload='metadata' width="600" poster=""><source id='mp4' src="${base_img_url}${element.attachment}#t=0.5" type='video/mp4' /><p>Your user agent does not support the HTML5 Video element.</p></video>`;
+                      }else if(element.attachment_type.split('/')[0] === 'audio'){
+                          module_attachments_html +=`<audio class="player" controls><source src="${base_img_url}${element.attachment}" type="audio/mpeg">Your browser does not support the audio element.</audio>`;
+                      }else if(element.attachment_type.split('/')[0] === 'application'){
+                        var mathcount = Math.floor(Math.random() * 1000);
+                         module_attachments_html +=`<object data="${base_img_url}${element.attachment}" type="${element.attachment_type}"><iframe id="${element.id}" src='https://docs.google.com/gview?url=${base_img_url}${element.attachment}&embedded=true&ignore=${mathcount}' width='100%' height='500px' frameborder='1'><a href="${base_img_url}${element.attachment}&embedded=true&ignore=${mathcount}">Download Document</a></iframe></object>
+                         <p>If this browser does not support file. Please download the File to view it: <a href="#" onclick='window.open("${base_img_url}${element.attachment}");return false;'>Download File</a>.</p>`;
+                         let embed_pdfs = {};
+                         embed_pdfs['element'+element.id] = 'created';
+
+                        $(document).find('#element'+element.id+' iframe').load(function(){
+                                embed_pdfs[$(this).parents('element'+element.id).attr('id')] = 'loaded';
+                                $(this).siblings('.loader').remove();
+                                console.log($(this).parents('element'+element.id).attr('id') + " loaded");
+                        });
+
+                        let embed_pdf_check = setInterval(function() {
+                              let remaining_embeds = 0;
+                              $.each(embed_pdfs, function(key, value) {
+                                  try {
+                                      if ($($('#' + key)).find('iframe').contents().find("body").contents().length == 0) {
+                                          remaining_embeds++;
+                                          //console.log(key + " resetting");
+                                          $($('#' + key)).find('iframe').attr('src', src='https://docs.google.com/viewer?url=' + base_img_url+element.attachment+ '&embedded=true');
+                                      }
+                                  }
+                                  catch(err) {
+                                      //console.log(key + " reloading");
+                                  }
+                              });
+                          
+                              if (!remaining_embeds) {
+                                  clearInterval(embed_pdf_check);
+                              }
+                          }, 1000);
+                      }
+                      module_attachments_html +=`</div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </li>
+                                      </ul>
+                                    </li>`;
+                  }
+            });
+          }else{
+            module_attachments_html += `<div class='alert text-center text-danger'>No Records Found!</div>`;
+          }
+
+        $("#course_module_content").empty();
+        $("#course_module_content").append(module_attachments_html);
+
+      },
+      error: function(error) {
+       // toastr.error("Response Error: " + error.message);
+        console.log(error);
+      }
+    });
+}
+
+$('#popup_course_icon').on('hidden.bs.modal', function (event) {
+  console.log(xhrPool);
+  $.each(xhrPool, function(i, jqXHR){
+    jqXHR.abort();
+    console.log("aborted");
+  });
+  
+});
+function save_attachment_url(){
+  var cid = document.getElementById("course_param").getAttribute("data-cid");
+  var module_id = document.getElementById("course_param").getAttribute("data-module_id");
+  var attachment_url = $("#attachment_url").val();
+  $("#attachment_url").removeClass("is-invalid");
+  $("#attachment_url").next().remove();
+  attachment_url_valid = 0;
+  if(attachment_url == ""){
+    attachment_url_valid++;
+    $("#attachment_url").addClass("is-invalid");
+    $("#attachment_url").after(`<em for="attachment_url" class="error help-block">Please Enter Media Url.</em>`);
+  }else if(/^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i.test(attachment_url) == false){
+    attachment_url_valid++;
+    $("#attachment_url").addClass("is-invalid");
+    $("#attachment_url").after(`<em for="attachment_url" class="error help-block">Please Enter Valid Media Url.</em>`);
+  }else {
+    var formData = new FormData();
+    var todayDate = new Date().toISOString().slice(0, 10);
+    formData.append("url_attachment", attachment_url);
+    formData.append("attachment_type", "url");
+    formData.append("created_date", todayDate);
+    formData.append("status", 1);
+    formData.append("module_id", module_id);
+    formData.append("course_id", cid);
+    $.ajax({
+
+      url: API_CONTENT_URL + "/module_attachment/",
+      method: "POST",
+      type: 'POST', // For jQuery < 1.9
+      cache: false,
+      contentType: false,
+      processData: false,
+      data: formData,
+      headers: { "Authorization": "Bearer " + getUserInfo().access_token },
+      success:function(response){
+        console.log(response);
+        $("#attachment_url").val("");
+          updateCountsSelectedModule("");
+          get_module_details(cid, module_id);
+          toastr.success("Media URL saved successfully.");
+          console.log(response);
+      },
+      error:function(error){
+        console.log(error);
+      }
+    });
+  }
+}
+function delete_attachment_course_pop(attachment_id, api_name){
+
+  $.ajax({
+    url: API_CONTENT_URL + '/'+api_name+'/'+attachment_id+'/',
+    type: "DELETE",
+    dataType: 'json',
+    headers: {
+      "Authorization": "Bearer " + getUserInfo().access_token,
+      "Content-Type": "application/json"
+    },
+    success:function(response){
+      toastr.success("Attachment Deleted Successfully");
+      updateCountsSelectedModule("");
+      var cid = document.getElementById("course_param").getAttribute("data-cid");
+      var module_id = document.getElementById("course_param").getAttribute("data-module_id");
+      get_module_details(cid, module_id);
+    },
+    error: function(error){
+      //toastr.error("Response Error: " + error.message);
+      console.log(error);
+    }
+  });
+
+}
+</script>

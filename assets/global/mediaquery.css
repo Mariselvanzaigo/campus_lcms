@@ -1,0 +1,29 @@
+/*****************Media starts******************/
+@media only screen and (min-width: 1201px) and (max-width: 1500px) {
+.title-head h2 {
+	font-family: Inter;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 23px;
+	line-height: 50px;
+	color: #20204F;
+}
+}
+@media only screen and (min-width: 1601px) and (max-width: 1920px) {
+.content-part {
+	min-height: 815px;
+}
+.popup {
+	margin: 0px auto;
+	padding: 20px;
+	background: #fff;
+	border-radius: 5px;
+	width: 35%;
+	position: relative;
+	transition: all 5s ease-in-out;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+}

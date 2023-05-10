@@ -1,0 +1,951 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 title-head mb-3">
+      <div class="container-fluid p-0">
+        <div class="row">
+          <div class="col-md-6">
+            <div id="backbutton_to_role" class="wrapper" style="display: none;float: left;margin-right: 17px;">
+              <div class="left_icon">
+                <li style="list-style: none;">
+                  <a href="roles/roles" data-flinkto="roles">
+                    <img src="../assets/images/left_arrow.png" class="arrow_icon">
+                  </a>
+                </li>
+              </div>
+            </div>
+            <h2> Members <dfn
+                data-info="Lorem ipsum dolor sit amet, perspiciatis consectetur dolor."
+                ><i class="fas fa-info-circle"></i
+              ></dfn> </h2>
+          </div>
+          <div class="col-md-6 p-0 side-btn">
+            <ul>
+              <!--
+              <li id="member-bulk-upload"> <span class="border-btn"><a href="#addusers"><button><i class="fas fa-plus"></i> Bulk Upload</button></a></span></li>
+              -->
+              <li id="member-add"> <span class="orange-btn"><button id="trigger-member-create-form"> <i class="fas fa-plus"></i> Create Member </button></span> </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="memberListContainer">
+    <div class="container-fluid p-0">
+    <div class="row">
+      <div class="col-12">
+        <div class="white-bg title-head p-3">
+          <div class="container-fluid p-0">
+            <div class="row">
+              <div class="col-lg-4 col-md-4">
+                <div class="searchbar">
+                  <h4> List of Members <dfn data-info="Lorem ipsum dolor sit amet, perspiciatis consectetur dolor."><i class="fas fa-info-circle"></i></dfn> </h4>
+                </div>
+              </div>
+              <div class="col-lg-8 col-md-8 top-btn">
+                <div class="row">
+                  <div class="col-lg-2 col-md-2 p-0">
+                    <a class="btn btn-sm btn-danger btnReset d-none" style="position:relative;top:2px;">Reset</a>
+                  </div>
+                  <div class="col-lg-4 col-md-4">
+                    <div class="topsearch relative">
+                      <input
+                        class="form-control form-control-dark w-100"
+                        type="text"
+                        placeholder="Search Here"
+                        aria-label="Search"
+                        id="searchText"
+                      />
+                      <i class="fas fa-search btnSearch"></i> </div>
+                  </div>
+                  <div class="col-lg-3 col-md-3">
+                    <div class="dropdown-select">
+                      <select class="sort-select member-role-list" id="role_list">
+                        <option value="" selected disabled>Select Role</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-3">
+                    <div class="dropdown-select">
+                      <select class="form-control sort-select" id="status">
+                        <option value="">Status</option>
+                        <!--<option value="0">Active</option>
+                        <option value="1">InActive</option>-->
+                        <option value="1">Active</option>
+                        <option value="2">InActive</option>
+                        <option value="3">Delete</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="whitebg col-md-12">
+        <div class="container-fluid p-0">
+          <div class="white-bg p-3 mt-3">
+            <div class="p-0">
+              <div class="table-section table_member">
+                <table class="table table-bordered responsive">
+                  <thead>
+                    <tr>
+                      <!--<th> <div class="form-check">
+                          <input
+                            class="form-check-input parentcheck"
+                            name="chk"
+                            type="checkbox"
+                            value=""
+                            id="myCheck"
+                            onclick="selects()"
+                          />
+                          <label class="form-check-label" for="myCheck"> </label>
+                        </div>
+                      </th>-->
+                      <th>S.No</th>
+                      <th>NAME</th>
+                      <th>EMAIL</th>
+                      <th>PHONE NO</th>
+                      <th>ROLE</th>
+                      <th>STATUS</th>
+                      <th>ACTIONS</th>
+                    </tr>
+                  </thead>
+                  <tbody id="memberListDataContainer">
+                    <!-- HTML snippet will be dynamically appended-->
+                    <tr>
+                      <td colspan="7">
+                        <div class="alert text-center">Loading...</div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!--<div id="pagination-container"></div>-->
+
+              <div class="container-fluid pagination-cont">
+                <div id="pagination-container" class="certificate_pagination"></div>
+                <div id="pagination-container-goto" class="goto_page"><span class="goto_page_text">Go to page</span>
+                <input type="number" value="" id="go_to_page" maxlength="3" min="1">
+                <a class="goto_go" onclick="goto_pageCall('pagination-container', 'go_to_page');"><span>Go<i class="fa fa-angle-right" aria-hidden="true"></i>
+                </span></a></div>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+<!-- Member Create Form Start -->
+<div id="member-create-form-container" class="overlay">
+  <div class="popup">
+    <h4 id="member_type_name">Create Member</h4>
+    <span class="cancel-member-create-form close" href="#">&times;</span>
+    <form class="pop-form" id="member-create-form">
+      <div class="row mb-3">
+        <div class="col-md-12 search_email">
+          <div class="form-floating">
+            <label >Search by Email</label>
+          </div>
+          <div class="topsearch relative add_email_search">
+            <input
+              class="form-control form-control-dark w-100"
+              id="member-email"
+              name="email_id"
+              type="text"
+              autocomplete="off"
+              aria-label="Search"
+            />
+            <i class="fas fa-search"></i> </div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <div class="form-floating">
+            <label >First Name</label>
+          </div>
+          <div>
+            <input
+              id="member-fName"
+              name="first_name"
+              type="name"
+              class="form-control"
+              disabled
+            />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-floating">
+            <label >Last Name</label>
+          </div>
+          <div>
+            <input
+              id="member-lName"
+              name="last_name"
+              type="name"
+              class="form-control"
+              disabled
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-12">
+          <div class="form-floating">
+            <label >Phone No</label>
+          </div>
+          <div>
+            <!--<input
+              id="member-phoneNo"
+              name="phone_number"
+              type="number"
+              class="form-control"
+              min="0"
+              disabled
+            />-->
+            <input type="tel" class="form-control" name="phone_number" id="phone_number" data-fieldName="phone_number" placeholder="Mobile Number" value="" onkeypress="return /[0-9 +]/i.test(event.key);" onpaste="return /[0-9 +]/i.test(event.key);" disabled>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-12">
+          <div class="form-floating">
+            <label >Select Role</label>
+          </div>
+          <div class="dropdown-select">
+            <select
+              class="form-control sort-select"
+              id="member-role"
+              name="roles_name"
+              disabled
+            >
+              <option value="" selected disabled></option>
+              <!-- HTML snippet will be dynamically appended-->
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <input type="hidden" id="member-id_edit" value=""/>
+        <input type="hidden" id="member_status" value=""/>
+        <div class="col-12 pt-3 pb-3 wauto"> 
+          <!-- We don't need close button, because there is close icon. In All popup same Procedure followed-->
+          <!--<span class="border-btn nbtn">
+            <button class="cancel-member-create-form" type="button"> Cancel </button>
+          </span> -->
+          <span class="orange-btn nbtn">
+            <button id="save-member-create-form" type="submit">Create</button>
+          </span> 
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- Member Create Form End -->
+<!--
+<div id="addusers" class="overlay">
+  <div class="popup defaultopen">
+    <h4>Bulk Upload Members</h4>
+    <a class="close" href="#">&times;</a>
+    <div class="col-lg-12 col-md-12 mt-3 mb-3">
+      <div class="dropdown-select">
+        <select id="" class="form-control sort-select member-role-list">
+        </select>
+      </div>
+    </div>
+    <div class="col-lg-12 col-md-12 mb-3 buttonupload">
+        <div id="drop-zone" class="drop-zone">
+          <div id="clickHere"><i class="fas fa-plus"></i> Attach File 
+            <input type="file" name="file" id="file" multiple />
+          </div>          
+        </div>
+        <div id='filename'></div>
+    </div>
+    <div class="col-lg-12 col-md-12 mt-2 mb-2 text-right"> <span class="orange-btn nbtn"
+        ><a href="#">
+      <button>Save</button>
+      </a></span
+      > </div>
+  </div>
+</div>
+-->
+<div id="delete" class="overlay">
+  <div class="popup"> <a class="close" href="#">×</a>
+    <form method="get" class="pop-form">
+      <div class="row">
+        <div class="col-md-12 text-center mb-2"> <img src="../assets/images/delete.png" /> </div>
+        <div class="col-md-12 text-center mb-2">
+          <p>Are you sure you want to delete it</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 pt-3 pb-3 wauto text-center"> <span class="dborder-btn nbtn"
+            ><a href="#">
+          <button>Cancel</button>
+          </a></span
+          > <span class="danger-btn nbtn"
+            ><a href="#">
+          <button>Delete</button>
+          </a></span
+          > </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+
+let queries_param = getUrlParamquery();
+if(queries_param.target && queries_param.target != "" && queries_param.target != null){
+    $("#backbutton_to_role").attr("style", "display:block;float: left;margin-right: 17px;");
+}else{
+  $("#backbutton_to_role").attr("style", "display:none;");
+}
+$(function () {
+    var dropZoneId = "drop-zone";
+    var buttonId = "clickHere";
+    var mouseOverClass = "mouse-over";
+    var dropZone = $("#" + dropZoneId);
+    
+    if(dropZone.length > 0) {
+      var ooleft = dropZone.offset().left;
+      var ooright = dropZone.outerWidth() + ooleft;
+      var ootop = dropZone.offset().top;
+      var oobottom = dropZone.outerHeight() + ootop;
+      var inputFile = dropZone.find("input");
+      document.getElementById(dropZoneId).addEventListener("dragover", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          dropZone.addClass(mouseOverClass);
+          var x = e.pageX;
+          var y = e.pageY;
+  
+          if (!(x < ooleft || x > ooright || y < ootop || y > oobottom)) {
+              inputFile.offset({
+                  top: y - 15,
+                  left: x - 100
+              });
+          } else {
+              inputFile.offset({
+                  top: -400,
+                  left: -400
+              });
+          }
+  
+      }, true);
+      if (buttonId != "") {
+          var clickZone = $("#" + buttonId);
+  
+          var oleft = clickZone.offset().left;
+          var oright = clickZone.outerWidth() + oleft;
+          var otop = clickZone.offset().top;
+          var obottom = clickZone.outerHeight() + otop;
+  
+          $("#" + buttonId).mousemove(function (e) {
+              var x = e.pageX;
+              var y = e.pageY;
+              if (!(x < oleft || x > oright || y < otop || y > obottom)) {
+                  inputFile.offset({
+                      top: y - 15,
+                      left: x - 160
+                  });
+              } else {
+                  inputFile.offset({
+                      top: -400,
+                      left: -400
+                  });
+              }
+          });
+      }
+      document.getElementById(dropZoneId).addEventListener("drop", function (e) {
+          $("#" + dropZoneId).removeClass(mouseOverClass);
+      }, true);
+      inputFile.on('change', function (e) {
+          $('#filename').html("");
+          var fileNum = this.files.length,
+              initial = 0,
+              counter = 0;
+      var filenamenew = '';
+          for (initial; initial < fileNum; initial++) {
+              counter = counter + 1;
+        var filename = this.files[initial].name;
+        if(filename){
+          splitfilename = filename.split(".");
+          if(splitfilename[0]){
+          filenamenew = splitfilename[0].substring(0, 10);
+          filenamenew = filenamenew.replace(/[\/-]+/g, '');
+          //filenamenew.replace('-', '');
+          //filenamenew.replace('/','');
+          filenamenew = filenamenew +'.'+splitfilename[1];
+          }
+        }
+          
+        
+              $('#filename').append('<div class="fileuploads"><span class="fa-stack fa-lg"><i class="fa fa-file fa-stack-1x "></i><strong class="" style="color:#FFF; font-size:12px; margin-top:2px;">'+ counter + '</strong></span> ' + filenamenew + '&nbsp;&nbsp;<span class="fa fa-times-circle fa-lg closeBtn" title="remove"></span><br></div>');
+          }
+      });
+    }
+    //https://uatadmin.exper.com/member/?per_page=6&page=1&_=1666249748229
+    /*$.ajax({
+      url: API_BASE_URL + '/member/',
+      type: 'get',
+      dataType: 'json',
+      headers: {
+        "Authorization": "Bearer " + getUserInfo().access_token,
+        "Content-Type": "application/json"
+      },
+      success:function(response){
+        console.log(response);
+      },
+      error:function(error){
+        console.log(error);
+      }
+    });*/
+})
+$(document).on('click','.fa-lg.closeBtn',function(){
+		$(this).parent('.fileuploads').remove();	
+});
+</script> 
+
+<script type="application/javascript">
+var roleList = '';
+function doSearchMember(){
+  gridMembers("pagination-container", "memberListDataContainer");
+}
+$( document ).ready(function() {
+  //roleID
+  $.ajax({
+    url: API_BASE_URL + '/roles/',
+    type: 'get',
+    dataType: 'json',
+    headers: {"Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token},
+    success:function(response){
+      roleList = response;
+      $("#role_list").empty();
+      $("#role_list").append("<option value=''>Select Role</option>");
+      $.each( response, function( i, val ) {
+        $("#role_list").append("<option value='"+val.id+"'>"+val.name+"</option>");
+      });
+      let queries_param = getUrlParamquery();
+      if(queries_param.target && queries_param.target != "" && queries_param.target != null){
+          console.log(queries_param.target);
+          $("#role_list").val(queries_param.target).change();
+          window.selectedRoleID = null;
+      } else if(window.selectedRoleID) {
+          $("#role_list").val(window.selectedRoleID).change();
+          window.selectedRoleID = null;
+      }else {
+        doSearchMember();
+      }
+    },
+    error: function(error) {
+      if (error.status === 401) {
+        alert("Session Expired, Please login again.");
+        logoutSession();
+      }
+    }
+  });
+  
+  $(".btnReset").on("click", function(){
+    $("#status, #role_list, #searchText").val(null);
+    doSearchMember();
+    setTimeout(function() {
+      $(".btnReset").addClass("d-none");
+    }, 500);
+  });
+
+  $(".btnSearch").on("click", function(){ 
+    $(".btnReset").removeClass("d-none");
+    doSearchMember(); 
+  });
+  $("#status, #role_list").on("change", function(){ doSearchMember(); $(".btnReset").removeClass("d-none");});
+    $("#searchText").on("blur", function(){ 
+      if($(this).val().trim() != ""){
+        doSearchMember();
+        $(".btnReset").removeClass("d-none"); 
+      }else{
+        doSearchTask();
+        if($("#status").val() != "" || $("#role_list").val() != ""){
+          $(".btnReset").removeClass("d-none");
+        }
+      }
+    });
+  $('.btnRadio').click(function(){ doSearchMember(); });
+  
+  
+  $(".cancel-member-create-form").on("click", function() {
+    $("#member-create-form-container").removeClass("overlay_target");
+    doSearchMember();
+  });
+
+    var search_data_memberlist_inp = document.getElementById("searchText");
+    search_data_memberlist_inp.addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        $(".btnReset").removeClass("d-none");
+        doSearchMember();
+      }
+    });
+    var input = document.querySelector("#phone_number");
+    window.intlTelInput(input, {
+        separateDialCode: true,
+        initialCountry:"in",
+              utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/javascript.util/0.12.12/javascript.util.min.js" // just for formatting/placeholders etc
+            });
+});
+
+function gridMembers(tagID, htmlID, assignTOBY){
+  var queryPara = '';
+  //check for search field
+  if($("#searchText").val()) {
+    if(queryPara == ""){
+        queryPara += "?search=" + $("#searchText").val();
+      }else{
+        queryPara += "&search=" + $("#searchText").val();
+      }
+  }
+  //role_list
+  if($("#role_list").val()) {
+    if(queryPara == ""){
+      queryPara += "?roles_name=" + $("#role_list").val();
+    }else{
+      queryPara += "&roles_name=" + $("#role_list").val();
+    }
+  }
+  //status
+  if($("#status").val()) {
+    if(queryPara == ""){
+      queryPara += "?status=" + $("#status").val();
+    }else{
+      queryPara += "&status=" + $("#status").val();
+    }
+  }
+
+  $('#' + tagID).pagination({
+    dataSource: API_BASE_URL + '/member/' + queryPara,
+    locator: 'data',
+    totalNumberLocator: function(response) {
+      setTimeout(function() {
+        $(".paginationjs-prev").attr("data-num", "1");
+        $(".paginationjs-next").attr("data-num", response.total_pages);
+        $("#go_to_page").attr("min", 1);
+        $("#go_to_page").attr("max", response.total_pages);
+      }, 500);
+      return response.total;
+    },
+    alias: {
+      pageNumber: 'page',
+      pageSize: 'per_page'
+    },  
+    pageSize: 6,
+    ajax: {
+      beforeSend: function(request) {
+        request.setRequestHeader("Authorization", "Bearer " + getUserInfo().access_token);
+      },
+      complete: function(jqXHR, textStatus) {
+        if (jqXHR.status === 200 || jqXHR.readyState === 0 || jqXHR.status === 0) {
+          return false; // do nothing
+        } else if (jqXHR && jqXHR.status === 403) {
+          //window.location.href = window.location.href.split('/').slice(0, 3).join('/') + '/login';
+          logoutSession();
+        } else if(jqXHR && jqXHR.status === 401) {
+            alert("Session Expired, Please login again.");
+            logoutSession();
+        } else {
+          console.log('error');
+        }
+      },    
+    },
+    callback: function(data, pagination) {
+        if(pagination.totalNumber < 7){
+          $("#pagination-container").hide();
+        }else{
+          $("#pagination-container").show();
+        }
+      var html = template(data, pagination);
+      $('#' + htmlID).html(html);
+      //loadAlertModalDeleteMember();
+    }
+  });
+}
+
+function template(data, pagination) {
+  var html = '';
+  if(data.length > 0) {
+    $.each(data, function(index, item) {
+      html += '<tr>';
+      
+     /* html += `
+      <td>
+        <div class="form-check">
+          <input class="form-check-input" name="chk" type="checkbox" value="`+ item.id +`" id="chk_`+ item.id +`">
+          <label class="form-check-label" for="chk_`+ item.id +`"> </label>
+        </div>
+      </td>
+      `;*/
+      if(item.m_image != "" && item.m_image != null){
+        item.m_image = item.m_image.replace("http:", "");
+        item.m_image = item.m_image.replace("https:", "");
+      }
+      html += '<td><span class="">'+ (pagination.pageSize * (pagination.pageNumber - 1) + index + 1) +'</span></td>';
+      html += '<td class="wrap"><img src="'+item.m_image+'" />&nbsp;&nbsp;'+ item.first_name + ' ' + item.last_name +'</td>';
+      html += '<td>'+ item.email_id +'</td>';
+      html += '<td>'+ item.phone_number +'</td>';
+      html += '<td><span class="green-shade"><a href="#">'+ item.role_name +'</a></span></td>';
+      html += '<td>'+ getStatus(item.status)+'</td>';
+      html += `
+        <td class="text-center">
+        <div class="dropdown ahide">
+          <button class="btn dropdown-toggle dbtn btn-light" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-ellipsis-v"></i></button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton3">`;
+
+      if(item.status == '0' || item.status == '1' || item.status == '2' || item.status == '3'  || item.status == '4') {
+        //Add/Edit Member
+        if(processRights("Add/Edit Member") === false) {
+          html += `<li><a class="dropdown-item disabled">&nbsp;Edit</a></li>`;
+        } else {
+          //if(getUserInfo().id == item.id){
+            html += `<li><a class="dropdown-item" onClick="editMembers('${item.id}');">&nbsp;Edit</a></li>`;
+          //}else{
+            //html += `<li><a class="dropdown-item disabled">&nbsp;Edit</a></li>`;
+          //}
+        }
+      } else {
+          //if(getUserInfo().id == item.id){
+            //html += `<li><a class="dropdown-item" onClick="editMembers('${item.id}');">&nbsp;Edit</a></li>`;
+          //}else{
+            html += `<li><a class="dropdown-item" onClick="editMembers('${item.id}');">&nbsp;Edit</a></li>`;
+          //}
+      }
+      
+      if(processRights("Delete Member") === false || getUserInfo().id === item.id) {
+        html += `<li><a class="dropdown-item disabled">&nbsp;Disable<a></li>`;
+      }else {
+        if(item.status == '0' || item.status == '1') {
+          html += `<li><a id="disabled_` + item.id + `" data-name="`+item.first_name+`" data-url="`+item.id+`" class="dropdown-item mDisabledMem">&nbsp;Disable</a></li>`;
+        } else if(item.status == '2') {
+          html += `<li><a id="enabled_` + item.id + `" data-name="`+item.first_name+`" data-url="`+item.id+`" class="dropdown-item mEnambledMem">&nbsp;Enable</a></li>`;
+        } else {
+          html += `<li><a id="enabled_` + item.id + `" data-name="`+item.first_name+`" data-url="`+item.id+`" class="dropdown-item mEnambledMem">&nbsp;Enable</a></li>`;
+          html += `<li><a id="disabled_` + item.id + `" data-name="`+item.first_name+`" data-url="`+item.id+`" class="dropdown-item mDisabledMem">&nbsp;Disable</a></li>`;
+        }
+      }
+
+      html += `<li>`;
+      
+      if(item.status == '3') {
+        html += `<a class="dropdown-item disabled">&nbsp;Delete<a>`;
+      } else {
+        if(processRights("Delete Member") === false || getUserInfo().id === item.id) {
+          html += `<a class="dropdown-item disabled">&nbsp;Delete<a>`;
+        } else {
+          html += `<a href="#mAlertDeleteMember" id="delete_` + item.id + `"  data-bs-toggle="modal" data-bs-target="#mAlertDeleteMember" data-name="`+item.first_name+ ` ` +item.last_name+`" data-url="`+item.id+`" class="dropdown-item">&nbsp;Delete</a>`;
+        }
+      }
+      html += `</li>
+          </ul>
+        </div>
+        </td>
+      `;
+      html += '</tr>';
+    });
+  }else {
+      html += '<tr>';
+      html += `
+      <td>
+        <div class="form-check">
+          <input class="form-check-input" name="chk" type="checkbox" value="0" id="chk_0" disabled>
+          <label class="form-check-label" for="chk_0"> </label>
+        </div>
+      </td>
+      `;
+      html += '<td colspan="6" class="text-center">';
+      html += '<span class="text-danger">'+ window.language.no_record_found +'</span>';
+      html += '</td>';
+      html += '</tr>';
+    }
+  html += '';
+  return html;
+}
+
+function editMembers(id){
+
+  getRolesOptions("#member-role");
+  $("#member-email").val("");
+  $("#member-fName").val("");
+  $("#member-lName").val("");
+  //$("#member-phoneNo").val("");
+  $("#member_status").val("");
+  $("#member_type_name").text("Edit Member");
+  $("#member-email").prop('disabled', true);
+  $("#save-member-create-form").text("Update");
+    $.ajax({
+      url: API_BASE_URL + '/member/'+ id + '/',
+      type: 'get',
+      dataType: 'json',
+      headers: {
+        "Authorization": "Bearer " + getUserInfo().access_token,
+        "Content-Type": "application/json"
+      },
+      success:function(response){
+        $("#member-id_edit").val(id);
+        $("#member-email").val(response.email_id);
+        $("#member-fName").val(response.first_name);
+        $("#member-lName").val(response.last_name);
+        //$("#member-phoneNo").val(response.phone_number);
+        if(response.mobile_number && response.mobile_number != "" && response.mobile_number != null){
+          console.log('mobile_number');
+          var region_code = response.region_code != "" && response.region_code != null ? response.region_code+" " : '+91 ';
+          $("#phone_number").val(region_code+response.mobile_number);
+          var input = document.querySelector("#phone_number");
+          window.intlTelInput(input, {
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/javascript.util/0.12.12/javascript.util.min.js" // just for formatting/placeholders etc
+          });
+          $(".iti--allow-dropdown").addClass("iti--separate-dial-code");
+          $("#phone_number").val(response.mobile_number);
+        }else if(response.phone_number && response.phone_number != "" && response.phone_number != null){
+          console.log('phone_number');
+          if(response.phone_number.trim().substring(0, 1) == "+"){
+            console.log('phone_number +');
+            $("#phone_number").val(response.phone_number);
+            var input = document.querySelector("#phone_number");
+            window.intlTelInput(input, {
+              utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/javascript.util/0.12.12/javascript.util.min.js" // just for formatting/placeholders etc
+            });
+            $(".iti--allow-dropdown").addClass("iti--separate-dial-code");
+            $("#phone_number").val(response.phone_number.split(' ').pop().replace(/\s*/g,''));
+          }else{
+            console.log('phone_number !+');
+            var region_code = response.region_code != "" && response.region_code != null ? response.region_code+" " : '+91 ';
+            $("#phone_number").val(region_code+response.phone_number);
+            var input = document.querySelector("#phone_number");
+            window.intlTelInput(input, {
+              utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/javascript.util/0.12.12/javascript.util.min.js" // just for formatting/placeholders etc
+            });
+            $(".iti--allow-dropdown").addClass("iti--separate-dial-code");
+            $("#phone_number").val(response.phone_number);
+          }
+        }else{
+          var input = document.querySelector("#phone_number");
+          window.intlTelInput(input, {
+              separateDialCode: true,
+              initialCountry:"in",
+              utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/javascript.util/0.12.12/javascript.util.min.js" // just for formatting/placeholders etc
+            });
+        }
+        $("#member_status").val(response.status);
+        $("#member-fName").prop('disabled', false);
+        $("#member-lName").prop('disabled', false);
+        //$("#member-phoneNo").prop('disabled', false);
+        $("#phone_number").prop('disabled', false);
+        $("#member-create-form-container").addClass("overlay_target");
+        if(response.roles_name){
+            $("#member-role option[value='']").prop('selected', false);
+          setTimeout(function(){
+            $("#member-role option[value='"+response.roles_name+"']").prop('selected', true);
+            $("#member-role").prop('disabled', false);
+          }, 500);
+        }
+      },
+      error: function(error) {
+        toastr.error("Response Error: " + error.message);
+        console.log(error);
+      }
+    });
+}
+//function loadAlertModalDeleteMember(){
+  $(document).ready(function(){
+  $('#mAlertDeleteMember').on('shown.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var recipientID = button.data('url');
+    var name = button.data('name');
+    var modal = $(this);
+    modal.find('.modal-content input').val(recipientID);
+    modal.find('.modal-content #mAlertName').html("Are you sure you want to delete member '"+name+"'?");
+    $("#mAlertCancel").focus();
+    //mAlertDelete
+    //mAlertCancel
+    /*$(document).on('click', '#mAlertCancel', function() {
+      $(document).off('click', '#mAlertCancel');
+      $(document).off('click', '#mAlertDelete_mem');
+    });*/
+    
+  });
+  
+    $("#mAlertDelete_mem").click(function(e) {
+      e.preventDefault();
+      var url = $("#mAlertURL").val();
+      var me = $(this);
+      if ( me.data('requestRunning') ) {
+          return;
+      }
+      me.data('requestRunning', true);
+
+      me.data('requestRunning', true);
+      $.ajax({
+        url: API_BASE_URL + '/member/' + url+'/',
+        type: 'PATCH',
+        data: JSON.stringify({
+          "status": 3
+        }),
+        headers: {
+          "Authorization": "Bearer " + getUserInfo().access_token,
+          "Content-Type": "application/json"
+        },
+        success:function(response){
+          toastr.success("Member Deleted Successfully.");
+          $("#mAlertCancel").click();
+          doSearchMember();
+        },
+        complete: function() {
+            me.data('requestRunning', false);
+        },
+        error: function(error) {
+          toastr.error("Response Error: " + error.message);
+          console.log(error);
+        }
+      });
+    });
+  //hidden.bs.modal	
+  $('#mAlertDeleteMember').on('hidden.bs.modal', function (event) {
+    //$(document).off('click', '#mAlertCancel');
+    //$(document).off('click', '#mAlertDelete_mem');
+    var modal = $(this);
+    modal.find('.modal-content input').val(null);
+    modal.find('.modal-content #mAlertName').html("Loading...");
+  });
+  
+  $(".table_member").on("click", ".mDisabledMem", function(){
+    var url = $(this).data("url");
+    $.ajax({
+      url: API_BASE_URL + '/member/' + url + '/',
+      type: 'PATCH',
+      data: JSON.stringify({
+        "status": 2
+      }),
+      headers: {
+        "Authorization": "Bearer " + getUserInfo().access_token,
+        "Content-Type": "application/json"
+      },
+      success:function(response){
+        toastr.success("Member Disabled Successfully.");
+        doSearchMember();
+      },
+      error: function(error) {
+        toastr.error("Response Error: " + error.message);
+        console.log(error);
+      }
+    });
+  });
+  
+  //mEnambledMem
+  $(".table_member").on("click", ".mEnambledMem", function(){
+    var url = $(this).data("url");
+    $.ajax({
+      url: API_BASE_URL + '/member/' + url + '/',
+      type: 'PATCH',
+      data: JSON.stringify({
+        "status": 1
+      }),
+      headers: {
+        "Authorization": "Bearer " + getUserInfo().access_token,
+        "Content-Type": "application/json"
+      },
+      success:function(response){
+        toastr.success("Member Enabled Successfully.");
+        doSearchMember();
+      },
+      error: function(error) {
+        toastr.error("Response Error: " + error.message);
+        console.log(error);
+      }
+    });
+  });
+  
+  $("input[name='chk']").on("click", function (e) {
+    var isFalse = false;
+    $("input[name='chk']:not(.parentcheck)").each( function () {
+      if($(this).is(":checked") == true) {
+        isFalse = true;
+      }
+    });
+    if(!isFalse) {
+      //parentcheck
+      $("#myCheck").prop("checked", false);
+    }
+  });
+
+//}
+});
+function getStatus(sCode){
+  /* 0 - New, 1 - Active,  2 - Inactive, 3 - Delete, 4 - completed */
+  switch(sCode) {
+    case 0:
+      return '<span class="badge bg-info">Enabled</span>';    
+      break;
+    case 1:
+      return '<span class="badge bg-info">Enabled</span>';
+      break;
+    case 2:
+      return '<span class="badge bg-warning">Disabled</span>';    
+      break;
+    case 3:
+      return '<span class="badge bg-danger">Deleted</span>';    
+      break;
+    default:
+      return '<span class="badge bg-primary">None</span>';    
+      break;
+  }
+}
+</script>
+
+<div id="mAlertDeleteMember" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mAlertCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+
+      <a class="close" data-bs-dismiss="modal" style="text-align: right;padding-right: 10px;">×</a>
+      <div class="modal-body">
+        <form method="get" class="pop-form">
+          <div class="row">
+            <div class="col-md-12 text-center mb-2"> <img src="../assets/images/delete.png" style="width: 25%;"> </div>
+            <div class="col-md-12 text-center mb-2" id="">
+              <input type="hidden" id="mAlertURL" value="" />
+              <p id="mAlertName">Are you sure you want to delete it?</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 pt-3 pb-3 wauto text-center"> 
+            <span class="dborder-btn nbtn">
+              <button type="button" id="mAlertCancel" class="btn btn-default" data-bs-dismiss="modal">No</button>
+            </span> 
+            <span class="danger-btn nbtn">
+              <button type="button" id="mAlertDelete_mem" class="btn btn-danger">Yes, Delete</button>
+            </span>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!--<div class="modal-header">
+        <h6 class="modal-title"><span id="mAlertName"></span></h6>
+        <a class="close" data-bs-dismiss="modal">×</a>
+      </div>
+      <div class="modal-body text-center">
+        <div class="col-md-12 text-center mb-2"> <img src="../assets/images/delete.png" alt="Delete"> </div>
+        <input type="hidden" id="mAlertURL" value="" />
+        <p>Are you sure you want to delete it?</p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <span class="dborder-btn nbtn">
+          <button type="button" id="mAlertCancel" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+        </span>
+        <span class="danger-btn nbtn">
+          <button type="button" id="mAlertDelete_mem" class="btn btn-danger">Yes Delete</button>
+        </span>
+      </div>-->
+    </div>
+  </div>
+</div>

@@ -1,0 +1,336 @@
+<ul class="acnav__list wbg br-10"><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  <li class="has-children">
+    <div class="acnav__label acnav__label--level2">
+      <div class="accordionlist">
+        <div class="row">
+          <div class="col-md-12 p-3 mtag tag_cont_box">
+            <div class="tag__container">
+              <div style="width: auto;float: left;"><input type="text" class="tag__inputs tag_inputs_case" placeholder="+ Add Tag"></div>
+              <span class="orange-btn nbtn"><button onclick="addTagBtn(this)" style="margin-left:20px;"><i class="fas fa-plus"></i>Add</button>
+              </span>
+              <ul class="tag__List content" id="tag__List_append_case">
+              </ul>
+              <div class="show-more showmore">More >></div>
+              <input type="hidden" class="tag__values" id="tag__values" value=""/>
+           </div>
+          </div>                                   
+        </div>
+      </div>
+    </div>
+  </li>
+</ul>
+<input type="hidden" id="case_param" value=""/>
+<script type="text/javascript">
+  setTimeout(function(){
+   let case_id = document.getElementById("case_param").getAttribute("data-case_id");
+   let case_module_id = document.getElementById("case_param").getAttribute("data-case_module_id");
+    get_module_details(case_id, case_module_id);
+  }, 0);
+
+  function get_module_details(case_id, case_module_id){
+    $.ajax({
+      url: API_CONTENT_URL + '/case_tags/?case_id='+case_id+'&case_module_id='+case_module_id,
+      type: 'get',
+      dataType: 'json',
+      headers: { "Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token },
+      success:function(response){
+        console.log(response);
+        var case_tags = response;
+        var tag_list ="";
+        var tag_list_str = "";
+        for(var i = 0; i < case_tags.length; i++){
+          tag_list += '<li>'+case_tags[i].name+'<span class="tag__removes_case_mod" data-tag="'+case_tags[i].name+'" data-tagid="'+case_tags[i].id+'">×</span></li>';
+          tag_list_str += case_tags[i].name+",";
+        }
+        /*if(case_tags.length > 2){
+          $(".showmore").attr("style", "display:block");
+        }else{
+          if(case_tags.length === 0){
+            $(".showmore").text("No Tags Found!");
+            $(".showmore").attr("style", "width:100%;");
+          }else{
+            $(".showmore").attr("style", "display:none");
+          } 
+        }*/
+        document.getElementById("tag__List_append_case").innerHTML = tag_list;
+        document.getElementById("tag__values").value = tag_list_str;
+        var sum = 0;
+        $('#tag__List_append_case li').each(function() {
+           sum += $(this).height();
+        });
+        console.log(sum);
+        if(sum > 96){
+          $("#tag__List_append_case").addClass("hideContent");
+          $("#tag__List_append_case").attr("style", "overflow:hidden;");
+          $(".show-more").css('display','block');
+        }else{
+          $("#tag__List_append_case").removeClass("hideContent");
+          $("#tag__List_append_case").attr("style", "overflow:none;");
+          $(".show-more").css('display','none');
+        }
+      }
+    });
+}
+$(".show-more").on("click", function() {
+    var $this = $(this); 
+    var $content = $this.prev("ul.content");
+    var linkText = $this.text().toUpperCase();   
+    if(linkText === "MORE >>"){
+        linkText = "<< Less";
+        $content.switchClass("hideContent", "showContent", 400);
+        $this.switchClass("showmore", "showless", 1);
+    } else {
+        linkText = "More >>";
+        $content.switchClass("showContent", "hideContent", 400);
+        $this.switchClass("showless", "showmore", 1);
+    };
+
+    $this.text(linkText);
+});
+
+/*******************multiple tag list************************/
+
+$(".tag_inputs_case").keyup(function(e){
+    event.stopPropagation();
+    if (e.keyCode === 13 && e.target.classList.contains("tag_inputs_case")) {
+      console.log('keyup');
+    var errorMsg = "";
+    const currentTag = e.target.value;
+    if(currentTag.length > 256 || currentTag.length < 3){
+      
+      $(".tag_inputs_case").next("span").remove();
+      if(currentTag.length > 256){console.log(256);
+          errorMsg = "Maximum 256 characters allowed";
+      }else{console.log(3);
+          errorMsg = "Minimum 3 characters allowed";
+      }
+      $(".tag_inputs_case").after(`<span class='field-error'>${errorMsg}</span>`);
+      return;
+    }else{
+      if($(".tag_inputs_case").next().hasClass("field-error")){
+        $(".tag_inputs_case").next().remove();
+      }
+    }
+    if(currentTag){
+      const hiddenInput = e.target.parentElement.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling;
+      const hiddenInputOldValue = hiddenInput.value;
+      const existingTags = getExistingTagAsArray(hiddenInputOldValue);
+      const isTagExistAlready = checkIfTagExistAlready(existingTags, currentTag);
+      
+      if(isTagExistAlready){ 
+        errorMsg = "Tag Name already Exist";
+        $(".tag_inputs_case").after(`<span class='field-error'>${errorMsg}</span>`);
+        return; 
+      }else{
+        if($(".tag_inputs_case").next().hasClass("field-error")){
+          $(".tag_inputs_case").next().remove();
+        }
+      }
+      if(hiddenInputOldValue.length > 0){
+        var tag_array_name = hiddenInputOldValue.split(',');
+        console.log(tag_array_name);
+        if(tag_array_name.length > 63){ 
+          errorMsg = "Only 64 tags allowed";
+          $(".tag_inputs_case").after(`<span class='field-error'>${errorMsg}</span>`);
+          return; 
+        }else{
+          if($(".tag_inputs_case").next().hasClass("field-error")){
+            $(".tag_inputs_case").next().remove();
+          }
+        }
+      }
+      if(hiddenInputOldValue){
+        hiddenInput.value = hiddenInputOldValue + "," + currentTag;
+      }else{
+        hiddenInput.value = currentTag;       
+      }
+     let case_id = document.getElementById("case_param").getAttribute("data-case_id");
+     let case_module_id_val = document.getElementById("case_param").getAttribute("data-case_module_id");
+      var tag_data = {
+          "name": currentTag,
+          "case_module_id": case_module_id_val,
+          "case_id": case_id
+      }
+      $.ajax({
+        url: API_CONTENT_URL + '/case_tags/?case_id='+case_id+'&case_module_id='+case_module_id_val,
+        type: 'POST',
+        data: JSON.stringify(tag_data),
+        headers: { "Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token },
+        success:function(response){
+          $(".showmore").text("More >>");
+          $(".showmore").attr("style", "left:none;");
+          const newTag = ` <li>${currentTag}<span class="tag__removes_case_mod" data-tag="${currentTag}" data-tagid="${response.id}">×</span></li>`;
+          e.target.parentElement.nextElementSibling.nextElementSibling.insertAdjacentHTML("beforeend", newTag);
+          e.target.value = "";
+
+          var sum = 0;
+          $('#tag__List_append_case li').each(function() {
+             sum += $(this).height();
+          });
+          console.log(sum);
+          if(sum > 96){
+            $("#tag__List_append_case").addClass("hideContent");
+            $("#tag__List_append_case").attr("style", "overflow:hidden;");
+            $(".show-more").css('display','block');
+          }else{
+            $("#tag__List_append_case").removeClass("hideContent");
+            $("#tag__List_append_case").attr("style", "overflow:none;");
+            $(".show-more").css('display','none');
+          }
+        }
+      });
+    }
+    }
+});
+function addTagBtn(e){
+  var errorMsg = "";
+    const currentTag = e.parentElement.parentElement.children[0].children[0].value;
+    if(currentTag.length > 256 || currentTag.length < 3){
+      
+      $(".tag_inputs_case").next("span").remove();
+      if(currentTag.length > 256){console.log(256);
+          errorMsg = "Maximum 256 characters allowed";
+      }else{console.log(3);
+          errorMsg = "Minimum 3 characters allowed";
+      }
+      $(".tag_inputs_case").after(`<span class='field-error'>${errorMsg}</span>`);
+      return;
+    }else{
+      if($(".tag_inputs_case").next().hasClass("field-error")){
+        $(".tag_inputs_case").next().remove();
+      }
+    }
+    if(currentTag){
+      const hiddenInput = e.parentElement.nextElementSibling.nextElementSibling.nextElementSibling;
+      const hiddenInputOldValue = hiddenInput.value;
+      
+      const existingTags = getExistingTagAsArray(hiddenInputOldValue);
+      const isTagExistAlready = checkIfTagExistAlready(existingTags, currentTag);
+      
+      if(isTagExistAlready){ 
+        errorMsg = "Tag Name already Exist";
+        $(".tag_inputs_case").after(`<span class='field-error'>${errorMsg}</span>`);
+        return; 
+      }else{
+        if($(".tag_inputs_case").next().hasClass("field-error")){
+          $(".tag_inputs_case").next().remove();
+        }
+      }
+      if(hiddenInputOldValue.length > 0){
+        var tag_array_name = hiddenInputOldValue.split(',');
+        console.log(tag_array_name);
+        if(tag_array_name.length > 63){ 
+          errorMsg = "Only 64 tags allowed";
+          $(".tag_inputs_case").after(`<span class='field-error'>${errorMsg}</span>`);
+          return; 
+        }else{
+          if($(".tag_inputs_case").next().hasClass("field-error")){
+            $(".tag_inputs_case").next().remove();
+          }
+        }
+      }
+      if(hiddenInputOldValue){
+        hiddenInput.value = hiddenInputOldValue + "," + currentTag;
+      }else{
+        hiddenInput.value = currentTag;       
+      }
+     let case_id = document.getElementById("case_param").getAttribute("data-case_id");
+     let case_module_id_val = document.getElementById("case_param").getAttribute("data-case_module_id");
+      var tag_data = {
+          "name": currentTag,
+          "case_module_id": case_module_id_val,
+          "case_id": case_id
+      }
+      $.ajax({
+        url: API_CONTENT_URL + '/case_tags/?case_id='+case_id+'&case_module_id='+case_module_id_val,
+        type: 'POST',
+        data: JSON.stringify(tag_data),
+        headers: { "Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token },
+        success:function(response){
+          $(".showmore").text("More >>");
+          $(".showmore").attr("style", "left:none;");
+          const newTag = ` <li>${currentTag}<span class="tag__removes_case_mod" data-tag="${currentTag}" data-tagid="${response.id}">×</span></li>`;
+          e.parentElement.nextElementSibling.insertAdjacentHTML("beforeend", newTag);
+          e.parentElement.parentElement.children[0].children[0].value = "";
+          var sum = 0;
+          $('#tag__List_append_case li').each(function() {
+             sum += $(this).height();
+          });
+          console.log(sum);
+          if(sum > 96){
+            $("#tag__List_append_case").addClass("hideContent");
+            $("#tag__List_append_case").attr("style", "overflow:hidden;");
+            $(".show-more").css('display','block');
+          }else{
+            $("#tag__List_append_case").removeClass("hideContent");
+            $("#tag__List_append_case").attr("style", "overflow:none;");
+            $(".show-more").css('display','none');
+          }
+        }
+      });
+    }
+}
+document.addEventListener("click", function(e){
+    if (e.target.classList.contains("tag__removes_case_mod")) {
+    const currentTag = e.target.dataset.tag;
+    const hiddenInput = e.target.parentElement.parentElement.nextElementSibling.nextElementSibling;  
+    const hiddenInputOldValue = hiddenInput.value;
+    
+    const existingTags = getExistingTagAsArray(hiddenInputOldValue);
+    const isTagExistAlready = checkIfTagExistAlready(existingTags, currentTag);
+    
+    if(isTagExistAlready){
+      const updatedInputValueAsArray = existingTags.filter((tag) => {
+        return tag != currentTag 
+      });
+      const updatedInputValue = updatedInputValueAsArray.join(",");
+      
+      hiddenInput.value = updatedInputValue;
+    }
+      var tag_id = e.target.dataset.tagid;
+      if(tag_id !== ''){
+        $.ajax({
+          url: API_CONTENT_URL + '/case_tags/'+tag_id+'/',
+          type: 'DELETE',
+          headers: {"Authorization": "Bearer " + getUserInfo().access_token },
+          success:function(response){
+            e.target.parentElement.remove();   
+            var sum = 0;
+            $('#tag__List_append_case li').each(function() {
+               sum += $(this).height();
+            });
+            console.log(sum);
+            if(sum > 96){
+              $("#tag__List_append_case").addClass("hideContent");
+              $("#tag__List_append_case").attr("style", "overflow:hidden;");
+              $(".show-more").css('display','block');
+            }else{
+              $("#tag__List_append_case").removeClass("hideContent");
+              $("#tag__List_append_case").attr("style", "overflow:none;");
+              $(".show-more").css('display','none');
+            }
+          }
+        });
+      }
+  }
+});
+
+const getExistingTagAsArray = (allTags) => {
+  let existingTagsAsArray = [];
+  
+  if(allTags.includes(",")){
+    existingTagsAsArray = allTags.split(",");
+  }
+  
+  return existingTagsAsArray;
+}
+
+const checkIfTagExistAlready = (allTags, currentTag) => {
+  if(allTags.includes(currentTag)){ 
+    return true;
+  }else{
+    return false;
+  }
+}
+/*******************multiple tag list************************/
+</script>

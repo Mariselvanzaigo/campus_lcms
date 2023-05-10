@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title data-lang="login_title">Login</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css" rel="stylesheet" />
+<link href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet" />
+<link href="../assets/global/style.css" rel="stylesheet" />
+<link href="../assets/global/mediaquery.css" rel="stylesheet" />
+<link href="../assets/global/fileup.css" rel="stylesheet" />
+<!-- Toastr -->
+<link href="../assets/global/toastr/toastr.min.css" rel="stylesheet" />
+<!-- EOF Toastr -->
+<script src="../assets/global/language.js"></script>
+<script src="../assets/global/jwt-decode.js"></script>
+</head>
+<body>
+<div id="app-login">
+  <div class="fullheight loginbg">
+    <div class="container-fluid fullheight">
+      <div class="row fullheight">
+        <div class="col-lg-6 col-md-6 col-12 p-0 fullheight">
+          <div class="login-banner fullheight"> <img src="../assets/images/loginscreen.png" alt=""> </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12 wbg">
+          <span class="orange-btn" id="back_button_login" onclick="backtologin();" style="display:none;" role="button">
+              <img src="../assets/images/back_icon.png"><h5>Back</h5>
+          </span>
+          <div class="form-section h-100 d-flex align-items-center p-5">
+            <div>
+              <div class="login-logo mb-3"><img src="images/logo.svg" alt=""></div>
+              <h3 class="mb-4" data-lang="welcome_to">Welcome</h3>
+              <!--<h2 data-lang="exper">Exper</h2>-->
+              <h2 data-lang="campus"></h2>
+              <form>
+                <div id="areaPhone">
+                  <div class="mb-3 relative">
+                    <label for="phoneNumber" class="form-label" data-lang="lbl_emailmobile">EMail Id / Mobile Number</label>
+                    <input type="text" class="form-control user" id="phoneNumber"  data-placeholder="placeholder_emailmobile"
+                    placeholder="Enter Your EMail Id / Mobile Number Here" title="+919908XXXXXX" tabindex="1">
+                  </div>
+                  <div class="mb-3 relative">
+                    <input type="checkbox" class="form-check-input" id="remember" tabindex="3">
+                    <label for="remember" class="form-label" data-lang="lbl_rememberme">Remember Me</label>
+                  </div>
+                  <a class="login-btn" onClick="submitPhoneNumberAuth('sent')" href="#" tabindex="2" data-lang="lbl_getotp">Get OTP</a>
+                  <div class="mb-4 mt-4 relative or">
+                    <p data-lang="lbl_or">OR</p>
+                  </div>
+                  <div class="mb-3 relative">
+                    <div id="g_id_onload"
+                      data-client_id="410925001844-muc17m3pgf3amd3vqv4kggcd2v5o15dk.apps.googleusercontent.com"
+                      data-callback="postGoogleLogin">
+                    </div>
+                    <div class="g_id_signin" data-type="standard"></div>
+
+                  </div>
+                </div>
+
+                <div id="areaCode" style="display:none">
+                  <h4 class="mt-2 mb-2" data-lang="lbl_enter_one_time_password">Enter One Time Password(OTP)</h4>
+                  <div class="mb-3 relative">
+                    <label for="" class="form-label" data-lang="lbl_enter_otp">Enter OTP</label>
+                    <div class="otp" id="otpCode"> <span>
+                      <input type="text" class="form-control" maxlength="1" id="o1" onFocus="this.select();" onkeyup="clickEvent(this,'o2')" >
+                      </span> <span>
+                      <input type="text" class="form-control" maxlength="1" id="o2" onFocus="this.select();" onkeyup="clickEvent(this,'o3')" >
+                      </span> <span>
+                      <input type="text" class="form-control" maxlength="1" id="o3" onFocus="this.select();" onkeyup="clickEvent(this,'o4')" >
+                      </span> <span>
+                      <input type="text" class="form-control" maxlength="1" id="o4" onFocus="this.select();" onkeyup="clickEvent(this,'o5')" >
+                      </span> <span>
+                      <input type="text" class="form-control" maxlength="1" id="o5" onFocus="this.select();" onkeyup="clickEvent(this,'o6')" >
+                      </span> <span>
+                      <input type="text" class="form-control" maxlength="1" id="o6" onFocus="this.select();" >
+                      </span> </div>
+                  </div>
+                  <div class="mb-4 mt-4 relative code">
+                    <p><span data-lang="lbl_dont_code">Don't receive code?</span> <strong><a onclick="resendOtp()" data-lang="lbl_resend_otp">Resend OTP</a></strong></p>
+                  </div>
+                  <a class="login-btn" href="#" onClick="submitPhoneNumberAuthCode()" data-lang="lbl_login">Login</a>
+                </div>
+              </form>
+            </div>
+          <footer>
+            <section class="footer-section">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-6 powered_by">
+                    <p>Powered By <img src="../assets/images/experlogo.jpg" alt=""></p>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </footer>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="recaptcha-container"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<!--<script src="https://unpkg.com/axios/dist/axios.min.js"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.1.3/axios.min.js"></script>
+<!-- Google & Toastr -->
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+
+<!-- <script src="https://apis.google.com/js/api:client.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-auth-compat.js"></script> -->
+<script src="../assets/global/toastr/toastr.min.js"></script>
+<!-- EOF :: Google & Toastr -->
+<script src="../assets/config.js"></script>
+<script src="../assets/global/custom.js"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    console.log(localStorage.getItem("auth_data_lcms"));
+    if(localStorage.getItem("auth_data_lcms") !== null){
+      //window.location = SITE_URL_PROTOCOL+'/home?page=dashboard/dashboard';
+      window.location.href = `${SITE_URL_PROTOCOL}`;
+      /*localStorage.removeItem("auth_lcms");
+      localStorage.removeItem("auth_type_lcms");
+      localStorage.removeItem("auth_user_lcms");
+      localStorage.removeItem("auth_data_lcms");
+      localStorage.removeItem("system_rights_lcms");
+      window.location.replace(SITE_URL_PROTOCOL);*/
+    }else{
+      localStorage.removeItem("auth_lcms");
+      localStorage.removeItem("auth_token_lcms");
+      localStorage.removeItem("auth_type_lcms");
+      localStorage.removeItem("auth_user_lcms");
+      localStorage.removeItem("auth_data_lcms");
+      localStorage.removeItem("system_rights_lcms");
+      //window.location.replace(SITE_URL_PROTOCOL);
+    }
+    console.log(localStorage.getItem("auth_data_lcms"));
+    var search_data_memberlist_inp = document.getElementById("phoneNumber");
+    search_data_memberlist_inp.addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        submitPhoneNumberAuth('sent');
+      }
+    });
+
+    var search_data_memberlist_inp = document.getElementById("o6");
+    search_data_memberlist_inp.addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        submitPhoneNumberAuthCode();
+      }
+    });
+    $('html').keyup(function(e){
+      if(e.keyCode == 8){
+        //backtologin();
+        var focused = document.activeElement;
+        console.log($(focused).attr('id'));
+        if($(focused).attr('id') == "o2"){
+          clickEventBack('o1')
+        }else if($(focused).attr('id') == "o3"){
+          clickEventBack('o2')
+        }else if($(focused).attr('id') == "o4"){
+          clickEventBack('o3')
+        }else if($(focused).attr('id') == "o5"){
+          clickEventBack('o4')
+        }else if($(focused).attr('id') == "o6"){
+          clickEventBack('o5')
+        }
+      }
+    });
+  });
+  function clickEventBack(focuselement){
+    document.getElementById(focuselement).focus();
+  }
+
+
+  /* Process for OTP */
+  /*window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
+    "recaptcha-container", {
+      size: "invisible",
+      callback: function(response) {
+        // submitPhoneNumberAuth();
+      },
+      "expired-callback": function() {
+        console.log("revalid");
+      }
+    }
+  );*/
+
+  function isLetter(str) {
+    str = str.toLowerCase();
+    return str.length === 1 && str.match(/[a-z]/i);
+  }
+
+  function submitPhoneNumberAuth(sentval) {
+    let pattern = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/i;
+    var phoneNumber = document.getElementById("phoneNumber").value;
+
+    if(phoneNumber && phoneNumber.match(pattern) == null) {
+      var _regNumber = /^[0-9-+()]*$/;
+      if(_regNumber.test(phoneNumber)) {
+        console.log(SITE_URL_PROTOCOL);
+        var domain_namefull = SITE_URL_PROTOCOL.replace(/\/$/, '');
+        if(domain_namefull.indexOf("localhost") !== -1 || domain_namefull.indexOf("127.0.0")){
+          domain_namefull = "http://127.0.0.1:5500";
+        }
+        console.log(domain_namefull);
+        $.ajax({
+          url: API_BASE_URL + "otp/trigger",
+          method: "POST",
+          type: 'POST', // For jQuery < 1.9
+          cache: false,
+          contentType: "application/json",
+          processData: false,
+          data: JSON.stringify({
+            "email_id": phoneNumber,
+            "domain": DOMAIN_FULL,
+            "logo_url": SITE_URL_PROTOCOL+"/assets/images/medvarsity_logo.png"
+          }),
+          success: function(response){
+
+            var inputs = document.getElementById("otpCode").querySelectorAll('input');
+            for (const input of inputs){
+              $("#" + input.id).val("");
+            }
+            console.log(response);
+            toastr.success("OTP has been "+sentval+" successfully");
+            //toastr.info(language.lbl_enter_one_time_password);
+            localStorage.setItem("auth_type_lcms", "phone");
+            localStorage.setItem("auth_user_lcms", phoneNumber);
+            $("#areaPhone").hide();
+            $("#areaCode").show();
+            $("#back_button_login").show();
+            $("#o1").focus();
+          },
+          error: function(error) {
+            var errorJson = jQuery.parseJSON(error.responseText);
+            if(errorJson.error){
+              console.log(errorJson.error);
+              toastr.error(errorJson.error);
+            }else{
+              console.log(error);
+            }
+          }
+        });
+      } else {
+        toastr.error(language.error_invalid_number_mail);
+        document.getElementById("phoneNumber").focus();
+      }
+    } else {
+      if(phoneNumber.match(pattern) == null) {
+        if(phoneNumber.trim() == ""){
+          console.log(language.empty_mobile_or_email)
+          toastr.error(language.empty_mobile_or_email);
+        }else{
+          console.log(language.error_invalid_number)
+          toastr.error(language.error_invalid_number);
+        }
+        document.getElementById("phoneNumber").focus();
+      } else {
+        console.log(SITE_URL_PROTOCOL);
+        var domain_namefull = SITE_URL_PROTOCOL.replace(/\/$/, '');
+        if(domain_namefull.indexOf("localhost") !== -1 || domain_namefull.indexOf("127.0.0")){
+          domain_namefull = "http://127.0.0.1:5500";
+        }
+        console.log(domain_namefull);
+        $.ajax({
+          url: API_BASE_URL + "otp/trigger",
+          method: "POST",
+          type: 'POST', // For jQuery < 1.9
+          cache: false,
+          contentType: "application/json",
+          processData: false,
+          data: JSON.stringify({
+            "email_id": phoneNumber,
+            "domain": DOMAIN_FULL,
+            "logo_url": SITE_URL_PROTOCOL+"/assets/images/medvarsity_logo.png"
+          }),
+          success: function(response){
+            console.log(response);
+            toastr.success("OTP has been "+sentval+" successfully");
+            //toastr.info(language.lbl_enter_one_time_password);
+            localStorage.setItem("auth_type_lcms", "mail");
+            localStorage.setItem("auth_user_lcms", phoneNumber);
+            $("#areaPhone").hide();
+            $("#areaCode").show();
+            $("#back_button_login").show();
+            $("#o1").focus();
+          },
+          error: function(error) {
+            var errorJson = jQuery.parseJSON(error.responseText);
+            if(errorJson.error){
+              console.log(errorJson.error);
+              toastr.error(errorJson.error);
+            }else{
+              console.log(error);
+            }
+          }
+        });
+      }
+    }
+  }
+
+  function submitPhoneNumberAuthCode() {
+    var inputs = document.getElementById("otpCode").querySelectorAll('input');
+    var values = "";
+    for (const input of inputs){
+       values += input.value
+    }
+    if(values.length <= 5) {
+      toastr.error(language.error_invalid_otp);
+      return false;
+    }
+    const auth_type = localStorage.getItem("auth_type_lcms");
+    console.log(auth_type);
+    if(auth_type === 'mail' || auth_type == "phone") {
+      const auth_user = localStorage.getItem("auth_user_lcms");
+      postEmailLogin(auth_user, values);
+      return;
+    }
+    confirmationResult
+      .confirm(values)
+      .then(function(result) {
+        var user = result.user;
+        console.log(user);
+        processRememberMe();
+        toastr.success("Welcome : " + user.uid);
+        //Get the user.email from backend
+        localStorage.setItem("auth_lcms", 1);
+        localStorage.setItem("auth_type_lcms", "phone");
+        localStorage.setItem("auth_user_lcms", user.uid); //replace the uid with email address
+        setTimeout(function() {
+          window.location.href = `${SITE_URL_PROTOCOL}home/?page=dashboard/dashboard`;
+        }, 2000);
+      })
+      .catch(function(error) {
+        console.log(error);
+        toastr.error("Error: " + error.message);
+      });
+  }
+
+  function clickEvent(first,last){
+    if(first.value.length){
+      document.getElementById(last).focus();
+    }
+  }
+  function resendOtp(){
+    submitPhoneNumberAuth('resent');
+  }
+
+  function postGoogleLogin(googleUser){
+      const decoded = jwt_decode(googleUser.credential);
+      console.log("ID: " + decoded.sub);
+      console.log('Full Name: ' + decoded.name);
+      console.log('Given Name: ' + decoded.given_name);
+      console.log('Family Name: ' + decoded.family_name);
+      console.log("Image URL: " + decoded.picture);
+      console.log("Email: " + decoded.email);
+
+      var access_token = googleUser.credential;
+      var email_id = decoded.email;
+      //validated the email from backend
+      $.ajax({
+        url: API_BASE_URL + "login/",
+        method: "POST",
+        type: 'POST', // For jQuery < 1.9
+        cache: false,
+        contentType: "application/json",
+        processData: false,
+        data: JSON.stringify({
+          "email_id": email_id,
+          "google_token": access_token,
+          "domain": DOMAIN_FULL
+        }),
+        success: function(response){
+          if(typeof(response['message']) !== 'undefined') {
+            toastr.error(response.message);
+            $("#areaPhone").show();
+            $("#areaCode").hide();
+          } else {
+            localStorage.setItem("auth_lcms", 1);
+            localStorage.setItem("auth_type_lcms", "social");
+            localStorage.setItem("auth_user_lcms", email_id);
+            localStorage.setItem("auth_token_lcms", access_token);
+            localStorage.setItem("auth_data_lcms", JSON.stringify(response));
+            toastr.success("Welcome : " + email_id);
+            processRememberMe();
+            setTimeout(function() {
+              window.location.href = `${SITE_URL_PROTOCOL}home/?page=dashboard/dashboard`;
+            }, 1500);
+          }
+        },
+        error: function(error) {
+          toastr.error("Response Error: " + error.message);
+          console.log(error);
+        }
+      });
+  }
+
+  function postEmailLogin(mailID, otp){
+      //https://elearningadmin.zaigoinfotech.com/login/
+      //var access_token = "";
+      var email_id = mailID;
+      var login_otp = otp;
+      //validated the email from backend
+      $.ajax({
+        url: API_BASE_URL + "otp/verify",
+        method: "POST",
+        type: 'POST', // For jQuery < 1.9
+        cache: false,
+        contentType: "application/json",
+        processData: false,
+        data: JSON.stringify({
+          "email_id": email_id,
+          "otp": login_otp,
+          "domain": DOMAIN_FULL
+        }),
+        success: function(response){
+            localStorage.setItem("auth_lcms", 1);
+            localStorage.setItem("auth_type_lcms", "mail");
+            localStorage.setItem("auth_user_lcms", email_id);
+            localStorage.setItem("auth_token_lcms", response.access_token);
+            localStorage.setItem("auth_data_lcms", JSON.stringify(response));
+            toastr.success("Welcome : " + email_id);
+            processRememberMe();
+            setTimeout(function() {
+              window.location.href = `${SITE_URL_PROTOCOL}`;
+            }, 1500);
+        },
+        error: function(error) {
+
+            var errorJson = jQuery.parseJSON(error.responseText);
+            if(errorJson.error){
+              console.log(errorJson.error);
+              toastr.error(errorJson.error);
+              var inputs = document.getElementById("otpCode").querySelectorAll('input');
+              for (const input of inputs){
+                 $("#" + input.id).val("");
+              }
+            }else{
+              toastr.error("Response Error: " + error.message);
+              console.log(error);
+            }
+        }
+      });
+  }
+
+  function processRememberMe(){
+    if($("#remember").is(':checked')) {
+      //store to cookies
+      localStorage.setItem("elrememberMailPhone", $("#phoneNumber").val());
+    } else {
+      localStorage.removeItem("elrememberMailPhone");
+    }
+  }
+
+  $( document ).ready(function() {
+    const rememberMailPhone = localStorage.getItem("elrememberMailPhone");
+    if(rememberMailPhone) {
+      $("#phoneNumber").val(rememberMailPhone);
+      $("#remember").attr("checked", true);
+    }
+  });
+  function backtologin(){
+    console.log(backtologin);
+    $("#areaPhone").show();
+    $("#areaCode").hide();
+    $("#back_button_login").hide();
+    $("#phoneNumber").focus();
+  }
+</script>
+</body>
+</html>

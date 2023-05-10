@@ -1,0 +1,705 @@
+<div class="container-fluid">
+
+      <div class="row">
+        <div class="col-12 title-head mb-3">
+          <h2>Organization <dfn data-info="Lorem ipsum dolor sit amet, perspiciatis consectetur dolor."><i class="fas fa-info-circle"></i></dfn></h2>
+          <input type="hidden" data-flinkto="courses" id="courses_page">
+          <span class="orange-btn nbtn">
+            <button type="button" class="btn btn-primary navigate_refresh" id="add_org_button_top" data-bs-toggle="modal" data-bs-target="#exampleModalXl">
+              <i class="fas fa-plus"></i> Add Organization
+            </button>
+          </span>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+            <div class="white-bg h-100 p-3"> 
+              <div class="searchbar d-flex justify-content-between mb-3">
+                <h4>Organization List</h4>
+                <a class="gplus add-cms_org" id="add-cms_org_plusbutton" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#exampleModalXl"><i class="fas fa-plus"></i></a>
+              </div>
+              <div class="topsearch relative mb-3">
+                <input class="form-control form-control-dark w-100" type="text" placeholder="Search here" aria-label="Search" id="searchOrganization">
+                <i class="fas fa-search" id="cms-org_search"></i> 
+              </div>
+              <div class="topsearch relative mb-3" style="height: 20px;">
+                <a class="btn btn-sm btn-danger btnReset d-none" id="resetButtonOrglist" style="position:relative;color: white;float:right">Reset</a>
+              </div>
+              <div class="org-list">
+                <!-----------Platform view start---------------->
+
+                <!--------------loader start--------------->           
+                <div class="row loader disp_block" id="orglist-loader"><span>Loading Organization List</span></div> 
+                <!--------------loader end---------------> 
+
+                <ul id="cms-org_list">
+                    <!-- <li><a href="#">SRM University </a><div class="d-flex justify-content-between align-items-center side-icons"><span>04</span><span><img style="width:18px;margin-top: 0px;opacity: 0.7;" src="../assets/images/edits.png" class=""></span><span><img style="width:16px; margin:6px;" src="../assets/images/deleteicon.png" class="" title="Delete"></span></div></li> -->
+                    <!-- <li><a href="#">Vels University <span>02</span></a></li>
+                    <li><a href="#">Vit University <span>05</span></a></li>
+                    <li><a href="#">SRM University <span>04</span></a></li>
+                    <li><a href="#">Vels University <span>02</span></a></li>
+                    <li><a href="#">Vit University <span>05</span></a></li>
+                    <li><a href="#">SRM University <span>04</span></a></li> -->
+                </ul>
+
+                <!--------------pagination start--------------->         
+                <div class="container-fluid pagination-cont cs-number p-0 OrglistPagination" style="display: none;">
+                  <div id="pagination-container-to" class="orglist__pagination"></div>
+                  <div id="pagination-container-goto" class="goto_page d-none"><span class="goto_page_text">Go to page</span>
+                  <input type="number" value="" id="go_to_pageto" maxlength="3" min="1" class=" d-none">
+                  <a class="goto_go d-none" id="gotoques" onclick="goto_pageCall('pagination-container-to', 'go_to_pageto');"><span>Go<i class="fa fa-angle-right" aria-hidden="true"></i>
+                  </span></a></div>
+                </div>
+                <!--------------pagination end---------------> 
+                
+                <!--------------No records found start---------------> 
+                <div  id="nodataFound_platformlist" style="display: none;">
+                  <div class="row">
+                    <div class="col-12 title-head no-record mb-3 text-center">
+                      <p><span class="text-danger">No Records Found!</span></p>
+                    </div>
+                  </div>
+                </div>
+                <!--------------No records found end--------------->
+                
+                <!---------Platform view end-------->
+              </div>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="white-bg p-3"> 
+              <div class="searchbar d-none" id="cms_institute_module_name">
+                <h4>SRM - University</h4>
+              </div>
+
+              <div class="table-section">
+                <div class="row">
+                  <div class="col-md-12 col-lg-12" id="left_module_section">
+                    <div class="br-5">
+                      <div class="course-all d-none" id="cms_institute_modules">
+                        <div class="row">
+                          <ul class="p-0 px-3 course coursesortable ui-sortable mt-3" id="course_box">
+                            <li class="module module_1 main_mod has_child  mjs-nestedSortable-branch mjs-nestedSortable-expanded">
+                              <div id="" class="ui-sortable-handle">
+                                  <span class="course_img_icon disp_in_block flt_left" >
+                                  <img src="../assets/images/dotsicon.png" style="width: 33px;" class="course_icon"></span>
+                                  <span class="module_input disp_in_block flt_left" >
+                                    <input type="text" class="input_module_fld" id="module_inp" placeholder="Add Module Name"  style="display: none;" maxlength="256" >
+                                    <p id="module_module_1">Section one</p>
+                                </span>
+                                <span class="expand_img_icon disp_in_block flt_right title-tip">
+                                    <img src="../assets/images/arrow_down_icon.png" title="Expand/Collapse Children" class="expand_icon" onclick="toggle_collapse_expand(this);"></span>
+                                    <span class="expand_img_icon disp_in_block flt_right" data-bs-toggle="modal" data-bs-target="#deletemodal"><img style="width:16px; margin:6px;" src="../assets/images/deleteicon.png" class="expand_icon" title="Details"></span>
+                                    <span class="expand_img_icon disp_in_block flt_right delete_module_temp" style="display:inline_block;"><img style="width:18px;margin-top: 6px;opacity: 0.7;" src="../assets/images/edits.png" class="expand_icon" ></span>
+                                    
+                                    <span class="plus_img_icon disp_in_block flt_right" style="display:inline_block;"><img src="../assets/images/eyeicon.png" style="width: 25px;
+                                        margin: 7px;" title="Add Assets" class="plus_icon" ></span>
+                                </div>
+                                  
+                                  <ul class="main_module module_opacity" style="opacity:1">
+                                    <li class="module sub_module_1 sub_1 module_1 no_child sub_mods mjs-nestedSortable-branch mjs-nestedSortable-expanded disp_none" id="1" >
+                                        <div class="ui-sortable-handle">
+                                            <span class="course_img_icon disp_in_block flt_left" ><img style="width: 33px;" src="../assets/images/dotsicon.png" class="course_icon"></span>
+                                            <span class="module_input disp_in_block flt_left" ><input type="text" class="input_module_fld" id="module_inp" placeholder="Add Module Name"  style="display: none;" maxlength="256"  ><p >Content</p></span>
+                                            <span class="expand_img_icon disp_in_block flt_right"><p style="width: 20px;margin-top: 7px;"></p></span>
+                                            <span class="expand_img_icon disp_in_block flt_right" data-bs-toggle="modal" data-bs-target="#deletemodal"><img style="width:16px; margin:6px;" src="../assets/images/deleteicon.png" class="expand_icon" title="Details" ></span>
+                                            <span class="expand_img_icon disp_in_block flt_right delete_module_temp" style="display:inline_block;"><img style="width:18px;margin-top: 6px;opacity: 0.7;" src="../assets/images/edits.png" class="expand_icon" ></span>
+                                            <span class="elipsis_img_icon disp_in_block flt_right" style="display:none;"><img src="../assets/images/elipsis.png" class="elipsis_icon" ></span>
+                                            <span class="plus_img_icon disp_in_block flt_right" style="display:inline_block;"><img src="../assets/images/eyeicon.png" style="width: 25px;margin: 7px;" title="Add Assets" class="plus_icon" ></span>
+                                       </div>  
+                                    </li>
+                                    <li class="disp_none mt-4">                                        
+                                       <h6><a class="orange-text" href=""><i class="fas fa-plus"></i> Add College</a></h6>
+                                    </li>
+                                
+                                  </ul>
+                        </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+
+            </div>
+
+            <!--no record start-->
+            <div class="no-record h-100 d-flex align-items-center white-bg p-5 justify-content-center text-center">
+                <div>
+                    <img id="no_records_org_main_img" src="../assets/images/norecord.png" alt="Exper" />
+                    <p id="no_records_org_main_p" >No Records have been found. Click the button 
+                        below to create one.</p>
+                        <div class="col-12 title-head justify-content-center mb-3" id="add_org_container_main">
+                            <span class="orange-btn">
+                              <button type="button" class="btn btn-primary add-cms_org"  id="add_org_button_main" data-bs-toggle="modal" data-bs-target="#exampleModalXl">
+                                <i class="fas fa-plus"></i> Add Organization
+                              </button>
+                            </span>
+                        </div>
+                </div>
+            </div>
+             <!--no record end-->
+
+          </div>
+      </div>
+</div>
+
+
+
+<!--modal start-->
+<div class="modal fade" id="exampleModalXl" tabindex="-1" aria-labelledby="exampleModalXlLabel" style="display: none;" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title h4" id="exampleModalXlLabel">Add Organization</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close_cms-org"></button>
+        </div>
+        <div class="modal-body p-4">
+          <form method="post" id="frmNewCmsOrg" name="frmNewCmsOrg" class="pop-form">
+              <div class="mb-3">
+                <label>Enter Organization Name</label>
+                <input type="text" class="form-control" id="create_org_organization_name" name="create_org_organization_name" placeholder="Organization Name">
+              </div>
+              <div class="mb-3">
+                <label>Enter Organization Code</label>
+                <input type="text" class="form-control" id="create_org_organization_code" name="create_org_organization_code" placeholder="Organization Code">
+              </div>
+              <div class="mb-3 mt-5 d-flex justify-content-end align-items-center">
+                <div class="blue-border-btn"><button type="button" class="btn btn-primary" id="cancel_cms-org">Cancle</button></div>
+                <div class="orange-btn"><button type="submit" class="btn btn-primary ms-4" id="add_cms-org">Add</button></div>
+             </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--modal end-->
+
+  <!--delete modal start-->
+<div class="modal fade" id="deletemodal" tabindex="-1" aria-labelledby="exampleModalXlLabel" style="display: none;" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title h4" id="exampleModalXlLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-4">
+        <form method="get" class="pop-form">
+          <div class="row">
+            <input type="hidden" id="delete_org_id" value=""/>
+            <div class="col-md-12 text-center mb-2"> <img src="../assets/images/delete.png"> </div>
+            <div class="col-md-12 text-center mb-2" id="delete_module_name_msg">
+              <p>Are you sure you want to delete it </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 pt-3 pb-3 wauto text-center"> 
+              <span class="dborder-btn nbtn"><a href="javascript:void(0)" data-bs-dismiss="modal" aria-label="Close">
+                <button type="button">Cancel</button>
+                </a></span>
+                <span class="danger-btn nbtn"><a href="javascript:void(0)" >
+              <button type="button" id="delete_popup_confirm">Delete</button>
+              </a></span>                
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!--delete modal end-->
+
+
+
+<script>
+var selector = ".org-list ul li a";
+
+$(selector).on("click", function () {
+  $(selector).removeClass("active");
+  $(this).addClass("active");
+});
+$(document).ready(function(){
+  getOrglistCall("");
+  $('#searchOrganization').on('blur', function(e) {
+    e.stopImmediatePropagation();
+    searchOrgOnBlur();
+  });
+});
+
+var searchOrganization_inp = document.getElementById("searchOrganization");
+searchOrganization_inp.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    var searchVal = $("#searchOrganization").val().trim();
+    getOrglistCall(searchVal);
+  }
+});
+
+var go_to_pageto_inp = document.getElementById("go_to_pageto");
+go_to_pageto_inp.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    $("#gotoques").trigger("click");
+  }
+});
+
+$(document).on("click", "#resetButtonOrglist", function(){
+
+  $("#searchOrganization").val("");
+  //$("#search_data_sortby").val("");
+
+  localStorage.setItem("orgl_pageNum", "");
+  localStorage.setItem("orgl_search", "");
+  $("#go_to_pageto").val("");
+  getOrglistCall("");
+});
+window.onbeforeunload = function (e) {
+  window.onunload = function () {
+    emptylocalStorageOrgList();
+  }
+  return undefined;
+};
+
+function searchOrgOnBlur(){
+  var searchVal = $("#searchOrganization").val().trim();
+  getOrglistCall(searchVal);
+}
+function emptylocalStoragePlatform(){
+  localStorage.setItem("orgl_pageNum", "");
+  localStorage.setItem("orgl_search", "");
+  $("#go_to_pageto").val(""); 
+}
+function getOrglistCall(searchVal){
+
+  localStorage.setItem("orgl_pageNum", "");
+  localStorage.setItem("orgl_search", "");
+  $("#go_to_pageto").val("");
+
+  console.log(searchVal);
+  if(searchVal){
+    searchVal = "?search="+searchVal;
+    $('#resetButtonOrglist').removeClass("d-none");
+  }else{
+    $('#resetButtonOrglist').addClass("d-none");
+  }
+  getOrglist(searchVal);
+}
+
+//To Paginate platform list Data
+function getOrglist(parameter){
+  let isFirst = true;
+  var orgl_search = localStorage.getItem("orgl_search");
+  //console.log('orgl_search', orgl_search);
+  if(isFirst == true && orgl_search != ""){
+    var url = new URLSearchParams(orgl_search);
+    var search_inp = url.get("search");
+    var searchval = 0;
+    if(search_inp != "" && search_inp != null){
+      $("#searchOrganization").val(search_inp);
+      searchval++;
+    }
+    if(searchval > 0){
+      $('#resetButtonOrglist').removeClass("d-none");
+    }else{
+      $('#resetButtonOrglist').addClass("d-none");
+    }
+    parameter = orgl_search;
+  }
+  if($( "#pagination-container-to" ).length > 0) {
+    $('#pagination-container-to').pagination({
+      dataSource: API_BASE_URL + 'active_organization/list'+parameter,
+      locator: 'data',
+      totalNumberLocator: function(response) {
+        setTimeout(function() {
+        $(".paginationjs-prev").attr("data-num", "1");
+        $(".paginationjs-next").attr("data-num", response.total_pages);
+        $("#go_to_pageto").attr("min", 1);
+        $("#go_to_pageto").attr("max", response.total_pages);
+        }, 500);
+        return response.total;
+      },
+      alias: {
+        pageNumber: 'page',
+        pageSize: 'per_page',
+      },  
+      pageSize: 9,
+      ajax: {
+        beforeSend: function(request) {
+          if(getUserInfo() == null){
+            console.log(SITE_URL_PROTOCOL);
+            window.location.href = SITE_URL_PROTOCOL+"/login";
+          }
+          request.setRequestHeader("Authorization", "Bearer " + getUserInfo().access_token);
+        },
+        complete: function(jqXHR, textStatus) {
+          if (jqXHR.status === 200 || jqXHR.readyState === 0 || jqXHR.status === 0) {
+              var orgl_pageNum = localStorage.getItem("orgl_pageNum");
+             if(isFirst == true && orgl_pageNum != ""){
+               $("#go_to_pageto").val(orgl_pageNum);
+               $("#gotoques").trigger('click');
+             }
+            if(isFirst){
+              isFirst = false;
+            }
+            return false; // do nothing
+          } else if (jqXHR && (jqXHR.status === 403)) {
+            //window.location.href = SITE_URL_PROTOCOL;
+            logoutSession();
+          } else if (jqXHR.status === 401) {
+            alert("Session Expired, Please login again.");
+            //window.location.href = SITE_URL_PROTOCOL;
+            logoutSession();
+          } else {
+            if(isFirst){
+              isFirst = false;
+            }
+            alert("Session Expired, Please login again.");
+          }
+
+        },     
+      },
+      callback: function(data, pagination) {
+        ////console.log(data);
+        if(pagination.totalNumber < 10){
+          //$("#pagination-container-to").hide();
+          $(".OrglistPagination").attr("style", "display:none");
+        }else{
+          //$("#pagination-container-to").show();
+          $(".OrglistPagination").attr("style", "display:block");
+          $(".paginationjs-next").attr("title", "Last Page");
+          $(".paginationjs-prev").attr("title", "First Page");
+        }
+        //console.log(parameter);
+        if(parameter != ''){
+          localStorage.setItem("platforml_search", parameter);
+        }
+        $("#orglist-loader").removeClass("disp_block");
+        $("#orglist-loader").addClass("disp_none");
+        $("#cms-org_list").removeClass("disp_none");
+        $("#cms-org_list").addClass("disp_block");
+        $("#no_records_org_main_p").text("No Records have been found. Click the button below to create one.");
+        $("#add_org_button_main").html(`<i class="fas fa-plus"></i> Add Organization`);
+        $("#add_org_button_main").removeAttr("data-n-linkto");
+        $("#add_org_button_main").attr("data-bs-toggle", "modal");
+        $("#add_org_button_main").attr("data-bs-target", "#exampleModalXl"); 
+        $("#add_org_button_top").html(`<i class="fas fa-plus"></i> Add Organization`);
+        $("#add_org_button_top").removeAttr("data-n-linkto");
+        $("#add_org_button_top").attr("data-bs-toggle", "modal");
+        $("#add_org_button_top").attr("data-bs-target", "#exampleModalXl");
+        $("#add_org_container_main").removeClass("d-none");
+        if(data.length === 0){
+          //$(".questionPagination").attr("style", "display:none");
+          if(parameter != ""){
+            $("#nodataFound_orglist").attr("style", "display:block");
+            $("#no_records_org_main_img").addClass("d-none");
+            $("#no_records_org_main_p").addClass("d-none");
+            //$("#add_org_container_main").addClass("d-none");
+          }else{
+            $("#nodataFound_orglist").attr("style", "display:block");
+            $("#no_records_org_main_img").removeClass("d-none");
+            $("#no_records_org_main_p").removeClass("d-none");
+            //$("#add_org_container_main").removeClass("d-none"); 
+          }
+        }else{
+          $("#no_records_org_main_img").addClass("d-none");
+          $("#no_records_org_main_p").addClass("d-none");
+          //$(".questionPagination").attr("style", "display:block");
+          $("#nodataFound_orglist").attr("style", "display:none");
+        }
+
+        $("#pagination-container-to ul li").click(function(){
+          $("#go_to_pageto").val("");
+        });
+        var html = getOrglistData(data);
+        if(isFirst == false){
+          if(pagination.pageNumber){
+            localStorage.setItem("orgl_pageNum", pagination.pageNumber);
+          }
+        }
+      }
+    });
+  }
+}
+
+function getOrglistData(data){
+  $("#cms-org_list").empty();
+  if(data){
+    $.each( data, function( i, val ) {
+      var org_institute_count = val.institute_count < 10 ? "0"+val.institute_count : val.institute_count;
+      $("#cms-org_list").append(`<li data-org_id="${val.id}" data-org_institute_count="${val.institute_count}"><a href="javascript:void(0);">${val.organization_name} </a><div class="d-flex justify-content-between align-items-center side-icons"><span>${org_institute_count}</span><span class="cursor-pointer"><img style="width:18px;margin-top: 0px;opacity: 0.7;" src="../assets/images/edits.png" class="editOrganization" data-org_id="${val.id}"></span><span class="cursor-pointer"><img style="width:16px; margin:6px;" src="../assets/images/deleteicon.png" class="deleteOrganization" title="Delete" data-org_id="${val.id}" data-org_name="${val.organization_name}""></span></div></li>`);
+    });
+  }
+}
+$.urlParam = function(name, parameter){
+  var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(parameter);
+  if (results==null) {
+     return null;
+  }
+  return decodeURI(results[1]) || 0;
+}
+var frmvalidatorfrm;
+$.validator.addMethod("pattern", function (value, element, param) {
+if (this.optional(element)) { return true; }
+if (typeof param === "string") {
+  param = new RegExp("^(?:" + param + ")$");
+}
+return param.test(value);
+}, "Check your inputs");
+var frmvalidatorfrm = $("#frmNewCmsOrg").validate({
+ignore:'',
+rules: {
+  create_org_organization_name: { required: true, minlength: 1, maxlength: 256 },
+  create_org_organization_code: { required: true, minlength: 1, maxlength: 256 },
+},
+messages: {
+  create_org_organization_name: {
+    required: "Please enter Organization Name",
+    minlength: "Your Organization Name must consist of at least 1 characters",
+    maxlength: "Your Organization Name must consist of max of 256 characters",
+  },
+  create_org_organization_code: {
+    required: "Please enter Organization Code",
+    minlength: "Organization Code must consist of at least 1 characters",
+    maxlength: "Organization Code must consist of max of 256 characters",
+  },
+},
+errorElement: "em",
+errorPlacement: function (error, element) {
+  error.addClass("help-block");
+  if (element.prop("type") === "checkbox") {
+    error.insertAfter(element.parent("label"));
+  } else {
+    error.insertAfter(element);
+  }
+  if (element.attr("type") == "radio") {
+      error.insertAfter(element.parent().parent());
+  } else {
+      error.insertAfter(element);
+  }
+  if (element.attr("name") == "master_course_selected") {
+      error.insertAfter($("#search_course_data"));
+  }
+},
+highlight: function (element, errorClass, validClass) {
+  if (element.getAttribute("name") == "master_course_selected") {
+    $("#search_course_data").addClass("is-invalid");
+  }else{
+    $(element).addClass("is-invalid");
+  }
+},
+unhighlight: function (element, errorClass, validClass) {
+  if (element.getAttribute("name") == "master_course_selected") {
+    $("#search_course_data").removeClass("is-invalid");
+  }else{
+    $(element).removeClass("is-invalid");
+  }
+}
+});
+$("#cancel_cms-org").click(function(){
+  $("#close_cms-org").trigger("click");
+});
+$("#close_cms-org").click(function(){
+  //$('#add-cms_org').prop('disabled', false);
+  $( '#frmNewCmsOrg' ).each(function(){
+      this.reset();
+      frmvalidatorfrm.resetForm();
+      $('#frmNewCmsOrg .form-control').removeClass('is-invalid');
+      $('#create_org_organization_name').val('');
+      $('#create_org_organization_code').val('');
+  });
+
+  $("#add_cms-org").text("Add");
+  $("#add_cms-org").attr("data-org_id", "");
+  $("#exampleModalXlLabel").text("Add Organization");
+  $('#exampleModalXl').modal('hide');
+});
+
+$("#add_cms-org").on("click", function () {
+  var current_element = $(this);
+  var data_organization_id = current_element.attr("data-org_id");
+  current_element.prop('disabled', true);
+  var isValidForm = frmvalidatorfrm.form();
+  if (isValidForm) {
+
+    var group_name = $("#create_org_group_name").val();
+    var group_data = [];
+    group_data.push({"name": group_name, "level": 1});
+
+    var formData = new FormData();
+    formData.append("name", $("#create_org_organization_name").val());
+    formData.append("code", $("#create_org_organization_code").val());
+    var URL = API_BASE_URL + "create_organization/";
+    var method = "POST";
+    var type = "POST";
+    if(data_organization_id != "" && data_organization_id != null && data_organization_id != undefined){
+      method = "PUT";
+      type = "PUT";
+      URL = API_BASE_URL + "update_organization/"+data_organization_id+"/";
+    }
+    $.ajax({
+      url: URL,
+      method: method,
+      type: type, // For jQuery < 1.9
+      cache: false,
+      contentType: false,
+      processData: false,
+      data: formData,
+      headers: {
+        "Authorization": "Bearer " + getUserInfo().access_token
+      },
+      success: function (response) {
+        current_element.removeAttr("disabled");
+        if(method == "POST"){
+          toastr.success("Organization created successfully.");
+        }else{
+          toastr.success("Organization updated successfully.");
+        }
+        $("#close_cms-org").trigger("click");
+         getOrglistCall("");
+        //window.sharedEditCourseId = "";
+      },
+      error: function (error) {
+
+        var errorJson = jQuery.parseJSON(error.responseText);
+        console.log(errorJson);
+        if(errorJson){
+          toastr.error(errorJson);
+        }
+        current_element.removeAttr("disabled");
+      } 
+    });
+  }else{
+    current_element.removeAttr("disabled");
+  }
+});
+
+$(document).on("blur", "#create_org_organization_name", function () {
+  var str = $(this).val().trim();
+  if(str){
+    var acpref = str.substring(0, 4);
+    $("#create_org_organization_code").val(acpref.str_replace(' ', '-').toUpperCase());
+  }
+});
+$(document).on("click", ".editOrganization", function(e){
+  e.stopImmediatePropagation();
+  var org_id = $(this).attr("data-org_id");
+  console.log(org_id);
+  if(org_id != "" && org_id != null && org_id != undefined){
+    $("#cms-org_list li").removeClass("active_org");
+    $(this).closest("li").addClass("active_org");
+    $.ajax({
+      url: API_BASE_URL + 'single_organization_details/'+org_id,
+      type: "GET",
+      headers: {
+        "Authorization": "Bearer " + getUserInfo().access_token,
+        "Content-Type": "application/json"
+      },
+      success:function(response){
+        var resp = response?.data;
+        if(resp){
+            $("#create_org_organization_name").val(resp[0].organization_name ? resp[0].organization_name : "");
+            $("#create_org_organization_code").val(resp[0].organization_code ? resp[0].organization_code : "");
+            $("#add_cms-org").text("Update");
+            $("#add_cms-org").attr("data-org_id", org_id);
+            $("#exampleModalXlLabel").text("Edit Organization");
+            //$('#add-cms_org_plusbutton').trigger("click");
+            $('#exampleModalXl').modal('toggle');
+        }
+      },
+      error: function(error) {
+        if (error.status === 401) {
+          alert("Session Expired, Please login again.");
+          logoutSession();
+        }
+        //toastr.error("Response Error: " + error.message);
+        console.log(error);
+      }
+    });
+  }
+});
+
+$(document).on("click", ".deleteOrganization", function(e){
+  e.stopImmediatePropagation();
+  var org_id = $(this).attr("data-org_id");
+  var org_name = $(this).attr("data-org_name");
+  console.log(org_id);
+  if(org_id != "" && org_id != null && org_id != undefined){
+    $("#delete_module_name_msg").html(`<p> Are you sure you want to delete the Organization: ${org_name} ? </p>`);
+    $("#delete_org_id").val(org_id);
+    $("#deletemodal").modal('toggle');
+  }
+});
+$(document).on("click", "#delete_popup_confirm", function(e){
+    var org_id = $("#delete_org_id").val();
+    if(org_id != "" && org_id != null && org_id != undefined){
+      var formData = new FormData();
+      formData.append("status", 2);
+      $.ajax({
+        url: API_BASE_URL + "delete_organization/"+org_id+"/",
+        type: 'DELETE',
+        data: JSON.stringify({
+          "status": 2
+        }),
+        headers: {
+            "Authorization" : "Bearer " + getUserInfo().access_token,
+            "Content-Type": "application/json"
+        },
+        success: function(response){
+         $("#deletemodal").modal('toggle');
+          toastr.success("Organization Deleted Successfully.");
+          var searchVal = $("#searchOrganization").val().trim();
+          getOrglistCall(searchVal);
+        },
+        error: function(error) {
+              if (error.status === 401) {
+                alert("Session Expired, Please login again.");
+                logoutSession();
+              }
+              if (error.msg){
+                toastr.error(error.msg);
+              }else{
+                toastr.error("Response Error: " + error.message);
+              }
+            console.log(error);
+        }
+    });
+  }
+});
+$(document).on("click", "#cms-org_list li", function(){
+  $("#cms-org_list li").removeClass("active_org");
+  $(this).addClass("active_org");
+  var org_id = $(this).attr("data-org_id");
+  var org_institute_count = $(this).attr("data-org_institute_count");
+  
+  if(org_id != "" && org_id != null && org_id != undefined && org_institute_count != 0){
+    orgtoInstitute();
+  }else{
+    orgtoNoInstitute(org_id);
+  }
+});
+function orgtoInstitute(){
+  $("#cms_institute_modules").removeClass("d-none");
+  $("#cms_institute_module_name").removeClass("d-none");
+}
+function orgtoNoInstitute(org_id){
+  $("#no_records_org_main_img").removeClass("d-none");
+  $("#no_records_org_main_p").removeClass("d-none");
+  $("#add_org_container_main").removeClass("d-none");
+  $("#no_records_org_main_p").text("No Records have been found. Click the button below to create one.");
+  $("#add_org_button_main").html(`<i class="fas fa-plus"></i> Add Institute`);
+  $("#add_org_button_main").attr("data-n-linkto", "addinstitute");
+  $("#add_org_button_main").attr("data-n-url-org_id", org_id);
+  $("#add_org_button_main").removeAttr("data-bs-toggle");
+  $("#add_org_button_main").removeAttr("data-bs-target"); 
+  $("#add_org_button_top").html(`<i class="fas fa-plus"></i> Add Institute`);
+  $("#add_org_button_top").attr("data-n-linkto", "addinstitute");
+  $("#add_org_button_top").attr("data-n-url-org_id", org_id);
+  $("#add_org_button_top").removeAttr("data-bs-toggle");
+  $("#add_org_button_top").removeAttr("data-bs-target");
+  $("#cms_institute_modules").addClass("d-none");
+  $("#cms_institute_module_name").addClass("d-none");
+}
+</script>

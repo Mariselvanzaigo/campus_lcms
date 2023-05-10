@@ -1,0 +1,90 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+    />
+    <meta
+      name="google-signin-client_id"
+      content="591014728640-ffhuj822gr8k2f92mpk3l8eg4rbhialf.apps.googleusercontent.com"
+    />
+    <title>NanoJS</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link href="../assets/global/adminGlobal.css" rel="stylesheet" />
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+  </head>
+  <body>
+    <div data-n-dynamic-element="login">
+      <div class="container-fluid login-page">
+        <div class="row min-vh-100">
+          <div
+            class="col-md-6 d-flex justify-content-center align-items-center login-page-left"
+          >
+            <img src="../assets/images/login.svg" />
+          </div>
+          <div
+            class="col-md-6 d-flex justify-content-center align-items-center login-page-right"
+          >
+            <div class="login-container p-5">
+              <p class="login-page-title mb-4">Welcome Back</p>
+              <form autocomplete="off">
+                <div class="floating-label mb-4">
+                  <input
+                    class="floating-input form-control"
+                    type="text"
+                    placeholder=" "
+                    name=""
+                    autocomplete="off"
+                  />
+                  <span class="highlight"></span>
+                  <label>Email</label>
+                </div>
+                <div class="floating-label mb-4">
+                  <input
+                    class="floating-input form-control"
+                    type="password"
+                    placeholder=" "
+                    name=""
+                    autocomplete="off"
+                  />
+                  <span class="highlight"></span>
+                  <label>Password</label>
+                </div>
+                <button
+                  class="btn btn-primary rounded-pill w-100"
+                  type="submit"
+                >
+                  Login
+                </button>
+              </form>
+              <div class="mb-4 mt-4 relative or">
+                <p>OR</p>
+              </div>
+              <div class="g-signin2" data-onsuccess="onSignIn"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        console.log("ID: " + profile.getId()); // Do not send to your backend! Use an ID token instead.
+        console.log("Name: " + profile.getName());
+        console.log("Image URL: " + profile.getImageUrl());
+        console.log("Email: " + profile.getEmail()); // This is null if the 'email' scope is not present.
+      }
+    </script>
+  </body>
+</html>

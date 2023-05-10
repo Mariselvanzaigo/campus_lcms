@@ -1,0 +1,164 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-12 title-head mb-3">
+        <h2>Courses <dfn data-info="Lorem ipsum dolor sit amet, perspiciatis consectetur dolor."><i class="fas fa-info-circle"></i></dfn></h2>
+        <input type="hidden" data-flinkto="courses" id="courses_page">
+        <span class="orange-btn nbtn">
+          <button type="button" class="btn btn-primary" id="btnAddCourses" data-course_id="">
+            <i class="fas fa-plus"></i> Create Course
+          </button>
+        </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="white-bg title-head br-5 p-3">
+          <div class="container-fluid p-0">
+          <div class="row">
+            <div class="col-lg-3 col-md-3">
+              <div class="searchbar">
+                <h4><span id="courseTitle">All Courses</span> <a class="btn btn-sm btn-danger btnReset d-none" style="position:relative;top:2px;float:right">Reset</a><dfn data-info="Lorem ipsum dolor sit amet, perspiciatis consectetur dolor."><i class="fas fa-info-circle"></i></dfn></h4>
+              </div>
+            </div>
+            <div class="col-lg-9 col-md-9 top-btn">
+              <div class="row">
+                <div class="col-lg-5 col-md-5">
+                  <div class="topsearch relative">
+                    <input class="form-control form-control-dark w-100" type="text" placeholder="Search here" aria-label="Search"id="search_data" onblur="searchCourseBlur()">
+                    <i class="fas fa-search"></i> </div>
+                </div>
+                <div class="col-lg-3 col-md-3">
+                  <div class="dropdown-select">
+                    <select class="sort-select" id="courses_list" name="courses_list" onchange="searchCourseBlur()">
+                      <option value="">Select Course</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-2 col-md-2">
+                  <div class="dropdown-select">
+                    <select class="sort-select" id="sort_recent" onchange="searchCourseBlur()">
+                      <option value="">Sort By</option>
+                      <option value="0">Recent</option>
+                      <option value="4">Completed</option>
+                      <option value="2">Onhold</option>
+                      <option value="1">To do</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-2 col-md-2 cc-right pl-0">
+                  <div class="grid-list-view">
+                    <span><a id="grid" class="active"><i class="fas fa-th-large"></i></a></span>
+                    <span><a id="list"><i class="fas fa-th-list"></i></a></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+      <div class="whitebg col-md-12 mt-3">
+        <div class="row" id="course-box">
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="container-fluid pagination-cont">
+  <div id="pagination-container-to" class="certificate_pagination"></div>
+  <div id="pagination-container-goto" class="goto_page"><span class="goto_page_text">Go to page</span>
+  <input type="number" value="" id="go_to_page" maxlength="3" min="1">
+  <a class="goto_go" onclick="goto_pageCall('pagination-container-to', 'go_to_page');"><span>Go<i class="fa fa-angle-right" aria-hidden="true"></i>
+  </span></a></div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-12 title-head mb-3">
+        <div class="clearfix">
+          <div class="course_pagination">
+            <div class="box pagination"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div  id="nodataFound_course" style="display: none;">
+    <div class="row">
+      <div class="col-12 title-head mb-3">
+        <p><span class="text-danger">No Records Found!</span></p>
+      </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addCourses" data-bs-backdrop="static">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $("<link/>", {
+     rel: "stylesheet",
+     type: "text/css",
+     href: "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
+  }).appendTo("head");
+  $.getScript('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js');
+  $.getScript('https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js');
+  
+  $( document ).ready(function() {
+    if(processRights("Add Course") === false) {
+      $("#btnAddCourses").attr("style", "display:none;");
+    }
+    const container = document.getElementById("addCourses");
+    const modal = new bootstrap.Modal(container);
+    var url = `${SITE_URL_PROTOCOL}/assets/pages/courses/new_courses.html?t=` + Math.floor(Date.now() / 1000);
+    document.getElementById("btnAddCourses").addEventListener("click", function () {
+      if(processRights("Add Course") === false) {
+        toastr.error(window.language.error_no_access);
+        return false;
+      } else {
+        window.sharedEditCourseId = "";
+        $('.modal-content').load(url,function(result){
+          modal.show();
+        });
+      }
+    });
+  });
+  function editCourse(e){
+    const container = document.getElementById("addCourses");
+    const modal = new bootstrap.Modal(container);
+    var url = `${SITE_URL_PROTOCOL}/assets/pages/courses/new_courses.html?t=` + Math.floor(Date.now() / 1000);
+    if(processRights("Add Course") === false || processRights("Define Course") === false) {
+      toastr.error(window.language.error_no_access);
+      return false;
+    } else {
+      window.sharedEditCourseId = e.dataset.course_id;
+      $('.modal-content').load(url,function(result){
+        $("#addCourses").attr("style", "top: 0px;");
+        modal.show();
+      });
+    }
+  }
+  function assignCourse(e){
+    const container = document.getElementById("addCourses");
+    const modal = new bootstrap.Modal(container);
+    var url = `${SITE_URL_PROTOCOL}/assets/pages/courses/assignee_popup.html?t=` + Math.floor(Date.now() / 1000);
+    if(processRights("Add/Edit Member") === false || processRights("View Member") === false || processRights("Add Course") === false) {
+      toastr.error(window.language.error_no_access);
+      return false;
+    } else {
+      window.sharedAssignCourseId = e.dataset.course_id;
+      $('.modal-content').load(url,function(result){
+        $("#addCourses").attr("style", "top: 120px;");
+      document.getElementById("course_param").setAttribute("data-cid", e.dataset.course_id);
+      document.getElementById("course_param").setAttribute("data-show_input", "true");
+      document.getElementById("course_param").setAttribute("data-course_assignee", "true");
+        modal.show();
+      });
+    }
+  }
+</script>

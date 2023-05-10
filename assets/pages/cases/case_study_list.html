@@ -1,0 +1,947 @@
+<div class="modal-header">
+    <div class="row" style='width: 100%;'>
+      <div class="col-3">
+        <h5 class="modal-title p-3">List Of Cases</h5>
+      </div>
+      <div class="col-9">
+        <div class="white-bg title-head br-5 p-3">
+          <div class="row w-100">
+            <div class="col-lg-11 col-md-11 top-btn">
+              <div class="row">
+                <div class="col-lg-6 col-md-6">
+                  <div class="topsearch relative">
+                    <input class="form-control form-control-dark w-100" type="text" placeholder="Search here" aria-label="Search"  id="search_data" onblur="searchParam()">
+                    <i class="fas fa-search"></i> </div>
+                </div>
+                <div class="col-lg-3 col-md-3">
+                <div class="dropdown-select">
+                    <select class="sort-select form-control" id="case_list2" name="case_list2" onchange="searchParam()">
+                      <option value="">All Case study</option>
+                    </select>
+                  </div>                    
+                </div>
+                <div class="col-lg-3 col-md-3">
+                  <div class="dropdown-select">
+                    <select class="sort-select form-control" id="sort_recent" onchange="searchParam()">
+                      <option value="">Search By</option>
+                      <option value="0">Recent</option>
+                      <option value="4">Completed</option>
+                      <option value="2">Onhold</option>
+                      <option value="1">To do</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="margin-top: -60px;"></button>
+</div>
+<div class="modal-body">
+
+<div class="row loader disp_block" id="role-loader"><span>Loading Cases</span></div>
+<div class="container-fluid disp_none" id="add_case_container">
+    <div class="row">
+      <div class="col-12">
+        <div class="c-align d-flex align-center justify-cotent-center">
+          <div>
+            <div class="round"><img src="../assets/images/course-1.svg" /></div>
+            <h4>Create your first Case</h4>
+            
+            <span class="orange-btn nbtn">
+            <button class="add-case"><i class="fas fa-plus"></i> Add Case</button>
+            </span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--popup start-->
+  <div id="createcases_2" class="overlay" style="display:none;">
+    <div class="popup pt-3">
+      <h4 class="mb-3" id="create_case_text">Create Case</h4>
+      <span class="close">×</span>
+      <form method="post" id="frmNewCase2" name="frmNewCase2" enctype="multipart/form-data">
+        <input type="hidden" name="case_id" id="case_id" value="">
+        <div class="row">
+          <div class="col-md-12 mb-3">
+              <div class="form-floating">
+                <input type="text" id="case_name" name="case_name" class="form-control cm-capitalize" placeholder=" " onchange="onchange_caseName(this);">
+                <label for="case_name">Name of the Case</label>
+              </div>
+          </div>
+
+          <!--<div class="col-md-12 mb-3">
+              <div class="form-floating">
+                <input type="text" id="case_short_code" name="case_short_code" class="form-control cm-replaceSpace" placeholder=" ">
+                <label for="case_short_code">Case ID</label>
+              </div>
+          </div>-->
+          <div class="col-md-12 mb-3">
+            <div class="form-floating">
+              <select class="sort-select form-control" id="case_type" name="case_type">
+                <option value="">Select type of case</option>
+                <option value="0">Simple</option>
+                <option value="1">Moderate</option>
+                <option value="2">Complex</option>
+              </select>
+              <label for="case_type" data-title="Select type of case" data-caption="Select">Type of Case</label>
+            </div>
+          </div>
+          <div class="col-md-12 mb-3">
+            <div class="form-floating">
+              <select class="sort-select form-control" id="case_assign_to" name="assign_to">
+                <option value="">Select Assign To</option>
+              </select>
+              <label for="assign_to" data-title="Select Assignto" data-caption="Select">Assign To</label>
+            </div>
+          </div>
+          <div class="col-md-12 mb-3">
+            <div class="form-floating">
+              <input type="text" id="case_description" name="description" class="form-control counter"
+                placeholder=" " maxlength="256" minlength="4"/>
+              <span class="charcounter">256 Char(s)</span>
+              <label for="description">One line description</label>
+            </div>
+          </div>
+          <div class="col-md-12 mb-3">
+            <label for="tags3" class="tags3-label d-none">Add a tag</label>
+            <select class="form-control tags3" id="tags3" name="tags[]" multiple="multiple" style="width:100%"></select>
+          </div>
+        </div>
+      </form>
+
+        <div class="row">
+          <div class="col-12 pt-3 pb-3 wauto">   <span class="orange-btn nbtn">
+            <button class="add-case_save" id="create_case_save_text">Create</button>
+            </span> </div>
+        </div>
+    </div>
+  </div>
+  <!--popup end-->
+
+
+  <!--Cases card start-->
+  <div class="container-fluid disp_none" id="list_case_container">
+    <div class="row">
+      <!--<div class="col-12">
+        <div class="white-bg title-head br-5 p-3">
+          <div class="row w-100">
+            <div class="col-lg-4 col-md-4">
+              <div class="searchbar">
+                <h4>All Case Studies <dfn data-info="Lorem ipsum dolor sit amet, perspiciatis consectetur dolor."><i class="fas fa-info-circle"></i></dfn></h4>
+              </div>
+            </div>
+            <div class="col-lg-8 col-md-8 top-btn">
+              <div class="row">
+                <div class="col-lg-6 col-md-6">
+                  <div class="topsearch relative">
+                    <input class="form-control form-control-dark w-100" type="text" placeholder="Search here" aria-label="Search"  id="search_data" onblur="searchParam()">
+                    <i class="fas fa-search"></i> </div>
+                </div>
+                <div class="col-lg-3 col-md-3">
+                <div class="dropdown-select">
+                    <select class="sort-select form-control" id="case_list2" name="case_list2" onchange="searchParam()">
+                      <option value="">All Case study</option>
+                    </select>
+                  </div>                    
+                </div>
+                <div class="col-lg-3 col-md-3">
+                  <div class="dropdown-select">
+                    <select class="sort-select form-control" id="sort_recent" onchange="searchParam()">
+                      <option value="0">Recent</option>
+                      <option value="4">Completed</option>
+                      <option value="2">Onhold</option>
+                      <option value="1">To do</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>-->
+      <div class="whitebg col-md-12 mt-3">
+        <div class="row" id="case-box2">
+         <!-- <div class="col-md-4">
+            <div class="role-content cases-card mb-4">
+              <div class="row">
+                <div class="col-6 cleft new-btn" data-flinkto="caseslist">  <a href="#" data-flinkto="caseslist">New</a>  </div>
+                <div class="col-6 cright">
+                  <div class="dropdown ahide" data-flinkto="caseslist">
+                    <button class="btn dropdown-toggle dbtn" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
+                      <li><a class="dropdown-item" href="#">Edit</a></li>
+                      <li><a class="dropdown-item" href="#">Disable</a></li>
+                      <li><a class="dropdown-item" href="#">Delete</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="row" data-flinkto="caseslist">
+                <div class="col-12" data-flinkto="caseslist">
+                    <h4 data-flinkto="caseslist">Producer</h4>
+                    <p data-flinkto="caseslist">Lorem ipsum dolor sit amet, consectetur adip ipsum dolor sit amet, consectetur adip...</p>
+                </div>
+              </div> 
+            </div>
+          </div>-->
+          
+        </div>
+        
+        <div  id="nodataFound_course" style="display: none;">
+            <div class="row">
+              <div class="col-12 title-head mb-3">
+                <p><span class="text-danger">No Records Found!</span></p>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div id="mAlert" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mAlertCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+      <!--<div class="modal-header">
+        <h6 class="modal-title"><span id="mAlertName"></span></h6>
+        <a class="close" data-bs-dismiss="modal">×</a>
+      </div>-->
+      <div class="modal-body text-center">
+        <div class="col-md-12 text-center mb-2"> <img src="../assets/images/delete.png" alt="Delete"> </div>
+        <input type="hidden" id="mAlertURL" value="" />
+        <p>Are you sure you want to delete it?</p>
+      </div>
+      <div class="modal-footer justify-content-center border_none">
+        <span class="dborder-btn nbtn">
+          <button type="button" id="mAlertCancel" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+        </span>
+        <span class="danger-btn nbtn">
+          <button type="button" id="mAlertDelete" class="btn btn-danger">Yes</button>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div class="modal-footer" style="justify-content:none;display: block;">
+  
+<div class="container-fluid pagination-cont">
+  <div id="pagination-container-by" class="certificate_pagination"></div>
+  <div id="pagination-container-goto" class="goto_page"><span class="goto_page_text">Go to page</span>
+  <input type="number" value="" id="go_to_page2" maxlength="3" min="1">
+  <a class="goto_go" onclick="goto_pageCall('pagination-container-by', 'go_to_page2');"><span>Go<i class="fa fa-angle-right" aria-hidden="true"></i>
+  </span></a></div>
+</div>
+  <span class="orange-btn nbtn" style="float: right;">
+    <button type="button" class="btn btn-success" id="selectCase">Select Case</button>
+  </span>
+  <span class="orange-btn nbtn" style="float: right;">
+    <button class="add-case_save add-case_2" id="add_case">Create Case</button>
+  </span>
+</div>
+
+<script type="text/javascript">
+  /*********Case List section Starts***********************/
+if(processRights("Add Course") === false || processRights("Define Course") === false){
+  $("#add_case").hide();
+}
+  var frmvalidatorfrm2;
+    $.validator.addMethod("pattern", function (value, element, param) {
+      if (this.optional(element)) { return true; }
+      if (typeof param === "string") {
+        param = new RegExp("^(?:" + param + ")$");
+      }
+      return param.test(value);
+    }, "Check your inputs");
+    var frmvalidatorfrm2 = $("#frmNewCase2").validate({
+      rules: {
+        case_name: { required: true, minlength: 1, maxlength: 256 },
+        description: { required: true, minlength: 1, maxlength: 256 },
+        case_type: { required: true },
+        assign_to: { required: true },
+      },
+      messages: {
+        case_name: {
+          required: "Please enter a Case Name",
+          minlength: "Your case name must consist of at least 1 characters",
+          maxlength: "Your case name must consist of max of 256 characters",
+        },
+        description: {
+          required: "Please enter a description",
+          minlength: "Description must consist of at least 1 characters",
+          maxlength: "Description must consist of max of 256 characters",
+        },
+        case_type: { required: "Please select the Case type" },
+        assign_to: { required: "Please select Assign To" },
+      },
+      errorElement: "em",
+      errorPlacement: function (error, element) {
+        error.addClass("help-block");
+        if (element.prop("type") === "checkbox") {
+          error.insertAfter(element.parent("label"));
+        } else {
+          error.insertAfter(element);
+        }
+      },
+      highlight: function (element, errorClass, validClass) {
+        $(element).addClass("is-invalid");
+      },
+      unhighlight: function (element, errorClass, validClass) {
+        $(element).removeClass("is-invalid");
+      }
+    });
+    $(document).ready(function(){
+      member_id = "";
+    getAssignMember(member_id);
+    //TO Get Cases list for search case dropdown
+      var url_api = API_CONTENT_URL + '/cases_list/';
+      var method = "GET";
+      $.ajax({
+        url: url_api,
+        type: method,
+        headers: {
+          "Authorization": "Bearer " + getUserInfo().access_token,
+          "Content-Type": "application/json"
+        },
+        success:function(response){
+          var chapters_list_template = "";
+          if(response.length > 0){
+            $("#case_list2").empty();
+            $("#case_list2").append("<option value=''>All Case study</option>");
+            $.each(response, function( i, val ) {
+              $("#case_list2").append("<option value='"+val.id+"'>"+val.name+"</option>");
+            });
+          }else{
+            $("#case_list2").empty();
+          }
+        },
+        error: function(error){
+          //toastr.error("Response Error: " + error.message);
+          console.log(error);
+        }
+      });
+      
+    });
+  $(".add-case_2").click(function(){
+    window.sharedEditCaseId = "";
+    $( '#frmNewCase2' ).each(function(){
+        this.reset();
+        frmvalidatorfrm2.resetForm();
+        $('#frmNewCase2 .form-control').removeClass('is-invalid');
+    });
+    var tags_empty = [];
+    $("#tags3").html("");
+    $("#tags3").val(tags_empty).change();
+    $("#createcases_2").addClass("overlay_target");
+    $("#createcases_2").attr("style","display:block");
+    $("#create_case_text").text("Create Case");
+    $("#create_case_save_text").text("Create");
+  });
+  $(".close").click(function(){
+    $("#createcases_2").removeClass("overlay_target");
+    $("#createcases_2").attr("style","display:none");
+  });
+  function searchParam(){
+    $("#role-loader").removeClass("disp_none");
+    $("#role-loader").addClass("disp_block");
+
+    $("#add_case_container").removeClass("disp_block");
+    $("#add_case_container").addClass("disp_none");
+
+    $("#list_case_container").removeClass("disp_block");
+    $("#list_case_container").addClass("disp_none");
+    var search_param = "";
+    var search_inp_val = document.getElementById("search_data").value;
+    if(search_inp_val !== ''){
+        search_param += "?search="+search_inp_val;
+    }
+    var case_list2_val = document.getElementById("case_list2").value;
+    if(case_list2_val !== ""){
+        if(search_param == ""){
+            search_param += "?id="+case_list2_val;
+        }else{
+            search_param += "&id="+case_list2_val;
+        }
+    }
+    var sort_recent_val = document.getElementById("sort_recent").value;
+    if(sort_recent_val !== ""){
+        if(search_param == ""){
+            search_param += "?status="+sort_recent_val;
+        }else{
+            search_param += "&status="+sort_recent_val;
+        }
+    }
+    get_pagination(search_param);
+}
+
+function get_pagination(parameter){
+  document.getElementById("selectCase").setAttribute("data-selected_case_id", "");
+  $(".cases-card").attr("style", "");
+  if($( "#pagination-container-by" ).length > 0) {
+    $('#pagination-container-by').pagination({
+      dataSource: API_CONTENT_URL + '/cases'+parameter,
+      locator: 'data',
+      totalNumberLocator: function(response) {
+        console.log(response);
+        console.log(response.total_pages);
+        setTimeout(function() {
+          $(".paginationjs-prev").attr("data-num", "1");
+          $(".paginationjs-next").attr("data-num", response.total_pages);
+          $("#go_to_page2").attr("min", 1);
+          $("#go_to_page2").attr("max", response.total_pages);
+        }, 500);
+        return response.total;
+      },
+      alias: {
+        pageNumber: 'page',
+        pageSize: 'per_page',
+      },  
+      pageSize: 6,
+      ajax: {
+        beforeSend: function(request) {
+          document.getElementById("selectCase").setAttribute("data-selected_case_id", "");
+          request.setRequestHeader("Authorization", "Bearer " + getUserInfo().access_token);
+        },
+        complete: function(jqXHR, textStatus) {
+          if (jqXHR.status === 200 || jqXHR.readyState === 0 || jqXHR.status === 0) {
+            return false; // do nothing
+          } else if (jqXHR && jqXHR.status === 403) {
+            window.location.href = window.location.href.split('/').slice(0, 3).join('/') + '/login';
+          }else if(jqXHR && jqXHR.status === 401) {
+            alert("Session Expired, Please login again.");
+            logoutSession();
+          } else {
+            alert('error');
+          }
+        },    
+      },
+      callback: function(data, pagination) {
+        if(pagination.totalNumber < 7){
+          $("#pagination-container-by").hide();
+        }else{
+          $("#pagination-container-by").show();
+        }
+
+        $("#role-loader").removeClass("disp_block");
+        $("#role-loader").addClass("disp_none");
+        console.log(parameter);
+        if(data.length === 0){
+          if(parameter != ""){
+            $("#nodataFound_course").attr("style", "display:block");
+            $("#list_case_container").addClass("disp_block");
+            $("#list_case_container").removeClass("disp_none");
+
+            $("#add_case_container").removeClass("disp_block");
+            $("#add_case_container").addClass("disp_none");
+          }else{
+            $("#add_case_container").addClass("disp_block");
+            $("#add_case_container").removeClass("disp_none");
+
+            $("#list_case_container").removeClass("disp_block");
+            $("#list_case_container").addClass("disp_none");
+          }
+        }else{
+          $("#nodataFound_course").attr("style", "display:none");
+          $("#list_case_container").addClass("disp_block");
+          $("#list_case_container").removeClass("disp_none");
+
+          $("#add_case_container").removeClass("disp_block");
+          $("#add_case_container").addClass("disp_none");
+        }
+        var html = template(data);
+        loadAlertModal();
+      }
+    });
+  }
+}
+
+  function loadAlertModal(){
+    $('#mAlert').on('shown.bs.modal', function (event) {
+      var button = $(event.relatedTarget);
+      var recipientID = button.data('url');
+      var name = button.data('name');
+      var modal = $(this);
+      modal.find('.modal-content input').val(recipientID);
+      modal.find('.modal-content #mAlertName').html(name);
+      $("#mAlertCancel").focus();
+      //mAlertDelete
+
+      //mAlertCancel
+      $(document).on('click', '#mAlertCancel', function() {
+        $(document).off('click', '#mAlertCancel');
+        $(document).off('click', '#mAlertDelete');
+      });
+      
+    });
+    //hidden.bs.modal 
+    $('#mAlert').on('hidden.bs.modal', function (event) {
+      $(document).off('click', '#mAlertCancel');
+      $(document).off('click', '#mAlertDelete');
+      var modal = $(this);
+      modal.find('.modal-content input').val(null);
+      modal.find('.modal-content #mAlertName').html("Loading...");
+    });
+    
+    $(".mDisabled").on("click", function(){
+      var url = $(this).data("url");
+      $.ajax({
+        url: API_CONTENT_URL + '/task/' + url + '/',
+        type: 'PATCH',
+        data: JSON.stringify({
+          "status": 2
+        }),
+        headers: {
+          "Authorization": "Bearer " + getUserInfo().access_token,
+          "Content-Type": "application/json"
+        },
+        success:function(response){
+          doSearch();
+        },
+        error: function(error) {
+          toastr.error("Response Error: " + error.message);
+          console.log(error);
+        }
+      });
+    });
+    
+  $("<link/>", {
+     rel: "stylesheet",
+     type: "text/css",
+     href: "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
+  }).appendTo("head");  
+  $.getScript('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js');
+  var URL = API_CONTENT_URL + "/tags/";
+    var $tagsControl = $('#tags3').select2({
+      dropdownParent: $('#createcases_2'),
+      placeholder: "Add a tag",
+      dropdownCssClass: "select2Font",
+      tokenSeparators: [','],
+      tags: true,
+      multiple: true,
+      allowClear: true,
+      ajax: {
+        url: URL,
+        dataType: 'json',
+        type: "GET",
+        headers: { "Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token },
+        quietMillis: 50,
+        data: function (params) {
+          return {
+            term: $.trim(params.term)
+          };
+        },
+        processResults: function (data) {
+          return {
+            results: $.map(data, function (item) {
+              return {
+                text: item,
+                id: item
+              }
+            })
+          };
+        },
+        cache: true,
+      },
+      createTag: function (params) {
+        var term = $.trim(params.term);
+        if (term === '') {
+          return null;
+        }
+        return {
+          id: term,
+          text: term,
+          newTag: true
+        };
+      },
+      maximumSelectionLength: 64,
+      minimumInputLength: 3,
+      formatSelectionTooBig: function (limit) {
+        return "Too many selected items, Only 64 tags allowed."
+      },
+      formatNoMatches: "add new tag and hit ENTER-KEY",
+      escapeMarkup: function (markup) {
+        return markup;
+      }
+    });
+    //mEnabled
+    /*$(".mEnabled").on("click", function(){
+      var url = $(this).data("url");
+      $.ajax({
+        url: API_CONTENT_URL + '/task/' + url + '/',
+        type: 'PATCH',
+        data: JSON.stringify({
+          "status": 1
+        }),
+        headers: {
+          "Authorization": "Bearer " + getUserInfo().access_token,
+          "Content-Type": "application/json"
+        },
+        success:function(response){
+          doSearch();
+        },
+        error: function(error) {
+          toastr.error("Response Error: " + error.message);
+          console.log(error);
+        }
+      });
+    });*/
+  
+  }
+function template(data){
+    $('#case-box2').empty();
+    //console.log(data);
+    data.forEach(function (element, index) {
+        if (Object.keys(element).length > 0) {
+            var status_class = "";
+            var status_text = "";
+            if(element.type == 0){
+              status_class = "status_new";
+              status_text = "Simple";
+            }else if(element.type == 1){
+              status_class = "status_inprogress";
+              status_text = "Moderate";
+            }else if(element.type == 2){
+              status_class = "status_onhold";
+              status_text = "Complex";
+            }
+          var dots = "";
+          if(element.description.length > 75){
+            dots = "...";
+          }
+          var td = `<div class="col-md-4">
+            <div class="role-content cases-card mb-4" onClick="call_card(this);"  data-case_id="${element.id}" data-case_name="${element.name}">
+              <div class="row">
+                <div class="col-6 cleft new-btn" data-case_id="${element.id}" data-case_name="${element.name}">  <a href="#"  data-case_id="${element.id}" data-case_name="${element.name}" class="${status_class}">${status_text}</a>  </div>`;
+                //td += `<div class="col-6 cright"><div class="dropdown ahide" data-flinkto="caseslist" data-case_id="${element.id}" data-case_name="${element.name}"><button class="btn dropdown-toggle dbtn" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button><ul class="dropdown-menu" aria-labelledby="dropdownMenuButton3"><li><a class="dropdown-item" href="#" data-case_id='${element.id}' data-case_name='${element.name}' onClick='editCase(this);'>Edit</a></li><li><a class="dropdown-item" href="#mAlert" id="delete_${element.id}"  data-bs-toggle="modal" data-bs-target="#mAlert" data-name="${element.name}" data-url="${element.id}">Delete</a></li></ul></div></div>`;
+                td += `</div>
+              <div class="row" data-case_id="${element.id}" data-case_name="${element.name}">
+                <div class="col-12"  data-case_id="${element.id}" data-case_name="${element.name}">
+                    <h4 data-case_id="${element.id}" data-case_name="${element.name}">${element.name}</h4>
+                    <p  data-case_id="${element.id}" data-case_name="${element.name}">${element.description.substring(0, 75)+dots}</p>
+                </div>
+              </div> 
+            </div>
+          </div>`;
+
+          $('#case-box2').append(td);
+        }
+    });
+}   
+/*********Case List section Ends***********************/
+/****** Create Case View section Starts *************/
+
+  function getAssignMember(member_id){
+      $.ajax({
+        url: API_BASE_URL + '/mem_category_list/' + encodeURI("Define Course"),
+        type: 'get',
+        dataType: 'json',
+        headers: { "Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token },
+        success: function (response) {
+          console.log("response:", response);
+          $("#case_assign_to").empty();
+          $("#case_assign_to").append("<option value=''>Select Assign To</option>");
+          $.each(response.data, function (i, val) {
+            $("#case_assign_to").append("<option value='" + val.id + "'>" + val.first_name + " " + val.last_name + "</option>");
+          });
+          if(member_id){
+              $("#case_assign_to option[value='"+member_id+"']").prop('selected', true);
+          }
+        }
+      });
+  }
+
+  /*$("#mAlertDelete").click(function(){
+    console.log("test");
+    var url = $("#mAlertURL").val();
+    $.ajax({
+      url: API_CONTENT_URL + '/cases/' + url,
+      type: 'DELETE',
+      headers: {
+        "Authorization": "Bearer " + getUserInfo().access_token
+      },
+      success:function(response){
+        $("#role-loader").addClass("disp_block");
+        $("#role-loader").removeClass("disp_none");
+        $("#add_case_container").addClass("disp_none");
+        $("#list_case_container").addClass("disp_none");
+        $("#mAlertCancel").click();
+
+        toastr.success("Case Deleted successfully.");
+        var search_param = "";
+        get_pagination(search_param);
+      },
+      error: function(error) {
+        toastr.error("Response Error: " + error.message);
+        console.log(error);
+      }
+    });
+  });*/
+  $(document).ready(function(){
+
+    //To Display character length in add Case description
+    $('.counter').keyup(function () {
+      var cuChar = Number(256) - $(this).val().length;
+      $(this).next("span.charcounter").html(cuChar + " Char");
+    });
+
+    $("#case_name").on("blur", function () {
+      var str = $(this).val();
+      //var acpref = str.substring(0, 4);
+      //$("#case_short_code").val(acpref.str_replace(' ', '-').toUpperCase());
+      getTagSuggest(str);
+    });
+    var search_param = "";
+    var member_id = "";
+    get_pagination(search_param);
+  /****** Create Case View section Ends *************/
+
+  /****** Create Case Save section Starts *************/
+    $('.cm-capitalize').each(function () { $(this).capitalize(); });
+    $('.cm-uppercase').each(function () { $(this).upperCase(); });
+    $('.cm-replaceSpace').each(function () { $(this).replaceSpace(); });
+    $(".form-select").each(function (index, element) {
+      const $this = $(this);
+      $this.on("change", (event) => {
+        const $this = $(event.currentTarget);
+        if ($this.val()) {
+          $this.next("label").html($this.next("label").data("title"));
+        } else {
+          $this.next("label").html($this.next("label").data("caption"));
+        }
+      });
+    });
+    $("#create_case_save_text").on("click", function () {
+
+      var isValidForm = frmvalidatorfrm2.form();
+      if (isValidForm) {
+        var case_id = window.sharedEditCaseId;
+        if($("#case_name").val() != ''){
+          var url_api = API_CONTENT_URL + '/cases_list/';
+          var method = "GET";
+          $.ajax({
+            url: url_api,
+            type: method,
+            headers: {
+              "Authorization": "Bearer " + getUserInfo().access_token,
+              "Content-Type": "application/json"
+            },
+            success:function(response){
+
+              var case_name_exist = false;
+              $.each(response, function( i, val ) {
+                  if(case_id != ""){
+                    if($("#case_name").val() == val.name && case_id != val.id){
+                      case_name_exist = true;
+                    }
+                  }else{
+                    if($("#case_name").val() == val.name){
+                      case_name_exist = true;
+                    }
+                  }
+              });
+              if(case_name_exist){
+                $("#case_name").val("");
+                $("#case_name").focus();
+                var tags_empty = [];
+                $("#tags3").html("");
+                $("#tags3").val(tags_empty).change();
+                toastr.error("Case Name already Exists!");
+              }else{
+                var tags = "";
+                if($("#tags3").val()){
+                  if($("#tags3").val().length === 0) {
+                    alert("Tags field cannot empty please choice atleast one tag!");
+                    return false;
+                  }else{
+
+                    tags = $("#tags3").val().join(",");
+                  }
+                }
+                var formData = new FormData();
+
+                formData.append("name", $("#case_name").val());
+                //formData.append("short_code", $("#case_short_code").val());
+                formData.append("type", $("#case_type").find("option:selected").val());
+                formData.append("member_id", $("#case_assign_to").find("option:selected").val());
+                formData.append("description", $("#case_description").val());
+                formData.append("tags", tags);
+                var URL = API_CONTENT_URL + "/cases/";
+                var method = "POST";
+                var type = "POST";
+                if(case_id != ""){
+                  var URL = API_CONTENT_URL + "/cases/"+case_id+"/";
+                  var method = "PUT";
+                  var type = "PUT";
+                }
+
+                $.ajax({
+                  url: URL,
+                  method: method,
+                  type: type, // For jQuery < 1.9
+                  cache: false,
+                  contentType: false,
+                  processData: false,
+                  data: formData,
+                  headers: {
+                    "Authorization": "Bearer " + getUserInfo().access_token
+                  },
+                  success: function (response) {
+                    console.log(response)
+                    toastr.success("New Case was successfully saved.");
+                    $(".close").trigger("click");
+                    $("#createcases_2").attr("style","display:none");
+
+                    $("#createcases_2").removeClass("overlay_target");
+                    var parameter = "";
+                    get_pagination(parameter);
+                    window.sharedEditCaseId = "";
+                  },
+                  error: function (error) {
+                    toastr.error("Response Error: " + error.message);
+                    console.log(error);
+                  }
+                });
+              }
+            },
+            error: function(error){
+              //toastr.error("Response Error: " + error.message);
+              console.log(error);
+            }
+          });
+        }
+      }
+    });
+
+  /****** Create Case Save section Ends *************/
+  });
+
+  function getTagSuggest(qString) {
+    $.ajax({
+      url: encodeURI(API_CONTENT_URL + '/suggest/tags/?term=' + qString),
+      type: 'get',
+      dataType: 'json',
+      headers: { "Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token },
+      success: function (response) {
+        var tags = response.tags;
+        var tags_empty = [];
+        if (tags) {
+          $("#tags3").html("");
+          $("#tags3").val(tags_empty).change();
+          $.each(tags, function (i, val) {
+            $("#tags3").append("<option value='" + val + "'>" + val + "</option>");
+          });
+          $("#tags3").val(tags).change();
+        }
+      }
+    });
+  }
+
+function onchange_caseName(e) {
+  if(e.value != ''){
+
+    var url_api = API_CONTENT_URL + '/cases_list/';
+    var method = "GET";
+    $.ajax({
+      url: url_api,
+      type: method,
+      headers: {
+        "Authorization": "Bearer " + getUserInfo().access_token,
+        "Content-Type": "application/json"
+      },
+      success:function(response){
+        var case_name_exist = false;
+          $.each(response, function( i, val ) {
+            if(e.value == val.name){
+              case_name_exist = true;
+            }
+          });
+          if(case_name_exist){
+            $("#case_name").val("");
+            $("#case_name").focus();
+            var tags_empty = [];
+            $("#tags3").html("");
+            $("#tags3").val(tags_empty).change();
+            toastr.error("Case Name already Exists!");
+          }
+      },
+      error: function(error){
+        //toastr.error("Response Error: " + error.message);
+        console.log(error);
+      }
+    });
+  }
+}
+function call_card(e){
+console.log("asdasd",e);
+$(".cases-card").attr("style", "");
+console.log(e.getAttribute("data-case_id"));
+document.getElementById("selectCase").setAttribute("data-selected_case_id", e.getAttribute("data-case_id"));
+e.setAttribute("style", "border: 3px solid orange !important;");
+//document.getElementById("selectCase").setAttribute("data-bs-dismiss", "modal");
+}
+
+$("#selectCase").click(function(){
+  var selected_case_id = document.getElementById("selectCase").getAttribute("data-selected_case_id");
+  if(selected_case_id){
+  var clicked_elem_id = document.getElementById("clicked_event").getAttribute("data-click_id");
+  var clicked_elem_level = document.getElementById("clicked_event").getAttribute("data-click_level");
+  //$(".btn-close").trigger("click");
+  var element = document.querySelector('[data-unique_id="'+clicked_elem_id+'"]');
+  //if(clicked_elem_level == "sub"){
+    add_sub_case_study(element, selected_case_id, clicked_elem_level);
+  }else{
+    toastr.error("Please Select Case.");
+    return false;
+  }
+
+});
+function add_sub_case_study(e, selected_case_id, clicked_elem_level){
+
+  var classList = e.className.split(/\s+/);
+  var index = classList[1].lastIndexOf("_");
+  var result = "";
+  if(clicked_elem_level == "sub_sub"){
+    if(classList[1].indexOf('.') !== -1){
+        result = (classList[1].split("_module")[1]).split(".")[classList[1].split(".").length-1];
+    }else{
+        result = Number(classList[2].split('_')[1]);
+    }
+  }else{
+    result = Number(classList[1].substr(index+1));
+  }
+  var result = e.children[1].children.length+1;
+  var url = API_CONTENT_URL + '/course_module/';
+  var method = "POST";
+
+  var parent_id = e.getAttribute("data-module_id");
+  var get_submodule_level_values = {
+    module_name: String("Case Study"),
+    level: parseInt(result), 
+    course_id:String(document.getElementById("course_id").value),
+    parent_id:parent_id,
+    case_id: selected_case_id
+  };
+  console.log(get_submodule_level_values);
+  fetch(url, {
+    method: method,
+    body: JSON.stringify(get_submodule_level_values),
+    headers: {"Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token},
+  })
+  .then((response) => response.json())
+  .then((json) => {
+    $(".btn-close").trigger("click");
+    $('#course_id').trigger('click');
+    location.reload();
+  })
+  .catch(function (error) {
+    console.log("Requestfailed", error);
+  });
+
+
+}
+</script>

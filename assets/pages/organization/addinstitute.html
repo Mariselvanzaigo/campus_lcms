@@ -1,0 +1,406 @@
+<div class="container-fluid">
+
+    <div class="row">
+      <div class="col-12 title-head mb-3">
+        <h2>Organization / Add Institute <dfn data-info="Lorem ipsum dolor sit amet, perspiciatis consectetur dolor."><i class="fas fa-info-circle"></i></dfn></h2>                
+        <span class="orange-btn nbtn">
+            <button type="button" class="btn btn-primary" data-flinkto="addinstitue" data-bs-toggle="modal" data-bs-target="#previewmodal">
+              <i class="fas fa-plus"></i> Preview
+            </button>
+          </span>
+    </div>      
+    </div>
+
+    <div class="row">
+      
+        <div class="col-md-12">
+          <div class="white-bg p-3 relative"> 
+            <div class="searchbar mt-3">
+              <h4>Create Institution</h4>
+              <h4 class="disp_none">Create Admin</h4>
+              <h4 class="disp_none">Manage Academics</h4>
+            </div>
+            <div class="s-stepper">
+                <div data-target="#stage1" id="stage-1-step" class="s-step active">
+                    <span class="s-step-counter"></span>
+                    <small>Create institution</small>
+                    <span><i class="fas fa-angle-double-right"></i></span>
+                </div>
+                <div data-target="#stage2" id="stage-2-step" class="s-step">
+                    <span class="s-step-counter"></span>
+                    <small>Create Admin</small>
+                    <span><i class="fas fa-angle-double-right"></i></span>
+                </div>
+                <div data-target="#stage3" id="stage-3-step" class="s-step">
+                    <span class="s-step-counter"></span>
+                    <small>Manage Academics</small>
+                </div>
+            </div>
+            <div class="s-stepper-content mt-5 p-3">
+                <!--stage one start-->
+                <div id="stage1" class="s-stepper-stage active">
+                    <div class="steper-details">
+                           <div class="row">
+                            <div class="col-md-4">
+                                Drag & Drop
+                            </div>
+                            <div class="col-md-8">
+                                Drag & Drop
+                            </div>
+                           </div>
+                           <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label>Institution name</label>
+                                        <input type="text" class="form-control" id="" placeholder="Enter your text here">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label>Website</label>
+                                        <input type="text" class="form-control" id="" placeholder="Enter your text here">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                    <label>Phone Number</label>
+                                    <input type="text" class="form-control" id="" placeholder="Enter your Phone Number">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                    <label>Email</label>
+                                    <input type="text" class="form-control" id="" placeholder="Enter your Email">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                    <label>Address Line 1</label>
+                                    <input type="text" class="form-control" id="" placeholder="Enter your Address">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                    <label>Address Line 2</label>
+                                    <input type="text" class="form-control" id="" placeholder="Enter your Address">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                    <label>Country</label>
+                                    <input type="text" class="form-control" id="" placeholder="Enter your text here">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                    <label>State</label>
+                                    <input type="text" class="form-control" id="" placeholder="Enter your text here">
+                                    </div>
+                                </div>
+                           </div>  
+                         
+                          
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mt-3">
+                        <div>
+                            <span class="blue-border-btn">
+                                <button type="button" class="btn btn-primary">
+                                  Cancel
+                                </button>
+                            </span>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <span class="orange-btn me-3">
+                                <button>Save <i class="fa fa-right"></i></button>
+                            </span>
+                            <span class="orange-btn">
+                            <button onclick="hideStage(1);showStage(2)">Next <i class="fa fa-right"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <!--stage one end-->
+
+                <!--stage two start-->
+                <div id="stage2" class="s-stepper-stage">
+                    <div class="steper-details">
+                        <div class="row">
+                         <div class="col-md-4">
+                             Drag & Drop
+                         </div>
+                        </div>
+                        <div class="row">                            
+                             <div class="col-md-6">
+                                 <div class="mb-3">
+                                 <label>First name (principal)</label>
+                                 <input type="text" class="form-control" id="" placeholder="Enter your text here">
+                                 </div>
+                             </div>
+                             <div class="col-md-6">
+                                <div class="mb-3">
+                                <label>Last Name</label>
+                                <input type="text" class="form-control" id="" placeholder="Enter your text here">
+                                </div>
+                             </div>
+                             <div class="col-md-6">
+                                <div class="mb-3">
+                                <label>Phone Number</label>
+                                <input type="text" class="form-control" id="" placeholder="Enter your Phone Number">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                <label>Email</label>
+                                <input type="text" class="form-control" id="" placeholder="Enter your Email">
+                                </div>
+                            </div>
+                             <div class="col-md-12">
+                                 <div class="mb-3">
+                                 <label>Qualifications</label>
+                                 <input type="text" class="form-control" id="" placeholder="Enter your text here">
+                                 </div>
+                             </div>
+                             <div class="col-md-12">
+                                 <div class="mb-3">
+                                 <label>Description</label>
+                                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                 </div>
+                             </div>                             
+                        </div>  
+                      
+                       
+                 </div>
+                   <div class="d-flex justify-content-between mt-3">
+                    <div>
+                        <span class="blue-border-btn">
+                            <button type="button" class="btn btn-primary">
+                              Cancel
+                            </button>
+                        </span>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <span class="blue-border-btn me-3">
+                            <button onclick="hideStage(2);showStage(1)" style=""><i class="fa fa-left"></i> Previous</button>
+                        </span>
+                        <span class="orange-btn">
+                            <button onclick="hideStage(2);showStage(3)" style="">Next <i class="fa fa-right"></i></button>
+                        </span>
+                    </div>
+                    </div>
+                </div>
+                <!--stage two end-->
+
+                <!--stage three start-->
+                <div id="stage3" class="s-stepper-stage">
+                    <div class="row">
+                        <div class="col-md-6">
+                           <div class="step-checkbox">
+                            <div class="searchbar mb-3">
+                                <h4>Select Stream</h4>
+                              </div>
+                              <div class="d-flex justify-content-start align-items-center step-search relative mb-3">
+                                <i class="fas fa-search"></i> 
+                                <input class="form-control form-control-dark w-100" type="text" placeholder="Enter Stream Name" aria-label="Search" id="">                                
+                                <span style="white-space: nowrap;"><a class="orange-text" href="#"><i class="fas fa-plus"></i> Add</a></span>
+                            </div>
+                              <form>
+                                  <div class="mb-3 relative">
+                                    <input type="checkbox" class="form-check-input" id="one" tabindex="3">
+                                    <label for="one" class="form-label">Medical</label>
+                                  </div>
+                                  <div class="mb-3 relative">
+                                    <input type="checkbox" class="form-check-input" id="two" tabindex="3">
+                                    <label for="two" class="form-label">Pharmacology</label>
+                                  </div>
+                                  <div class="mb-3 relative">
+                                    <input type="checkbox" class="form-check-input" id="three" tabindex="3">
+                                    <label for="three" class="form-label">Nursing</label>
+                                  </div>
+                                  <div class="mb-3 relative">
+                                    <input type="checkbox" class="form-check-input" id="one1" tabindex="3">
+                                    <label for="one1" class="form-label">Medical</label>
+                                  </div>
+                                  <div class="mb-3 relative">
+                                    <input type="checkbox" class="form-check-input" id="two2" tabindex="3">
+                                    <label for="two2" class="form-label">Pharmacology</label>
+                                  </div>
+                                  <div class="mb-3 relative">
+                                    <input type="checkbox" class="form-check-input" id="three3" tabindex="3">
+                                    <label for="three3" class="form-label">Nursing</label>
+                                  </div>
+                              </form>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="step-checkbox">
+                             <div class="searchbar mb-3">
+                                 <h4>Select Course</h4>
+                               </div>
+                               <div class="d-flex justify-content-start align-items-center step-search relative mb-3">
+                                 <i class="fas fa-search"></i> 
+                                 <input class="form-control form-control-dark w-100" type="text" placeholder="Enter Course Name" aria-label="Search" id="">
+                             </div>
+                               <form>
+                                   <div class="mb-3 relative">
+                                     <input type="checkbox" class="form-check-input" id="one" tabindex="3">
+                                     <label for="one" class="form-label">Medical</label>
+                                   </div>
+                                   <div class="mb-3 relative">
+                                     <input type="checkbox" class="form-check-input" id="two" tabindex="3">
+                                     <label for="two" class="form-label">Pharmacology</label>
+                                   </div>
+                                   <div class="mb-3 relative">
+                                     <input type="checkbox" class="form-check-input" id="three" tabindex="3">
+                                     <label for="three" class="form-label">Nursing</label>
+                                   </div>
+                                   <div class="mb-3 relative">
+                                     <input type="checkbox" class="form-check-input" id="one1" tabindex="3">
+                                     <label for="one1" class="form-label">Medical</label>
+                                   </div>
+                                   <div class="mb-3 relative">
+                                     <input type="checkbox" class="form-check-input" id="two2" tabindex="3">
+                                     <label for="two2" class="form-label">Pharmacology</label>
+                                   </div>
+                                   <div class="mb-3 relative">
+                                     <input type="checkbox" class="form-check-input" id="three3" tabindex="3">
+                                     <label for="three3" class="form-label">Nursing</label>
+                                   </div>
+                               </form>
+                            </div>
+                         </div>
+                    </div>
+                    <div class="d-flex justify-content-between mt-3">
+                        <div>
+                            <span class="blue-border-btn">
+                                <button type="button" class="btn btn-primary">
+                                  Cancel
+                                </button>
+                            </span>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <span class="orange-btn">
+                                <button onclick="">Submit </button>
+                            </span>
+                        </div>
+                        </div>
+                </div>
+                 <!--stage three end-->
+            </div>
+
+          </div>        
+        </div>
+    </div>
+</div>
+
+
+
+<!--preview modal start-->
+<div class="modal fade" id="previewmodal" tabindex="-1" aria-labelledby="exampleModalXlLabel" style="display: none;" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title h4" id="exampleModalXlLabel">Preview</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4">
+          <div class="pre-details">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="org-logo">
+                        <img class="" src="../assets/images/organization.png" alt="" />
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="org-details relative">
+                        <a class="topedit" href="#"><i class="fas fa-edit"></i> Edit</a>
+                        <h2>SRM Organization</h2>
+                        <h4>SRM INSTITUTE OF SCIENCE AND TECHNOLOGY</h4>
+                        <h6><a href="#">www.srmuniversity.com</a></h6>
+                        <p>SRM1250230</p>
+                        <p class="col-md-8">3, Veerasamy St, Gokulam Colony, Ramakrishnapuram, 
+                         West Mambalam, Chennai, Tamil Nadu 600033
+                        </p>
+                        <div class="org-info">
+                            <p class="org-email mb-3"><a href="#">srminfo@gmail.com</a></p>
+                            <p class="org-phone"><a href="#">044 2635 2563</a></p>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+            <div class="org-title mt-3 mb-3 p-2">
+                <h4>Admin</h4>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="org-logo">
+                        <img class="" src="../assets/images/profile.png" alt="" />
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="org-details relative">
+                        <h4>Sri Harsha raj Kumar [ B.E ,ME,B.Ed ]</h4>
+                        <p>Principal</p>
+                        <p class="col-md-8">45, 3rd St, Sriram Colony, Abiramapuram, Chennai, Tamil Nadu 600018</p>
+                        <div class="org-info">
+                            <p class="org-email mb-3"><a href="#">srminfo@gmail.com</a></p>
+                            <p class="org-phone"><a href="#">044 2635 2563</a></p>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 mt-2">
+                    <p>
+                        discourse intended to give a mental image of something experienced. beautiful beyond description. 
+                        gave an accurate description of what he saw. : a statement or account giving the characteristics
+                        of someone or something : a descriptive statement or account.3
+                    </p>
+                </div>
+            </div>
+            <div class="org-title mt-3 mb-3 p-2">
+                <h4>Manage Academic</h4>
+            </div>
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Select Stream</th>
+                    <th scope="col">Select course</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Medical</td>
+                    <td>Undergraduate</td>
+                  </tr>
+                  <tr>
+                    <td>Pharmacology</td>
+                    <td>PostGraduate</td>
+                  </tr>
+                  <tr>
+                    <td>Nursing</td>
+                    <td>Diploma</td>
+                  </tr>
+                </tbody>
+              </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--preview modal end-->
+
+
+
+<script>
+function hideStage(stage){
+	// you can validate here
+	$('#stage'+stage).removeClass('active');
+	$('#stage-'+stage+'-step').addClass('done');
+}
+
+function showStage(stage) {
+	$('#stage'+stage).addClass('active');
+	$('#stage-'+stage+'-step').addClass('active');
+}
+</script>

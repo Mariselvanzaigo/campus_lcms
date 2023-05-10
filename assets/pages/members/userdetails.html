@@ -1,0 +1,295 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12 title-head ">
+          <h2 class="mb-2 cc m-0 reports_page">
+            <span class="back reports_page">
+              <!--<li style="list-style:none;"><a class="reports_page_navigation" data-flinkto="members"><i class="fas fa-arrow-left reports_page"></i></a></li>-->
+              <input type="hidden" id="user_profile_id" data-user_id_el="">
+            </span> 
+            <small id="user_profile_name"></small>            
+          </h2>           
+      </div>
+</div>
+</div>
+
+
+<div class="container-fluid white-bg p-3 br-5 mt-3" >
+    <div class="row">
+      <div class="col-md-2">    
+        <div class="userimg">
+            <img class="" id="user_profile_image" src="../assets/images/no-user.png" alt="" />
+        </div>
+      </div>
+      <div class="col-md-10">    
+        <div class="usertext">
+          <h6 id="user_profile_name_header">
+            <small id="user_profile_username"></small>&nbsp;&nbsp;
+            <span href="members/createmember"  class="navigate_refresh"data-flinkto="createmember" data-editmember_id="" id="edit_member_page"> 
+              <!--<img src="../assets/images/edit.png" alt="" style="width: 15px;" id="edit_member_page"/>-->
+              
+            <!--<img class="navigate_refresh" href="members/createmember" src="../assets/images/edit.png" alt="" style="width: 15px;" id="edit_member_page" data-flinkto="createmember" data-editmember_id="" data-page_from="membermanagement"/>-->
+            </span>
+          </h6>
+          <p>
+            <span>
+              <img class="" src="../assets/images/call.png" alt="" />&nbsp;
+              <small id="user_profile_phone_number" style="font-weight: 500;"></small>&nbsp;&nbsp;
+            </span> 
+            <span class="email_user_span">
+              &nbsp;&nbsp;<img class="" src="../assets/images/email.png" alt="" />&nbsp;
+              <small id="user_profile_email_id" style="font-weight: 500;"></small>
+            </span>
+          </p>
+          <p>
+            <img class="mb-1" src="../assets/images/platform.png" alt="" /> 
+            <strong>Platform</strong> : <small style="font-weight: 500;" id="user_profile_platform"></small>
+          </p>
+          <p>
+            <img class="mb-1" src="../assets/images/specialist.png" alt="" /> 
+            <strong>Specialist</strong> : <small id="user_profile_specialist" style="font-weight: 500;"></small>
+          </p>
+          <p>
+            <img class="mb-1" src="../assets/images/speciality.png" alt="" /> 
+            <strong>Speciality</strong> : 
+            <small id="user_profile_speciality">
+            </small>
+          </p>
+          <p>
+            <img class="mb-1" src="../assets/images/dob_icon3.png" alt="" style="width:20px;"/> 
+            <strong>DOB</strong> : 
+            <small id="user_profile_dob" style="font-weight: 500;">
+            </small>
+          </p>
+          <div class="user-status"></div>
+          <div class="kyc-status" style="position: absolute;right: 0;top: 25px;font-weight: 600;"></div>
+        </div>
+      </div>      
+    </div>
+</div>
+
+<div class="container-fluid userinfo white-bg p-3 br-5 mt-3" >
+    <div class="reg-title">
+        <div class="row">
+            <div class="col-md-6">    
+              <div class="cleft">
+                  <h6>Registration No : <span class="orange-text" id="user_profile_reg_no"></span></h6>
+              </div>
+            </div>
+            <div class="col-md-6">    
+              <div class="cright">
+                  <h6>Registration Date : <span class="orange-text" id="user_profile_reg_date"></span></h6>
+              </div>
+            </div>            
+          </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12">    
+          <div class="reg-head">
+              <h4>Educational Qualification :</h4>
+          </div>
+        </div>                 
+    </div>
+    <div class="row mb-4" id="user_profile_educational_qualification">
+            
+    </div>
+    <div class="row">
+        <div class="col-md-12">    
+          <div class="reg-head">
+              <h4>KYC :</h4>
+          </div>
+        </div>                 
+    </div>
+    <div class="row" id="user_profile_kyc"> 
+   </div>
+
+    <div class="row mb-4">
+      <!--<div class="col-md-12"  id="other_user_details"> 
+      </div>   -->  
+    </div>
+</div>
+<script type="text/javascript">
+  $(document).ready(function(){
+
+    var queries_param = getUrlParamquery();
+    var user_id_element = document.querySelectorAll("[data-user_id_el]");
+    user_id_element.forEach(el=>{
+      if(queries_param.user_profile_id && queries_param.user_profile_id != ""){
+        el.setAttribute("data-user_id_el",queries_param.user_profile_id);
+      }else{
+        el.setAttribute("data-user_id_el", "");
+      }
+    });
+
+    var user_profile_id = $("#user_profile_id").attr("data-user_id_el");
+    if(user_profile_id){
+      $("#edit_member_page").attr("data-editmember_id", user_profile_id);
+      $.ajax({
+        url: USER_ENGINE_API_URL + 'member/'+user_profile_id,
+        type: 'get',
+        dataType: 'json',
+        headers: { "Content-type": "application/json; charset=UTF-8"},
+        beforeSend: function (xhr) {
+          xhr.setRequestHeader ("Authorization", "Bearer " + getUserInfo().access_token);
+        },
+        success: function (response) {
+          console.log('afafff',response);
+          if(response.member_image && response.member_image != "" && response.member_image != null ){
+            $("#user_profile_image").attr("src", response.member_image);
+          }
+          var firstname_user = "";
+          var lastname_user = "";
+          if(response.first_name && response.first_name != "" && response.first_name != null ){
+            firstname_user = response.first_name;
+          }
+          if(response.last_name && response.last_name != "" && response.last_name != null ){
+            lastname_user = response.last_name;
+          }
+          $("#user_profile_name").text(firstname_user+" "+lastname_user);
+          $("#user_profile_username").text(firstname_user+" "+lastname_user);
+          if(response.phone_number && response.phone_number != "" && response.phone_number != null ){
+              $("#user_profile_phone_number").text(response.phone_number);
+          }
+          if(response.email_id && response.email_id != "" && response.email_id != null ){
+              $("#user_profile_email_id").text(response.email_id);
+          }
+          if(response.speciality_name && response.speciality_name != "" && response.speciality_name != null ){
+              $("#user_profile_specialist").text(response.speciality_name);
+          }
+          if(response.dob && response.dob != "" && response.dob != null ){
+              $("#user_profile_dob").text(response.dob);
+          }
+          if(response.reg_no && response.reg_no != "" && response.reg_no != null ){
+              $("#user_profile_reg_no").text(response.reg_no);
+          }
+          if(response.registration_date && response.registration_date != "" && response.registration_date != null ){
+              $("#user_profile_reg_date").text(response.registration_date.substring(0, 10).replace(/-/g, '/'));
+          }
+          if(response.kyc_verified === true){
+               $(".kyc-status").html('KYC : <span class="green">Verified</span>');
+          }else{
+             $(".kyc-status").html('KYC : <span class="red">Not Verified</span>');  
+          }
+          if(response.status && response.status != "" && response.status != null ){
+            if(response.status == 1){
+                 $(".user-status").html('Status : <span class="green">Active</span>');
+            }else if(response.status == 2){
+                 $(".user-status").html('Status : <span class="yellow">Inactive</span>');
+            }else{
+               $(".user-status").html('Status : <span class="red">Deleted</span>');  
+            }
+          }
+          if(response.access_types && response.access_types != "" && response.access_types.length > 0 ){
+            var platform_str = '';
+            response.access_types.forEach(function (element, index) {
+              if(platform_str == ""){
+               platform_str += element.platform_name;
+              }else{
+               platform_str += ", "+element.platform_name; 
+              }
+            });
+              $("#user_profile_platform").text(platform_str);
+          }
+          if(response.topics_of_interest && response.topics_of_interest != "" && response.topics_of_interest.length > 0 ){
+            var topic_of_intrest_li = '';
+            $("#user_profile_speciality").empty();
+              response.topics_of_interest.forEach(function (element, index) {
+              topic_of_intrest_li += `<span class="ct">${element.name}</span>`;
+            });
+            $("#user_profile_speciality").append(topic_of_intrest_li);
+          }
+          console.log(response.educational_qualification);
+          if(response.educational_qualification && response.educational_qualification != "" && response.educational_qualification.length > 0 && $.isArray( response.educational_qualification )){
+            var topic_of_intrest_li = '';
+            $("#user_profile_educational_qualification").empty();
+              response.educational_qualification.forEach(function (element, index) {
+              topic_of_intrest_li += `<div class="col-md-5">    
+                                      <div class="rinfo">
+                                          <h4>${element.name}</h4>
+                                          <h6>${element.college_name}</h6>
+                                          <p  style="font-weight: 500;color: #a3a0a0;">${element.details}</p>
+                                      </div>
+                                    </div>`;
+            });
+            $("#user_profile_educational_qualification").append(topic_of_intrest_li);
+          }else if(response.educational_qualification && response.educational_qualification != "" && response.educational_qualification != null){
+            $("#user_profile_educational_qualification").empty();
+            var topic_of_intrest_li = `<div class="col-md-5">    
+                                      <div class="rinfo">
+                                          <h4>${response.educational_qualification}</h4>
+                                      </div>
+                                    </div>`;
+            $("#user_profile_educational_qualification").append(topic_of_intrest_li);
+          }else{
+            $("#user_profile_educational_qualification").empty();
+            var topic_of_intrest_li = `<div class="col-md-12">    
+                           <p style="color:red;">No Educational Qualification Added</p>
+                         </div>`;
+            $("#user_profile_educational_qualification").append(topic_of_intrest_li);
+          }
+          if(response.kyc_documents && response.kyc_documents != "" && response.kyc_documents.length > 0 && $.isArray( response.kyc_documents )){
+            var kyc_li = '';
+            $("#user_profile_kyc").empty();
+              response.kyc_documents.forEach(function (element, index) {
+
+              var updated_atSlash = element.updated_at.substring(0, 10);
+              updated_datec = updated_atSlash.split('-').reverse().join('/');
+              kyc_li += `<div class="col-md-5">    
+                           <div class="rinfo">
+                               <img class="" src="../assets/images/pdf.png" alt="" />
+                               <a href="${element.attachment}" target="_blank" download><h6>${element.attachment_name}</h6></a>
+                               <p style="font-weight: 500;color: #a3a0a0;">Uploaded At: ${updated_datec}</p>
+                           </div>
+                         </div>`;
+            });
+            $("#user_profile_kyc").append(kyc_li);
+          }else{
+            $("#user_profile_kyc").empty();
+            var kyc_li = `<div class="col-md-12">    
+                           <p style="color:red;">No KYC Added</p>
+                         </div>`;
+            $("#user_profile_kyc").append(kyc_li);
+          }
+          /*if(response.member_type_fields && response.member_type_fields != "" && response.member_type_fields.length > 0 && $.isArray(response.member_type_fields)){
+            $("#other_user_details").empty();
+            var temp_dynamic_fields  = `<div class="reg-head">
+                                          <h4>Other Details :</h4>
+                                        </div>`;
+            response.member_type_fields.forEach(function (element, index) {
+              if(index%2==0){
+                temp_dynamic_fields += '<div class="row">';
+              }
+              var textval = "";
+              if(element.value != "" && element.value != null){
+                var $div=$('<div>').html(element.value);
+                if($div.children().length){
+                  textval_html = $(element.value);
+                  textval = textval_html.text();
+                }else{
+                  textval = element.value;
+                }
+              }
+              temp_dynamic_fields +=`<div class="col-md-5 p-3" style="float:left;" title="${textval}">
+                                      <label class="mb-2">${element.field_label}</label>
+                                      <input type="text" class="form-control" id="${element.id}" value="${textval}" disabled>
+                                  </div>`;
+              if(index%2==1 || response.member_type_fields.length-1 == index){
+                temp_dynamic_fields += `</div>`;
+              }
+            });
+            $("#other_user_details").append(temp_dynamic_fields);
+          }else{
+            $("#other_user_details").empty();
+          }*/
+        }, 
+        error: function (error) {
+          if (error.status === 401) {
+            alert("Session Expired, Please login again.");
+            logoutSession();
+          }
+          console.log('error', error);
+        }
+      });
+    }
+  });
+</script>

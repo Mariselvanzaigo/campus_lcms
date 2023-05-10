@@ -1,0 +1,218 @@
+<div class="modal-body">
+  
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="position: absolute;right: 10px;top: 5px;"></button>
+      <div class="row">
+        <div class="col-md-5 br-right">
+          <h4 class="mb-3">List of Modules</h4>
+          <!--<div class="row">
+            <div class="col-md-6">
+                <div class="topsearch relative mb-3">
+                <input class="form-control form-control-dark w-100" type="text" placeholder="Search here" aria-label="Search">
+                <i class="fas fa-search"></i> </div>
+            </div>
+            <div class="col-md-6">
+              <div class="dropdown-select">
+                <select class="form-control sort-select">
+                  <option value="Project1">Categories</option>
+                  <option value="Project2">Modules1</option>
+                  <option value="Project2">Modules2</option>
+                  <option value="Project3">Modules3</option>
+                  <option value="Project4">Modules4</option>
+                </select>
+              </div>
+            </div>
+          </div>-->
+          
+          <div id="ccard" class="chapter-card">
+            <div class="role-content mb-3" style="height: 35px;">
+              <input type='text' class='input_module_fld' class='module_inp' placeholder='Add Module Name' onChange='check_value(this);' onblur='totext(this);' style='display: none;' maxlength='256'>
+              <h4 onclick="toinput(this);">Module A</h4>
+              <span class="chk">
+                <input type="checkbox" class="form-check-input module_checkbox" name="module_name_check" id="remember01">
+                <label for="remember01" class="form-label" style="cursor: pointer;"></label>
+              </span>             
+            </div>
+            <div class="role-content mb-3" style="height: 35px;">
+              <input type='text' class='input_module_fld' class='module_inp' placeholder='Add Module Name' onChange='check_value(this);' onblur='totext(this);' style='display: none;' maxlength='256'>
+              <h4 onclick="toinput(this);">Module B</h4>
+              <span class="chk">
+                <input type="checkbox" class="form-check-input module_checkbox" name="module_name_check" id="remember02">
+                <label for="remember02" class="form-label" style="cursor: pointer;"></label>
+              </span>          
+            </div>
+            <div class="role-content mb-3" style="height: 35px;">
+              <input type='text' class='input_module_fld' class='module_inp' placeholder='Add Module Name' onChange='check_value(this);' onblur='totext(this);' style='display: none;' maxlength='256'>
+              <h4 onclick="toinput(this);">Module C</h4>
+              <span class="chk">
+                <input type="checkbox" class="form-check-input module_checkbox" name="module_name_check" id="remember03">
+                <label for="remember03" class="form-label" style="cursor: pointer;"></label>
+              </span>            
+            </div>
+            <div class="role-content mb-3" style="height: 35px;">
+              <input type='text' class='input_module_fld' class='module_inp' placeholder='Add Module Name' onChange='check_value(this);' onblur='totext(this);' style='display: none;' maxlength='256'>
+              <h4 onclick="toinput(this);">Module D</h4>
+              <span class="chk">
+                <input type="checkbox" class="form-check-input module_checkbox" name="module_name_check" id="remember04">
+                <label for="remember04" class="form-label" style="cursor: pointer;"></label>
+              </span>                         
+            </div>
+            <div class="role-content mb-3" style="height: 35px;">
+              <input type='text' class='input_module_fld' class='module_inp' placeholder='Add Module Name' onChange='check_value(this);' onblur='totext(this);' style='display: none;' maxlength='256'>
+              <h4 onclick="toinput(this);">Module E</h4>
+              <span class="chk">
+                <input type="checkbox" class="form-check-input module_checkbox" name="module_name_check" id="remember05">
+                <label for="remember05" class="form-label" style="cursor: pointer;"></label>
+              </span>                         
+            </div>
+          </div>          
+        </div>
+        <div class="col-md-7">
+          <h4 class="mb-3">List of Chapters</h4>
+          <div class="chapter-list">
+            <ul class="h-100" id="chapter_list_ul">     
+            </ul>
+          </div>         
+        </div>
+        </div>
+
+</div>
+<div class="modal-footer">
+  <div class="col-12 pt-3 pb-3 wauto"> 
+    <!--<span class="border-btn nbtn"><a href="#">
+    <button id="add-role-cancel">Create Chapter</button>
+    </a></span> -->
+    <span class="orange-btn nbtn"><a href="#">
+    <button id="add-selected_chapter">Add selected Chapter</button>
+    </a></span> 
+  </div> 
+</div>
+<script type="text/javascript">
+  function toinput(e){
+    e.previousElementSibling.setAttribute("style","display:block;");
+    e.setAttribute("style","display: none;");
+    e.previousElementSibling.focus();
+    e.previousElementSibling.value = e.innerHTML;
+  }
+  function totext(e){
+    if(e.value){
+      e.nextElementSibling.innerHTML = e.value; 
+      e.setAttribute("style","display:none");
+      e.nextElementSibling.setAttribute("style","display:block");
+      e.nextElementSibling.focus();
+    }else{
+      toastr.error("Module Name should not be empty");
+    }
+  }
+  $(document).ready(function(){
+
+        var url_api = API_CONTENT_URL + '/chapters_list/';
+        var method = "GET";
+        $.ajax({
+          url: url_api,
+          type: method,
+          headers: {
+            "Authorization": "Bearer " + getUserInfo().access_token,
+            "Content-Type": "application/json"
+          },
+          success:function(response){
+            console.log(response);
+            var chapters_list_template = "";
+            if(response.length > 0){
+              response.forEach(function (element, index) {
+                chapters_list_template += ` <li>${element.name}<span><input type="checkbox" name="checked_chapter[]" class="form-check-input" id="${element.id}"><label for="${element.id}" class="form-label" style="cursor: pointer;"></label></span></li>`;
+              });
+            }
+            if(chapters_list_template == ""){
+              chapters_list_template = "<li>No Chapters Found</li>";
+            }
+            document.getElementById("chapter_list_ul").innerHTML = chapters_list_template;
+          },
+          error: function(error) {
+            if (error.status === 401) {
+              alert("Session Expired, Please login again.");
+              logoutSession();
+            }
+            toastr.error("Response Error: " + error.message);
+            console.log(error);
+          }
+        });
+    $(".module_checkbox").on('click', function() {
+  // in the handler, 'this' refers to the box clicked on
+      var $box = $(this);
+      if ($box.is(":checked")) {
+        // the name of the box is retrieved using the .attr() method
+        // as it is assumed and expected to be immutable
+        var group = "input:checkbox[name='" + $box.attr("name") + "']";
+        // the checked state of the group/box on the other hand will change
+        // and the current value is retrieved using .prop() method
+        $(group).prop("checked", false);
+        $box.prop("checked", true);
+      } else {
+        $box.prop("checked", false);
+      }
+    });
+    $("#add-selected_chapter").click(function(){
+      //var selected_case_id = document.getElementById("selectCase").getAttribute("data-selected_case_id");
+      var clicked_elem_id = document.getElementById("clicked_event").getAttribute("data-click_id");
+      var clicked_elem_level = document.getElementById("clicked_event").getAttribute("data-click_level");
+      var element = document.querySelector('[data-unique_id="'+clicked_elem_id+'"]');
+      var module_id =  element.getAttribute("data-module_id");
+      var selected_case_id = element.getAttribute("data-unique_case_id");
+      var checked_module_name = "";
+      $('.module_checkbox').each(function(index, element) {
+        if($(element).prop("checked")) {
+          checked_module_name = element.closest(".role-content").childNodes[3].textContent;
+        }
+      });
+      var searchIDs = $(".chapter-list input:checkbox:checked").map(function(){
+        return $(this).attr("id");
+      }).get(); // <----
+      if(checked_module_name == ""){
+        toastr.error("Please Select a Module");
+        return false;
+      }
+      console.log(searchIDs);
+      if(searchIDs.length > 0){
+      }else{
+        toastr.error("Please Select any Chapter");
+        return false;
+      }
+          var chapter_data = {
+              "case_id": String(selected_case_id),
+              "course_id": String(document.getElementById("course_id").value),
+              "case_module_id": String(module_id),
+              "chapter_ids": searchIDs,
+              "group_name": String(checked_module_name)
+          }
+          console.log(chapter_data);
+        $.ajax({
+          url: API_CONTENT_URL + '/cases/add/chapter/',
+          type: 'POST',
+          data: JSON.stringify(chapter_data),
+          headers: {
+            "Authorization": "Bearer " + getUserInfo().access_token,
+            "Content-Type": "application/json"
+          },
+          success:function(response){
+            console.log(response);
+            toastr.success("Module Chapter Created Successfully.");
+            $(".btn-close").trigger("click");
+            $('#course_id').trigger('click');
+            location.reload();
+          },
+          error: function(error) {
+            var errorJson = jQuery.parseJSON(error.responseText);
+            console.log(errorJson.error);
+            if(errorJson.error.length > 0){
+              errorJson.error.forEach(function (element, index) {
+                toastr.error(element);
+              });
+            }else{
+              toastr.error("Response Error: " + error.message);
+              console.log(error);
+            }
+          }
+        });
+    });
+  });
+</script>

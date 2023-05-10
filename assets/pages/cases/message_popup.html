@@ -1,0 +1,149 @@
+<div class="row course_module_details">
+	<div class="acnav__list wbg br-10" style="background:right;width: 97%;">
+		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	</div>
+	<div class="col-md-12 p-3" style="padding-top: 0rem !important;">
+		<div class="course_module_content" style="overflow-y: scroll;height: 400px;overflow-x: hidden;">
+			<!--<form method="post" class="" id="frmMessage" name="frmMessage" enctype="multipart/form-data">
+		      <div class="col-md-12 mb-3">
+		        <div class="form-floating">
+		          <textarea name="message" id="message" type="text" value="" rows="7" cols="30" class="ckeditor form-control" maxlength="250" style="height: 120px"></textarea>
+		        </div>
+		      </div>
+          	</form>-->
+	
+        <div class="gwhite p-3">
+          <h4 class="mb-4">Comments</h4>
+          <div class="col-md-12 mb-3 comments" id="user_comments">
+            
+          </div>
+        </div>
+        <div class="white-bg box-shadow p-3 add_comment_sec">
+          <div class="col-md-12 mb-3 comments">
+             <!--<div class="add-comment"><img src="../assets/images/Ellipse10.png">-->
+			<form method="post" class="" id="frmMessage" name="frmMessage" enctype="multipart/form-data">
+              <!--<textarea name="message" id="message" type="text" value="" class="ckeditor form-control" maxlength="250" placeholder="Add a comment"></textarea>-->
+              <textarea name="message" id="message" class="form-control" placeholder="Add a comment"></textarea>
+          	</form>
+            <!--</div>-->
+          </div>
+        </div>
+		<div class="modal-footer add_comment_sec">
+		  <span class="custom-btn nbtn">
+		    <button type="button" class="btn btn-success" id="saveMessage">Save</button>
+		  </span>
+		</div>
+	</div>
+</div>
+<input type="hidden" id="case_param">
+<script type="text/javascript">
+$(document).ready(function(){
+
+  if(processRights("Add Comments") === false) {
+    $('.add_comment_sec').css('display','none');
+    $("#user_comments").attr("style", "height:280px;");
+  }
+	setTimeout(function(){
+		var case_id = document.getElementById("case_param").getAttribute("data-case_id");
+		var case_module_id = document.getElementById("case_param").getAttribute("data-case_module_id");
+		get_message_details(case_id, case_module_id);
+	}, 0);
+
+  $("#saveMessage").on("click", function() {
+	var case_id = document.getElementById("case_param").getAttribute("data-case_id");
+	var case_module_id = document.getElementById("case_param").getAttribute("data-case_module_id");
+    var isValidForm = frmvalidatorfrm.form();
+    if(isValidForm){
+      var user_details = getUserInfo();
+      var formData = new FormData();
+      formData.append("case_id",  case_id);
+      formData.append("case_module_id", case_module_id);
+      formData.append("comments", $("#message").val());
+	  //formData.append("commented_member_id", user_details.id);
+	  //formData.append("commented_member_name", user_details.name);
+
+	  $.ajax({
+		    url: API_CONTENT_URL + "/case_module_comments/",
+		    method: "POST",
+		    type: 'POST', // For jQuery < 1.9
+		    cache: false,
+		    contentType: false,
+		    processData: false,
+		    data: formData,
+		    headers: {
+		      	"Authorization" : "Bearer " + getUserInfo().access_token
+		    },
+		    success: function(response){
+	     		toastr.success("Comment saved Successfully.");
+				get_message_details(case_id, case_module_id);
+		    },
+		    error: function(error) {
+		      	toastr.error("Response Error: " + error.message);
+		      	console.log(error);
+		    }
+	  });
+    }
+  });
+});
+$.validator.addMethod("pattern", function( value, element, param ) {
+    if ( this.optional( element ) ) { return true; }
+    if ( typeof param === "string" ) {
+      param = new RegExp( "^(?:" + param + ")$" );
+    }
+    return param.test( value );
+  }, "Check your inputs" );
+  var frmvalidatorfrm = $("#frmMessage").validate({
+    rules: {
+        message: {
+            required: true
+        },
+    },
+    messages: {     
+	    message: {
+	        required: "Enter your comments"
+	    }   
+    },
+    errorElement: "em",
+    errorPlacement: function ( error, element ) {
+      error.addClass( "help-block" );
+      if ( element.prop( "type" ) === "checkbox" ) {
+        error.insertAfter( element.parent( "label" ) );
+      } else {
+        error.insertAfter( element );
+      }
+    },
+    highlight: function ( element, errorClass, validClass ) {
+      //$( element ).parents( ".col-md-12" ).addClass( "has-error" ).removeClass( "has-success" );
+      $(element).addClass("is-invalid");
+    },
+    unhighlight: function (element, errorClass, validClass) {
+     //$( element ).parents( ".col-md-12" ).addClass( "has-success" ).removeClass( "has-error" );
+     $(element).removeClass("is-invalid");
+    }
+  });
+function get_message_details(case_id, case_module_id){
+	$.ajax({
+		url: API_CONTENT_URL + '/case_module_comments/?case_module_id='+case_module_id,
+		type: 'get',
+		dataType: 'json',
+		headers: {"Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token},
+		success:function(response){
+			console.log(response);
+			if(response.length > 0){
+		      $("#user_comments").empty();
+				var member_comments_html = "";
+		      	$.each( response, function( i, val ) {
+		      		member_comments_html += `<h4 class="p-2">${val.commented_member_name}<span>&nbsp;&nbsp;${val.commented_date}</span></h4>
+								            <div class="add-comment"> 
+								              <p class="w-100" style="word-break: break-all;">${val.comments}</p>
+								            </div>`;
+		      	});
+		      $("#user_comments").html(member_comments_html);
+		      $("#message").val("");
+			}else{
+				var member_comments_html = "<div class='alert text-center text-danger'>No Records Found!</div>";
+				$("#user_comments").html(member_comments_html);
+			}
+		}
+	});
+}

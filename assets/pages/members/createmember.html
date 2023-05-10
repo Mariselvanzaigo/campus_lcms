@@ -1,0 +1,1338 @@
+<div class="container-fluid cms_course_list" style="display:block">
+    <div class="row">
+    <div class="col-12 title-head mb-0">  
+    <h2 class="mb-3 cc">
+      <span class="back">
+        <li style="list-style:none;"><a href="members/userdetails" class="createmember_page" data-flinkto="userdetails" id="backtoButton"><i class="fas fa-arrow-left"></i></a></li>
+      </span> 
+      <small id="create_member_header">Create New Member</small><dfn data-info="Lorem ipsum dolor sit amet, perspiciatis consectetur dolor."><i class="fas fa-info-circle"></i></dfn>
+      <input type="hidden" id="editMember" value="" data-membereditid="">
+    </h2>  
+    </div>  
+    </div>
+  </div>
+
+  <div class="container-fluid white-bg p-3 br-5 mt-3">
+    <div class="row">
+      <div class="col-12">
+        
+        <form class="manage-form mt-4 col-md-12" id="create_member">
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <label>First Name</label>
+                    <input type="text" class="form-control" name="first_name" id="first_name" data-fieldName="first_name" placeholder="First name" value="">
+                </div>
+                <div class="col-md-6">
+                    <label>Last Name</label>
+                    <input type="text" class="form-control" name="last_name" id="last_name" data-fieldName="last_name"  placeholder="Last name" value="">
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-md-6 cs-number">
+                    <label>Mobile No<span style="color:#ff0000">*</span></label>
+                    <input type="tel" class="form-control" name="phone_number" id="phone_number" data-fieldName="phone_number" placeholder="Mobile Number" value="" onkeypress="return /[0-9 +]/i.test(event.key);" onpaste="return /[0-9 +]/i.test(event.key);">
+                </div>
+                <!--<div class="col-md-6 cs-number">
+                    <label>Mobile No<span style="color:#ff0000">*</span></label>
+                    <input type="tel" class="form-control" name="phone_number" id="phone_number" data-fieldName="phone_number" placeholder="Mobile Number" value="" onkeypress="return /[0-9 +]/i.test(event.key);" onpaste="return /[0-9 +]/i.test(event.key);">
+                </div>-->
+                <div class="col-md-6">
+                    <label>Email Id<span style="color:#ff0000">*</span></label>
+                    <input type="email" class="form-control" name="email_id" data-fieldName="email_id" id="email_id" placeholder="Email Id" value="">
+                </div>
+            </div>
+            <div class="row mb-1 p-0">
+                <div class="col-md-12 mb-4 cfile">
+                    <label>Profile Photo (JPG / PNG)</label>
+                    <input type="file" class="form-control" name="profile" id="profile" placeholder="profile" value="" accept=".png,.jpg,.jpeg">
+                    <p class="vinfo"><small>Accepts Maximum size of 4 MB Images</small></p>
+                </div>
+            </div>
+            <div id="profile_image" class="mb-4 hide">
+              <div class="container-fluid p-0">
+                <div class="row">
+                  <div class="col-md-2">    
+                    <div class="userimg">
+                      <img id="CourseSettingsBannerc223" onclick="deleteProfilePopup();" src="../assets/images/delete-round.png">
+                      <img id="profile_image_img" src="../assets/images/profile.png" alt="">
+                    </div>
+                  </div>
+                  <div class="col-md-10">
+                    <input type="hidden" id="profile_url" value="">
+                  </div>      
+                </div>
+              </div>
+            </div>
+            <!--<div class="title-head mb-3">
+            <div class="container-fluid p-0">
+                <div class="row">
+                    <div class="col-md-10">
+                        <h4>Select Access Type</h4>
+                    </div>
+                    <div class="col-md-2 cright">
+                        <span class="blue-btn mr-5 qt-btn">                            
+                            <button type="button" class="add_list add_access_cm" onclick="add_access_list('','','');"><i class="fas fa-plus"></i> Add Access</button>                           
+                        </span>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="col-md-12 mb-4">
+                <div class="row">
+                    <div class="col-lg-4 col-md-3">
+                        <label>Platform<span style="color:#ff0000">*</span></label>                   
+                    </div>
+                    <div class="col-lg-4 col-md-3">
+                        <label>Member Type<span style="color:#ff0000">*</span></label>                
+                    </div>
+                    <div class="col-lg-3 col-md-3">
+                        <label>Role<span style="color:#ff0000">*</span></label>            
+                    </div>         
+                </div>
+                <div class="append-elements_access">
+                </div>
+                
+                
+            </div> -->
+
+            <div class="container-fluid p-0 mb-4 hide" id="member_field_by_selection">
+            </div>          
+              <div class="col-md-12 mb-4 relative">
+               <span class="orange-btn mr-5 qt-btn">
+                <button type="button" id="create_member_submit"> Create</button>
+              </span>
+              <span class="border-btn mr-5 qt-btn">
+                <button type="button" id="cancel_create_member" > Cancel</button>
+                
+              </span>
+              </div>
+        </form>
+    </div>
+</div>
+</div>
+<!------delete start-------->
+  <div id="delete_popupprofile" class="overlay">
+  <div class="popup"> <a class="close" onclick="close_profile_del_popup();">×</a>
+    <form method="get" class="pop-form">
+      <div class="row">
+        <div class="col-md-12 text-center mb-2"> <img src="../assets/images/delete.png"> </div>
+        <div class="col-md-12 text-center mb-2" id="delete_course_name_msg">
+          <h6>Are you sure you want to delete the Profile Image ? </h6>
+        </div>
+      </div>
+    <input type="hidden" id="delete_popupprofile_id" value="">
+      <div class="row">
+        <div class="col-12 pt-3 pb-3 wauto text-center"> 
+          <span class="orange-btn nbtn"><a onclick="delete_profileImage();">
+          <button type="button">Yes</button>
+          </a></span>
+          <span class="border-btn nbtn"><a onclick="close_profile_del_popup();">
+          <button type="button">Cancel</button>
+          </a></span>  
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<!-------delete end-------->
+<script>
+  var queries_param = getUrlParamquery();
+  $(document).ready(function(){
+     var editmember = document.querySelectorAll("[data-membereditid]");
+    editmember.forEach(el=>{
+      if(queries_param.editmember_id && queries_param.editmember_id != ""){
+        el.setAttribute("data-membereditid", queries_param.editmember_id);
+      }else{
+        el.setAttribute("data-membereditid", "");
+      }
+    });
+    var membermanagementback = document.querySelectorAll(".createmember_page");
+    membermanagementback.forEach(el=>{
+      el.setAttribute("data-flinkto", "userdetails");
+      el.setAttribute("href", "members/userdetails");
+      if(queries_param.editmember_id && queries_param.editmember_id != ""){
+        el.setAttribute('data-user_profile_id', queries_param.editmember_id);
+      } 
+    });
+  });
+/*var platform_list = function () {
+    var tmp_platform = null;
+   $.ajax({
+    'async': false,
+    url: USER_ENGINE_API_URL + '/platforms/all/',
+    type: 'get',
+    global: false,
+    dataType: 'json',
+    headers: { "Content-type": "application/json; charset=UTF-8"},
+    success: function (response) {
+      tmp_platform = response;
+    }
+  });
+  return tmp_platform;
+}(); 
+var member_type_list = function () {
+    var tmp_member_type = null;
+  $.ajax({
+    'async': false,
+    url: API_BASE_URL + 'member/types/',
+    type: 'get',
+    global: false,
+    dataType: 'json',
+    headers: { "Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token },
+    success: function (response) {
+      tmp_member_type = response;
+    }
+  });
+  return tmp_member_type;
+}();
+var role_list = function () {
+    var tmp_role = null;
+  $.ajax({
+    'async': false,
+    url: API_BASE_URL + 'role_create/',
+    type: 'get',
+    global: false,
+    dataType: 'json',
+    headers: { "Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token },
+    success: function (response) {
+      tmp_role = response;
+    }
+  }); 
+  return tmp_role;
+}();*/
+  var editMemberId = queries_param.editmember_id;
+  var member_type_fields = function () {
+    var tmp_member_type_fields = null;
+  if(editMemberId && editMemberId != ""  && editMemberId != "undefined"){
+    $.ajax({
+    'async': false,
+      url: USER_ENGINE_API_URL + 'member/'+editMemberId,
+      type: 'get',
+      dataType: 'json',
+    global: false,
+      headers: { "Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token },
+      success: function (response) {
+        $("#create_member_header").text("Edit Member");
+        $("#create_member_submit").text("Update");
+        if(response.first_name && response.first_name != "" && response.first_name != null){
+          $("#first_name").val(response.first_name);
+        }else{
+          $("#first_name").val("");
+        }
+        if(response.last_name && response.last_name != "" && response.last_name != null){
+          $("#last_name").val(response.last_name);
+        }else{
+          $("#last_name").val("");
+        }
+        if(response.mobile_number && response.mobile_number != "" && response.mobile_number != null){
+          console.log('mobile_number');
+          var region_code = response.region_code != "" && response.region_code != null ? response.region_code+" " : '+91 ';
+          $("#phone_number").val(region_code+response.mobile_number);
+          var input = document.querySelector("#phone_number");
+          window.intlTelInput(input, {
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/javascript.util/0.12.12/javascript.util.min.js" // just for formatting/placeholders etc
+          });
+          $(".iti--allow-dropdown").addClass("iti--separate-dial-code");
+          $("#phone_number").val(response.mobile_number);
+        }else if(response.phone_number && response.phone_number != "" && response.phone_number != null){
+          console.log('phone_number');
+          if(response.phone_number.trim().substring(0, 1) == "+"){
+            console.log('phone_number +');
+            $("#phone_number").val(response.phone_number);
+            var input = document.querySelector("#phone_number");
+            window.intlTelInput(input, {
+              utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/javascript.util/0.12.12/javascript.util.min.js" // just for formatting/placeholders etc
+            });
+            $(".iti--allow-dropdown").addClass("iti--separate-dial-code");
+            $("#phone_number").val(response.mobile_number.split(' ').pop().replace(/\s*/g,''));
+          }else{
+            console.log('phone_number !+');
+            var region_code = response.region_code != "" && response.region_code != null ? response.region_code+" " : '+91 ';
+            $("#phone_number").val(region_code+response.phone_number);
+            var input = document.querySelector("#phone_number");
+            window.intlTelInput(input, {
+              utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/javascript.util/0.12.12/javascript.util.min.js" // just for formatting/placeholders etc
+            });
+            $(".iti--allow-dropdown").addClass("iti--separate-dial-code");
+            $("#phone_number").val(response.phone_number);
+          }
+        }else{
+          var input = document.querySelector("#phone_number");
+          window.intlTelInput(input, {
+              separateDialCode: true,
+              initialCountry:"in",
+              utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/javascript.util/0.12.12/javascript.util.min.js" // just for formatting/placeholders etc
+            });
+        }
+        if(response.email_id && response.email_id != "" && response.email_id != null){
+          $("#email_id").val(response.email_id);
+        }
+        /*if(response.access_types && response.access_types.length > 0){
+          $(".append-elements_access").empty();
+          $.each(response.access_types, function (i, val) {
+            add_access_list(val.platform_id, val.member_type_id, val.role_id);
+          });
+          var membertype_element = document.querySelector(".member_type_access");
+        }else{
+          add_access_list('','','');
+        }*/
+        /*if(response.member_type_fields && response.member_type_fields.length > 0){
+          editMembertypechange(response.member_type_fields);
+          tmp_member_type_fields = response.member_type_fields;
+        }*/
+        if(response.member_image && response.member_image != "" && response.member_image != null){
+          $("#profile_image").removeClass('hide');
+          $("#profile_image_img").attr("src", response.member_image);
+          $("#profile_url").val("imageadded");
+        }
+      },
+      error: function(error) {
+        if (error.status === 401) {
+          alert("Session Expired, Please login again.");
+          logoutSession();
+        }
+      }
+    }); 
+  }else{
+console.log('add_member')
+    var input = document.querySelector("#phone_number");
+    window.intlTelInput(input, {
+        separateDialCode: true,
+        initialCountry:"in",
+              utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/javascript.util/0.12.12/javascript.util.min.js" // just for formatting/placeholders etc
+            });
+    var platform_selected = "";
+    var member_type_selected = "";
+    var role_selected = "";
+    //add_access_list(platform_selected, member_type_selected, role_selected);
+  } 
+  return tmp_member_type_fields;
+}();
+function add_access_list(platform_selected, member_type_selected, role_selected){
+    var selectedplatform_list = "";
+  if(platform_selected != ""){
+    selectedplatform_list = function () {
+      var selectedtmp_platform = null;
+       $.ajax({
+        'async': false,
+        url: API_BASE_URL + 'platform/roles/'+platform_selected,
+        type: 'get',
+        global: false,
+        dataType: 'json',
+        headers: { "Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token },
+        success: function (response) {
+          selectedtmp_platform = response;
+        },
+        error: function(error) {
+          if (error.status === 401) {
+            alert("Session Expired, Please login again.");
+            logoutSession();
+          }
+        }
+      });
+      return selectedtmp_platform;
+    }(); 
+  }
+  var mathcount = Math.floor(Math.random() * 100000);
+  var added_access_length = $(".added_list").length;
+  var template = `<div id="addlist-${mathcount}" class="added_list">
+                    <div class="row mb-4">
+                      <div class="col-lg-4 col-md-3">
+                        <div class="dropdown-select">
+                          <select class="sort-select platform_select" id="platform_id" name="platform_id" onchange="platformChange(this);" data-platform_row_id="addlist-${mathcount}">
+                            <option value="">Select Platform</option>`;
+                            $.each(platform_list, function (i, val) {
+                              if(platform_selected != "" && platform_selected == val.id){
+                                template += `<option value="${val.id}" selected>${val.platform_name}</option>`;
+                              }else{
+                                template += `<option value="${val.id}">${val.platform_name}</option>`;
+                              }
+                            });
+                          template += `</select>
+                        </div>
+                      </div>
+                      <div class="col-lg-4 col-md-3">
+                        <div class="dropdown-select">
+                          <select class="sort-select member_type_access" id="member_id" name="member_id" onchange="membertypeChange(this);" data-member_type_row_id="addlist-${mathcount}">
+                              <option value="">Select Member Type</option>`;
+                              $.each(member_type_list, function (i, val) {
+                                if(member_type_selected != "" && member_type_selected == val.id){
+                                  template += `<option value="${val.id}" selected>${val.name}</option>`;
+                                }else{
+                                  template += `<option value="${val.id}">${val.name}</option>`;
+                                }
+                              });
+                          template += `</select>
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3">
+                        <div class="dropdown-select">`;
+                        if(role_selected != ""){
+                          template += `<select class="sort-select role_select" id="role_id" name="role_id" onchange="roleChange(this);" data-role_row_id="addlist-${mathcount}">`;
+                        }else{
+                          template += `<select class="sort-select role_select" id="role_id" name="role_id" onchange="roleChange(this);" disabled="true" data-role_row_id="addlist-${mathcount}">`;
+                        }
+                            template += `<option value="">Select Role</option>`;
+                            if(selectedplatform_list != ""){
+                              $.each(selectedplatform_list, function (i, val) {
+                                if(role_selected != "" && role_selected == val.id){
+                                  template += `<option value="${val.id}" selected>${val.name}</option>`;
+                                }else{
+                                  template += `<option value="${val.id}">${val.name}</option>`;
+                                }
+                              });
+                            }
+                          template += `</select>
+                        </div>
+                      </div>
+                      <div class="col-md-1 ques cc">
+                        <span class="delete_case" data-deletecase="addlist-${mathcount}" onclick="deleteAccess('addlist-${mathcount}');"><i data-deletecase="addlist-${mathcount}" class="fas fa-trash"></i></span>
+                      </div>
+                    </div>
+                  </div>`;
+  $('.append-elements_access').append(template);
+}
+
+function platformChange(el){
+
+  var parentContainer = el.closest('.added_list');
+  var unique_id = parentContainer.getAttribute("id");
+  var selected_platform_id = el.value;
+  var role_element = parentContainer.querySelector("[data-role_row_id]");
+  $(el).removeClass("is-invalid");
+  $(el).next().remove();
+    if($(el).hasClass("platform_select")){
+      if(el.value == ""){
+        $(el).removeClass("is-invalid");
+        $(el).next().remove();
+        $(el).addClass("is-invalid");
+        $(el).after(`<em for="platform_select" class="error help-block" style="position: absolute;bottom: -18px;">Please Select Platform</em>`);
+
+        $(role_element).empty();
+        var template = `<option value="">Select Role</option>`;
+        $(role_element).append(template);
+        $(role_element).attr("disabled", true);
+      }
+    }
+    if(el.value != ""){
+        var sameSelect = 0;
+        var filterRows = document.querySelectorAll(".added_list");
+        $.each(filterRows, function(a, b){
+          var currentPlatformVal = el.value;
+          if(currentPlatformVal == b.querySelector(".platform_select").value){
+            sameSelect++;
+          }
+        });
+        if(sameSelect > 1){
+          $(el).removeClass("is-invalid");
+          $(el).next().remove();
+          $(el).val("");
+          $(el).addClass("is-invalid");
+          $(el).after(`<em for="platform_select" class="error help-block" style="position: absolute;bottom: -18px;">Please Select Different Platform</em>`);
+            $(role_element).empty();
+            var template = `<option value="">Select Role</option>`;
+            $(role_element).append(template);
+            $(role_element).attr("disabled", true);
+          return;
+        }
+    }
+    $(role_element).attr("disabled", false);
+    $.ajax({
+    url: API_BASE_URL + 'platform/roles/'+selected_platform_id,
+    type: 'get',
+    dataType: 'json',
+    headers: { "Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token },
+    success: function (response) {
+      $(role_element).empty();
+      var template = `<option value="">Select Role</option>`;
+      $.each(response, function (i, val) {
+        template += `<option value="${val.id}">${val.name}</option>`;
+      });
+      $(role_element).append(template);
+    }
+  });
+
+}
+function checkValueExist(value, arr) {
+    var status = "";
+    if(arr != null && arr.length > 0){
+      for (var i = 0; i < arr.length; i++) {
+          var name = arr[i];
+          if (name.id == value) {
+              status = arr[i];
+              break;
+          }
+      }
+    }
+
+    return status;
+}
+function checkValueExistAttr(value, arr){
+
+    var status = "";
+    if(arr != null && arr.length > 0){
+      for (var i = 0; i < arr.length; i++) {
+          var name = arr[i].getAttribute("data-fieldLabel");
+
+          if (name == value) {
+              status = "exist";
+              break;
+          }
+      }
+    }
+
+    return status;
+}
+function membertypeChange(el){
+  /*var selected_member_type = el.value;
+  var selectedText = $(el).val();
+  var member_type_selected = [];*/
+
+  $(el).removeClass("is-invalid");
+  $(el).next().remove();
+  if(el.value == ""){
+    $(el).addClass("is-invalid");
+    $(el).after(`<em for="member_type_access" class="error help-block" style="position: absolute;bottom: -18px;">Please Select Member Type</em>`);
+    return;
+  }
+  /*$(".member_type_access").each(function(){
+    if($(this).val() != ""){
+      member_type_selected.push($(this).val());
+    }
+  });
+  var member_type_data = {
+        "member_type_ids": member_type_selected
+    }
+  $.ajax({
+    url: API_BASE_URL + 'user_type_fields_list/',
+    type: 'POST',
+    data: JSON.stringify(member_type_data),
+    headers: { "Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token },
+    success: function (response) {
+      var field_labels = document.querySelectorAll("[data-fieldLabel]");
+                  var responses = [];
+                  $.each(response, function (i, val) {
+                    var valueExist = checkValueExistAttr(val.field_label, field_labels);
+                    if(valueExist != ""){
+                      var inp_val = document.querySelector("[data-fieldLabel='"+val.field_label+"']").value;
+                      responses.push({field_label:val.field_label, field_name:val.field_name, field_type:val.field_type, id: val.id, is_required:val.is_required, maximum:val.maximum, minimum:val.minimum, supported_file_types:val.supported_file_types, value: inp_val, member_type_id: val.member_type_id, member_type_name: val.member_type_name });
+                    }else{
+                      responses.push(val);
+                    }
+                  });
+
+      const groups = responses.reduce((groups, item) => {
+        const member_type_name = (groups[item.member_type_name] || []);
+        member_type_name.push(item);
+        groups[item.member_type_name] = member_type_name;
+        return groups;
+      }, {});
+      $("#member_field_by_selection").empty();
+      var template_field = '';
+          template_field += `<div class="row">
+                              <div class="col-12">`;
+                              $.each(groups, function (ik, valk) {
+                                template_field += `<h6 style="margin-top: 30px;">Member Type:  <span> ${ik}</span></h6>`;
+                                $.each(valk, function (i, val) {
+                                        var minval ="";
+                                        var maxval ="";
+                                        template_field += `<div class="field_type_container_row">
+                                          <div class="col-md-12 mb-4">`;
+                                          var required = "";
+                                          var req_symbol = ""
+                                          if(val.is_required){
+                                            required = "required";
+                                            req_symbol = `<span style="color:#ff0000">*</span>`;
+                                          }
+                                        if(val.field_type == "alphabet" || val.field_type == "alpha_numeric" || val.field_type == "alpha_numeric_special"){
+                                          minval = val.minimum;
+                                          maxval = val.maximum; 
+                                          var textval = "";
+                                          if(val.value != "" && val.value != null){
+                                            if(val.field_name == "description"){
+                                              textval_html = $(val.value);
+                                              textval = textval_html.text();
+                                            }else{
+                                              textval = val.value;
+                                            }
+                                          }
+                                              template_field += `
+                                              <label>${val.field_label}${req_symbol}</label><input type="text" class="form-control fieldnamec" name="fieldname" id="fieldname" placeholder="Enter ${val.field_label}" data-fieldName="${val.field_name}" data-fieldType="${val.field_type}" data-fieldLabel="${val.field_label}" value="${textval}" onblur="checkfieldName(this);" minlength="${minval}" maxlength="${maxval}" ${required}/>`;
+                                            }else{
+                                          minval = 1;
+                                          maxval = 512;
+                                          var textval = "";
+                                          if(val.value != "" && val.value != null){
+                                            if(val.field_name == "description"){
+                                              textval_html = $(val.value);
+                                              textval = textval_html.text();
+                                            }else{
+                                              textval = val.value;
+                                            }
+                                          }
+                                              template_field += `
+                                              <label>${val.field_label}${req_symbol}</label><input type="text" class="form-control fieldnamec" name="fieldname" id="fieldname" placeholder="Enter ${val.field_label}" data-fieldName="${val.field_name}" data-fieldType="${val.field_type}" data-fieldLabel="${val.field_label}" value="${textval}" onblur="checkfieldName(this);" minlength="${minval}" maxlength="${maxval}" ${required}/>`;
+                                            }
+                                          template_field += `</div>
+                                          <div>
+                                              <input type="hidden" value="${val.field_name}" class="field_name_key"/>
+                                          </div>`;
+                                        template_field += `</div>`;                                    
+                                });                                   
+                              });
+                            template_field += `</div>
+                        </div>`;
+        $("#member_field_by_selection").removeClass("hide");
+        $("#member_field_by_selection").append(template_field);
+    }
+  });*/
+}
+/*function editMembertypechange(membertypedata){
+  const groups = membertypedata.reduce((groups, item) => {
+    const member_type_name = (groups[item.member_type_name] || []);
+    member_type_name.push(item);
+    groups[item.member_type_name] = member_type_name;
+    return groups;
+  }, {});
+  $("#member_field_by_selection").empty();
+  var template_field = '';
+      template_field += `<div class="row">
+                            <div class="col-12">`;
+                            $.each(groups, function (ik, valk) {
+                              template_field += `<h6 style="margin-top: 30px;">Member Type:  <span> ${ik}</span></h6>`;
+                              $.each(valk, function (i, val) {
+                                var minval ="";
+                                var maxval ="";
+                                template_field += `<div class="field_type_container_row">
+                                  <div class="col-md-12 mb-4">`;
+                                  var required = "";
+                                  var req_symbol = ""
+                                  if(val.is_required){
+                                    required = "required";
+                                    req_symbol = `<span style="color:#ff0000">*</span>`;
+                                  }
+                                if(val.field_type == "alphabet" || val.field_type == "alpha_numeric" || val.field_type == "alpha_numeric_special"){
+                                  minval = val.minimum;
+                                  maxval = val.maximum;
+                                      var textval = "";
+                                      if(val.value != "" && val.value != null){
+                                        var $div=$('<div>').html(val.value);
+                                        if($div.children().length){
+                                          textval_html = $(val.value);
+                                          textval = textval_html.text();
+                                        }else{
+                                          textval = val.value;
+                                        }
+                                      }
+                                      template_field += `
+                                      <label>${val.field_label}${req_symbol}</label><input type="text" class="form-control fieldnamec" name="fieldname" id="fieldname" placeholder="Enter ${val.field_label}" data-fieldName="${val.field_name}" data-fieldType="${val.field_type}" data-fieldLabel="${val.field_label}" value="${textval}" onblur="checkfieldName(this);" minlength="${minval}" maxlength="${maxval}" ${required}/>`;
+                                    }else{
+                                  minval = 1;
+                                  maxval = 512;
+                                      var textval = "";
+                                      if(val.value != "" && val.value != null){
+                                        var $div=$('<div>').html(val.value);
+                                        if($div.children().length){
+                                          textval_html = $(val.value);
+                                          textval = textval_html.text();
+                                        }else{
+                                          textval = val.value;
+                                        }
+                                      }
+                                      template_field += `
+                                      <label>${val.field_label}${req_symbol}</label><input type="text" class="form-control fieldnamec" name="fieldname" id="fieldname" placeholder="Enter ${val.field_label}" data-fieldName="${val.field_name}" data-fieldType="${val.field_type}" data-fieldLabel="${val.field_label}" value="${textval}" onblur="checkfieldName(this);" minlength="${minval}" maxlength="${maxval}" ${required}/>`;
+                                    }
+                                  template_field += `</div>
+                                  <div>
+                                      <input type="hidden" value="${val.field_name}" class="field_name_key"/>
+                                  </div>`;
+                                  template_field += `</div>`;                                    
+                                });
+                              });
+                            template_field += `</div>
+                        </div>`;
+        $("#member_field_by_selection").removeClass("hide");
+        $("#member_field_by_selection").append(template_field);
+}
+function deleteAccessMemberTypeChange(){
+  var member_type_selected = [];
+  var member_type_field = '';
+  $(".member_type_access").each(function(){
+    member_type_field++;
+    if($(this).val() != ""){
+      member_type_selected.push($(this).val());
+    }
+  });
+  //console.log('member_type_field', member_type_field);
+  //console.log('member_type_selected', member_type_selected);
+  if(member_type_field == 0){
+    add_access_list('','','');
+  }
+  if(member_type_selected.length == 0){
+    $("#member_field_by_selection").empty();
+  }else{
+    var member_type_data = {
+      "member_type_ids": member_type_selected
+    }
+    $.ajax({
+      url: API_BASE_URL + 'user_type_fields_list/',
+      type: 'POST',
+      data: JSON.stringify(member_type_data),
+      headers: { "Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token },
+      success: function (response) {
+      var field_labels = document.querySelectorAll("[data-fieldLabel]");
+                  var responses = [];
+                  $.each(response, function (i, val) {
+                    var valueExist = checkValueExistAttr(val.field_label, field_labels);
+                    if(valueExist != ""){
+                      var inp_val = document.querySelector("[data-fieldLabel='"+val.field_label+"']").value;
+                      responses.push({field_label:val.field_label, field_name:val.field_name, field_type:val.field_type, id: val.id, is_required:val.is_required, maximum:val.maximum, minimum:val.minimum, supported_file_types:val.supported_file_types, value: inp_val, member_type_id: val.member_type_id, member_type_name: val.member_type_name });
+                    }else{
+                    }
+                  });
+
+        const groups = responses.reduce((groups, item) => {
+          const member_type_name = (groups[item.member_type_name] || []);
+          member_type_name.push(item);
+          groups[item.member_type_name] = member_type_name;
+          return groups;
+        }, {});
+        $("#member_field_by_selection").empty();
+        var template_field = '';
+            template_field += `<div class="row">
+                                <div class="col-12">`;
+                                  $.each(groups, function (ik, valk) {
+                                    template_field += `<h6 style="margin-top: 30px;">Member Type:  <span> ${ik}</span></h6>`;
+                                    $.each(valk, function (i, val) {
+                                      var minval ="";
+                                      var maxval ="";
+                                      var required = "";
+                                      var req_symbol = ""
+                                      if(val.is_required){
+                                        required = "required";
+                                        req_symbol = `<span style="color:#ff0000">*</span>`;
+                                      }
+                                      template_field += `<div class="field_type_container_row">
+                                        <div class="col-md-12 mb-4">`;
+                                      if(val.field_type == "alphabet" || val.field_type == "alpha_numeric" || val.field_type == "alpha_numeric_special"){
+                                        minval = val.minimum;
+                                        maxval = val.maximum;
+                                        var textval = "";
+                                        if(val.value != "" && val.value != null){
+                                          if(val.field_name == "description"){
+                                            textval_html = $(val.value);
+                                            textval = textval_html.text();
+                                          }else{
+                                            textval = val.value;
+                                          }
+                                        }
+                                      template_field += `<label>${val.field_label}${req_symbol}</label><input type="text" class="form-control fieldnamec" name="fieldname" id="fieldname" placeholder="Enter ${val.field_label}" data-fieldName="${val.field_name}" data-fieldType="${val.field_type}" data-fieldLabel="${val.field_label}" value="${textval}" onblur="checkfieldName(this);" minlength="${minval}" maxlength="${maxval}" ${required}/>`;
+                                          }else{
+                                        minval = 1;
+                                        maxval = 512;
+                                        var textval = "";
+                                        if(val.value != "" && val.value != null){
+                                          if(val.field_name == "description"){
+                                            textval_html = $(val.value);
+                                            textval = textval_html.text();
+                                          }else{
+                                            textval = val.value;
+                                          }
+                                        }
+                                      template_field += `<label>${val.field_label}${req_symbol}</label><input type="text" class="form-control fieldnamec" name="fieldname" id="fieldname" placeholder="Enter ${val.field_label}" data-fieldName="${val.field_name}" data-fieldType="${val.field_type}" data-fieldLabel="${val.field_label}" value="${textval}" onblur="checkfieldName(this);" minlength="${minval}" maxlength="${maxval}" ${required}/>`;
+                                          }
+                                        template_field += `</div>
+                                        <div>
+                                            <input type="hidden" value="${val.field_name}" class="field_name_key"/>
+                                        </div>`;
+                                        template_field += `</div>`;                                    
+                                      });                                   
+                                    });
+                  template_field += `</div>
+              </div>`;
+          $("#member_field_by_selection").removeClass("hide");
+          $("#member_field_by_selection").append(template_field);
+      }
+    });
+  }
+}*/
+function roleChange(el){
+  var selected_role = el.value;
+
+  $(el).removeClass("is-invalid");
+  $(el).next().remove();
+  if(selected_role == ""){
+    $(el).addClass("is-invalid");
+    $(el).after(`<em for="role_select" class="error help-block" style="position: absolute;bottom: -18px;">Please Select Role</em>`);
+    return;
+  }
+}
+/*function checkfieldName(e){
+  $(e).removeClass("is-invalid");
+  $(e).next().remove();
+  var validName = true;
+  var parentContainer = e.closest('.field_type_container_row');
+  //console.log($(e).attr("required"));
+  var field_label_name = e.getAttribute("data-fieldLabel");
+  var req_field = $(e).attr("required");
+  if(e.value.trim() == ""){
+    if(req_field != undefined){
+      validName = false;
+      $(e).addClass("is-invalid");
+      $(e).after(`<em for="field_type" class="error help-block" style="position: relative;">Please enter ${field_label_name}</em>`);
+    }
+  }else{
+    if(e.minLength != "" && e.value.length < e.minLength){
+      validName = false;
+      $(e).addClass("is-invalid");
+      $(e).after(`<em for="field_type" class="error help-block" style="position: relative;">${field_label_name} must consist of at least ${e.minLength} characters</em>`);
+    }
+    if(e.maxLength != "" && e.value.length > e.maxLength){
+      validName = false;
+      $(e).addClass("is-invalid");
+      $(e).after(`<em for="field_type" class="error help-block" style="position: relative;">${field_label_name} must consist of max of ${e.maxLength} characters</em>`);
+    }
+    if(e.getAttribute("data-fieldType") == "number" && isNaN(e.value)){
+      validName = false;
+      $(e).addClass("is-invalid");
+      $(e).after(`<em for="field_type" class="error help-block" style="position: relative;">Please enter a number</em>`);
+    }
+  }
+  return validName;
+}*/
+function deleteAccess(){
+  var access_row_id = $("#delete_id_access").val();
+  $('#'+access_row_id).remove();
+  //deleteAccessMemberTypeChange();
+  //toastr.success("Access deleted Successfully");
+}
+/************* First name validation Starts ******/
+$(document).on("blur", "#first_name", function (e) {
+  const _this = $(this);
+  const fieldValue = _this.val();
+
+  _validateMemberFName(_this, fieldValue, true);
+});
+
+function _validateMemberFName(el, fieldValue, displayMsg) {
+  let errorMsg;
+  let hasError = false;
+  const maxLength = 64;
+
+  if (displayMsg) {
+    $(el).next().remove();
+    $(el).removeClass("is-invalid");
+  }
+
+  const regex = /^\s*$/;
+  /*if (fieldValue.trim() == "") {
+    errorMsg = `Please enter First Name`;
+    hasError = true;
+  } else */
+  if (fieldValue.length > maxLength) {
+    errorMsg = `First Name should not exceed ${maxLength} characters`;
+    hasError = true;
+  } else {
+    errorMsg = "";
+    hasError = false;
+  }
+  if (hasError && displayMsg) {
+    el.after(`<em for="first_name" class="error help-block">${errorMsg}</em>`);
+    $(el).addClass("is-invalid");
+  }
+
+  return hasError;
+}
+/************* First name validation Ends ******/
+/************* Last name validation Starts ******/
+$(document).on("blur", "#last_name", function (e) {
+  const _this = $(this);
+  const fieldValue = _this.val();
+
+  _validateMemberLName(_this, fieldValue, true);
+});
+
+function _validateMemberLName(el, fieldValue, displayMsg) {
+  let errorMsg;
+  let hasError = false;
+  const maxLength = 64;
+
+  if (displayMsg) {
+    $(el).next().remove();
+    $(el).removeClass("is-invalid");
+  }
+
+  const regex = /^\s*$/;
+  /*if (fieldValue.trim() == "") {
+    errorMsg = `Please enter Last Name`;
+    hasError = true;
+  } else */
+  if (fieldValue.length > maxLength) {
+    errorMsg = `Last Name should not exceed ${maxLength} characters`;
+    hasError = true;
+  } else {
+    errorMsg = "";
+    hasError = false;
+  }
+
+  if (hasError && displayMsg) {
+    el.after(`<em for="last_name" class="error help-block">${errorMsg}</em>`);
+    $(el).addClass("is-invalid");
+  }
+
+  return hasError;
+}
+/************* Last name validation Ends ******/
+/************* Mobile Number validation Starts ******/
+$(document).on("blur", "#phone_number", function (e) {
+  const _this = $(this);
+  const fieldValue = _this.val();
+
+  _validateMemberPhoneNo(_this, fieldValue, true);
+});
+
+function _validateMemberPhoneNo(el, fieldValue, displayMsg) {
+  let errorMsg;
+  let hasError = false;
+  const minValue = 0;
+  const maxValue = 9999999999;
+  const min_length = 10;
+  const max_length = 14;
+  
+  if (displayMsg) {
+    $(el.parent()).next().remove();
+    $(el).removeClass("is-invalid");
+  }
+
+  const regex = /^\s*$/;
+  if (fieldValue.trim() == "" && $("#email_id").val().trim() == "") {
+    errorMsg = `Please enter Mobile Number or Email Id`;
+    hasError = true;
+  }else if(fieldValue.trim().substring(0, 1) == "+"){
+    if (fieldValue && fieldValue.trim().split(/\s(.+)/)[1].length > 10) {
+      errorMsg = `Enter a valid Mobile Number`;
+      hasError = true;
+    } else if (fieldValue && fieldValue.trim().split(/\s(.+)/)[1].length < 10) {
+      errorMsg = `Enter a valid Mobile Number`;
+      hasError = true;
+    }else {
+      errorMsg = "";
+      hasError = false;
+    }
+
+  }else {
+    if (fieldValue && fieldValue.length > 10) {
+      errorMsg = `Enter a valid Mobile Number`;
+      hasError = true;
+    } else if (fieldValue && fieldValue.length < 10) {
+      errorMsg = `Enter a valid Mobile Number`;
+      hasError = true;
+    }else {
+      errorMsg = "";
+      hasError = false;
+    }
+  } 
+  
+  if (hasError && displayMsg) {
+    console.log(el.parent());
+    el.parent().after(`<em for="phone_number" class="error help-block">${errorMsg}</em>`);
+    $(el).addClass("is-invalid");
+  }
+
+  return hasError;
+}
+/************* Mobile Number validation Ends ******/
+/************* Email Id validation Starts ******/
+$(document).on("blur", "#email_id", function (e) {
+  const _this = $(this);
+  const fieldValue = _this.val();
+
+  var hasEmailError = _validateMemberEmail(_this, fieldValue, true);
+  /*if (!hasEmailError) {
+  
+    //console.log("CHECKED");
+    ajaxValidationMailID(fieldValue);
+
+  }*/
+});
+
+function _validateMemberEmail(el, fieldValue, displayMsg = true) {
+  let errorMsg;
+  let hasError = false;
+
+  if (displayMsg) {
+    $(el).next().remove();
+    $(el).removeClass("is-invalid");
+  }
+
+  const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+  if (fieldValue.trim() == "" && $("#phone_number").val().trim() == "") {
+    errorMsg = `Please enter Email Id or Mobile Number`;
+    hasError = true;
+  } else if (fieldValue && !regex.test(fieldValue)) {
+    errorMsg = `Please enter a valid Email Id`;
+    hasError = true;
+  } else {
+    errorMsg = "";
+    hasError = false;
+  }
+  if (hasError && displayMsg) {
+    el.after(`<em for="email_id" class="error help-block">${errorMsg}</em>`);
+    $(el).addClass("is-invalid");
+  }
+
+  return hasError;
+}
+
+/*function ajaxValidationMailID(mailID){
+  //    //https://elearningadmin.zaigoinfotech.com/email_login/
+  var bool = false;
+  $.ajax({
+    url: API_BASE_CAS_URL + "/email_login/",
+    method: "POST",
+    type: 'POST', // For jQuery < 1.9
+    cache: false,
+    contentType: false,
+    processData: false,
+    async: false,
+    data: JSON.stringify({
+      "email_id": mailID
+    }),
+    headers: {
+      "Authorization" : "Bearer " + getUserInfo().access_token,
+      "Content-Type": "application/json"
+    },
+    success: function(response){
+      $("#email_id").next().remove();
+      $("#email_id").removeClass("is-invalid");
+      if(response.is_valid) {
+        bool = false;
+      } else {
+        bool = true;
+      $("#email_id").addClass("is-invalid");
+      $("#email_id").after(`<em for="email_id" class="error help-block">Email already exisit!</em>`);
+        //toastr.error("Email already exisit!" );
+      }
+    },
+    error: function(error) {
+        bool = true;
+      $("#email_id").addClass("is-invalid");
+      $("#email_id").after(`<em for="email_id" class="error help-block">Email already exisit!</em>`);
+      //toastr.error("Email already exisit!" );
+    }
+  });
+  return bool;
+}*/
+/************* Email Id validation Ends ******/
+
+$("#create_member_submit").click(function(){
+  //$("#create_member_submit").attr("disabled", true);
+  var first_name = document.getElementById("first_name");
+  var last_name = document.getElementById("last_name");
+  var mobile_number = document.getElementById("phone_number");
+  var emailid = document.getElementById("email_id");
+  var formData = new FormData();
+  formData.append("first_name", first_name.value);
+  formData.append("last_name", last_name.value);
+  //var first_last_name = first_name.value.trim() +" "+last_name.value.trim();
+  //formData.append("name", first_last_name);
+  if(mobile_number.value.trim().substring(0, 1) == "+"){
+    var mobilenumberarr = mobile_number.value.trim().split(/\s(.+)/);
+    formData.append("phone_number", mobilenumberarr[1]);
+    formData.append("region_code", mobilenumberarr[0]);
+    formData.append("mobile_number", mobilenumberarr[1]);
+  }else{
+    var input = document.querySelector('#phone_number');
+    var iti = window.intlTelInputGlobals.getInstance(input);
+    var region_code = iti.getSelectedCountryData();
+    formData.append("phone_number", mobile_number.value);
+    formData.append("region_code", "+"+region_code.dialCode);
+    formData.append("mobile_number", mobile_number.value);
+  }
+  formData.append("email_id", emailid.value);
+  let formHasError = false;
+  for (const [fieldName, fieldValue] of formData.entries()) {
+    const fieldValidationStatus = validateFields(fieldName, fieldValue);
+    formHasError = formHasError || fieldValidationStatus;
+  }
+  var profileUpdated = $("#profile_url").val();
+  console.log('profileUpdated', profileUpdated);
+  if(profileUpdated == ""){
+  }else{
+    var profile_file_length = document.getElementById('profile').files.length
+    if(profile_file_length > 0){
+      $.each($('input[name^="profile"]')[0].files, function (i, file) {
+        formData.append("m_image", file, file.name);
+      });
+    }
+  }
+
+  formData.append("status", 1);
+  var filterLists = [];
+  var fileTypeData = []; 
+  var valid = 0;
+  var sameSelect = 0;
+  /*$.each($(".added_list"), function(a,b){
+        $(b.querySelector(".platform_select")).removeClass("is-invalid");
+        $(b.querySelector(".platform_select")).next().remove();
+        $(b.querySelector(".member_type_access")).removeClass("is-invalid");
+        $(b.querySelector(".member_type_access")).next().remove();
+        $(b.querySelector(".role_select")).removeClass("is-invalid");
+        $(b.querySelector(".role_select")).next().remove();
+        $(b.querySelector(".sameSelect")).remove();
+        //$(b.querySelector(".role_select")).parent().next().remove();
+        var platform_sel_id = b.querySelector(".platform_select").value.trim();
+        var membertype_sel_id = b.querySelector(".member_type_access").value.trim();
+        var role_sel_id = b.querySelector(".role_select").value.trim();
+        //if(platform_sel_id == "" && membertype_sel_id == "" && role_sel_id == ""){
+        //}else{
+          var allSelected = 0;
+          if(platform_sel_id == ""){
+            valid++;
+            allSelected++;
+            $(b.querySelector(".platform_select")).addClass("is-invalid");
+            $(b.querySelector(".platform_select")).after(`<span for="platform_select" class="error help-block" style="position: absolute;margin-top: 0px;left: 0;bottom: -17px;">Please Select Platform</span>`);
+          }
+          if(membertype_sel_id == ""){
+            valid++;
+            allSelected++;
+            $(b.querySelector(".member_type_access")).addClass("is-invalid");
+            $(b.querySelector(".member_type_access")).after(`<span for="member_type_access" class="error help-block" style="position: absolute;margin-top: 0px;left: 0;bottom: -17px;">Please Select Member Type</span>`);
+          }
+
+          if(b.querySelector(".platform_select").value != ""){
+              var filterRows = document.querySelectorAll(".added_list");
+              //var member_typeVal = b.querySelector(".member_type_access").value;
+              var platform_typeVal = b.querySelector(".platform_select").value;
+              $.each(filterRows, function(c, d){
+                if(b != d){
+                  if(platform_typeVal == d.querySelector(".platform_select").value){
+                    sameSelect++;
+
+                  $(b.querySelector(".platform_select")).addClass("is-invalid");
+                  $(b).append(`<span for="platform_select" class="error help-block sameSelect" style="position: relative;margin-top: 0px;left: 0;">Please select different Platform</span>`);
+                  }
+                }
+              });
+          }
+          if(role_sel_id == ""){
+            valid++;
+            allSelected++;
+            $(b.querySelector(".role_select")).addClass("is-invalid");
+            $(b.querySelector(".role_select")).after(`<span for="role_select" class="error help-block" style="position: absolute;left: 0;bottom: -17px;">Please Select Role</span>`);
+          }
+          if(allSelected == 0){
+            filterLists.push({platform_id: platform_sel_id, member_type_id: membertype_sel_id, role_id: role_sel_id});
+          }
+      });
+      if(sameSelect > 1){
+        valid++;
+      }*/
+      formData.append("access_types", JSON.stringify(filterLists));
+
+  /*$.each($(".field_type_container_row"), function(e,f){
+    var field_keyField = f.querySelector(".field_name_key").value;
+    var field_nameField = f.querySelector(".fieldnamec");
+    if(f.querySelector(".fieldnamec").getAttribute("data-fieldType") == "number" && !isNaN(f.querySelector(".fieldnamec").value) && f.querySelector(".fieldnamec").value.trim() != ""){
+      var field_namValue = parseFloat(f.querySelector(".fieldnamec").value);
+    }else{
+      var field_namValue = f.querySelector(".fieldnamec").value;
+    }
+    var name_is_valid = checkfieldName(field_nameField);
+    if(name_is_valid == false){
+      valid++;
+    }
+    formData.append(field_keyField, field_namValue);
+  });*/
+  formObj = {};
+  for (var pair of formData.entries()) {
+    formObj[pair[0]] = pair[1]
+  }
+  if(!formHasError && valid == 0){
+    var URL  = USER_ENGINE_API_URL + 'member/';
+    var method = "POST";
+    var type = "POST";
+    var member_id = $("#editMember").attr("data-membereditid");
+    if(member_id !== "" && member_id != undefined && member_id !== "undefined"){
+      URL = USER_ENGINE_API_URL + 'member/'+member_id+'/';
+      method = "PUT";
+      type = "PUT";
+    }
+    $.ajax({
+      url: URL,
+      method: method,
+      type: type, // For jQuery < 1.9
+      cache: false,
+      contentType: false,
+      processData: false,
+      data: formData,
+      headers: {
+        "Authorization": "Bearer " + getUserInfo().access_token
+      },
+      success:function(response){
+        if(member_id !== "" && member_id != undefined && member_id !== "undefined"){
+          toastr.success("Member Details Updated Successfully");
+        }else{
+          toastr.success("Member Details Saved Successfully");
+        }
+        $("#backtoButton").trigger('click');
+      },
+      error: function(error) {
+        if (error.status === 401) {
+          alert("Session Expired, Please login again.");
+          logoutSession();
+        }
+        $("#create_member_submit").attr("disabled", false);
+            var errorJson = jQuery.parseJSON(error.responseText);
+            if(errorJson){
+              $.each(errorJson, function(key, value){
+                var fieldElement = document.querySelector(`[data-fieldName="${key}"]`);
+                if(fieldElement){
+                  if(key == "phone_number" &&( value == "Already Exists"  || value == "Already Taken")) {
+                    value = "Mobile Number already taken";
+                    toastr.error(value);
+                  }else{
+                    $(fieldElement).removeClass("is-invalid");
+                    $(fieldElement).next().remove();
+                    $(fieldElement).addClass("is-invalid");
+                    $(fieldElement).after(`<em for="platform_select" class="error help-block" style="position: relative;">${value}</em>`);
+                  }
+                }else{
+                  if(key == "mobile_number" && value == "Already Taken"){
+                    value = "Mobile Number already taken";
+                    toastr.error(value);
+                  }
+                }
+              });
+          }else{
+            toastr.error(error.responseText);
+          }
+      }
+    });
+  }else{
+    $("#create_member_submit").attr("disabled", false);
+  }
+});
+  /*************************** Field Validation starts ******************/
+
+//Create Form - Validate Fields On Form Submit
+function validateFields(fieldName, fieldValue) {
+  let validationStatus = false;
+  switch (fieldName) {
+    case "email_id":
+      var el = $(`[name='${fieldName}']`);
+      validationStatus = _validateMemberEmail(el, fieldValue, true);
+      /*if (!validationStatus) {
+        validationStatus = ajaxValidationMailID(fieldValue);
+      }*/
+      break;
+    case "first_name":
+      var el = $(`[name='${fieldName}']`);
+      validationStatus = _validateMemberFName(el, fieldValue, true);
+      break;
+    case "last_name":
+      var el = $(`[name='${fieldName}']`);
+      validationStatus = _validateMemberLName(el, fieldValue, true);
+      break;
+    case "phone_number":
+      var el = $(`[name='${fieldName}']`);
+      validationStatus = _validateMemberPhoneNo(el, fieldValue, true);
+      break;
+  }
+  return validationStatus;
+}
+/***************** Field Validation Ends ***********/ 
+
+$("#profile").change(function(){
+    console.log(this.files[0].size);
+    if(this.files[0].size > 4000000){
+       toastr.error("File size is too big, Max file size allowed is 4MB");
+       this.value = "";
+    }else{
+      readURL(this);
+    }
+});
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+          $("#profile_image").removeClass('hide');
+          $('#profile_image_img').attr('src', e.target.result);
+          $("#profile_url").val("imageadded");
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+/*function deleteProfilePopup(){
+  $("#delete_popupprofile").addClass("overlay_target");
+}
+function close_memberlist_del_popup(){
+  $("#delete_popupprofile").removeClass("overlay_target");
+}
+*/
+function deleteProfilePopup(){
+  $("#delete_popupprofile").addClass("overlay_target");
+}
+function close_profile_del_popup(){
+  $("#delete_popupprofile").removeClass("overlay_target");
+}
+function delete_profileImage(){
+    var member_id = $("#editMember").attr("data-membereditid");
+    if(member_id !== "" && member_id != undefined && member_id !== "undefined"){
+      var formData = new FormData();
+      formData.append("m_image", "");
+      URL = USER_ENGINE_API_URL + 'delete_member_image/'+member_id;
+      method = "PATCH";
+      type = "PATCH";
+      $.ajax({
+        url: URL,
+        method: method,
+        type: type, // For jQuery < 1.9
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: formData,
+        headers: {
+          "Authorization": "Bearer " + getUserInfo().access_token
+        },
+        success:function(response){
+            toastr.success("Member Profile Deleted Successfully");
+            $("#profile_image_img").attr("src", "");
+            $("#profile_url").val("");
+            $("#profile_image").addClass("hide");
+            $('#profile').val('');
+            $("#delete_popupprofile").removeClass("overlay_target");
+        },
+        error: function(error) {
+          console.log(error);
+        }
+      });
+    }
+    
+} 
+$("#cancel_create_member").click(function(){
+  $("#backtoButton").trigger('click');
+});
+function delete_access_popup(access_row_id){
+  //$("#delete_access_msg h6").text("Are you sure you want to delete list '"+name+"'?");
+  $("#delete_id_access").val(access_row_id);
+  $("#delete_popupaccess").addClass("overlay_target");
+}
+function close_access_del_popup(){
+  $("#delete_id_access").val("");
+  $("#delete_popupaccess").removeClass("overlay_target");
+}
+
+//$('.form-control').keypress(function(event){
+$(document).on("keypress", "#create_member .form-control", function (event) {
+    event.stopImmediatePropagation();
+  if (event.key === "Enter") {
+    $(".form-control").blur(); 
+    event.preventDefault();
+    $("#create_member_submit").click();
+    //$("#create_member_submit").attr('disabled', true);
+  }
+});
+</script>

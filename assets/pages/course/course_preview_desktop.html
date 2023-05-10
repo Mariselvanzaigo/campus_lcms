@@ -1,0 +1,66 @@
+
+	<div class="acnav__list wbg br-10 dpc-closeh" style="border-radius: 15px !important;background-color: unset;">
+		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	</div>
+	<div class="row loader" id="course_preview-loader" style="margin-top: 200px;"><span>Loading</span></div>
+<div class="row desktop_prev_container">
+	<div class="col-md-12 p-3" style="padding-top: 0rem !important;">
+		<div class="course_module_content" id="course_module_content_preview"style="padding-left: 9px;">
+			
+		</div>
+	</div>
+</div>
+<input type="hidden" id="course_param">
+<script type="text/javascript">
+	var xhrPreview = '';
+$(document).ready(function(){
+	setTimeout(function(){
+		var cid = document.getElementById("course_param").getAttribute("data-cid");
+		//get_assignee_details(cid, module_id);
+		//$("#mobile_preview").addClass("overlay_target");
+		  //var course_id = $("#dp_course_id").val();
+		    var url = API_CONTENT_URL + `/course_module_detail/?course_id=`+cid;
+
+		    xhrPreview = $.ajax({
+		      url: url,
+		      type: 'get',
+		      dataType: 'json',
+		      headers: {"Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token},
+		      success:function(data){
+		      var course_data_html = `<div class="course_data">
+		                                <div class="row">
+		                                  <div class="col-12 title-head">
+		                                  <h4 class="p-3" style="margin-bottom: -20px;">${data.course_name}</h4>
+		                                  </div>
+		                                  <div class="col-12 title-head">
+		                                  <p class="p-3" style="margin-bottom: 0rem !important;">${data.description}</p>
+		                                  </div>
+		                                </div>
+		                                <div class="row">
+		                                </div>
+		                              </div>`;
+		      var newDIVs = $("<div class='course' id='course_box' style='background-color: rgb(231 231 231);'></div>");
+		      get_list_preview( data.module_detail, newDIVs, 1, "mobile");
+		      var outerHtml = newDIVs.prop('outerHTML');
+		      $("#course_preview-loader").attr("style", "display:none;")
+		      document.getElementById("course_module_content_preview").innerHTML = course_data_html+outerHtml;
+		  	}, 
+		  	error: function(error) {
+	            if (error.status === 401) {
+	              alert("Session Expired, Please login again.");
+	              logoutSession();
+	            }
+		  		console.log(error);
+		  	}
+		    });
+	}, 0);
+});
+/*$(".btn-close").click(function(){
+	alert(1);
+});
+$(".btn-close").on("click", function(){
+	alert(2);
+});*/
+$('#popup_course_icon').on('hidden.bs.modal', function (event) {
+	xhrPreview.abort();
+	});

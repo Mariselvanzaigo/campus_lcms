@@ -1,0 +1,315 @@
+.box {
+	float: left;
+	padding: 50px 0px;
+}
+
+.clearfix::after {
+	clear: both;
+	display: table;
+}
+
+.options {
+	margin: 5px 0px 0px 0px;
+	float: left;
+}
+
+.pagination {
+	float: right;
+}
+
+.pagination a {
+	color: black;
+	float: left;
+	padding: 8px 16px;
+	text-decoration: none;
+	transition: background-color .3s;
+	border: 1px solid #ddd;
+	margin: 0 4px;
+}
+
+.pagination a.active {
+	background-color: #4CAF50;
+	color: white;
+	border: 1px solid #4CAF50;
+}
+
+.pagination a:hover:not(.active) {
+	background-color: #ddd;
+}
+
+
+.wrapper .left_icon .arrow_icon{
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.wrapper .course_head{
+    margin-left: -25px;
+    margin-top: -12px;
+}
+.wrapper .course_head .header_content{
+	cursor: pointer;
+}
+.wrapper .save_drft_btn{
+	margin-top: -50px;
+} 
+#course-box  h6 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 52px;
+  font-size: 14px;
+}
+#course_box .user_img_icon, #course_box .message_img_icon, #course_box .attach_img_icon{
+	position: relative;
+}
+#course_box li {
+	cursor: pointer;
+	clear: both;
+	margin-bottom: 15px;
+}
+#course_box .icon_counts{
+    position: absolute;
+    background-color: black;
+    color: white;
+    font-size: 11px;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    text-align: center;
+    right: 5px;
+    top: 22px;
+}
+.uploaded_display .fileup-file{
+    margin: 5px;
+    float: left;
+    width: 48%;
+}
+.uploaded_display .fileup-description{
+    height: 29px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.course_module_content .fileup-remove{
+    display: none;
+}
+.course_module_content .custom-file {
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  background-color: #e9e8ed;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 17px;
+  color: #9e9e9e;
+}
+.course_module_content .custom-file span.filename {
+  cursor:pointer;
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 8px;
+}
+.course_module_content span.name {
+  margin: 8px;
+  padding: 4px;
+  font-size: 14px;
+  color: #607d8b;
+  border-radius: 0px;
+}
+.dz-message span{
+
+    border-style: dashed;
+    border-color: #e0e0e0;
+    border-width: 2px;
+    width: auto;
+    padding-bottom: 44px;
+    width: 100%;
+    display: grid;
+    text-align: center;
+    padding-top: 40px;
+}
+
+#addCourses{
+    position: fixed !important;
+    right: 0px !important;
+    left: unset !important;
+    top: 0px;
+}
+.dz-preview{
+    width: 48.5%;
+    float: left;
+    border: 2px solid #d9d7d7;
+    margin-top: 10px; 
+    margin-left: 6px;
+}
+.dz-image{
+    width: 35%;
+    float: left;
+    padding-left: 6px;
+    padding-bottom: 6px;
+    padding-top: 6px;
+}
+.dz-image img{
+    width: 100px;
+    height: 100px;
+}
+.dz-details{
+    width: 50%;
+    float: left;
+    padding-top: 25px;
+}
+.dz-success-mark,  .dz-error-mark{
+    display: none !important;
+}
+.tag_cont_box{
+    float: left;
+}
+.dz-default{
+    margin: 5px;
+    margin-top: 60px;
+}
+.header_breadcrumbs .tbtn a{
+  background: #cbcbcb !important;
+}
+#course_module_content .course_module_pdf{
+  height: 500px;
+}
+#module_breadcrumbs{
+  display: block !important;
+}
+#module_breadcrumbs li{
+  display: inline-flex;
+}
+.course_module_details .course_head_right li{
+  display: inline-block;
+}
+.course_details .wrapper .course_head .header_breadcrumbs a {
+	color: #97a5ba;
+	font-size: 16px;
+	font-weight: 400;
+	margin-top: 12px;
+	display: block;
+}
+#module_breadcrumbs .breadcrumb-item+.breadcrumb-item::before {
+    padding-top: 12px;
+}
+#module_breadcrumbs {
+    padding-left: 0rem !important;
+    margin-top: -9px;
+}
+.course_module_details .course_head_right ul{
+  float: right;
+}
+.course_module_details{
+      padding-left: 0px;
+}
+.image_content img{
+  width: 100%;
+  object-fit: contain;
+  height: auto;
+}
+.show-more_content_text, .show-more_content_text_ind, .show-more_audio_content, .show-more_audio_content_ind
+, .show-more_video_content, .show-more_video_content_ind, .show-more_slide_content, .show-more_slide_content_ind{
+    width: 100%;
+    text-align: right;
+    display: none;
+    cursor: pointer;
+}
+.load-more_content_text, .load-more_content_text_ind, .load-more_audio_content, .load-more_audio_content_ind
+, .load-more_video_content, .load-more_video_content_ind, .load-more_slide_content, .load-more_slide_content_ind{
+    width: 100%;
+    text-align: center;
+    display: block;
+    cursor: pointer;
+    background: #20204f;
+    color: white;
+    border-radius: 2px;
+    font-weight: 600;
+    /* margin: auto; */
+    /* width: 50%;*/
+}
+.dz-filename span{
+  word-break: break-word;
+}
+.ck-editor__editable {
+  min-height: 200px;
+}
+.dz-filename{
+  height: 52px;
+  overflow: hidden;
+}
+.video_spinner {
+  display: inline-block;
+  width: 17px;
+  margin-left: 10px;
+  margin-bottom: 4px;
+}
+.read-more{
+    font-size: 12px;
+    margin-top: 12px;
+    cursor: pointer;
+    display: block;
+    text-align: left;
+    background: #20204f;
+    color: white;
+    padding: 3px;
+    width: fit-content;
+    border-radius: 3px;
+}
+.read-less{
+    font-size: 12px;
+    margin-top: 12px;
+    cursor: pointer;
+    display: none;
+    text-align: left; 
+    background: #20204f;
+    color: white;
+    padding: 3px;
+    width: fit-content;
+    border-radius: 3px;
+}
+
+.comment-wrapper.open .read-more {
+    display: none;
+
+}
+.comment-wrapper.open .read-less {
+    display: block;   
+
+}
+.comment-wrapper{
+    background: #f9f9fb;
+    padding: 5px;
+    border-radius: 5px;
+}
+.comment-wrapper .content_show_hide {
+    text-align: left;
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+.comment-wrapper .content_hide_show {
+    text-align: left;
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+.comment-wrapper.open .content_show_hide {
+    display: block;
+}
+.slide_content p, .video_content p, .audio_content p{
+      overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
