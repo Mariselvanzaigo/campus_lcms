@@ -23,4 +23,14 @@ const menuSchema = {
   components_buttons: {
     template: "/assets/pages/components/button.html",
   },
+  programlist: {
+    template: "/assets/pages/program/programorganizationlist.html",
+    // callback: organizationList,
+    url: "/program",
+  },
+  courseslist: {
+    template: "/assets/pages/courses/courses.html",
+    // callback: organizationList,
+    url: "/courses",
+  },
 };
