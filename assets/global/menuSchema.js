@@ -25,7 +25,7 @@ const menuSchema = {
   },
   programlist: {
     template: "/assets/pages/program/programorganizationlist.html",
-    // callback: organizationList,
+    callback: programCallbacks,
     url: "/program",
   },
   courseslist: {
