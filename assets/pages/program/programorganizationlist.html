@@ -1,233 +1,439 @@
 <div class="container-fluid">
 
-    <div class="row">
-      <div class="col-12 title-head mb-3">
-        <h2>Programs <dfn data-info="Lorem ipsum dolor sit amet, perspiciatis consectetur dolor."><i class="fas fa-info-circle"></i></dfn></h2>                
-        <span class="orange-btn nbtn">
-            <button type="button" class="btn btn-primary" data-flinkto="createprogram" >
-              <i class="fas fa-plus"></i> Create Program
-            </button>
-          </span>
-    </div>      
+  <div class="row">
+    <div class="col-12 title-head mb-3">
+      <h2>Programs <dfn data-info="Lorem ipsum dolor sit amet, perspiciatis consectetur dolor."><i
+            class="fas fa-info-circle"></i></dfn></h2>
+      <span class="orange-btn nbtn">
+        <button type="button" class="btn btn-primary" data-flinkto="createprogram">
+          <i class="fas fa-plus"></i> Create Program
+        </button>
+      </span>
     </div>
+  </div>
 
-    <div class="row">
-      
-        <div class="col-md-12">
-          <div class="white-bg relative"> 
-            
-            <div class="orglist">
+  <div class="row">
 
-                <input type="checkbox" id="menu-toggle">
-                <label for="menu-toggle" class="menu-icon"></label>
-                
-                <div class="slideout-sidebar">            
-                    <div class="sidehead p-3">
-                        <h4>Organization List </h4>
-                    </div>
-                    <div class="d-flex justify-content-start align-items-center step-search relative mb-3">
-                        <i class="fas fa-search"></i> 
-                        <input class="form-control form-control-dark w-100" type="text" placeholder="Search Organization or Institute" aria-label="Search" id="">
-                    </div>
+    <div class="col-md-12">
+      <div class="white-bg relative">
 
+        <div class="orglist">
 
-                    <div class="accordion" id="accordionExample">
-                        <div class="accordion-item">
-                          <h2 class="accordion-header" id="headingOne">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                SRM Organization
-                            </button>
-                          </h2>
-                          <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <ul>
-                                    <li><a href='#'>SRM Arts & Science</a></li>
-                                    <li><a href='#'>SRM Engineering Institute</a></li>
-                                    <li><a href='#'>SRM Medicals Institute</a></li>
-                                    <li><a href='#'>SRM Science & Technology's</a></li>
-                                </ul>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="accordion-item">
-                          <h2 class="accordion-header" id="headingTwo">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                VELS Organization
-                            </button>
-                          </h2>
-                          <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <ul>
-                                    <li><a href='#'>SRM Arts & Science</a></li>
-                                    <li><a href='#'>SRM Engineering Institute</a></li>
-                                    <li><a href='#'>SRM Medicals Institute</a></li>
-                                    <li><a href='#'>SRM Science & Technology's</a></li>
-                                </ul>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="accordion-item">
-                          <h2 class="accordion-header" id="headingThree">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                MIT Group of  organization
-                            </button>
-                          </h2>
-                          <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <ul>
-                                    <li><a href='#'>SRM Arts & Science</a></li>
-                                    <li><a href='#'>SRM Engineering Institute</a></li>
-                                    <li><a href='#'>SRM Medicals Institute</a></li>
-                                    <li><a href='#'>SRM Science & Technology's</a></li>
-                                </ul>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+          <input type="checkbox" id="menu-toggle">
+          <label for="menu-toggle" class="menu-icon"></label>
 
-
-                    
-                </div>
-                <div class="content-container">
-                    <div class="container p-3">
-                        <div class="searchbar">
-                            <h4>SRM - University</h4>
-                        </div>
-                        
-                        <div class="row mt-4 mb-4">
-                            <div class="col-lg-5 col-md-5">
-                              <div class="topsearch relative">
-                                <input class="form-control form-control-dark w-100" type="text" placeholder="Program Name" aria-label="Search" id="search_data" onblur="searchCourseBlur()">
-                                <i class="fas fa-search"></i> 
-                              </div>
-                            </div>
-                            <div class="col-lg-3 col-md-3">
-                              <div class="dropdown-select">
-                                <select class="sort-select" id="courses_list" name="courses_list" onchange="searchCourseBlur()">
-                                  <option value="">Select Stream</option>
-                                </select>
-                              </div>
-                            </div>
-                            <div class="col-lg-3 col-md-3">
-                                <div class="dropdown-select">
-                                  <select class="sort-select" id="courses_list" name="courses_list" onchange="searchCourseBlur()">
-                                    <option value="">Select Course</option>
-                                  </select>
-                                </div>
-                              </div>
-                            <div class="col-lg-1 col-md-1 cc-right pl-0">
-                              <div class="advance-search">
-                                <span class="dot"><a><i class="fas fa-search-plus"></i></a></span>
-                              </div>
-                            </div>
-                        </div>
-
-                        <div class="academic-year-section">
-                            <div class="row data">
-                                <div class="col-md-8">
-                                    <div class="dropdown-select">
-                                        <select class="sort-select" id="courses_list" name="courses_list" onchange="searchCourseBlur()">
-                                          <option value="">Academic Year</option>
-                                        </select>
-                                      </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="s-search">
-                                        <input type="submit" value="Search">
-                                    </div>
-                                </div>
-                                <div class="col-lg-1 col-md-1 cc-right pl-0">
-                                    <div class="advance-close">
-                                      <span class="close-dot"><a><i class="fas fa-times"></i></a></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="org-table mt-4">
-                         <table class="table">
-                            <thead>
-                              <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">First</th>
-                                <th scope="col">Last</th>
-                                <th scope="col">Handle</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">3</th>
-                                <td>Larry</td>
-                                <td>the Bird</td>
-                                <td>@twitter</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-
-                    </div>            
-                </div>
-            
+          <div class="slideout-sidebar">
+            <div class="sidehead p-3">
+              <h4>Organization List </h4>
             </div>
-            
-          </div>        
+            <div class="topsearch relative mb-3">
+              <input class="form-control form-control-dark w-100" type="text" placeholder="Search here"
+                aria-label="Search" id="pr_searchOrganization">
+              <i class="fas fa-search" id="pr_cms-org_search"></i>
+            </div>
+            <div class="topsearch relative mb-3" style="height: 20px;">
+              <a class="btn btn-sm btn-danger btnReset d-none" id="pr_resetButtonOrglist"
+                style="position:relative;color: white;float:right">Reset</a>
+            </div>
+
+
+            <div id="prg_orglist">
+
+              <!-----------Platform view start---------------->
+
+              <!--------------loader start--------------->
+              <div class="row loader disp_block" id="prg_orglist-loader"><span>Loading Organization List</span></div>
+              <!--------------loader end--------------->
+
+              <div class="accordion" id="prg_orglist_items">
+
+              </div>
+
+              <!--------------pagination start--------------->
+              <div class="container-fluid pagination-cont cs-number p-0 OrglistPagination" style="display: none;">
+                <div id="prorg_pagination-container-to" class="orglist__pagination"></div>
+                <div id="pagination-container-goto" class="goto_page d-none"><span class="goto_page_text">Go to
+                    page</span>
+                  <input type="number" value="" id="prorg_go_to_pageto" maxlength="3" min="1" class=" d-none">
+                  <a class="goto_go d-none" id="prorg_gotoques"
+                    onclick="goto_pageCall('prorg_pagination-container-to', 'prorg_go_to_pageto');"><span>Go<i
+                        class="fa fa-angle-right" aria-hidden="true"></i>
+                    </span></a>
+                </div>
+              </div>
+              <!--------------pagination end--------------->
+
+              <!--------------No records found start--------------->
+              <div id="nodataFound_platformlist" style="display: none;">
+                <div class="row">
+                  <div class="col-12 title-head no-record mb-3 text-center">
+                    <p><span class="text-danger">No Records Found!</span></p>
+                  </div>
+                </div>
+              </div>
+              <!--------------No records found end--------------->
+
+              <!---------Platform view end-------->
+            </div>
+
+
+
+          </div>
+          <div class="content-container">
+            <div class="container p-3">
+              <div class="searchbar">
+                <h4>SRM - University</h4>
+              </div>
+
+              <div class="row mt-4 mb-4">
+                <div class="col-lg-5 col-md-5">
+                  <div class="topsearch relative">
+                    <input class="form-control form-control-dark w-100" type="text" placeholder="Program Name"
+                      aria-label="Search" id="search_data" onblur="searchCourseBlur()">
+                    <i class="fas fa-search"></i>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-3">
+                  <div class="dropdown-select">
+                    <select class="sort-select" id="courses_list" name="courses_list" onchange="searchCourseBlur()">
+                      <option value="">Select Stream</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-3">
+                  <div class="dropdown-select">
+                    <select class="sort-select" id="courses_list" name="courses_list" onchange="searchCourseBlur()">
+                      <option value="">Select Course</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-1 col-md-1 cc-right pl-0">
+                  <div class="advance-search">
+                    <span class="dot"><a><i class="fas fa-search-plus"></i></a></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="academic-year-section">
+                <div class="row data">
+                  <div class="col-md-8">
+                    <div class="dropdown-select">
+                      <select class="sort-select" id="courses_list" name="courses_list" onchange="searchCourseBlur()">
+                        <option value="">Academic Year</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="s-search">
+                      <input type="submit" value="Search">
+                    </div>
+                  </div>
+                  <div class="col-lg-1 col-md-1 cc-right pl-0">
+                    <div class="advance-close">
+                      <span class="close-dot"><a><i class="fas fa-times"></i></a></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="org-table mt-4">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">First</th>
+                      <th scope="col">Last</th>
+                      <th scope="col">Handle</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>Mark</td>
+                      <td>Otto</td>
+                      <td>@mdo</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">2</th>
+                      <td>Jacob</td>
+                      <td>Thornton</td>
+                      <td>@fat</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">3</th>
+                      <td>Larry</td>
+                      <td>the Bird</td>
+                      <td>@twitter</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+            </div>
+          </div>
+
         </div>
+
+      </div>
     </div>
+  </div>
 
 </div>
 
 
 <script>
-    $('.menu-icon').click( function(){
-        if ( $(this).hasClass('current') ) {
-            $(this).removeClass('current');
-        } else {
-            $('.menu-icon.current').removeClass('current');
-            $(this).addClass('current');    
-        }
-    });
-    
-    $(document).on('click', '.addcurrentclass', function () {
-        if ( $(this).hasClass('current') ) {
-            $(this).removeClass('current');
-        } else {
-            $('li.current').removeClass('current');
-            $(this).addClass('current');    
-        }
-    });
+  $('.menu-icon').click(function () {
+    if ($(this).hasClass('current')) {
+      $(this).removeClass('current');
+    } else {
+      $('.menu-icon.current').removeClass('current');
+      $(this).addClass('current');
+    }
+  });
 
-    $(document).ready(function(){
-        $(".menu-icon").click(function(){
-            $(".slideout-sidebar").toggleClass("anim1");		
-        });
-    });
-    
+  $(document).on('click', '.addcurrentclass', function () {
+    if ($(this).hasClass('current')) {
+      $(this).removeClass('current');
+    } else {
+      $('li.current').removeClass('current');
+      $(this).addClass('current');
+    }
+  });
 
-    $('.data').hide()
-    $('.dot').on('click',function(){
+  $(document).ready(function () {
+    $(".menu-icon").click(function () {
+      $(".slideout-sidebar").toggleClass("anim1");
+    });
+  });
+
+
+  $('.data').hide()
+  $('.dot').on('click', function () {
     $('.data').toggle();
-    });
-    $('.close-dot').on('click',function(){
+  });
+  $('.close-dot').on('click', function () {
     $('.data').hide()
+  });
+</script>
+
+
+<script>
+// var selector = ".org-list ul li a";
+
+// $(selector).on("click", function () {
+//   $(selector).removeClass("active");
+//   $(this).addClass("active");
+// });
+
+
+  $(document).ready(function () {
+    getOrglistCall("");
+    $('#pr_searchOrganization').on('blur', function (e) {
+      e.stopImmediatePropagation();
+      searchOrgOnBlur();
     });
+  });
 
 
+var pr_searchOrganization_inp = document.getElementById("pr_searchOrganization");
+pr_searchOrganization_inp.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    var searchVal = $("#pr_searchOrganization").val().trim();
+    getOrglistCall(searchVal);
+  }
+});
 
-    
-      </script>
+var prorg_go_to_pageto_inp = document.getElementById("prorg_go_to_pageto");
+prorg_go_to_pageto_inp.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    $("#prorg_gotoques").trigger("click");
+  }
+});
+
+$(document).on("click", "#pr_resetButtonOrglist", function(){
+
+  $("#pr_searchOrganization").val("");
+  //$("#search_data_sortby").val("");
+
+  localStorage.setItem("pr_orgl_pageNum", "");
+  localStorage.setItem("pr_orgl_search", "");
+  $("#prorg_go_to_pageto").val("");
+  getOrglistCall("");
+});
+window.onbeforeunload = function (e) {
+  window.onunload = function () {
+    emptylocalStorageOrgList();
+  }
+  return undefined;
+};
+
+function searchOrgOnBlur(){
+  var searchVal = $("#pr_searchOrganization").val().trim();
+  getOrglistCall(searchVal);
+}
+function emptylocalStoragePlatform(){
+  localStorage.setItem("pr_orgl_pageNum", "");
+  localStorage.setItem("pr_orgl_search", "");
+  $("#prorg_go_to_pageto").val(""); 
+}
+
+  function getOrglistCall(searchVal) {
+    console.log(searchVal);
+
+    localStorage.setItem("pr_orgl_pageNum", "");
+    localStorage.setItem("pr_orgl_search", "");
+    $("#prorg_go_to_pageto").val("");
+
+    if (searchVal) {
+      searchVal = "?search=" + searchVal;
+      $('#pr_resetButtonOrglist').removeClass("d-none");
+    } else {
+      $('#pr_resetButtonOrglist').addClass("d-none");
+    }
+    getOrglist(searchVal);
+  }
 
 
+  //To Paginate platform list Data
+  function getOrglist(parameter) {
+    let isFirst = true;
+    var pr_orgl_pageNum = localStorage.getItem("pr_orgl_pageNum");
+    //console.log('pr_orgl_pageNum', pr_orgl_pageNum);
+    if (isFirst == true && pr_orgl_pageNum != "") {
+      var url = new URLSearchParams(pr_orgl_pageNum);
+      var search_inp = url.get("search");
+      var searchval = 0;
+      if (search_inp != "" && search_inp != null) {
+        $("#pr_searchOrganization").val(search_inp);
+        searchval++;
+      }
+      if (searchval > 0) {
+        $('#pr_resetButtonOrglist').removeClass("d-none");
+      } else {
+        $('#pr_resetButtonOrglist').addClass("d-none");
+      }
+      parameter = pr_orgl_pageNum;
+    }
+    if ($("#prorg_pagination-container-to").length > 0) {
+      $('#prorg_pagination-container-to').pagination({
+        dataSource: API_BASE_URL + 'parent_institute/list/' + parameter,
+        locator: 'data',
+        totalNumberLocator: function (response) {
+          setTimeout(function () {
+            $(".paginationjs-prev").attr("data-num", "1");
+            $(".paginationjs-next").attr("data-num", response.total_pages);
+            $("#prorg_go_to_pageto").attr("min", 1);
+            $("#prorg_go_to_pageto").attr("max", response.total_pages);
+          }, 500);
+          return response.total;
+        },
+        alias: {
+          pageNumber: 'page',
+          pageSize: 'per_page',
+        },
+        pageSize: 9,
+        ajax: {
+          beforeSend: function (request) {
+            if (getUserInfo() == null) {
+              console.log(SITE_URL_PROTOCOL);
+              window.location.href = SITE_URL_PROTOCOL + "/login";
+            }
+            request.setRequestHeader("Authorization", "Bearer " + getUserInfo().access_token);
+          },
+          complete: function (jqXHR, textStatus) {
+            if (jqXHR.status === 200 || jqXHR.readyState === 0 || jqXHR.status === 0) {
+              var orgl_pageNum = localStorage.getItem("pr_orgl_pageNum");
+              if (isFirst == true && orgl_pageNum != "") {
+                $("#prorg_go_to_pageto").val(orgl_pageNum);
+                $("#prorg_gotoques").trigger('click');
+              }
+              if (isFirst) {
+                isFirst = false;
+              }
+              return false; // do nothing
+            } else if (jqXHR && (jqXHR.status === 403)) {
+              //window.location.href = SITE_URL_PROTOCOL;
+              logoutSession();
+            } else if (jqXHR.status === 401) {
+              alert("Session Expired, Please login again.");
+              //window.location.href = SITE_URL_PROTOCOL;
+              logoutSession();
+            } else {
+              if (isFirst) {
+                isFirst = false;
+              }
+              alert("Session Expired, Please login again.");
+            }
 
+          },
+        },
+        callback: function (data, pagination) {
+          ////console.log(data);
+          if (pagination.totalNumber < 10) {
+            //$("#prorg_pagination-container-to").hide();
+            $(".OrglistPagination").attr("style", "display:none");
+          } else {
+            //$("#prorg_pagination-container-to").show();
+            $(".OrglistPagination").attr("style", "display:block");
+            $(".paginationjs-next").attr("title", "Last Page");
+            $(".paginationjs-prev").attr("title", "First Page");
+          }
+          //console.log(parameter);
+          if (parameter != '') {
+            localStorage.setItem("platforml_search", parameter);
+          }
+          $("#prg_orglist-loader").removeClass("disp_block");
+          $("#prg_orglist-loader").addClass("disp_none");
+          $("#prg_orglist_items").removeClass("disp_none");
+          $("#prg_orglist_items").addClass("disp_block");
 
+          $("#prorg_pagination-container-to ul li").click(function () {
+            $("#prorg_go_to_pageto").val("");
+          });
+          var html = getOrglistData(data);
+          if (isFirst == false) {
+            if (pagination.pageNumber) {
+              localStorage.setItem("orgl_pageNum", pagination.pageNumber);
+            }
+          }
+        }
+      });
+    }
+  }
+
+  function getOrglistData(org_data) {
+    let org_Element = $('#prg_orglist_items');
+    org_Element.empty();
+    if (org_data.length > 0) {
+      $.each(org_data, function (index, element) {
+        let accrd = '';
+        let collapsedClass = (index == 0) ? '' : 'collapsed';
+        let expandBool = (index == 0) ? 'true' : 'false';
+        let collspaeShow = (index == 0) ? 'show' : '';
+        accrd += '<div class="accordion-item">';
+        accrd += '<h2 class="accordion-header" id="h_' + element.id + '">';
+        accrd += '<button class="accordion-button ' + collapsedClass + '"  type="button" data-bs-toggle="collapse" data-bs-target="#i_' + element.id + '" aria-expanded="' + expandBool + '" aria-controls="i_' + element.id + '">' + element.organization_name + '</button></h2>';
+        accrd += '<div id="i_' + element.id + '" class="accordion-collapse collapse ' + collspaeShow + '" aria-labelledby="h_' + element.id + '" data-bs-parent="#orglist_items">';
+        accrd += '<div class="accordion-body">';
+        accrd += '<ul>';
+        let org_sublist = element.children;
+        //console.log('org_sublist', org_sublist);
+        if (org_sublist.length > 0) {
+          $.each(org_sublist, function (index, ele) {
+            accrd += `<li id="${ele.id}"><a href='#'>${ele.name}</a></li>`;
+          });
+        }else{
+          accrd += `<li><a href='#'>No Data Found !</a></li>`;
+        }
+        accrd += '</ul>';
+        accrd += '</div>';
+        accrd += '</div>';
+        accrd += '</div>';
+        org_Element.append(accrd);
+      });
+    }
+  }
+
+</script>
