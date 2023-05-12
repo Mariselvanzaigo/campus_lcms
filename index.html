@@ -62,10 +62,10 @@
             <img data-n-linkto="institutelist" class="menuicon" src="../assets/images/institute.svg" alt="institutelist" />
             <span data-n-linkto="institutelist" class="mx-2">Institute</span></a>
           </li>
-          <li>
-            <a href="organization/organizationlist" data-flinkto="programorganizationlist" class="navlink programorganizationlist">
-            <img class="menuicon" src="../assets/images/program.svg" alt="" />
-            <span class="mx-2">Program</span></a>
+          <li data-n-linkto="programlist">
+            <a  data-n-linkto="programlist" class="navlink programorganizationlist">
+            <img  data-n-linkto="programlist" class="menuicon" src="../assets/images/program.svg" alt="" />
+            <span  data-n-linkto="programlist" class="mx-2">Program</span></a>
           </li>
           <!--<li>
             <a href="#" data-flinkto="modules"
@@ -79,10 +79,10 @@
               <img class="menuicon" src="../assets/images/course.svg" alt="Chapters" />
               <span class="mx-2">Modules</span></a>
           </li> -->
-          <li>
-              <a href="courses/courses" data-flinkto="courses" class="navlink courses">
-              <img class="menuicon" src="../assets/images/course.svg" alt="course" />
-              <span class="mx-2">Courses</span></a>
+          <li data-n-linkto="courseslist">
+              <a data-n-linkto="courseslist" class="navlink courses">
+              <img data-n-linkto="courseslist" class="menuicon" src="../assets/images/course.svg" alt="course" />
+              <span data-n-linkto="courseslist" class="mx-2">Courses</span></a>
           </li> 
           <li>
             <a href="organization/organizationlist" data-flinkto="" class="navlink">
@@ -273,6 +273,9 @@
     </div>
     <script src="/assets/config.js"></script>
     <script src="/assets/global/adminGlobal.js"></script>
+    <script src="/assets/pages/program/program_filters.js"></script>
+    <script src="/assets/pages/program/academic_list.js"></script>
+    <script src="/assets/pages/program/batch_list.js"></script>
     <!-- Load Page Scripts Here - Start -->
     <script src="/assets/pages/testPages/apiPages/templateAPI.js"></script>
     <!-- Load Page Scripts Here - End -->
