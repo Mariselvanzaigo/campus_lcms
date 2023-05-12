@@ -2,7 +2,7 @@
 
     <div class="row">
       <div class="col-12 title-head mb-3">
-        <h2 id="header_breadcrumbs">Organization / Add Institute</h2>                
+        <h2 id="header_breadcrumbs">Organization / Institute / Add College</h2>                
         <span class="orange-btn nbtn">
             <button type="button" class="btn btn-primary d-none" id="preview_institute" data-bs-toggle="modal" data-bs-target="#previewmodal">
               Preview
@@ -16,14 +16,14 @@
         <div class="col-md-12">
           <div class="white-bg p-3 relative"> 
             <div class="searchbar mt-3">
-              <h4 id="stage_head_1" class="stage_head">Create Institution</h4>
+              <h4 id="stage_head_1" class="stage_head">Create College</h4>
               <h4 id="stage_head_2" class="stage_head d-none">Create Admin</h4>
               <h4 id="stage_head_3" class="stage_head d-none">Manage Academics</h4>
             </div>
             <div class="s-stepper">
                 <div data-target="#stage1" id="stage-1-step" class="s-step active">
                     <span class="s-step-counter"></span>
-                    <small>Create institution</small>
+                    <small>Create College</small>
                     <span><i class="fas fa-angle-double-right"></i></span>
                 </div>
                 <div data-target="#stage2" id="stage-2-step" class="s-step">
@@ -137,8 +137,8 @@
                             <div class="row">
                               <div class="col-md-12">
                                   <div class="mt-3 mb-3">
-                                      <label>Institution name</label>
-                                      <input type="text" class="form-control" id="ins_name" name="ins_name" placeholder="Enter Institute Name">
+                                      <label>College name</label>
+                                      <input type="text" class="form-control" id="ins_name" name="ins_name" placeholder="Enter College Name">
                                   </div>
                               </div>
                               <div class="col-md-12">
@@ -196,14 +196,13 @@
                                     <input type="number" class="form-control" id="ins_zip_code" name="ins_zip_code" placeholder="Enter Zip Code">
                                   </div>
                               </div>
-                              <div class="col-md-6">
+                              <!-- <div class="col-md-6">
                                   <div class="mb-3">
                                       <label>Organization</label>
                                       <div class="dropdown-select org_list_container">
                                         <select class="sort-select form-control" id="ins_organization" name="ins_organization" onchange="getSetOrgCode(event);">
                                         </select>
                                       </div>
-                                      <!-- <input type="text" class="form-control" id="ins_organization" name="ins_organization" placeholder="Enter your text here"> -->
                                   </div>
                               </div>
                               <div class="col-md-6">
@@ -211,7 +210,7 @@
                                       <label>Organization Code</label>
                                       <input type="text" class="form-control" id="ins_organization_code" name="ins_organization_code" placeholder="Enter Organization Code" disabled="true">
                                   </div>
-                              </div>
+                              </div> -->
                               <div class="col-md-6">
                                   <div class="mb-3">
                                       <label>Registration Details</label>
@@ -496,7 +495,8 @@
                               <button onclick="hideStage(3);showStage(2)"><i class="fa fa-left"></i> Previous</button>
                           </span>
                           <span class="orange-btn">
-                            <button id="toOrganizationList" data-n-linkto="organizationlist" hidden></button>
+
+                            <button id="toOrganizationList" data-n-linkto="institutelist" hidden></button>
                               <button id="save_manage_academic">Submit</button>
                           </span>
                         </div>
@@ -699,31 +699,12 @@
 /**** multistep form global functions Starts ****/
 var cms_ins_param = getUrlParamquery();
 console.log(cms_ins_param);
-var org_id = cms_ins_param.org_id;
+//var org_id = cms_ins_param.org_id;
 var ins_id = cms_ins_param.ins_id;
+console.log('ins_id',ins_id);
+var clg_id = cms_ins_param.clg_id;
 var user_id = cms_ins_param.user_id;
 var page_from = cms_ins_param.page_from;
-$("<link/>", {
-  rel: "stylesheet",
-  type: "text/css",
-  href: "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
-}).appendTo("head");  
-$.getScript('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js');
-var org_list = function () {
-  var tmp_org = null;
-  $.ajax({
-    'async': false,
-    url: API_BASE_URL + 'organization/drop_down',
-    type: 'get',
-    global: false,
-    dataType: 'json',
-    headers: { "Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token },
-    success: function (response) {
-      tmp_org = response?.data;
-    }
-  }); 
-  return tmp_org;
-}();
 
 var stream_list = function () {
   var tmp_stream = null;
@@ -757,20 +738,21 @@ var course_list = function () {
   return tmp_course;
 }();
 $(document).ready(function(){
+  //hideStage(1);showStage(3);
+
   if(page_from){
     $("#toOrganizationList").attr("data-n-linkto", page_from);
   }
-  //hideStage(1);showStage(3);
-  if(ins_id){
+  if(clg_id){
     $("#save_manage_academic").attr("data-status", "Updated");
     $("#save_institute").text("Update & Next");
-    $("#stage_head_1").text("Edit Institute");
+    $("#stage_head_1").text("Edit College");
     $("#stage_head_2").text("Edit Admin");
-    $("#stage-1-step small").text("Edit Institute");
+    $("#stage-1-step small").text("Edit College");
     $("#stage-2-step small").text("Edit Admin");
-    $("#header_breadcrumbs").text("Organization / Edit Institute");
+    $("#header_breadcrumbs").text("Organization / Institute / Edit College");
     $.ajax({
-      url: API_BASE_URL + 'institute/details/'+ins_id+'/',
+      url: API_BASE_URL + 'institute/details/'+clg_id+'/',
       type: "GET",
       headers: {
         "Authorization": "Bearer " + getUserInfo().access_token,
@@ -806,13 +788,6 @@ $(document).ready(function(){
               $("#demo-upload_1 .dz-default").after(`<img id="CourseSettingsBanner1del" class="delete_file" data-file_prop_name="Cover Image" data-bs-toggle="modal" data-bs-target="#delete-add" src="../assets/images/delete-round.png">`);
               //$("#CourseSettingsBanner4").attr("style", "opacity:1");
             }
-            if(org_list){
-              getOrganizationDropdown(org_list, response.organization_id);
-            }else{
-              setTimeout(function(){
-                getOrganizationDropdown(org_list, response.organization_id);
-              }, 500)
-            }
             if(response.stream.length > 0){
               stream_list_select(stream_list, response.stream);
             }else{
@@ -829,7 +804,7 @@ $(document).ready(function(){
                 if(i == 0){
                   if(val.id){
                     user_id = val.id;
-                    var refresh = window.location.protocol + "//" + window.location.host + window.location.pathname + '?org_id='+org_id+'&ins_id='+ins_id+'&user_id='+user_id+"&page_from="+page_from;    
+                    var refresh = window.location.protocol + "//" + window.location.host + window.location.pathname + '?ins_id='+ins_id+'&clg_id='+clg_id+'&user_id='+user_id+"&page_from="+page_from;    
                     window.history.pushState({ path: refresh }, '', refresh);
                   }
                   insertMobilenumberwithRegion(val.mobile_number, val.region_code, "user_phone_no");
@@ -869,14 +844,13 @@ $(document).ready(function(){
       }
     });
   }else{
-    $("#save_manage_academic").attr("data-status", "Saved");
     $("#save_institute").text("Save & Next");
-    $("#stage_head_1").text("Create Institute");
+    $("#save_manage_academic").attr("data-status", "Saved");
+    $("#stage_head_1").text("Create College");
     $("#stage_head_2").text("Create Admin");
-    $("#stage-1-step small").text("Create Institute");
+    $("#stage-1-step small").text("Create College");
     $("#stage-2-step small").text("Create Admin");
-    $("#header_breadcrumbs").text("Organization / Add Institute");
-    getOrganizationDropdown(org_list, org_id);
+    $("#header_breadcrumbs").text("Organization / Institute / Add College");
     initiateMobilenumberwithRegion("ins_phone_no");
     initiateMobilenumberwithRegion("user_phone_no");
     stream_list_select(stream_list, "");
@@ -908,39 +882,6 @@ function insertMobilenumberwithRegion(mobile_number, region_code, field_id){
         separateDialCode: true,
         initialCountry:"in",
         utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/javascript.util/0.12.12/javascript.util.min.js" // just for formatting/placeholders etc
-      });
-  }
-}
-function getOrganizationDropdown(org_list, org_id){
-
-  $("#ins_organization").empty();
-  if(org_list){
-    var selected = "";
-    var organization_options = '<option value="">Select Organization</option>';
-      $.each( org_list, function( i, val ) {
-        if(org_id && org_id == val.id){
-          selected = "selected";
-          $("#ins_organization_code").val(val.organization_code);
-        }else{
-          selected = "";
-        }
-        organization_options += `<option value="${val.id}" data-org_code="${val.organization_code}" ${selected}>${val.organization_name}</option>`;
-      });
-
-      function formatState (state) {
-        if (!state.id) {
-          return state.text;
-        }
-        var baseUrl = "/user/pages/images/flags";
-        var $state = $(
-          '<span>' + state.text + '</span>'
-        );
-        return $state;
-      };
-      $("#ins_organization").append(organization_options);
-      $("#ins_organization").select2({
-        templateResult: formatState,
-        width: '100%'
       });
   }
 }
@@ -1166,15 +1107,14 @@ var frmvalidatorfrm = $("#frmNewCmsIns").validate({
     //ins_state: { required: false},
     //ins_country: { required: false},
     ins_zip_code: { required: false, minlength: 6, maxlength: 6 },
-    ins_organization: { required: true },
     //ins_registration_details: { required: false },
     //ins_recogonition_details: { required: false },
   },
   messages: {
     ins_name: {
-      required: "Please enter Institute Name",
-      minlength: "Institute Name must consist of at least 1 characters",
-      maxlength: "Institute Name must consist of max of 256 characters",
+      required: "Please enter College Name",
+      minlength: "College Name must consist of at least 1 characters",
+      maxlength: "College Name must consist of max of 256 characters",
     },
     ins_website: {
       url: "Enter Valid Website",
@@ -1192,9 +1132,6 @@ var frmvalidatorfrm = $("#frmNewCmsIns").validate({
       minlength: "Enter valid Zip Code",
       maxlength: "Enter valid Zip Code",
     },
-    ins_organization: {
-      required: "Please select Organization",
-    }
   },
   errorElement: "em",
   errorPlacement: function (error, element) {
@@ -1212,15 +1149,10 @@ var frmvalidatorfrm = $("#frmNewCmsIns").validate({
     if (element.attr("name") == "ins_phone_no") {
         error.insertAfter($("#ins_phone_no").closest(".iti--allow-dropdown"));
     }
-    if (element.attr("name") == "ins_organization") {
-        error.insertAfter($("#ins_organization").closest(".org_list_container"));
-    }
   },
   highlight: function (element, errorClass, validClass) {
     if (element.getAttribute("name") == "ins_phone_no") {
       $("#ins_phone_no").addClass("is-invalid");
-    }else if (element.getAttribute("name") == "ins_organization") {
-      $("#ins_organization").addClass("is-invalid");
     }else{
       $(element).addClass("is-invalid");
     }
@@ -1228,8 +1160,6 @@ var frmvalidatorfrm = $("#frmNewCmsIns").validate({
   unhighlight: function (element, errorClass, validClass) {
     if (element.getAttribute("name") == "ins_phone_no") {
       $("#ins_phone_no").removeClass("is-invalid");
-    }else if (element.getAttribute("name") == "ins_organization") {
-      $("#ins_organization").removeClass("is-invalid");
     }else{
       $(element).removeClass("is-invalid");
     }
@@ -1245,7 +1175,10 @@ $("#save_institute").on("click", function () {
   var isValidForm = frmvalidatorfrm.form();
   var logofile_exist = 0;
   var coverfile_exist = 0;
-  if(!ins_id){
+  console.log(clg_id);
+  console.log(logo_file.length);
+  console.log($(".dropzone_1_image_preview").attr("src"));
+  if(!clg_id){
     if(logo_file.length > 0){
       logofile_exist++;
     }else{
@@ -1275,7 +1208,6 @@ $("#save_institute").on("click", function () {
     var iti = window.intlTelInputGlobals.getInstance(input_phone_no);
     var region_code = iti.getSelectedCountryData();
     console.log(region_code.dialCode);
-    var org_id = $("#ins_organization").val() ? $("#ins_organization").val() : org_id;
     var formData = new FormData();
     formData.append("name", $("#ins_name").val() ? $("#ins_name").val() : "");
     formData.append("website", $("#ins_website").val() ? $("#ins_website").val() : "");
@@ -1292,7 +1224,7 @@ $("#save_institute").on("click", function () {
     formData.append("state", $("#ins_state").val() ? $("#ins_state").val() : "");
     formData.append("country", $("#ins_country").val() ? $("#ins_country").val() : "");
     formData.append("zip_code", $("#ins_zip_code").val() ? $("#ins_zip_code").val() : "");
-    formData.append("organization_id", org_id);
+    //formData.append("organization_id", org_id);
     formData.append("registration_details", $("#ins_registration_details").val() ? $("#ins_registration_details").val() : "");
     formData.append("recognition_detail", $("#ins_recogonition_details").val() ? $("#ins_recogonition_details").val() : "");
     //console.log(files);
@@ -1310,13 +1242,13 @@ $("#save_institute").on("click", function () {
         formData.append("cover_image", file);
       });
     }
-    var URL = API_BASE_URL + "institute_create/";
+    var URL = API_BASE_URL + "create_child_institute/"+ins_id+"/";
     var method = "POST";
     var type = "POST";
-    if(ins_id != "" && ins_id != null && ins_id != undefined){
+    if(clg_id != "" && clg_id != null && clg_id != undefined){
       method = "PUT";
       type = "PUT";
-      URL = API_BASE_URL + "institute_basic_update/"+ins_id+"/";
+      URL = API_BASE_URL + "institute_basic_update/"+clg_id+"/";
     }
     $.ajax({
       url: URL,
@@ -1330,25 +1262,18 @@ $("#save_institute").on("click", function () {
         "Authorization": "Bearer " + getUserInfo().access_token
       },
       success: function (response) {
-        ins_id = response.institute_id;
+        clg_id = response.institute_id;
         var user_param = "";
         if(user_id){
           user_param = "&user_id="+user_id;
         }
-        var refresh = window.location.protocol + "//" + window.location.host + window.location.pathname + '?org_id='+org_id+'&ins_id='+ins_id+user_param;    
+        console.log(ins_id);
+        var refresh = window.location.protocol + "//" + window.location.host + window.location.pathname + '?ins_id='+ins_id+'&clg_id='+clg_id+"&page_from="+page_from+user_param;    
         window.history.pushState({ path: refresh }, '', refresh);
         current_element.removeAttr("disabled");
-        /*if(method == "POST"){
-          toastr.success("Institute created successfully.");
-        }else{
-          toastr.success("Organization updated successfully.");
-        }*/
         hideStage(1);showStage(2);
-        //getOrglistCall("");
-        //window.sharedEditCourseId = "";
       },
       error: function (error) {
-
         var errorJson = jQuery.parseJSON(error.responseText);
         console.log(errorJson);
         if(errorJson){
@@ -1358,7 +1283,6 @@ $("#save_institute").on("click", function () {
       } 
     });
   }else{
-    //hideStage(1);showStage(2);
     current_element.removeAttr("disabled");
   }
 });
@@ -1551,8 +1475,8 @@ $("#save_user_details").on("click", function () {
     formData.append("state", $("#user_state").val() ? $("#user_state").val() : "");
     formData.append("country", $("#user_country").val() ? $("#user_country").val() : "");
     formData.append("zip_code", $("#user_zip_code").val() ? $("#user_zip_code").val() : "");
-    formData.append("organization_id", org_id);
-    formData.append("institute_id", ins_id);
+    //formData.append("organization_id", org_id);
+    formData.append("institute_id", clg_id);
     formData.append("qualification", $("#user_qualification").val() ? $("#user_qualification").val() : "");
     formData.append("description", $("#user_description").val() ? $("#user_description").val() : "");
     //console.log(files);
@@ -1584,7 +1508,7 @@ $("#save_user_details").on("click", function () {
       },
       success: function (response) {
         user_id = response.member_id;
-        var refresh = window.location.protocol + "//" + window.location.host + window.location.pathname + '?org_id='+org_id+'&ins_id='+ins_id+'&user_id='+user_id+"&page_from="+page_from;    
+        var refresh = window.location.protocol + "//" + window.location.host + window.location.pathname + '?ins_id='+ins_id+'&clg_id='+clg_id+'&user_id='+user_id+"&page_from="+page_from;    
         window.history.pushState({ path: refresh }, '', refresh);
         current_element.removeAttr("disabled");
         hideStage(2);showStage(3);
@@ -1813,7 +1737,7 @@ $("#save_manage_academic").on("click", function () {
     //var formData = new FormData();
     //formData.append("stream", JSON.stringify(stream_selected_checkbox));
     //formData.append("course_type", JSON.stringify(course_selected_checkbox));
-    var URL = API_BASE_URL + "manage_academic/"+ins_id+'/';
+    var URL = API_BASE_URL + "manage_academic/"+clg_id+'/';
     var method = "PATCH";
     var type = "PATCH";
     $.ajax({
@@ -1831,11 +1755,11 @@ $("#save_manage_academic").on("click", function () {
         "Authorization": "Bearer " + getUserInfo().access_token
       },
       success: function (response) {
+        $("#toOrganizationList").trigger("click");
         if(current_element.attr("data-status")){
-          $("#toOrganizationList").trigger("click");
-          toastr.success("Institute "+current_element.attr("data-status")+" Successfully");
+          toastr.success("College "+current_element.attr("data-status")+" Successfully");
         }else{
-          toastr.success("Institute Created Successfully");
+          toastr.success("College Created Successfully");
         }
         current_element.removeAttr("disabled");
       },
@@ -1873,9 +1797,9 @@ $("#preview_institute").on("click", function(){
   $("#prev-user_city_state_zip").text("");
   $("#prev-user_description").text("");
   $("#prev-user_email_id").text("");
-  if(ins_id){
+  if(clg_id){
     $.ajax({
-      url: API_BASE_URL + 'institute/details/'+ins_id+'/',
+      url: API_BASE_URL + 'institute/details/'+clg_id+'/',
       type: "GET",
       headers: {
         "Authorization": "Bearer " + getUserInfo().access_token,
