@@ -5,7 +5,7 @@
       <h2>Programs <dfn data-info="Lorem ipsum dolor sit amet, perspiciatis consectetur dolor."><i
             class="fas fa-info-circle"></i></dfn></h2>
       <span class="orange-btn nbtn">
-        <button type="button" class="btn btn-primary" data-flinkto="createprogram">
+        <button type="button" class="btn btn-primary" data-n-linkto="programcreate">
           <i class="fas fa-plus"></i> Create Program
         </button>
       </span>
@@ -135,38 +135,44 @@
                   </div>
                 </div>
               </div>
+              <div id="program_container">
 
-              <div class="org-table mt-4">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">First</th>
-                      <th scope="col">Last</th>
-                      <th scope="col">Handle</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">2</th>
-                      <td>Jacob</td>
-                      <td>Thornton</td>
-                      <td>@fat</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>Larry</td>
-                      <td>the Bird</td>
-                      <td>@twitter</td>
-                    </tr>
-                  </tbody>
-                </table>
+
+                <!--------------loader start--------------->
+                <div class="row loader disp_block" id="program_list-loader"><span>Loading Program List</span></div>
+                <!--------------loader end--------------->
+
+                <div class="table-section add-details mt-4" id="program_inner_container">
+
+                </div>
+
+                <!--------------pagination start--------------->
+                <div class="container-fluid pagination-cont cs-number p-0 programlistPagination" style="display: none;">
+                  <div id="prorg_pagination-container-to" class="orglist__pagination"></div>
+                  <div id="program_pagination-container-goto" class="goto_page d-none"><span class="goto_page_text">Go
+                      to
+                      page</span>
+                    <input type="number" value="" id="progran_go_to_pageto" maxlength="3" min="1" class=" d-none">
+                    <a class="goto_go d-none" id="program_gotoques"
+                      onclick="goto_pageCall('prorg_pagination-container-to', 'progran_go_to_pageto');"><span>Go<i
+                          class="fa fa-angle-right" aria-hidden="true"></i>
+                      </span></a>
+                  </div>
+                </div>
+                <!--------------pagination end--------------->
+
+                <!--------------No records found start--------------->
+                <div id="nodataFound_platformlist" style="display: none;">
+                  <div class="row">
+                    <div class="col-12 title-head no-record mb-3 text-center">
+                      <p><span class="text-danger">No Records Found!</span></p>
+                    </div>
+                  </div>
+                </div>
+                <!--------------No records found end--------------->
+
+                <!---------Platform view end-------->
+
               </div>
 
             </div>
@@ -182,258 +188,36 @@
 
 
 <script>
-  $('.menu-icon').click(function () {
-    if ($(this).hasClass('current')) {
-      $(this).removeClass('current');
-    } else {
-      $('.menu-icon.current').removeClass('current');
-      $(this).addClass('current');
-    }
+$('.menu-icon').click(function () {
+  if ($(this).hasClass('current')) {
+    $(this).removeClass('current');
+  } else {
+    $('.menu-icon.current').removeClass('current');
+    $(this).addClass('current');
+  }
+});
+
+$(document).on('click', '.addcurrentclass', function () {
+  if ($(this).hasClass('current')) {
+    $(this).removeClass('current');
+  } else {
+    $('li.current').removeClass('current');
+    $(this).addClass('current');
+  }
+});
+
+$(document).ready(function () {
+  $(".menu-icon").click(function () {
+    $(".slideout-sidebar").toggleClass("anim1");
   });
-
-  $(document).on('click', '.addcurrentclass', function () {
-    if ($(this).hasClass('current')) {
-      $(this).removeClass('current');
-    } else {
-      $('li.current').removeClass('current');
-      $(this).addClass('current');
-    }
-  });
-
-  $(document).ready(function () {
-    $(".menu-icon").click(function () {
-      $(".slideout-sidebar").toggleClass("anim1");
-    });
-  });
+});
 
 
+$('.data').hide()
+$('.dot').on('click', function () {
+  $('.data').toggle();
+});
+$('.close-dot').on('click', function () {
   $('.data').hide()
-  $('.dot').on('click', function () {
-    $('.data').toggle();
-  });
-  $('.close-dot').on('click', function () {
-    $('.data').hide()
-  });
-</script>
-
-
-<script>
-// var selector = ".org-list ul li a";
-
-// $(selector).on("click", function () {
-//   $(selector).removeClass("active");
-//   $(this).addClass("active");
-// });
-
-
-  $(document).ready(function () {
-    getOrglistCall("");
-    $('#pr_searchOrganization').on('blur', function (e) {
-      e.stopImmediatePropagation();
-      searchOrgOnBlur();
-    });
-  });
-
-
-var pr_searchOrganization_inp = document.getElementById("pr_searchOrganization");
-pr_searchOrganization_inp.addEventListener("keypress", function(event) {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    var searchVal = $("#pr_searchOrganization").val().trim();
-    getOrglistCall(searchVal);
-  }
 });
-
-var prorg_go_to_pageto_inp = document.getElementById("prorg_go_to_pageto");
-prorg_go_to_pageto_inp.addEventListener("keypress", function(event) {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    $("#prorg_gotoques").trigger("click");
-  }
-});
-
-$(document).on("click", "#pr_resetButtonOrglist", function(){
-
-  $("#pr_searchOrganization").val("");
-  //$("#search_data_sortby").val("");
-
-  localStorage.setItem("pr_orgl_pageNum", "");
-  localStorage.setItem("pr_orgl_search", "");
-  $("#prorg_go_to_pageto").val("");
-  getOrglistCall("");
-});
-window.onbeforeunload = function (e) {
-  window.onunload = function () {
-    emptylocalStorageOrgList();
-  }
-  return undefined;
-};
-
-function searchOrgOnBlur(){
-  var searchVal = $("#pr_searchOrganization").val().trim();
-  getOrglistCall(searchVal);
-}
-function emptylocalStoragePlatform(){
-  localStorage.setItem("pr_orgl_pageNum", "");
-  localStorage.setItem("pr_orgl_search", "");
-  $("#prorg_go_to_pageto").val(""); 
-}
-
-  function getOrglistCall(searchVal) {
-    console.log(searchVal);
-
-    localStorage.setItem("pr_orgl_pageNum", "");
-    localStorage.setItem("pr_orgl_search", "");
-    $("#prorg_go_to_pageto").val("");
-
-    if (searchVal) {
-      searchVal = "?search=" + searchVal;
-      $('#pr_resetButtonOrglist').removeClass("d-none");
-    } else {
-      $('#pr_resetButtonOrglist').addClass("d-none");
-    }
-    getOrglist(searchVal);
-  }
-
-
-  //To Paginate platform list Data
-  function getOrglist(parameter) {
-    let isFirst = true;
-    var pr_orgl_pageNum = localStorage.getItem("pr_orgl_pageNum");
-    //console.log('pr_orgl_pageNum', pr_orgl_pageNum);
-    if (isFirst == true && pr_orgl_pageNum != "") {
-      var url = new URLSearchParams(pr_orgl_pageNum);
-      var search_inp = url.get("search");
-      var searchval = 0;
-      if (search_inp != "" && search_inp != null) {
-        $("#pr_searchOrganization").val(search_inp);
-        searchval++;
-      }
-      if (searchval > 0) {
-        $('#pr_resetButtonOrglist').removeClass("d-none");
-      } else {
-        $('#pr_resetButtonOrglist').addClass("d-none");
-      }
-      parameter = pr_orgl_pageNum;
-    }
-    if ($("#prorg_pagination-container-to").length > 0) {
-      $('#prorg_pagination-container-to').pagination({
-        dataSource: API_BASE_URL + 'parent_institute/list/' + parameter,
-        locator: 'data',
-        totalNumberLocator: function (response) {
-          setTimeout(function () {
-            $(".paginationjs-prev").attr("data-num", "1");
-            $(".paginationjs-next").attr("data-num", response.total_pages);
-            $("#prorg_go_to_pageto").attr("min", 1);
-            $("#prorg_go_to_pageto").attr("max", response.total_pages);
-          }, 500);
-          return response.total;
-        },
-        alias: {
-          pageNumber: 'page',
-          pageSize: 'per_page',
-        },
-        pageSize: 9,
-        ajax: {
-          beforeSend: function (request) {
-            if (getUserInfo() == null) {
-              console.log(SITE_URL_PROTOCOL);
-              window.location.href = SITE_URL_PROTOCOL + "/login";
-            }
-            request.setRequestHeader("Authorization", "Bearer " + getUserInfo().access_token);
-          },
-          complete: function (jqXHR, textStatus) {
-            if (jqXHR.status === 200 || jqXHR.readyState === 0 || jqXHR.status === 0) {
-              var orgl_pageNum = localStorage.getItem("pr_orgl_pageNum");
-              if (isFirst == true && orgl_pageNum != "") {
-                $("#prorg_go_to_pageto").val(orgl_pageNum);
-                $("#prorg_gotoques").trigger('click');
-              }
-              if (isFirst) {
-                isFirst = false;
-              }
-              return false; // do nothing
-            } else if (jqXHR && (jqXHR.status === 403)) {
-              //window.location.href = SITE_URL_PROTOCOL;
-              logoutSession();
-            } else if (jqXHR.status === 401) {
-              alert("Session Expired, Please login again.");
-              //window.location.href = SITE_URL_PROTOCOL;
-              logoutSession();
-            } else {
-              if (isFirst) {
-                isFirst = false;
-              }
-              alert("Session Expired, Please login again.");
-            }
-
-          },
-        },
-        callback: function (data, pagination) {
-          ////console.log(data);
-          if (pagination.totalNumber < 10) {
-            //$("#prorg_pagination-container-to").hide();
-            $(".OrglistPagination").attr("style", "display:none");
-          } else {
-            //$("#prorg_pagination-container-to").show();
-            $(".OrglistPagination").attr("style", "display:block");
-            $(".paginationjs-next").attr("title", "Last Page");
-            $(".paginationjs-prev").attr("title", "First Page");
-          }
-          //console.log(parameter);
-          if (parameter != '') {
-            localStorage.setItem("platforml_search", parameter);
-          }
-          $("#prg_orglist-loader").removeClass("disp_block");
-          $("#prg_orglist-loader").addClass("disp_none");
-          $("#prg_orglist_items").removeClass("disp_none");
-          $("#prg_orglist_items").addClass("disp_block");
-
-          $("#prorg_pagination-container-to ul li").click(function () {
-            $("#prorg_go_to_pageto").val("");
-          });
-          var html = getOrglistData(data);
-          if (isFirst == false) {
-            if (pagination.pageNumber) {
-              localStorage.setItem("orgl_pageNum", pagination.pageNumber);
-            }
-          }
-        }
-      });
-    }
-  }
-
-  function getOrglistData(org_data) {
-    let org_Element = $('#prg_orglist_items');
-    org_Element.empty();
-    if (org_data.length > 0) {
-      $.each(org_data, function (index, element) {
-        let accrd = '';
-        let collapsedClass = (index == 0) ? '' : 'collapsed';
-        let expandBool = (index == 0) ? 'true' : 'false';
-        let collspaeShow = (index == 0) ? 'show' : '';
-        accrd += '<div class="accordion-item">';
-        accrd += '<h2 class="accordion-header" id="h_' + element.id + '">';
-        accrd += '<button class="accordion-button ' + collapsedClass + '"  type="button" data-bs-toggle="collapse" data-bs-target="#i_' + element.id + '" aria-expanded="' + expandBool + '" aria-controls="i_' + element.id + '">' + element.organization_name + '</button></h2>';
-        accrd += '<div id="i_' + element.id + '" class="accordion-collapse collapse ' + collspaeShow + '" aria-labelledby="h_' + element.id + '" data-bs-parent="#orglist_items">';
-        accrd += '<div class="accordion-body">';
-        accrd += '<ul>';
-        let org_sublist = element.children;
-        //console.log('org_sublist', org_sublist);
-        if (org_sublist.length > 0) {
-          $.each(org_sublist, function (index, ele) {
-            accrd += `<li id="${ele.id}"><a href='#'>${ele.name}</a></li>`;
-          });
-        }else{
-          accrd += `<li><a href='#'>No Data Found !</a></li>`;
-        }
-        accrd += '</ul>';
-        accrd += '</div>';
-        accrd += '</div>';
-        accrd += '</div>';
-        org_Element.append(accrd);
-      });
-    }
-  }
-
 </script>

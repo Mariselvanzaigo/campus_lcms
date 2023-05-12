@@ -5366,6 +5366,20 @@ video{
 	padding: 15px;
 	color: #787895;
 }
+.slideout-sidebar .accordion-body li.sub__program, .slideout-sidebar .accordion-body li.no__program{
+	display: block;
+	background: #F8F8F8;
+	padding: 15px;
+	color: #787895;
+}
+.slideout-sidebar .accordion-body li.sub__program{
+	cursor: pointer;
+}
+span.as_links{
+	cursor: pointer;
+	color: #7B61FF;
+	text-decoration: underline;	
+}
 .slideout-sidebar .accordion-body li a:hover {
 	background: #E5E5E9;
 	color: #20204F;

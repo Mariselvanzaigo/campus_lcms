@@ -326,7 +326,7 @@ $(document).ready(function(){
     $('a.navlink').removeClass("active");
     $(this).addClass("active");
   });
-  console.log('aut-data',localStorage.getItem("auth_data_lcms"));
+  //console.log('aut-data',localStorage.getItem("auth_data_lcms"));
   if(localStorage.getItem("auth_data_lcms") != null){
     var logo_image = getUserInfo().logo_image;
     $(".org_logo_image").attr("src", logo_image )
