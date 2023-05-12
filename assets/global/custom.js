@@ -349,3 +349,14 @@ function parseString(str) {
 } 
 
 
+
+function formatState (state) {
+  if (!state.id) {
+    return state.text;
+  }
+  var baseUrl = "/user/pages/images/flags";
+  var $state = $(
+    '<span>' + state.text + '</span>'
+  );
+  return $state;
+};

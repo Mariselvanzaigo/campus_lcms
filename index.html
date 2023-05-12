@@ -57,10 +57,10 @@
               <img data-n-linkto="organizationlist" class="menuicon" src="../assets/images/org.svg" alt="organizationlist" />
               <span data-n-linkto="organizationlist" class="mx-2">Organization</span></a>
           </li>
-          <li>
-            <a href="organization/organizationlist" data-flinkto="" class="navlink">
-            <img class="menuicon" src="../assets/images/institute.svg" alt="" />
-            <span class="mx-2">Institute</span></a>
+          <li data-n-linkto="institutelist">
+            <a data-n-linkto="institutelist" class="institutelist">
+            <img data-n-linkto="institutelist" class="menuicon" src="../assets/images/institute.svg" alt="institutelist" />
+            <span data-n-linkto="institutelist" class="mx-2">Institute</span></a>
           </li>
           <li>
             <a href="organization/organizationlist" data-flinkto="programorganizationlist" class="navlink programorganizationlist">
@@ -313,7 +313,7 @@
     <script src="../assets/global/callbackFunctions.js"></script>
     <script src="../assets/global/fileup.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
-    <script  type="text/babel" src="../assets/global/intlTelInput.min.js"></script>
+    <script  src="../assets/global/intlTelInput.min.js"></script>
     <script>
       const pageURLAttributes = getPageURLAndQueryParams();
       const pageName = getPageNameByURL(pageURLAttributes.url);
