@@ -12,13 +12,23 @@ const menuSchema = {
   },
   organizationlist: {
     template: "/assets/pages/organization/organizationlist.html",
-    // callback: organizationList,
+    callback: organizationList,
     url: "/organization",
   },
   addinstitute: {
     template: "/assets/pages/organization/addinstitute.html",
     callback: addInstituteToOrganization,
     url: "/addinstitute",
+  },
+  institutelist: {
+    template: "/assets/pages/institute/institutelist.html",
+    callback: instituteList,
+    url: "/institute",
+  },
+  addcollege: {
+    template: "/assets/pages/institute/addinstitutecollege.html",
+    callback: addCollegeToInstitute,
+    url: "/addcollege",
   },
   components_buttons: {
     template: "/assets/pages/components/button.html",
