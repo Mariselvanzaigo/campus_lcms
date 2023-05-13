@@ -11,6 +11,9 @@ function organizationList(urlParam){
 function instituteList(urlParam){
 
 }
+function createprogram(){
+    
+}
 function hideStage(stage){
 	// you can validate here
 	$('#stage'+stage).removeClass('active');
