@@ -5550,3 +5550,21 @@ span.as_links{
 .ins_email_prev{
 	overflow-wrap: anywhere;
 }
+.edit_icon{
+	cursor: pointer;
+}
+.academic_name_container{
+	padding: 15px;
+}
+.lightgreybg{
+	background:#efefef;
+}
+.bgwhite{
+	background-color: white;
+}
+.academic_name_input{
+	margin: -5px;
+}
+.form-control.is-invalid{
+	border-color:#e55353 !important;
+}
