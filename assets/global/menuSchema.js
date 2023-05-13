@@ -30,6 +30,11 @@ const menuSchema = {
     callback: addCollegeToInstitute,
     url: "/addcollege",
   },
+  createprogram: {
+    template: "/assets/pages/program/createprogram.html",
+    callback: createprogram,
+    url: "/createprogram",
+  },
   components_buttons: {
     template: "/assets/pages/components/button.html",
   },

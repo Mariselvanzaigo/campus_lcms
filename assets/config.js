@@ -44,6 +44,7 @@ if (SITE_URL_PROTOCOL === "http://127.0.0.1:5501"){
   API_CMS_URL = "https://qacmsapi.exper.com/api/v1/camp/"; 
 	SITE_URL_PROTOCOL = "http://127.0.0.1:5501/";
   API_CONTENT_URL = "https://qacontent.exper.com/api/v1/campus/";
+  API_CMS_URL = "https://qacmsapi.exper.com/api/v1/camp/";
   // USER_ENGINE_API_URL = "https://qaadmin.exper.com/api/v1/ue/";
 
 } else if(SITE_URL_PROTOCOL === "http://94.177.203.98"){
@@ -51,12 +52,14 @@ if (SITE_URL_PROTOCOL === "http://127.0.0.1:5501"){
   API_BASE_URL = "https://qaadmin.exper.com/api/v1/camp/";
 	SITE_URL_PROTOCOL = "http://127.0.0.1:5501/";
   API_CONTENT_URL = "https://qacontent.exper.com/api/v1/campus/";
+  API_CMS_URL = "https://qacmsapi.exper.com/api/v1/camp/";
   // USER_ENGINE_API_URL = "https://qaadmin.exper.com/api/v1/ue/";
 } else if(SITE_URL_PROTOCOL === "http://localhost"){
   DOMAIN_FULL = "http://127.0.0.1:5500";
   API_BASE_URL = "https://qaadmin.exper.com/api/v1/camp/";
 	SITE_URL_PROTOCOL = "http://localhost/";
   API_CONTENT_URL = "https://qacontent.exper.com/api/v1/campus/";
+  API_CMS_URL = "https://qacmsapi.exper.com/api/v1/camp/";
   // USER_ENGINE_API_URL = "https://qaadmin.exper.com/api/v1/ue/";
 
 }else if(SITE_URL_PROTOCOL === "https://elearning.zaigoinfotech.com"){
