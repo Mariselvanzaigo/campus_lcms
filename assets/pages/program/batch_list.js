@@ -231,6 +231,8 @@ function list_PR_batchData(batch_data) {
             batchtd += '</td>';
             batchtd += '</tr>';
         });
+    }else{
+        acctd += '<tr><td colspan="6"><div class="text-center"><b>No Data Found !</b></div></td>';
     }
 
     batchtd += '</tbody></table>';
