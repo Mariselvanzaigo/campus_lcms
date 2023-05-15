@@ -35,34 +35,6 @@ $.ajax({
 }); 
 return tmp_course;
 }();
-var academic_year_options = [
-    {"year":"2023-2024"},
-    {"year":"2024-2025"},
-    {"year":"2025-2026"},
-    {"year":"2026-2027"},
-    {"year":"2027-2028"},
-    {"year":"2028-2029"},
-    {"year":"2029-2030"},
-    {"year":"2030-2031"},
-    {"year":"2031-2032"},
-    {"year":"2032-2033"},
-    {"year":"2033-2034"},
-    {"year":"2034-2035"},
-    {"year":"2035-2036"},
-    {"year":"2036-2037"},
-    {"year":"2037-2038"},
-    {"year":"2038-2039"},
-    {"year":"2039-2040"},
-    {"year":"2040-2041"},
-    {"year":"2041-2042"},
-    {"year":"2042-2043"},
-    {"year":"2043-2044"},
-    {"year":"2044-2045"},
-    {"year":"2045-2046"},
-    {"year":"2046-2047"},
-    {"year":"2047-2048"},
-    {"year":"2048-2049"}
-];
 var program_data = {
     "name": "test 2",
     "stream_id": "787f2c09-4413-41b9-b7f7-c9ad970d2212",
@@ -258,6 +230,7 @@ function add_academic_section(academic_data){
         });
         $("#academic_container").append(academic_template)
     }else{
+        console.log(academic_year_options);
         var academic_template = `<div class="academic_section_box mt-3">
                                     <div class="academic_box searchbar greybg p-3">
                                         <div class="row">
@@ -271,35 +244,12 @@ function add_academic_section(academic_data){
                                                 <div class="mb-3">
                                                     <label>Select Academic Year</label>
                                                     <div class="dropdown-select bgwhite">
-                                                        <select class="sort-select form-control academic_year_list">
-                                                            <option value="">Select Academic Year</option>
-                                                            <option value="2023-2024">2023-2024</option>
-                                                            <option value="2024-2025">2024-2025</option>
-                                                            <option value="2025-2026">2025-2026</option>
-                                                            <option value="2026-2027">2026-2027</option>
-                                                            <option value="2027-2028">2027-2028</option>
-                                                            <option value="2028-2029">2028-2029</option>
-                                                            <option value="2029-2030">2029-2030</option>
-                                                            <option value="2030-2031">2030-2031</option>
-                                                            <option value="2031-2032">2031-2032</option>
-                                                            <option value="2032-2033">2032-2033</option>
-                                                            <option value="2033-2034">2033-2034</option>
-                                                            <option value="2034-2035">2034-2035</option>
-                                                            <option value="2035-2036">2035-2036</option>
-                                                            <option value="2036-2037">2036-2037</option>
-                                                            <option value="2037-2038">2037-2038</option>
-                                                            <option value="2038-2039">2038-2039</option>
-                                                            <option value="2039-2040">2039-2040</option>
-                                                            <option value="2040-2041">2040-2041</option>
-                                                            <option value="2041-2042">2041-2042</option>
-                                                            <option value="2042-2043">2042-2043</option>
-                                                            <option value="2043-2044">2043-2044</option>
-                                                            <option value="2044-2045">2044-2045</option>
-                                                            <option value="2045-2046">2045-2046</option>
-                                                            <option value="2046-2047">2046-2047</option>
-                                                            <option value="2047-2048">2047-2048</option>
-                                                            <option value="2048-2049">2048-2049</option>
-                                                        </select>
+                                                        <select class="sort-select form-control academic_year_list">`;
+                                                        academic_template +=`<option value="">Select Academic Year</option>`;
+                                                        $.each( academic_year_options, function( aci, acval ) {
+                                                            academic_template +=`<option value="${acval.year}">${acval.year}</option>`;
+                                                        });
+                                                        academic_template +=`</select>
                                                     </div>
                                                 </div>
                                             </div>
