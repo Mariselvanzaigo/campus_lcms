@@ -35,51 +35,6 @@ $.ajax({
 }); 
 return tmp_course;
 }();
-var program_data = {
-    "name": "test 2",
-    "stream_id": "787f2c09-4413-41b9-b7f7-c9ad970d2212",
-    "course_type_id": "4d02c9e2-2ea3-405f-a1bc-8d1057ac24b4",
-    "organization_id": "0dc23785-496e-47e6-8313-831cfbe67e12",
-    "institute_id": "12e3d1db-7e4f-4b46-92a2-e1c1f2b914a6",
-    "academic_years": [
-        {
-            "academic_name": "Academic Year 1",
-            "year": "2023-2024",
-            "start_date": "2023-04-25",
-            "end_date": "2024-03-20",
-            "batch_details": [
-                {
-                    "section_name": "Section 1",
-                    "batch_student_count": 250
-                },
-                {
-                    "section_name": "Section 1",
-                    "batch_student_count": 250
-                }
-            ]
-        },
-        {
-            "academic_name": "Academic Year 2",
-            "year": "2023-2024",
-            "start_date": "2023-03-25",
-            "end_date": "2024-02-20",
-            "batch_details": [
-                {
-                    "section_name": "Section 1",
-                    "batch_student_count": 250
-                },
-                {
-                    "section_name": "Section 2",
-                    "batch_student_count": 200
-                },
-                {
-                    "section_name": "Section 3",
-                    "batch_student_count": 210
-                }
-            ]
-        }
-    ]
-};
 $(document).ready(function(){
     if(program_id){
         $("#academic_container").empty();
@@ -153,7 +108,7 @@ function add_academic_section(academic_data){
             academic_template += `<div class="academic_section_box mt-3">
                                         <div class="academic_box searchbar greybg p-3">
                                             <div class="row">
-                                                <div class="col-md-4">
+                                                <div class="col-md-6">
                                                     <div class="academic_name_container mt-3">
                                                         <input type="text" class="form-control academic_name_input academic_year_inp_1 d-none" id="academic_year" placeholder="Enter Academic Name" value="${val.academic_name}" onblur="totext(this);" maxlength="256">
                                                         <h4 class="academic_name_element">${val.academic_name}<span class="ms-3 edit_icon" onclick="toinput(this);"><i class="fas fa-edit"></i></span></h4>
@@ -180,12 +135,6 @@ function add_academic_section(academic_data){
                                                     <div class="mb-3">
                                                         <label>Start Date</label>
                                                         <input class="form-control start_date" type="date" value="${val.start_date}" onclick="this.showPicker()" placeholder="">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="mb-3">
-                                                        <label>End Date</label>
-                                                        <input class="form-control end_date" type="date" value="${val.end_date}" onclick="this.showPicker()" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 cc-right">
@@ -257,12 +206,6 @@ function add_academic_section(academic_data){
                                                 <div class="mb-3">
                                                     <label>Start Date</label>
                                                     <input class="form-control start_date" type="date" onclick="this.showPicker()" placeholder="">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <div class="mb-3">
-                                                    <label>End Date</label>
-                                                    <input class="form-control end_date" type="date" onclick="this.showPicker()" placeholder="">
                                                 </div>
                                             </div>
                                             <div class="col-lg-2 col-md-2 cc-right">
@@ -482,8 +425,8 @@ function submit_program(){
             $(element).find(".start_date").removeClass("is-invalid");
             $(element).find(".start_date_error").remove();
 
-            $(element).find(".end_date").removeClass("is-invalid");
-            $(element).find(".end_date_error").remove();
+            // $(element).find(".end_date").removeClass("is-invalid");
+            // $(element).find(".end_date_error").remove();
 
             var academic_name = $(element).find(".academic_name_input").val().trim();
             if(academic_name == ""){
@@ -505,12 +448,12 @@ function submit_program(){
                 $(element).find(".start_date").addClass("is-invalid");
                 $(element).find(".start_date").after(`<em for="start_date" class="start_date_error error help-block">Select Start Date</em>`);
             }
-            var end_date = $(element).find(".end_date").val();
-            if(end_date == ""){
-                total_error++;
-                $(element).find(".end_date").addClass("is-invalid");
-                $(element).find(".end_date").after(`<em for="end_date" class="end_date_error error help-block">Select End Date</em>`);
-            }
+            // var end_date = $(element).find(".end_date").val();
+            // if(end_date == ""){
+            //     total_error++;
+            //     $(element).find(".end_date").addClass("is-invalid");
+            //     $(element).find(".end_date").after(`<em for="end_date" class="end_date_error error help-block">Select End Date</em>`);
+            // }
             var section_boxlen = $(element).find(".section_box").length;
 
             $(element).find(".section_container_error").remove();
@@ -544,7 +487,11 @@ function submit_program(){
                 }
                 
             });
-            if(academic_name != "" && academic_year != "" && start_date != "" && end_date != "" && batch.length > 0){
+            if(academic_name != "" && academic_year != "" && start_date != "" && batch.length > 0){
+
+                var start_date_val = new Date(start_date);
+                start_date_val.setDate(start_date_val.getDate() + 330);
+                var end_date = start_date_val.toInputFormat();
                 academic_years.push({"academic_name": academic_name, "year":academic_year, "start_date": start_date, "end_date": end_date, "batch_details":batch});
             }
 
@@ -612,3 +559,9 @@ function submit_program(){
     }
 
 }
+Date.prototype.toInputFormat = function() {
+    var yyyy = this.getFullYear().toString();
+    var mm = (this.getMonth()+1).toString(); // getMonth() is zero-based
+    var dd  = this.getDate().toString();
+    return yyyy + "-" + (mm[1]?mm:"0"+mm[0]) + "-" + (dd[1]?dd:"0"+dd[0]); // padding
+ };
