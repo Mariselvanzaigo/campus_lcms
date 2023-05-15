@@ -106,7 +106,7 @@ function list_PR_academic(parameter) {
   }
   if ($("#acc_pagination-container-to").length > 0) {
     $('#acc_pagination-container-to').pagination({
-      dataSource: API_CMS_URL + 'program/academic_list/'+ accids + parameter,
+      dataSource: API_CMS_URL + 'program/academic_list/'+ accids ,
       locator: 'data.academic_data',
       totalNumberLocator: function (response) {
         setTimeout(function () {
