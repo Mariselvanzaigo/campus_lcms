@@ -55,14 +55,14 @@
 
               <!--------------pagination start--------------->
               <div class="container-fluid pagination-cont cs-number p-0 OrglistPagination" style="display: none;">
-                <div id="prorg_pagination-container-to" class="orglist__pagination"></div>
-                <div id="pagination-container-goto" class="goto_page d-none"><span class="goto_page_text">Go to
+                <div id="prorg_pagination-container-by" class="orglist__pagination"></div>
+                <div id="pagination-container-gotoby" class="goto_page d-none"><span class="goto_page_text">Go to
                     page</span>
-                  <input type="number" value="" id="prorg_go_to_pageto" maxlength="3" min="1" class=" d-none">
+                  <!-- <input type="number" value="" id="prorg_go_to_pageto" maxlength="3" min="1" class=" d-none">
                   <a class="goto_go d-none" id="prorg_gotoques"
                     onclick="goto_pageCall('prorg_pagination-container-to', 'prorg_go_to_pageto');"><span>Go<i
                         class="fa fa-angle-right" aria-hidden="true"></i>
-                    </span></a>
+                    </span></a> -->
                 </div>
               </div>
               <!--------------pagination end--------------->
@@ -111,7 +111,7 @@
                 <div class="col-lg-3 col-md-3">
                   <div class="dropdown-select">
                     <select class="sort-select" id="courses_list" name="courses_list">
-                      <option value="">Select Course</option>
+                      
                     </select>
                   </div>
                 </div>
@@ -127,12 +127,12 @@
                   <div class="col-md-8">
                     <div class="dropdown-select">
                       <select class="sort-select" id="acc_year_list" name="acc_year_list">
-                        <option value="">Academic Year</option>
+                        
                       </select>
                     </div>
                   </div>
                   <div class="col-md-3">
-                    <div class="s-search">
+                    <div class="s-search d-none">
                       <input type="submit" value="Search">
                     </div>
                   </div>
@@ -157,13 +157,13 @@
 
                 <!--------------pagination start--------------->
                 <div class="container-fluid pagination-cont cs-number p-0 programlistPagination" style="display: none;">
-                  <div id="prorg_pagination-container-to" class="orglist__pagination"></div>
-                  <div id="program_pagination-container-goto" class="goto_page d-none"><span class="goto_page_text">Go
+                  <div id="prorg_pagination-container-to" style="float:left;" class="orglist__pagination"></div>
+                  <div id="program_pagination-container-goto" style="float: right;margin-right: 10px;"class="goto_page"><span class="goto_page_text">Go
                       to
                       page</span>
-                    <input type="number" value="" id="progran_go_to_pageto" maxlength="3" min="1" class=" d-none">
-                    <a class="goto_go d-none" id="program_gotoques"
-                      onclick="goto_pageCall('prorg_pagination-container-to', 'progran_go_to_pageto');"><span>Go<i
+                    <input type="number" value="" id="go_to_page2" maxlength="3" min="1" class="">
+                    <a class="goto_go" id="program_gotoques"
+                      onclick="goto_pageCall('prorg_pagination-container-to', 'go_to_page2');"><span>Go<i
                           class="fa fa-angle-right" aria-hidden="true"></i>
                       </span></a>
                   </div>
@@ -230,4 +230,10 @@ $('.close-dot').on('click', function () {
   $('.data').hide()
 });
 </script>
-
+<script>
+  reload_js('/assets/pages/program/program_filters.js');
+  function reload_js(src) {
+    $('script[src="' + src + '"]').remove();
+    $('<script>').attr('src', src).appendTo('head');
+  }
+</script>

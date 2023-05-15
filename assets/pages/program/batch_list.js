@@ -1,15 +1,13 @@
-var batch_id = '';
-var url_strings = window.location.href;
-var url = new URL(url_strings);
-batch_id = url.searchParams.get("batch_id") ? url.searchParams.get("batch_id") : '';
-accyear_id = url.searchParams.get("acc_yearid") ? url.searchParams.get("acc_yearid") : '';
-const batch_Callbacks = () => {
-    list_batch_Trigger();
-    // $('#pr_searchbatch').on('blur', function (e) {
-    //   e.stopImmediatePropagation();
-    //   prorg_search_onblur();
-    // });
-}
+var batch_id = '', accyear_id='';
+var program_param = getUrlParamquery();
+batch_id = program_param.batch_id;
+accyear_id = program_param.acc_yearid;
+
+
+$(document).ready(function(){
+    list_batch_Trigger("");
+});
+
 /**
  * ACADEMIC FILTERS AND LISTS
  */
@@ -89,7 +87,7 @@ function list_PR_batch(parameter) {
     }
     let batchids = '';
     if(batch_id && accyear_id){
-        batchids = batch_id + '/?program_id='+ accyear_id;
+        batchids = batch_id + '/?academic_id='+ accyear_id;
     }else if(batch_id) {
         batchids = batch_id + '/';
     }
@@ -115,13 +113,17 @@ function list_PR_batch(parameter) {
     if ($("#batch_pagination-container-to").length > 0) {
         $('#batch_pagination-container-to').pagination({
             dataSource: API_CMS_URL + 'program/batch_list/' + batchids + parameter,
-            locator: 'data',
+            locator: 'data.batch_details',
             totalNumberLocator: function (response) {
                 setTimeout(function () {
                     $(".paginationjs-prev").attr("data-num", "1");
                     $(".paginationjs-next").attr("data-num", response.total_pages);
                     $("#batch_go_to_pageto").attr("min", 1);
                     $("#batch_go_to_pageto").attr("max", response.total_pages);
+                    $('#prg__name').text(response.data.program_name);
+                    $('#stream__name').text(response.data.program_stream_name);
+                    $('#course__name').text(response.data.program_course_type_name);
+
                 }, 500);
                 return response.total;
             },
@@ -224,7 +226,7 @@ function list_PR_batchData(batch_data) {
             batchtd += '<td>' + element.batch_student_count + '</td>';
             batchtd += '<td class="action-icons">';
             batchtd += '<span class="eye-icon"><a href="#"><img src="/assets/images/eyeicon.png"></a></span>';
-            batchtd += '<span class="edit-icon"><a href="#"><img src="/assets/images/edit.png"></a></span>';
+            batchtd += '<span class="edit-icon" data-n-linkto="createprogram" data-n-url-program_id="' + batch_id + '" data-n-url-page_from="programsectionlist"><img data-n-linkto="createprogram" data-n-url-program_id="' + batch_id + '" data-n-url-page_from="programsectionlist" src="/assets/images/edit.png"></span>';
             batchtd += '<span class="delete-icon"><a href="#" data-bs-toggle="modal" data-bs-target="#deletemodal"><img src="/assets/images/deleteicon.png"></a></span>';
             batchtd += '</td>';
             batchtd += '</tr>';

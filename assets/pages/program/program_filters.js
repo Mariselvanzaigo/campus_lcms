@@ -30,8 +30,7 @@ var stream_list = function () {
   return tmp_course;
   }();
 
-
-const programCallbacks = () => {
+$(document).ready(function(){
   stream_list_select(stream_list, "");
   course_list_select(course_list, "");
   call_all_AccadmeicYear();
@@ -48,7 +47,9 @@ const programCallbacks = () => {
     e.stopImmediatePropagation();
     programs_search_onblur();
   });
-}
+});
+ 
+
 
 
 
@@ -77,6 +78,20 @@ function course_list_select(course_list_data, course_selected_list){
   $("#courses_list").append(course_list);
 }
 
+function call_all_AccadmeicYear(){
+  $("#acc_year_list").empty();
+  var course_list = `<option value="">Select Academic Year</option>`;
+  $.each(academic_year_options, function( i, val ) {
+    // if (course_selected_list === val.id) {
+    //   course_list +=`<option value="${val.id}" selected>${val.name}</option>`;
+    // }else{
+    //   course_list +=`<option value="${val.id}">${val.name}</option>`;
+    // }
+    course_list +=`<option value="${val.year}">${val.year}</option>`;
+  });
+  $("#acc_year_list").append(course_list);
+}
+
 /**
  * PROGRAM LIST AND FILTERS
  */
@@ -95,10 +110,10 @@ document.addEventListener("keypress", function (event) {
     }
   }
 
-  if (event.target.id === 'progran_go_to_pageto') {
+  if (event.target.id === 'go_to_page2') {
     if (event.key === "Enter") {
       event.preventDefault();
-      $("#progran_go_to_pageto").trigger("click");
+      $("#go_to_page2").trigger("click");
     }
   }
 
@@ -106,12 +121,15 @@ document.addEventListener("keypress", function (event) {
 
 $(document).on("click", "#pr_resetButtonprograms", function () {
 
-  $("#pr_searchprograms").val("");
-  //$("#search_data_sortby").val("");
-
   localStorage.setItem("pr_prlist_pageNum", "");
   localStorage.setItem("pr_prlist_search", "");
-  $("#progran_go_to_pageto").val("");
+  $("#go_to_page2").val("");
+  $("#stream_list").val("");
+   $("#courses_list").val("");
+   $("#acc_year_list").val("");
+   $("#pr_searchprograms").val("");
+  $("#pr_resetButtonprograms").addClass("d-none");
+ 
   list_PR_Programs_Trigger("");
 });
 
@@ -123,14 +141,13 @@ window.onbeforeunload = function (e) {
 };
 
 function programs_search_onblur() {
-  let searchVal = $("#pr_searchprograms").val().trim();
-  list_PR_Programs_Trigger(searchVal);
+  searchprogram_param();
 }
 
 function emtpy_localstorage_programs() {
   localStorage.setItem("pr_prlist_pageNum", "");
   localStorage.setItem("pr_prlist_search", "");
-  $("#progran_go_to_pageto").val("");
+  $("#go_to_page2").val("");
 }
 
 
@@ -138,6 +155,16 @@ function emtpy_localstorage_programs() {
 $(document).on("click", "#org-program-listings li", function (e) {
   let programId = $(this).attr("id");
   if (programId) {
+    //$('#pr_resetButtonprograms').trigger('click');
+    $("#stream_list").val("");
+    $("#courses_list").val("");
+    $("#acc_year_list").val("");
+    $("#pr_searchprograms").val("");
+    localStorage.setItem("pr_prlist_pageNum", "");
+    localStorage.setItem("pr_prlist_search", "");
+    $("#progran_go_to_pageto").val("");
+    $("#pr_resetButtonprograms").addClass("d-none");
+
     document.getElementById("orgid_includer").value = programId;
     searchprogram_param();  
   }
@@ -147,34 +174,11 @@ $(document).on("click", "#org-program-listings li", function (e) {
 
 //Trigger on changing the Stream list
 $(document).on("change", "#stream_list", function(e){
-  // let streamId = $(this).attr('value');
-  // let searchVal = $("#pr_searchprograms").val().trim();
-  // if (streamId) {
-  //   if(searchVal == '' && program_params == ''){
-  //     program_params += "?stream_id=" + streamId;
-  //   }else{
-  //     program_params += "&stream_id=" + streamId;
-  //   }
-    
-  //   list_PR_Programs_Trigger(searchVal);
-  // }
-
   searchprogram_param();
 });
 
 //Trigger on changing the Stream list
 $(document).on("change", "#courses_list", function(e){
-  // let courseId = $(this).attr('value');
-  // let searchVal = $("#pr_searchprograms").val().trim();
-  // if (courseId) {
-  //   if(searchVal == '' && program_params == ''){
-  //     program_params += "?course_id=" + courseId;
-  //   }else{
-  //     program_params += "&course_id=" + courseId;
-  //   }
-    
-  //   list_PR_Programs_Trigger(searchVal);
-  // }
   searchprogram_param();
 });
 
@@ -189,7 +193,7 @@ function list_PR_Programs_Trigger(searchVal) {
 
   localStorage.setItem("pr_prlist_pageNum", "");
   localStorage.setItem("pr_prlist_search", "");
-  $("#progran_go_to_pageto").val("");
+  $("#go_to_page2").val("");
 
   // if (searchVal) {
   //   if(program_params == ''){
@@ -239,6 +243,12 @@ function searchprogram_param(){
       }
   }
 
+  //$(".btnReset").removeClass("d-none");
+  //console.log(search_param);
+  if(search_param != ""){
+    $("#pr_resetButtonprograms").removeClass("d-none");
+  }
+
   var institute_id_val = document.getElementById("orgid_includer").value;
   if(institute_id_val !== ""){
       if(search_param == ""){
@@ -248,11 +258,6 @@ function searchprogram_param(){
       }
   }
   list_PR_programs(search_param);
-  //$(".btnReset").removeClass("d-none");
-  //console.log(search_param);
-  if(search_param != ""){
-    $(".pr_resetButtonprograms").removeClass("d-none");
-  }
 }
 
 
@@ -282,8 +287,8 @@ function list_PR_programs(parameter) {
     }
     parameter = pr_prlist_pageNum;
   }
-  if ($("#program_pagination-container-goto").length > 0) {
-    $('#program_pagination-container-goto').pagination({
+  if ($("#prorg_pagination-container-to").length > 0) {
+    $('#prorg_pagination-container-to').pagination({
       dataSource: API_CMS_URL + 'program/list/' + parameter ,
       locator: 'data',
       totalNumberLocator: function (response) {
@@ -299,7 +304,7 @@ function list_PR_programs(parameter) {
         pageNumber: 'page',
         pageSize: 'per_page',
       },
-      pageSize: 9,
+      pageSize: 7,
       ajax: {
         beforeSend: function (request) {
           if (getUserInfo() == null) {
@@ -336,8 +341,8 @@ function list_PR_programs(parameter) {
         },
       },
       callback: function (data, pagination) {
-        ////console.log(data);
-        if (pagination.totalNumber < 10) {
+        console.log(pagination.totalNumber);
+        if (pagination.totalNumber < 8) {
           //$("#program_pagination-container-goto").hide();
           $(".programlistPagination").attr("style", "display:none");
         } else {
@@ -398,7 +403,9 @@ function list_PR_ProgramData(prg_data) {
       prgtd += '<div class="dropdown ahide">';
       prgtd += '<button class="btn dropdown-toggle dbtn" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button>';
       prgtd += '<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton3" style="">';
-      prgtd += '<li><a class="dropdown-item" data-flinkto="" href="#">View</a></li>';
+      prgtd += '<li><a class="dropdown-item" href="#">View</a></li>';
+      prgtd += '<li><a class="dropdown-item" data-n-linkto="createprogram" data-n-url-program_id="' + element.id + '" data-n-url-page_from="programlist" href="#">Edit</a></li>';
+      prgtd += '<li><a class="dropdown-item" href="#">Delete</a></li>';
       prgtd += '</ul>';
       prgtd += '</div>';
       prgtd += '</td>';
@@ -429,7 +436,9 @@ document.addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
       event.preventDefault();
       var searchVal = $("#pr_searchOrganization").val().trim();
+      
       list_PR_Trigger(searchVal);
+
     }
   }
 
@@ -470,6 +479,18 @@ function emtpy_localstorage_preorg() {
 }
 
 function list_PR_Trigger(searchVal) {
+  $('#orgid_includer').val('');
+   $("#stream_list").val("");
+    $("#courses_list").val("");
+    $("#acc_year_list").val("");
+    $("#pr_searchprograms").val("");
+    localStorage.setItem("pr_prlist_pageNum", "");
+    localStorage.setItem("pr_prlist_search", "");
+    $("#progran_go_to_pageto").val("");
+    $("#pr_resetButtonprograms").addClass("d-none");
+
+    list_PR_programs('');
+
   console.log(searchVal);
 
   localStorage.setItem("pr_orgl_pageNum", "");
@@ -506,8 +527,8 @@ function list_PR_Organizaiton(parameter) {
     }
     parameter = pr_orgl_pageNum;
   }
-  if ($("#prorg_pagination-container-to").length > 0) {
-    $('#prorg_pagination-container-to').pagination({
+  if ($("#prorg_pagination-container-by").length > 0) {
+    $('#prorg_pagination-container-by').pagination({
       dataSource: API_BASE_URL + 'parent_institute/list/' + parameter,
       locator: 'data',
       totalNumberLocator: function (response) {
@@ -536,8 +557,8 @@ function list_PR_Organizaiton(parameter) {
           if (jqXHR.status === 200 || jqXHR.readyState === 0 || jqXHR.status === 0) {
             var orgl_pageNum = localStorage.getItem("pr_orgl_pageNum");
             if (isFirst == true && orgl_pageNum != "") {
-              $("#prorg_go_to_pageto").val(orgl_pageNum);
-              $("#prorg_gotoques").trigger('click');
+              //$("#prorg_go_to_pageto").val(orgl_pageNum);
+              //$("#prorg_gotoques").trigger('click');
             }
             if (isFirst) {
               isFirst = false;
@@ -579,7 +600,7 @@ function list_PR_Organizaiton(parameter) {
         $("#prg_orglist_items").removeClass("disp_none");
         $("#prg_orglist_items").addClass("disp_block");
 
-        $("#prorg_pagination-container-to ul li").click(function () {
+        $("#prorg_pagination-container-by ul li").click(function () {
           $("#prorg_go_to_pageto").val("");
         });
         var html = list_PR_OrganizaitonData(data);
@@ -675,9 +696,5 @@ function call_all_Stresm() {
 
 
 
-
-function call_all_AccadmeicYear() {
-  
-}
 
 

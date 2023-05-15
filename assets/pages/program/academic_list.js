@@ -1,9 +1,5 @@
 var acc_id = '';
-var url_strings = window.location.href;
-var url = new URL(url_strings);
-
 var program_param = getUrlParamquery();
-console.log(program_param);
 acc_id = program_param.acc_id;
 
 /**
@@ -118,6 +114,10 @@ function list_PR_academic(parameter) {
           $(".paginationjs-next").attr("data-num", response.total_pages);
           $("#academic_go_to_pageto").attr("min", 1);
           $("#academic_go_to_pageto").attr("max", response.total_pages);
+          $('#prg__name').text(response.data.program_name);
+          $('#stream__name').text(response.data.program_stream_name);
+          $('#course__name').text(response.data.program_course_type_name);
+
         }, 500);
         return response.total;
       },
@@ -218,10 +218,10 @@ function list_PR_academicData(acc_data) {
       acctd += '<td>'+  element.year +'</td>';
       acctd += '<td>'+  element.start_date +'</td>';
       acctd += '<td>'+  element.end_date +'</td>';
-      acctd += '<td><span class="as_links" data-n-linkto="programsectionlist" data-n-url-batch_id="'+ element.id +'" data-n-url-acc_yearid="'+ acc_id +'">' + element.batch_count + '</span> </td>';
+      acctd += '<td><span class="as_links" data-n-linkto="programsectionlist" data-n-url-batch_id="'+ acc_id +'" data-n-url-acc_yearid="'+ element.id +'">' + element.batch_count + '</span> </td>';
       acctd += '<td class="action-icons">';
       acctd += '<span class="eye-icon"><a href="#"><img src="/assets/images/eyeicon.png"></a></span>';
-      acctd += '<span class="edit-icon"><a href="#"><img src="/assets/images/edit.png"></a></span>';
+      acctd += '<span class="edit-icon" data-n-linkto="createprogram" data-n-url-program_id="' + acc_id + '" data-n-url-page_from="programacademiclist"><img data-n-linkto="createprogram" data-n-url-program_id="' + acc_id + '" data-n-url-page_from="programacademiclist" src="/assets/images/edit.png"></span>';
       acctd += '<span class="delete-icon"><a href="#" data-bs-toggle="modal" data-bs-target="#deletemodal"><img src="/assets/images/deleteicon.png"></a></span>';
       acctd += '</td>';
       acctd += '</tr>';
