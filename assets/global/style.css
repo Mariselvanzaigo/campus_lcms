@@ -5601,3 +5601,6 @@ span.as_links{
 	font-weight: 500;
 	min-height: 35px;
 }
+.slideout-sidebar .accordion {
+	margin-bottom: 25px;
+}
