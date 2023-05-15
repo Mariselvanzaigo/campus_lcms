@@ -1,15 +1,11 @@
 var acc_id = '';
 var url_strings = window.location.href;
 var url = new URL(url_strings);
-acc_id = url.searchParams.get("acc_id") ? url.searchParams.get("acc_id") : '';
-const academic_Callbacks = () => {  
-    console.log('acc_id: ', acc_id); 
-    list_accademic_Trigger();
-    // $('#pr_searchaccdemic').on('blur', function (e) {
-    //   e.stopImmediatePropagation();
-    //   prorg_search_onblur();
-    // });
-  }
+
+var program_param = getUrlParamquery();
+console.log(program_param);
+acc_id = program_param.acc_id;
+
 /**
  * ACADEMIC FILTERS AND LISTS
  */
@@ -79,7 +75,9 @@ function list_accademic_Trigger(searchVal) {
   list_PR_academic(searchVal);
 }
 
-
+$(document).ready(function(){
+  list_PR_academic("");
+});
 //To Paginate platform list Data
 function list_PR_academic(parameter) {
   if (typeof parameter === 'undefined') {

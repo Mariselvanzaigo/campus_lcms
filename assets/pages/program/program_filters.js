@@ -206,7 +206,7 @@ function list_PR_programs(parameter) {
   }
   if ($("#program_pagination-container-goto").length > 0) {
     $('#program_pagination-container-goto').pagination({
-      dataSource: API_CMS_URL + 'program/list/' + program_params + parameter,
+      dataSource: API_CMS_URL + 'program/list/' + program_params ,
       locator: 'data',
       totalNumberLocator: function (response) {
         setTimeout(function () {
