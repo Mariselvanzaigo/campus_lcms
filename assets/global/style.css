@@ -670,7 +670,7 @@ dfn i {
 	font-family: Inter;
 	font-style: normal;
 	font-weight: normal;
-	font-size: 13px;
+	font-size: 14px;
 	line-height: 20px;
 	color: #787895;
 	text-align: left;
@@ -689,7 +689,7 @@ dfn i {
 	font-family: Inter;
 	font-style: normal;
 	font-weight: normal;
-	font-size: 13px;
+	font-size: 14px;
 	line-height: 20px;
 	text-align: left;
 	vertical-align: middle;
@@ -2157,7 +2157,7 @@ span.obg {
 	padding: 10px 8px;
 	text-align: left;
 	border: 1.5px solid #52575d;
-	font-size: 13px;
+	font-size: 14px;
 	text-transform: uppercase;
 }
 .tab td {
@@ -2165,7 +2165,7 @@ span.obg {
 	font-weight: normal;
 	padding: 10px 8px;
 	text-align: left;
-	font-size: 13px;
+	font-size: 14px;
 	border: 1.5px solid #52575D;
 }
 .tab tr:hover {
@@ -5212,7 +5212,7 @@ video{
   }
   
   #menu-toggle:checked + .menu-icon {
-	left: -20px;
+	left: -10px;
   }
   
   #menu-toggle:checked ~ .content-container {
@@ -5293,7 +5293,7 @@ video{
 	vertical-align: middle;
 	margin-right: 8px;
 	background-color: transparent;
-	border: 1px solid #ced4da;
+	border: 0px solid #ced4da;
 	/* box-shadow: inset 0px 2px 2px rgba(0, 0, 0, .3); */
 	border-radius: 1px;
 }
@@ -5582,12 +5582,15 @@ span.as_links{
 .form-control.is-invalid{
 	border-color:#e55353 !important;
 }
+.action-icons img {
+	cursor: pointer;
+}
 .eye-icon img {
-	width: 25px;
+	width: 22px;
 }
 .edit-icon img {
 	margin: 0 10px;
-	width: 18px;
+	width: 17px;
 }
 .delete-icon img {
 	width: 16px;
