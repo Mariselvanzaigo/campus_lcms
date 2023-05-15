@@ -391,11 +391,23 @@ function list_PR_ProgramData(prg_data) {
 
   if (prg_data.length > 0) {
     $.each(prg_data, function (index, element) {
+      let academic_linkto = '', batch_linkto ='';
+      if(element.academic_count > 0){
+        academic_linkto = 'class="as_links" data-n-linkto="programacademiclist" data-n-url-acc_id="' + element.id + '"';
+      }else{
+        academic_linkto = 'class=""';
+      }
+      if(element.batch_count > 0){
+        batch_linkto = 'class="as_links" data-n-linkto="programsectionlist" data-n-url-batch_id="' + element.id + '"';
+      }else{
+        batch_linkto = 'class=""';
+      }
+
       prgtd += '<tr><td>' + element.program_name + '</td>';
       prgtd += '<td>' + element.stream_name + '</td>';
       prgtd += '<td>' + element.course_type_name + '</td>';
-      prgtd += '<td><span class="as_links" data-n-linkto="programacademiclist" data-n-url-acc_id="' + element.id + '">' + element.academic_count + '</span> </td>';
-      prgtd += '<td><span class="as_links" data-n-linkto="programsectionlist" data-n-url-batch_id="' + element.id + '">' + element.batch_count + '</span> </td>';
+      prgtd += '<td><span '+ academic_linkto +'>' + element.academic_count + '</span> </td>';
+      prgtd += '<td><span '+ batch_linkto +'>' + element.batch_count + '</span> </td>';
       prgtd += '<td class="">';
       prgtd += '<div class="dropdown ahide">';
       prgtd += '<button class="btn dropdown-toggle dbtn" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button>';
