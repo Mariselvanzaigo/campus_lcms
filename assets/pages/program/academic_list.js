@@ -220,9 +220,9 @@ function list_PR_academicData(acc_data) {
       acctd += '<td>'+  element.end_date +'</td>';
       acctd += '<td><span class="as_links" data-n-linkto="programsectionlist" data-n-url-batch_id="'+ acc_id +'" data-n-url-acc_yearid="'+ element.id +'">' + element.batch_count + '</span> </td>';
       acctd += '<td class="action-icons">';
-      acctd += '<span class="eye-icon"><a href="#"><img src="/assets/images/eyeicon.png"></a></span>';
+      acctd += '<span class="eye-icon"><img src="/assets/images/eyeicon.png"></span>';
       acctd += '<span class="edit-icon" data-n-linkto="createprogram" data-n-url-program_id="' + acc_id + '" data-n-url-page_from="programacademiclist"><img data-n-linkto="createprogram" data-n-url-program_id="' + acc_id + '" data-n-url-page_from="programacademiclist" src="/assets/images/edit.png"></span>';
-      acctd += '<span class="delete-icon"><a href="#" data-bs-toggle="modal" data-bs-target="#deletemodal"><img src="/assets/images/deleteicon.png"></a></span>';
+      acctd += '<span class="delete-icon"><img src="/assets/images/deleteicon.png"></span>';
       acctd += '</td>';
       acctd += '</tr>';
     });
@@ -230,5 +230,7 @@ function list_PR_academicData(acc_data) {
 
   acctd += '</tbody></table>';
   acc_Element.append(acctd);
+
+  //data-bs-toggle="modal" data-bs-target="#deletemodal"
 }
  

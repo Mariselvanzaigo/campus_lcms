@@ -129,7 +129,8 @@ $(document).on("click", "#pr_resetButtonprograms", function () {
    $("#acc_year_list").val("");
    $("#pr_searchprograms").val("");
   $("#pr_resetButtonprograms").addClass("d-none");
- 
+  $('#institute_namer').text('All Programs');
+  
   list_PR_Programs_Trigger("");
 });
 
@@ -164,6 +165,15 @@ $(document).on("click", "#org-program-listings li", function (e) {
     localStorage.setItem("pr_prlist_search", "");
     $("#progran_go_to_pageto").val("");
     $("#pr_resetButtonprograms").addClass("d-none");
+
+    let universityNames = $(this).closest('.accordion-item').find('button').text();
+    let universityEle = $('#institute_namer');
+    
+    if(universityNames){
+      universityEle.text(universityNames);
+    }else{
+      universityEle.text('All Programs');
+    }
 
     document.getElementById("orgid_includer").value = programId;
     searchprogram_param();  
@@ -488,6 +498,7 @@ function list_PR_Trigger(searchVal) {
     localStorage.setItem("pr_prlist_search", "");
     $("#progran_go_to_pageto").val("");
     $("#pr_resetButtonprograms").addClass("d-none");
+    $('#institute_namer').text('All Programs');
 
     list_PR_programs('');
 
