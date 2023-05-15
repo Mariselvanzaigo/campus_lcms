@@ -17,8 +17,7 @@
           <div class="col-12 d-flex justify-content-between searchbar mb-3">
             <h4>Program Details</h4>
             <span class="orange-btn nbtn">
-              <button type="button" class="btn btn-primary navigate_refresh" href="program/createprogram"
-                data-flinkto="createprogram">
+              <button type="button" id="academicedit" class="btn btn-primary navigate_refresh" data-n-linkto="createprogram" data-n-url-program_id="" data-n-url-page_from="programacademiclist">
                 Edit
               </button>
             </span>
@@ -29,15 +28,15 @@
           <div class="row">
             <div class="col-md-4 mb-3">
               <label>Program Name</label>
-              <p>Computer Science</p>
+              <p id="prg__name"></p>
             </div>
             <div class="col-md-4 mb-3">
               <label>Stream</label>
-              <p>Engineering</p>
+              <p id="stream__name"></p>
             </div>
             <div class="col-md-4 mb-3">
               <label>Course</label>
-              <p>Undergraduate</p>
+              <p id="course__name"></p>
             </div>
           </div>
 
@@ -45,7 +44,7 @@
           <div class="container-fluid p-0">
             <div class="tabs white-bg mt-3">
               <input type="radio" name="tabs" id="tab1" checked="checked" onclick="searchCertificateParam()">
-              <label for="tab1">Academic Year Information</label>
+              <label for="tab1" id="academictab" data-n-linkto="programacademiclist" data-n-url-acc_id="">Academic Year Information</label>
               <div class="tab p-0" id="academic-container">
 
 
@@ -86,122 +85,87 @@
                 <!--------------No records found end--------------->
 
                 <!---------Platform view end-------->
-
-
-
-
-
               </div>
 
               <input type="radio" name="tabs" id="tab2">
-              <label data-n-linkto="programsectionlist" for="tab2">Section</label>
+              <label id="sectiontab" data-n-linkto="programsectionlist" data-n-url-batch_id="" for="tab2">Section</label>
               <div class="tab p-0">
-                <!-- <div class="row loader d-none" id="load_draft"><span>Loading Section...</span></div>
-                        <div class="row" id="">
-                            <div class="table-section mt-4">
-                                <table class="table table-bordered responsive">
-                            <thead>
-                              <tr>    
-                                <th>Section Name</th>  
-                                <th>Academic Year</th>                
-                                <th>Start Date</th>
-                                <th>End Date</th>
-                                <th>No of Students</th>
-                                <th>&nbsp;</th>
-                              </tr>
-                            </thead>
-                            <tbody id="">
-                                <tr>    
-                                   <td>ABCD </td>
-                                   <td>2023 - 2024  </td>  
-                                   <td>20/01/2023 </td>  
-                                   <td>22/01/2024 </td>  
-                                   <td>240 </td>  
-                                   <td class="action-icons">
-                                    <span class="edit-icon"><a href="#"><img src="/assets/images/edit.png"></a></span>
-                                    <span class="delete-icon"><a href="#" data-bs-toggle="modal" data-bs-target="#deletemodal"><img src="/assets/images/deleteicon.png"></a></span>
-                                   </td>                  
-                                </tr>
-                            </tbody>
-                            </table>
-                            </div>
-                        </div>
-
-                        <div class="nodataFound_certificate" style="display:none">
-                          <div class="row">
-                            <div class="col-12 title-head mb-3">
-                              <p><span class="text-danger">No Records Found!</span></p>
-                            </div>
-                          </div>
-                        </div>
-                     </div>
-                    </div>
-                   </div>-->
-                <!----tab section end---->
-
-                
-
               </div>
-
-              <div class="d-flex justify-content-between mt-3">
-                <div>
-                  <span class="blue-border-btn">
-                    <button type="button" class="btn btn-primary">
-                      Back
-                    </button>
-                  </span>
-                </div>
-              </div>
-              
-            </div>
-
-
-
-          </div>
-        </div>
-      </div>
-
-
-
-
-      <!--delete modal start-->
-      <div class="modal fade" id="deletemodal" tabindex="-1" aria-labelledby="exampleModalXlLabel"
-        style="display: none;" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title h4" id="exampleModalXlLabel"></h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body p-4">
-              <form method="get" class="pop-form">
-                <div class="row">
-                  <div class="col-md-12 text-center mb-2"> <img src="../assets/images/delete.png"> </div>
-                  <div class="col-md-12 text-center mb-2" id="delete_module_name_msg">
-                    <p>Are you sure you want to delete it </p>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-12 pt-3 pb-3 wauto text-center">
-                    <span class="dborder-btn nbtn"><a onclick="">
-                        <button type="button">Cancel</button>
-                      </a></span>
-                    <span class="danger-btn nbtn"><a onclick="">
-                        <button type="button">Delete</button>
-                      </a></span>
-                  </div>
-                </div>
-              </form>
             </div>
           </div>
+
+          <div class="d-flex justify-content-between mt-3">
+            <div>
+              <span class="blue-border-btn">
+                <button type="button" class="btn btn-primary">
+                  Back
+                </button>
+              </span>
+            </div>
+          </div>
+
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!--delete modal start-->
+  <div class="modal fade" id="deletemodal" tabindex="-1" aria-labelledby="exampleModalXlLabel" style="display: none;"
+    aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title h4" id="exampleModalXlLabel"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4">
+          <form method="get" class="pop-form">
+            <div class="row">
+              <div class="col-md-12 text-center mb-2"> <img src="../assets/images/delete.png"> </div>
+              <div class="col-md-12 text-center mb-2" id="delete_module_name_msg">
+                <p>Are you sure you want to delete it </p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 pt-3 pb-3 wauto text-center">
+                <span class="dborder-btn nbtn"><a onclick="">
+                    <button type="button">Cancel</button>
+                  </a></span>
+                <span class="danger-btn nbtn"><a onclick="">
+                    <button type="button">Delete</button>
+                  </a></span>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
-      <!--delete modal end-->
+    </div>
+  </div>
+  <!--delete modal end-->
 
-<script>
-  reload_js('/assets/pages/program/academic_list.js');
-  function reload_js(src) {
-    $('script[src="' + src + '"]').remove();
-    $('<script>').attr('src', src).appendTo('head');
-  }
-</script>
+  <script>
+    let accid = '';
+    var program_param = getUrlParamquery();
+    accid = program_param.acc_id;
+
+    if (accid) {
+      document.getElementById('sectiontab').setAttribute('data-n-url-batch_id', accid);
+      document.getElementById('academictab').setAttribute('data-n-url-acc_id', accid);
+      document.getElementById('academicedit').setAttribute('data-n-url-program_id', accid);
+    }
+
+    reload_js('/assets/pages/program/academic_list.js');
+    function reload_js(src) {
+      $('script[src="' + src + '"]').remove();
+      $('<script>').attr('src', src).appendTo('head');
+    }
+
+
+
+  </script>
