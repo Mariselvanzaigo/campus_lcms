@@ -1,98 +1,102 @@
 <div class="container-fluid">
 
-    <div class="row">
-      <div class="col-12 title-head mb-3">
-        <h2>Program <dfn data-info="Lorem ipsum dolor sit amet, perspiciatis consectetur dolor."><i class="fas fa-info-circle"></i></dfn></h2>
-        <input type="hidden" data-flinkto="courses" id="courses_page">
-        
-      </div>
+  <div class="row">
+    <div class="col-12 title-head mb-3">
+      <h2>Program <dfn data-info="Lorem ipsum dolor sit amet, perspiciatis consectetur dolor."><i
+            class="fas fa-info-circle"></i></dfn></h2>
+      <input type="hidden" data-flinkto="courses" id="courses_page">
+
     </div>
+  </div>
 
-    <div class="row">
-      
-        <div class="col-md-12">
-          <div class="white-bg p-3"> 
-              <div class="row">
-                <div class="col-12 d-flex justify-content-between searchbar mb-3">
-                  <h4>Program Details</h4>                
-                  <span class="orange-btn nbtn">
-                      <button type="button" class="btn btn-primary navigate_refresh" href="program/createprogram" data-flinkto="createprogram" >
-                        Edit
-                      </button>
-                  </span>
-                 </div>      
-              </div>
-            <div class="add-details">
+  <div class="row">
 
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <label>Program Name</label>
-                        <p>Computer Science</p>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label>Stream</label>
-                        <p>Engineering</p>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label>Course</label>
-                        <p>Undergraduate</p>
-                    </div>
+    <div class="col-md-12">
+      <div class="white-bg p-3">
+        <div class="row">
+          <div class="col-12 d-flex justify-content-between searchbar mb-3">
+            <h4>Program Details</h4>
+            <span class="orange-btn nbtn">
+              <button type="button" class="btn btn-primary navigate_refresh" href="program/createprogram"
+                data-flinkto="createprogram">
+                Edit
+              </button>
+            </span>
+          </div>
+        </div>
+        <div class="add-details">
+
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <label>Program Name</label>
+              <p>Computer Science</p>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label>Stream</label>
+              <p>Engineering</p>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label>Course</label>
+              <p>Undergraduate</p>
+            </div>
+          </div>
+
+          <!----tab section start---->
+          <div class="container-fluid p-0">
+            <div class="tabs white-bg mt-3">
+              <input type="radio" name="tabs" id="tab1" checked="checked" onclick="searchCertificateParam()">
+              <label for="tab1">Academic Year Information</label>
+              <div class="tab p-0" id="academic-container">
+
+
+                <!--------------loader start--------------->
+                <div class="row loader disp_block" id="academic_list-loader"><span>Loading Academic Year
+                    Information...</span></div>
+                <!--------------loader end--------------->
+                <div class="row" id="">
+                  <div class="table-section add-details mt-4" id="academic_table_container">
+
+                  </div>
                 </div>
 
-                <!----tab section start---->
-                <div class="container-fluid p-0">
-                    <div class="tabs white-bg mt-3">
-                    <input type="radio" name="tabs" id="tab1" checked="checked" onclick="searchCertificateParam()">
-                    <label for="tab1">Academic Year Information</label>
-                     <div class="tab p-0" id="academic-container">
-                        
-                      
-                      <!--------------loader start--------------->
-                        <div class="row loader disp_block" id="academic_list-loader"><span>Loading Academic Year Information...</span></div>
-                        <!--------------loader end--------------->
-                        <div class="row" id="">
-                          <div class="table-section add-details mt-4" id="academic_table_container">
+                <!--------------pagination start--------------->
+                <div class="container-fluid pagination-cont cs-number p-0 academiclistPagination"
+                  style="display: none;">
+                  <div id="acc_pagination-container-to" class="orglist__pagination"></div>
+                  <div id="academic_pagination-container-goto" class="goto_page d-none"><span class="goto_page_text">Go
+                      to
+                      page</span>
+                    <input type="number" value="" id="academic_go_to_pageto" maxlength="3" min="1" class=" d-none">
+                    <a class="goto_go d-none" id="academic_gotoques"
+                      onclick="goto_pageCall('acc_pagination-container-to', 'academic_go_to_pageto');"><span>Go<i
+                          class="fa fa-angle-right" aria-hidden="true"></i>
+                      </span></a>
+                  </div>
+                </div>
+                <!--------------pagination end--------------->
 
-                          </div>
-                        </div>
-
-                        <!--------------pagination start--------------->
-                        <div class="container-fluid pagination-cont cs-number p-0 academiclistPagination" style="display: none;">
-                          <div id="acc_pagination-container-to" class="orglist__pagination"></div>
-                          <div id="academic_pagination-container-goto" class="goto_page d-none"><span class="goto_page_text">Go
-                              to
-                              page</span>
-                            <input type="number" value="" id="academic_go_to_pageto" maxlength="3" min="1" class=" d-none">
-                            <a class="goto_go d-none" id="academic_gotoques"
-                              onclick="goto_pageCall('acc_pagination-container-to', 'academic_go_to_pageto');"><span>Go<i
-                                  class="fa fa-angle-right" aria-hidden="true"></i>
-                              </span></a>
-                          </div>
-                        </div>
-                        <!--------------pagination end--------------->
-
-                        <!--------------No records found start--------------->
-                        <div id="nodataFound_platformlist" style="display: none;">
-                          <div class="row">
-                            <div class="col-12 title-head no-record mb-3 text-center">
-                              <p><span class="text-danger">No Records Found!</span></p>
-                            </div>
-                          </div>
-                        </div>
-                        <!--------------No records found end--------------->
-
-                        <!---------Platform view end-------->
-
-                      
-                      
-                    
-
+                <!--------------No records found start--------------->
+                <div id="nodataFound_platformlist" style="display: none;">
+                  <div class="row">
+                    <div class="col-12 title-head no-record mb-3 text-center">
+                      <p><span class="text-danger">No Records Found!</span></p>
                     </div>
+                  </div>
+                </div>
+                <!--------------No records found end--------------->
 
-                    <input type="radio" name="tabs" id="tab2" onclick="searchCertificateParam()">
-                    <label for="tab2">Section</label>
-                     <div class="tab p-0">
-                        <div class="row loader d-none" id="load_draft"><span>Loading Section...</span></div>
+                <!---------Platform view end-------->
+
+
+
+
+
+              </div>
+
+              <input type="radio" name="tabs" id="tab2">
+              <label data-n-linkto="programsectionlist" for="tab2">Section</label>
+              <div class="tab p-0">
+                <!-- <div class="row loader d-none" id="load_draft"><span>Loading Section...</span></div>
                         <div class="row" id="">
                             <div class="table-section mt-4">
                                 <table class="table table-bordered responsive">
@@ -132,64 +136,64 @@
                         </div>
                      </div>
                     </div>
-                  </div>
-                  <!----tab section end---->
+                   </div>-->
+                <!----tab section end---->
 
-                 <div class="d-flex justify-content-between mt-3">
-                    <div>
-                        <span class="blue-border-btn">
-                            <button type="button" class="btn btn-primary">
-                              Back
-                            </button>
-                        </span>
-                    </div>
+                
+
+              </div>
+
+              <div class="d-flex justify-content-between mt-3">
+                <div>
+                  <span class="blue-border-btn">
+                    <button type="button" class="btn btn-primary">
+                      Back
+                    </button>
+                  </span>
                 </div>
-               
-         </div>
-           
+              </div>
+              
+            </div>
+
+
 
           </div>
-
-          
-
-        </div>
-    </div>
-</div>
-
-
-
-
- <!--delete modal start-->
- <div class="modal fade" id="deletemodal" tabindex="-1" aria-labelledby="exampleModalXlLabel" style="display: none;" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title h4" id="exampleModalXlLabel"></h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body p-4">
-          <form method="get" class="pop-form">
-            <div class="row">
-              <div class="col-md-12 text-center mb-2"> <img src="../assets/images/delete.png"> </div>
-              <div class="col-md-12 text-center mb-2" id="delete_module_name_msg">
-                <p>Are you sure you want to delete it </p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12 pt-3 pb-3 wauto text-center"> 
-                <span class="dborder-btn nbtn"><a onclick="">
-                  <button type="button">Cancel</button>
-                  </a></span>
-                  <span class="danger-btn nbtn"><a onclick="">
-                <button type="button">Delete</button>
-                </a></span>                
-              </div>
-            </div>
-          </form>
         </div>
       </div>
-    </div>
-  </div>
-  <!--delete modal end-->
 
 
+
+
+      <!--delete modal start-->
+      <div class="modal fade" id="deletemodal" tabindex="-1" aria-labelledby="exampleModalXlLabel"
+        style="display: none;" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title h4" id="exampleModalXlLabel"></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+              <form method="get" class="pop-form">
+                <div class="row">
+                  <div class="col-md-12 text-center mb-2"> <img src="../assets/images/delete.png"> </div>
+                  <div class="col-md-12 text-center mb-2" id="delete_module_name_msg">
+                    <p>Are you sure you want to delete it </p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 pt-3 pb-3 wauto text-center">
+                    <span class="dborder-btn nbtn"><a onclick="">
+                        <button type="button">Cancel</button>
+                      </a></span>
+                    <span class="danger-btn nbtn"><a onclick="">
+                        <button type="button">Delete</button>
+                      </a></span>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--delete modal end-->
