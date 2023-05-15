@@ -225,9 +225,9 @@ function list_PR_batchData(batch_data) {
             batchtd += '<td>' + element.academic_end_date + '</td>';
             batchtd += '<td>' + element.batch_student_count + '</td>';
             batchtd += '<td class="action-icons">';
-            batchtd += '<span class="eye-icon"><a href="#"><img src="/assets/images/eyeicon.png"></a></span>';
+            batchtd += '<span class="eye-icon"><img src="/assets/images/eyeicon.png"></span>';
             batchtd += '<span class="edit-icon" data-n-linkto="createprogram" data-n-url-program_id="' + batch_id + '" data-n-url-page_from="programsectionlist"><img data-n-linkto="createprogram" data-n-url-program_id="' + batch_id + '" data-n-url-page_from="programsectionlist" src="/assets/images/edit.png"></span>';
-            batchtd += '<span class="delete-icon"><a href="#" data-bs-toggle="modal" data-bs-target="#deletemodal"><img src="/assets/images/deleteicon.png"></a></span>';
+            batchtd += '<span class="delete-icon"><img src="/assets/images/deleteicon.png"></span>';
             batchtd += '</td>';
             batchtd += '</tr>';
         });
@@ -235,4 +235,7 @@ function list_PR_batchData(batch_data) {
 
     batchtd += '</tbody></table>';
     batch_Element.append(batchtd);
+
+
+    //data-bs-toggle="modal" data-bs-target="#deletemodal"
 }
