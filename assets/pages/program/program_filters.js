@@ -413,8 +413,8 @@ function list_PR_ProgramData(prg_data) {
       prgtd += '<button class="btn dropdown-toggle dbtn" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button>';
       prgtd += '<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton3" style="">';
       prgtd += '<li><a class="dropdown-item" href="#">View</a></li>';
-      prgtd += '<li><a class="dropdown-item" data-n-linkto="createprogram" data-n-url-program_id="' + element.id + '" data-n-url-page_from="programlist" href="#">Edit</a></li>';
-      prgtd += '<li><a class="dropdown-item" href="#">Delete</a></li>';
+      prgtd += '<li><a class="dropdown-item" data-n-linkto="createprogram" data-n-url-program_id="' + element.id + '" data-n-url-page_from="programlist">Edit</a></li>';
+      prgtd += '<li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deletemodal">Delete</a></li>';
       prgtd += '</ul>';
       prgtd += '</div>';
       prgtd += '</td>';
