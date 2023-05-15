@@ -106,7 +106,7 @@ function list_PR_academic(parameter) {
   }
   if ($("#acc_pagination-container-to").length > 0) {
     $('#acc_pagination-container-to').pagination({
-      dataSource: API_CMS_URL + 'program/academic_list/'+ accids + parameter,
+      dataSource: API_CMS_URL + 'program/academic_list/'+ accids,
       locator: 'data.academic_data',
       totalNumberLocator: function (response) {
         setTimeout(function () {
@@ -211,13 +211,15 @@ function list_PR_academicData(acc_data) {
       </tr>
   </thead>
   <tbody>`;
-
+  
   if (acc_data.length > 0) {
     $.each(acc_data, function (index, element) {
+
+      console.log(dateFormat_slash(element.start_date));
       acctd += '<tr><td>'+  element.academic_name +'</td>';
       acctd += '<td>'+  element.year +'</td>';
-      acctd += '<td>'+  element.start_date +'</td>';
-      acctd += '<td>'+  element.end_date +'</td>';
+      acctd += '<td>'+  dateFormat_slash(element.start_date) +'</td>';
+      acctd += '<td>'+  dateFormat_slash(element.end_date) +'</td>';
       acctd += '<td><span class="as_links" data-n-linkto="programsectionlist" data-n-url-batch_id="'+ acc_id +'" data-n-url-acc_yearid="'+ element.id +'">' + element.batch_count + '</span> </td>';
       acctd += '<td class="action-icons">';
       acctd += '<span class="eye-icon"><img src="/assets/images/eyeicon.png"></span>';
