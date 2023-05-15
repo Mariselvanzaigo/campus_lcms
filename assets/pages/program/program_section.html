@@ -16,7 +16,7 @@
                 <div class="col-12 d-flex justify-content-between searchbar mb-3">
                   <h4>Program Details</h4>                
                   <span class="orange-btn nbtn">
-                      <button type="button" class="btn btn-primary navigate_refresh" href="program/createprogram" data-flinkto="createprogram" >
+                      <button id="sectionedit" type="button" class="btn btn-primary navigate_refresh" data-n-linkto="createprogram" data-n-url-program_id="" data-n-url-page_from="programsectionlist">
                         Edit
                       </button>
                   </span>
@@ -25,70 +25,32 @@
             <div class="add-details">
 
                 <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <label>Program Name</label>
-                        <p>Computer Science</p>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label>Stream</label>
-                        <p>Engineering</p>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label>Course</label>
-                        <p>Undergraduate</p>
-                    </div>
+                  <div class="col-md-4 mb-3">
+                    <label>Program Name</label>
+                    <p id="prg__name"></p>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label>Stream</label>
+                    <p id="stream__name"></p>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label>Course</label>
+                    <p id="course__name"></p>
+                  </div>
                 </div>
 
                 <!----tab section start---->
                 <div class="container-fluid p-0">
                     <div class="tabs white-bg mt-3">
                     <input type="radio" name="tabs" id="tab1" onclick="searchCertificateParam()">
-                    <label for="tab1">Academic Year Information</label>
+                    <label id="academictab" data-n-linkto="programacademiclist" data-n-url-acc_id="" for="tab1">Academic Year Information</label>
                      <div class="tab p-0">
-                        <div class="row loader d-none" id="load_completed"><span>Loading Academic Year Information...</span></div>
-                        <div class="row" id="">
-                            <div class="table-section mt-4">
-                                <table class="table table-bordered responsive">
-                            <thead>
-                              <tr>    
-                                <th>Academic Name</th>  
-                                <th>Academic Year</th>                
-                                <th>Start Date</th>
-                                <th>End Date</th>
-                                <th>Section</th>
-                                <th>&nbsp;</th>
-                              </tr>
-                            </thead>
-                            <tbody id="">
-                                <tr>    
-                                   <td>ABCD </td>
-                                   <td>2023 - 2024  </td>  
-                                   <td>20/01/2023 </td>  
-                                   <td>22/01/2024 </td>  
-                                   <td><a href="#">2</a> </td>  
-                                   <td class="action-icons">
-                                    <span class="eye-icon"><a href="#"><img src="/assets/images/eyeicon.png"></a></span>
-                                    <span class="edit-icon"><a href="#"><img src="/assets/images/edit.png"></a></span>
-                                    <span class="delete-icon"><a href="#" data-bs-toggle="modal" data-bs-target="#deletemodal"><img src="/assets/images/deleteicon.png"></a></span>
-                                   </td>                  
-                                </tr>
-                            </tbody>
-                            </table>
-                            </div>
-                        </div>
-
-                      <div class="nodataFound_certificate" style="display:none">
-                          <div class="row">
-                            <div class="col-12 title-head mb-3">
-                              <p><span class="text-danger">No Records Found!</span></p>
-                            </div>
-                          </div>
-                      </div>
+                        
 
                     </div>
 
                     <input type="radio" name="tabs" id="tab2" checked="checked" onclick="searchCertificateParam()">
-                    <label for="tab2">Section</label>
+                    <label for="tab2" id="sectiontab" data-n-linkto="programsectionlist" data-n-url-batch_id="">Section</label>
                     
                     <div class="tab p-0" id="batch-container">
                         
@@ -196,4 +158,23 @@
   </div>
   <!--delete modal end-->
 
+  <script>
+    let batchid = '';
+    var program_param = getUrlParamquery();
+    batchid = program_param.batch_id;
 
+    if (batchid) {
+      document.getElementById('sectiontab').setAttribute('data-n-url-batch_id', batchid);
+      document.getElementById('academictab').setAttribute('data-n-url-acc_id', batchid);
+      document.getElementById('sectionedit').setAttribute('data-n-url-program_id', batchid);
+    }
+
+    reload_js('/assets/pages/program/batch_list.js');
+    function reload_js(src) {
+      $('script[src="' + src + '"]').remove();
+      $('<script>').attr('src', src).appendTo('head');
+    }
+
+
+
+  </script>

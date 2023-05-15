@@ -40,7 +40,7 @@ const menuSchema = {
   },
   programlist: {
     template: "/assets/pages/program/programorganizationlist.html",
-    callback: programCallbacks,
+    //callback: programCallbacks,
     url: "/program",
   },
   programacademiclist: {
@@ -50,7 +50,7 @@ const menuSchema = {
   },
   programsectionlist: {
     template: "/assets/pages/program/program_section.html",
-    callback: batch_Callbacks,
+    //callback: batch_Callbacks,
     url: "/program/section",
   },
   // programcreate: {
