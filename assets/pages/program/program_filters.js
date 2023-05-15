@@ -340,7 +340,7 @@ function list_PR_Organizaiton(parameter) {
             if (isFirst) {
               isFirst = false;
             }
-            alert("Session Expired, Please login again.");
+            //alert("Session Expired, Please login again.");
           }
 
         },
@@ -391,7 +391,7 @@ function list_PR_OrganizaitonData(org_data) {
       accrd += '<div class="accordion-item">';
       accrd += '<h2 class="accordion-header" id="h_' + element.id + '">';
       accrd += '<button class="accordion-button ' + collapsedClass + '"  type="button" data-bs-toggle="collapse" data-bs-target="#i_' + element.id + '" aria-expanded="' + expandBool + '" aria-controls="i_' + element.id + '">' + element.organization_name + '</button></h2>';
-      accrd += '<div id="i_' + element.id + '" class="accordion-collapse collapse ' + collspaeShow + '" aria-labelledby="h_' + element.id + '" data-bs-parent="#orglist_items">';
+      accrd += '<div id="i_' + element.id + '" class="accordion-collapse collapse ' + collspaeShow + '" aria-labelledby="h_' + element.id + '" data-bs-parent="#i_' + element.id + '">';
       accrd += '<div class="accordion-body">';
       accrd += '<ul id="org-program-listings">';
       let org_sublist = element.children;

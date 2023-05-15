@@ -81,80 +81,80 @@ function toggle_collapse_expand(e){
     }
   }
 
-function callNestedSort(){
-    var ns = $('.coursesortable').nestedSortable({
-    scroll: true,
-    forcePlaceholderSize: true,
-    listType:"ul",
-    handle: 'div',
-    helper: 'clone',
-    items: 'li:not(.cattach):not(.nondraggable)',
-    toleranceElement: 'div>',
-    opacity: .6,
-    placeholder: 'placeholder',
-    revert: 250,
-    isTree: true,
-    expandOnHover: 700,
-    startCollapsed: false,
-    isAllowed: function(item, parent) { 
-      console.log(item);
-      var hasnoDroppable = item.parent().parent().hasClass('nondroppableelem');
-      if(hasnoDroppable){
-        console.log('hasnoDroppable');
-        return false;
-      }else{
-        return true;
-      }
-      return false;
-    },
-    update: function(event, ui){
-      var item = ui.item;
-      var target = ui.item.parent().parent();
-      var parent_id = target.attr("data-this_parent_id");
-      var parent_id_val = "";
-      if(parent_id && parent_id != "null" && parent_id != null){
-        parent_id_val = String(parent_id);
-      }else{
-        parent_id_val = null;
-      }
-      var module_id = item.attr("data-this_parent_id");
-      var level_number = item.index() + 1;
-      //var module_name = item.children().eq(0).children().eq(1).children().eq(1).attr("data-prev_val")
-      var get_submodule_level_values = {
-        //module_name: String(decodeURIComponent(module_name)),
-        rearrange: "yes",
-        level: parseInt(level_number), 
-        course_id:String(document.getElementById("cms_course_details").getAttribute("data-cid")),
-        parent_id:parent_id_val
-      }
+// function callNestedSort(){
+//     var ns = $('.coursesortable').nestedSortable({
+//     scroll: true,
+//     forcePlaceholderSize: true,
+//     listType:"ul",
+//     handle: 'div',
+//     helper: 'clone',
+//     items: 'li:not(.cattach):not(.nondraggable)',
+//     toleranceElement: 'div>',
+//     opacity: .6,
+//     placeholder: 'placeholder',
+//     revert: 250,
+//     isTree: true,
+//     expandOnHover: 700,
+//     startCollapsed: false,
+//     isAllowed: function(item, parent) { 
+//       console.log(item);
+//       var hasnoDroppable = item.parent().parent().hasClass('nondroppableelem');
+//       if(hasnoDroppable){
+//         console.log('hasnoDroppable');
+//         return false;
+//       }else{
+//         return true;
+//       }
+//       return false;
+//     },
+//     update: function(event, ui){
+//       var item = ui.item;
+//       var target = ui.item.parent().parent();
+//       var parent_id = target.attr("data-this_parent_id");
+//       var parent_id_val = "";
+//       if(parent_id && parent_id != "null" && parent_id != null){
+//         parent_id_val = String(parent_id);
+//       }else{
+//         parent_id_val = null;
+//       }
+//       var module_id = item.attr("data-this_parent_id");
+//       var level_number = item.index() + 1;
+//       //var module_name = item.children().eq(0).children().eq(1).children().eq(1).attr("data-prev_val")
+//       var get_submodule_level_values = {
+//         //module_name: String(decodeURIComponent(module_name)),
+//         rearrange: "yes",
+//         level: parseInt(level_number), 
+//         course_id:String(document.getElementById("cms_course_details").getAttribute("data-cid")),
+//         parent_id:parent_id_val
+//       }
   
-      var url = API_CMS_URL + 'course_meta_details/'+module_id;
-      var method = "PATCH";
-      $.ajax({
-        url: url,
-        type: method,
-        data: JSON.stringify(get_submodule_level_values),
-        headers: { "Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token },
-        success:function(response){
-          console.log(response);
-          //location.reload();
-          $('#cms_course_details').trigger('click');
-        },
-        error: function(error) {
-          if (error.status === 401) {
-            alert("Session Expired, Please login again.");
-            logoutSession();
-          }
-          tags_response = "1";
-          toastr.error("Response Error: " + error.message);
-          console.log(error);
-        }
-      });
+//       var url = API_CMS_URL + 'course_meta_details/'+module_id;
+//       var method = "PATCH";
+//       $.ajax({
+//         url: url,
+//         type: method,
+//         data: JSON.stringify(get_submodule_level_values),
+//         headers: { "Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token },
+//         success:function(response){
+//           console.log(response);
+//           //location.reload();
+//           $('#cms_course_details').trigger('click');
+//         },
+//         error: function(error) {
+//           if (error.status === 401) {
+//             alert("Session Expired, Please login again.");
+//             logoutSession();
+//           }
+//           tags_response = "1";
+//           toastr.error("Response Error: " + error.message);
+//           console.log(error);
+//         }
+//       });
       
-    }
-  });
-  }
-  function previewInstitute(ins_id){
+//     }
+//   });
+//   }
+  function previewInstitute(ins_id, ins_type, org_ins_id, current_id){
     $("#prev-org_logo").attr("src", "");
     $("#prev-org_name").text("");
     $("#prev-ins_name").text("");
@@ -184,6 +184,15 @@ function callNestedSort(){
             console.log(response)
             if(response){
                 $("#previewmodal").modal("toggle");
+                if(ins_type == "institute"){
+                  $("#prev-edit_icon").attr("data-n-linkto", "addinstitute");
+                  $("#prev-edit_icon").attr("data-n-url-org_id", org_ins_id);
+                  $("#prev-edit_icon").attr("data-n-url-ins_id", response.id);
+                }else{
+                  $("#prev-edit_icon").attr("data-n-linkto", "addcollege");
+                  $("#prev-edit_icon").attr("data-n-url-ins_id", org_ins_id);
+                  $("#prev-edit_icon").attr("data-n-url-clg_id", response.id);
+                }
               //prev-stream_list
                 var ins_city_state_zip = response.city ? response.city: "";
                 if(ins_city_state_zip){
@@ -288,3 +297,22 @@ function callNestedSort(){
         });
       }
   }
+
+function deleteModule(e, ins_id, mod_type){
+  if(ins_id){
+    var module_name = $(e).attr("data-module_name");
+    if(ins_id != "" && ins_id != null && ins_id != undefined){
+      var module_type = mod_type == "institute" ? "Institute" : "College";
+      $("#delete_module_name_msg").html(`<p> Are you sure you want to delete the ${module_type} : ${module_name} ? </p>`);
+      $("#delete_org_id").val(ins_id);
+      $("#deletemodal").modal('toggle');
+      $("#delete_org_id").attr("data-delete_module_type", mod_type);
+      if (window.location.href.indexOf("organization") > -1) {
+        $("#delete_org_id").attr("data-page", "organization");
+      }else if (window.location.href.indexOf("institute") > -1) {
+        $("#delete_org_id").attr("data-page", "institute");
+      }
+    }
+  }
+
+}
