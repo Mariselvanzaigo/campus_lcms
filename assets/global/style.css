@@ -670,12 +670,12 @@ dfn i {
 	font-family: Inter;
 	font-style: normal;
 	font-weight: normal;
-	font-size: 12px;
+	font-size: 13px;
 	line-height: 20px;
 	color: #787895;
 	text-align: left;
 	vertical-align: middle;
-	padding: 5px;
+	padding: 10px 5px;
 }
 .white-bg {
 	background: #fff;
@@ -689,11 +689,11 @@ dfn i {
 	font-family: Inter;
 	font-style: normal;
 	font-weight: normal;
-	font-size: 12px;
+	font-size: 13px;
 	line-height: 20px;
 	text-align: left;
 	vertical-align: middle;
-	padding: 5px;
+	padding: 10px 5px;
 }
 
 .ahide .dropdown-toggle::after {
@@ -2157,7 +2157,7 @@ span.obg {
 	padding: 10px 8px;
 	text-align: left;
 	border: 1.5px solid #52575d;
-	font-size: 14px;
+	font-size: 13px;
 	text-transform: uppercase;
 }
 .tab td {
@@ -2165,7 +2165,7 @@ span.obg {
 	font-weight: normal;
 	padding: 10px 8px;
 	text-align: left;
-	font-size: 14px;
+	font-size: 13px;
 	border: 1.5px solid #52575D;
 }
 .tab tr:hover {
