@@ -5366,6 +5366,20 @@ video{
 	padding: 15px;
 	color: #787895;
 }
+.slideout-sidebar .accordion-body li.sub__program, .slideout-sidebar .accordion-body li.no__program{
+	display: block;
+	background: #F8F8F8;
+	padding: 15px;
+	color: #787895;
+}
+.slideout-sidebar .accordion-body li.sub__program{
+	cursor: pointer;
+}
+span.as_links{
+	cursor: pointer;
+	color: #7B61FF;
+	text-decoration: underline;	
+}
 .slideout-sidebar .accordion-body li a:hover {
 	background: #E5E5E9;
 	color: #20204F;
@@ -5431,4 +5445,126 @@ video{
 #cms-org_list .active_org{
 	background: #ECECEC;
     color: #000;
+}
+
+
+/*** dropzone style starts ***/
+#dropzone #CourseSettingsBanner{
+    background: #f9f9fb url(../../assets/images/imagefile.jpg);
+    text-indent: -10000px;
+    height: 250px;
+    /* background-size: contain; */
+    background-repeat: no-repeat;
+    background-position: center center;
+    border: 2px dashed #ced4da;
+	object-fit: contain;
+}
+#dropzone{
+	width:100%;
+	position: relative;
+}
+#CourseSettingsBanner4, #CourseSettingsBanner1, #CourseSettingsBanner2 {
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    border: none;
+    background: url(../../assets/images/edit-round.png);
+    right: 56;
+    top: 4;
+    opacity: 0;
+}
+#CourseSettingsBanner4del, #CourseSettingsBanner1del, #CourseSettingsBanner2del{
+	width: 35px;
+    height: 35px;
+    padding: 0px;
+    float: right;
+    position: absolute;
+    top: 4px;
+    right: 12px;
+    margin: 5px;
+    cursor: pointer;
+    z-index: 999;
+    opacity: 0;
+}
+.dropzone_4:hover #CourseSettingsBanner4, .dropzone_1:hover #CourseSettingsBanner1, .dropzone_2:hover #CourseSettingsBanner2  {
+	opacity: 1;
+}
+.dropzone .dz-preview.dz-image img{
+	height: 120px;
+	width:120px;
+	object-fit: cover;
+}
+.dropzone_4:hover #CourseSettingsBanner4del, .dropzone_1:hover #CourseSettingsBanner1del, .dropzone_2:hover #CourseSettingsBanner2del { 
+	opacity: 1!important;
+}
+.dropzone_4_image_preview, .dropzone_1_image_preview, .dropzone_2_image_preview{
+
+    border: 2px solid #bfbcbc;
+    border-style: dashed;
+}
+#demo-upload_4, #demo-upload_1, #demo-upload_2{
+	margin-bottom: 0px !important;
+    margin-top: 16px;
+}
+.delete_courseMadeFor{
+	align-items: end;
+    padding: 10px;
+}
+/*** dropzone style ends ***/
+/*** select box style starts ***/
+.org_list_container .select2-selection__arrow{
+	top: 8px !important;
+}
+.org_list_container .select2-selection--single{
+	height: 42px !important;
+    padding-top: 5px;
+}
+.org_list_container .select2-container--default .select2-selection--single .select2-selection__arrow b{
+	border-width: 7px 7px 0 7px !important;
+	margin-left: -18px !important;
+}
+#frmNewCmsIns .iti--allow-dropdown, #frmNewCmsUser .iti--allow-dropdown {
+    width: 100%;
+}
+/*** select box style ends ***/
+#ins_stream_list, #ins_course_list{
+	height: 440px;
+	overflow: scroll;
+}
+.text_center{
+	text-align: center !important;
+}
+.li_item{
+	font-weight: 400;
+    font-size: 16px;
+    color: #20204F;
+    list-style: none;
+}
+.ul_item{
+	padding-left: 0px;;
+}
+.course .expand_img_icon img {
+    width: 20px;
+    margin-top: 7px;
+}
+.ins_email_prev{
+	overflow-wrap: anywhere;
+}
+.edit_icon{
+	cursor: pointer;
+}
+.academic_name_container{
+	padding: 15px;
+}
+.lightgreybg{
+	background:#efefef;
+}
+.bgwhite{
+	background-color: white;
+}
+.academic_name_input{
+	margin: -5px;
+}
+.form-control.is-invalid{
+	border-color:#e55353 !important;
 }

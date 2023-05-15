@@ -326,7 +326,7 @@ $(document).ready(function(){
     $('a.navlink').removeClass("active");
     $(this).addClass("active");
   });
-  console.log('aut-data',localStorage.getItem("auth_data_lcms"));
+  //console.log('aut-data',localStorage.getItem("auth_data_lcms"));
   if(localStorage.getItem("auth_data_lcms") != null){
     var logo_image = getUserInfo().logo_image;
     $(".org_logo_image").attr("src", logo_image )
@@ -334,13 +334,13 @@ $(document).ready(function(){
 });
 /* Go to Page pagination Ends */    
 function logoutSession(){
-    // localStorage.removeItem("auth_lcms");
-    // localStorage.removeItem("auth_type_lcms");
-    // localStorage.removeItem("auth_user_lcms");
-    // localStorage.removeItem("auth_data_lcms");
-    // localStorage.removeItem("system_rights");
-    // console.log('SITE_URL_PROTOCOL custom.js', SITE_URL_PROTOCOL+"login");
-    // window.location.replace(SITE_URL_PROTOCOL+"login");
+    localStorage.removeItem("auth_lcms");
+    localStorage.removeItem("auth_type_lcms");
+    localStorage.removeItem("auth_user_lcms");
+    localStorage.removeItem("auth_data_lcms");
+    localStorage.removeItem("system_rights");
+    console.log('SITE_URL_PROTOCOL custom.js', SITE_URL_PROTOCOL+"login");
+    window.location.replace(SITE_URL_PROTOCOL+"login");
 }
 function parseString(str) {
   var result=str.replace('"','&quot;');
@@ -349,3 +349,43 @@ function parseString(str) {
 } 
 
 
+
+function formatState (state) {
+  if (!state.id) {
+    return state.text;
+  }
+  var baseUrl = "/user/pages/images/flags";
+  var $state = $(
+    '<span>' + state.text + '</span>'
+  );
+  return $state;
+};
+
+var academic_year_options = [
+  {"year":"2023-2024"},
+  {"year":"2024-2025"},
+  {"year":"2025-2026"},
+  {"year":"2026-2027"},
+  {"year":"2027-2028"},
+  {"year":"2028-2029"},
+  {"year":"2029-2030"},
+  {"year":"2030-2031"},
+  {"year":"2031-2032"},
+  {"year":"2032-2033"},
+  {"year":"2033-2034"},
+  {"year":"2034-2035"},
+  {"year":"2035-2036"},
+  {"year":"2036-2037"},
+  {"year":"2037-2038"},
+  {"year":"2038-2039"},
+  {"year":"2039-2040"},
+  {"year":"2040-2041"},
+  {"year":"2041-2042"},
+  {"year":"2042-2043"},
+  {"year":"2043-2044"},
+  {"year":"2044-2045"},
+  {"year":"2045-2046"},
+  {"year":"2046-2047"},
+  {"year":"2047-2048"},
+  {"year":"2048-2049"}
+];

@@ -2,6 +2,7 @@ const ENVIRONMENT = "development"; //development | staging | live
 
 //Base URL for API
 let API_BASE_URL = "https://qaadmin.exper.com/api/v1/camp/";
+let API_CMS_URL ='';
 
 //SITE URL
 const windowLocation = window.location;
@@ -30,6 +31,7 @@ if (ENVIRONMENT === "development" || ENVIRONMENT === "staging") {
 // let API_BASE_URL = "https://qaadmin.exper.com/api/v1/camp/";
 // let API_CAMPUS_URL = "https://qaadmin.zaigoinfotech.com/api/v1/camp/";
 let API_CONTENT_URL = "https://qacontent.exper.com/api/v1/campus/";
+API_CMS_URL = "https://qacmsapi.exper.com/api/v1/camp/";
 // let SITE_URL_PROTOCOL = window.location.protocol + "//" + window.location.hostname;
 let SITE_URL_PROTOCOL = SITE_URL;
 console.log(SITE_URL_PROTOCOL);
@@ -39,6 +41,7 @@ let USER_ENGINE_API_URL = "https://elearningadmin.zaigoinfotech.com/api/v1/ue/";
 if (SITE_URL_PROTOCOL === "http://127.0.0.1:5501"){
   DOMAIN_FULL = "http://127.0.0.1:5500";
   API_BASE_URL = "https://qaadmin.exper.com/api/v1/camp/";
+  API_CMS_URL = "https://qacmsapi.exper.com/api/v1/camp/"; 
 	SITE_URL_PROTOCOL = "http://127.0.0.1:5501/";
   API_CONTENT_URL = "https://qacontent.exper.com/api/v1/campus/";
   // USER_ENGINE_API_URL = "https://qaadmin.exper.com/api/v1/ue/";
@@ -48,12 +51,14 @@ if (SITE_URL_PROTOCOL === "http://127.0.0.1:5501"){
   API_BASE_URL = "https://qaadmin.exper.com/api/v1/camp/";
 	SITE_URL_PROTOCOL = "http://127.0.0.1:5501/";
   API_CONTENT_URL = "https://qacontent.exper.com/api/v1/campus/";
+  API_CMS_URL = "https://qacmsapi.exper.com/api/v1/camp/";
   // USER_ENGINE_API_URL = "https://qaadmin.exper.com/api/v1/ue/";
 } else if(SITE_URL_PROTOCOL === "http://localhost"){
   DOMAIN_FULL = "http://127.0.0.1:5500";
   API_BASE_URL = "https://qaadmin.exper.com/api/v1/camp/";
 	SITE_URL_PROTOCOL = "http://localhost/";
   API_CONTENT_URL = "https://qacontent.exper.com/api/v1/campus/";
+  API_CMS_URL = "https://qacmsapi.exper.com/api/v1/camp/";
   // USER_ENGINE_API_URL = "https://qaadmin.exper.com/api/v1/ue/";
 
 }else if(SITE_URL_PROTOCOL === "https://elearning.zaigoinfotech.com"){

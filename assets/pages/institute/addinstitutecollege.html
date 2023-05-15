@@ -2,7 +2,7 @@
 
     <div class="row">
       <div class="col-12 title-head mb-3">
-        <h2 id="header_breadcrumbs">Organization / Add Institute</h2>                
+        <h2 id="header_breadcrumbs">Organization / Institute / Add College</h2>                
         <span class="orange-btn nbtn">
             <button type="button" class="btn btn-primary d-none" id="preview_institute" data-bs-toggle="modal" data-bs-target="#previewmodal">
               Preview
@@ -16,14 +16,14 @@
         <div class="col-md-12">
           <div class="white-bg p-3 relative"> 
             <div class="searchbar mt-3">
-              <h4 id="stage_head_1" class="stage_head">Create Institution</h4>
+              <h4 id="stage_head_1" class="stage_head">Create College</h4>
               <h4 id="stage_head_2" class="stage_head d-none">Create Admin</h4>
               <h4 id="stage_head_3" class="stage_head d-none">Manage Academics</h4>
             </div>
             <div class="s-stepper">
                 <div data-target="#stage1" id="stage-1-step" class="s-step active">
                     <span class="s-step-counter"></span>
-                    <small>Create institution</small>
+                    <small>Create College</small>
                     <span><i class="fas fa-angle-double-right"></i></span>
                 </div>
                 <div data-target="#stage2" id="stage-2-step" class="s-step">
@@ -137,8 +137,8 @@
                             <div class="row">
                               <div class="col-md-12">
                                   <div class="mt-3 mb-3">
-                                      <label>Institution name</label>
-                                      <input type="text" class="form-control" id="ins_name" name="ins_name" placeholder="Enter Institute Name">
+                                      <label>College name</label>
+                                      <input type="text" class="form-control" id="ins_name" name="ins_name" placeholder="Enter College Name">
                                   </div>
                               </div>
                               <div class="col-md-12">
@@ -196,14 +196,13 @@
                                     <input type="number" class="form-control" id="ins_zip_code" name="ins_zip_code" placeholder="Enter Zip Code">
                                   </div>
                               </div>
-                              <div class="col-md-6">
+                              <!-- <div class="col-md-6">
                                   <div class="mb-3">
                                       <label>Organization</label>
                                       <div class="dropdown-select org_list_container">
                                         <select class="sort-select form-control" id="ins_organization" name="ins_organization" onchange="getSetOrgCode(event);">
                                         </select>
                                       </div>
-                                      <!-- <input type="text" class="form-control" id="ins_organization" name="ins_organization" placeholder="Enter your text here"> -->
                                   </div>
                               </div>
                               <div class="col-md-6">
@@ -211,7 +210,7 @@
                                       <label>Organization Code</label>
                                       <input type="text" class="form-control" id="ins_organization_code" name="ins_organization_code" placeholder="Enter Organization Code" disabled="true">
                                   </div>
-                              </div>
+                              </div> -->
                               <div class="col-md-6">
                                   <div class="mb-3">
                                       <label>Registration Details</label>
@@ -496,7 +495,8 @@
                               <button onclick="hideStage(3);showStage(2)"><i class="fa fa-left"></i> Previous</button>
                           </span>
                           <span class="orange-btn">
-                            <button id="toOrganizationList" data-n-linkto="organizationlist" hidden></button>
+
+                            <button id="toOrganizationList" data-n-linkto="institutelist" hidden></button>
                               <button id="save_manage_academic">Submit</button>
                           </span>
                         </div>
@@ -690,9 +690,11 @@
   </div>
   <!--preview modal end-->
 
-  <script>
-    $('script[src="/assets/pages/institute/addinstitutecollege.js"]').remove();
-    reload_js('/assets/pages/organization/addinstitute.js');
+
+
+<script>
+    $('script[src="/assets/pages/organization/addinstitute.js"]').remove();
+    reload_js('/assets/pages/institute/addinstitutecollege.js');
     function reload_js(src) {
       $('script[src="' + src + '"]').remove();
       $('<script>').attr('src', src).appendTo('head');
