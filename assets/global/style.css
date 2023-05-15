@@ -475,6 +475,7 @@ input[type="checkbox"]:checked + label::before {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	padding: 15px 25px;
 }
 .title-head h2 {
     font-family: Inter;
@@ -5603,4 +5604,8 @@ span.as_links{
 }
 .slideout-sidebar .accordion {
 	margin-bottom: 25px;
+}
+h4.light-grey {
+	color: #A6A5B8;
+	font-size: 18px;
 }
