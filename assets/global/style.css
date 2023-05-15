@@ -5602,6 +5602,9 @@ span.as_links{
 	font-weight: 500;
 	min-height: 35px;
 }
+.slideout-sidebar .accordion {
+	margin-bottom: 25px;
+}
 h4.light-grey {
 	color: #A6A5B8;
 	font-size: 18px;

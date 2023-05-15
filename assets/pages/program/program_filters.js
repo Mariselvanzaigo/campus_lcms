@@ -130,7 +130,7 @@ $(document).on("click", "#pr_resetButtonprograms", function () {
    $("#pr_searchprograms").val("");
   $("#pr_resetButtonprograms").addClass("d-none");
   $('#institute_namer').text('All Programs');
-  
+
   list_PR_Programs_Trigger("");
 });
 
@@ -204,19 +204,6 @@ function list_PR_Programs_Trigger(searchVal) {
   localStorage.setItem("pr_prlist_pageNum", "");
   localStorage.setItem("pr_prlist_search", "");
   $("#go_to_page2").val("");
-
-  // if (searchVal) {
-  //   if(program_params == ''){
-  //     searchVal = "?search=" + searchVal;
-  //   }else{
-  //     searchVal = "&search=" + searchVal;
-  //   }
-    
-  //   $('#pr_resetButtonprograms').removeClass("d-none");
-  // } else {
-  //   $('#pr_resetButtonprograms').addClass("d-none");
-  // }
-  // list_PR_programs(searchVal);
   searchprogram_param();
 
 }
@@ -421,6 +408,8 @@ function list_PR_ProgramData(prg_data) {
       prgtd += '</td>';
       prgtd += '</tr>';
     });
+  }else{
+    prgtd += '<tr><td colspan="6"><div class="text-center"><b>No Data Found !</b></div></td>';
   }
 
   prgtd += '</tbody></table>';
@@ -433,12 +422,6 @@ function list_PR_ProgramData(prg_data) {
  * ORGANIZATION LIST FILTERS AND LISTS
  */
 
-// let pr_searchOrganization_inp = document.getElementById("pr_searchOrganization");
-// pr_searchOrganization_inp.addEventListener("keypress", function (event) {
-
-// });
-
-// let prorg_go_to_pageto_inp = document.getElementById("prorg_go_to_pageto");
 
 document.addEventListener("keypress", function (event) {
 
@@ -656,53 +639,6 @@ function list_PR_OrganizaitonData(org_data) {
       org_Element.append(accrd);
     });
   }
-}
-
-
-
-function call_all_Stresm() {
-  $.ajax({
-    url: API_BASE_URL + "stream/details",
-    method: "GET",
-    type: 'GET',
-    cache: false,
-    processData: false,
-    headers: {
-      "Authorization": "Bearer " + getUserInfo().access_token,
-      "Content-Type": "application/json"
-    },
-    success: function (response) {
-      //console.log(response);
-      response = response.data;
-      let html = '';
-      if (response.length > 0) {
-        html = '<option value="">Select Stream</option>';
-        for (let i = 0; i < response.length; i++) {
-          html += '<option value="' + response[i]['id'] + '">' + response[i]['name'] + '</option>';
-        }
-
-      } else {
-        html = '<option value="">No Stream Found</option>';
-      }
-
-      $('#stream_list').html(html);
-
-      // $.fn.modal.Constructor.prototype.enforceFocus = function() {};
-      // $("#stream_list").select2({
-      //   templateResult: formatState,
-      //     width: '100%',
-      //   dropdownParent: $('#load_vhl_modal'),
-      // });
-    },
-    error: function (error) {
-      if (error.status === 401) {
-        alert("Session Expired, Please login again.");
-        logoutSession();
-      }
-      //toastr.error("Response Error: " + error.message);
-      console.log(error);
-    }
-  });
 }
 
 

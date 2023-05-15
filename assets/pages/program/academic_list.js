@@ -228,6 +228,8 @@ function list_PR_academicData(acc_data) {
       acctd += '</td>';
       acctd += '</tr>';
     });
+  }else{
+    acctd += '<tr><td colspan="6"><div class="text-center"><b>No Data Found !</b></div></td>';
   }
 
   acctd += '</tbody></table>';
