@@ -45,7 +45,7 @@ const menuSchema = {
   },
   programacademiclist: {
     template: "/assets/pages/program/program_accademic.html",
-    callback: academic_Callbacks,
+    // callback: academic_Callbacks,
     url: "/program/academicyear",
   },
   programsectionlist: {
