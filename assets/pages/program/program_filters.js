@@ -1,7 +1,7 @@
 const programCallbacks = () => {
   call_all_Stream();
   call_all_Courses();
-  //call_all_AccadmeicYear();
+  call_all_AccadmeicYear();
   list_PR_Trigger("");
   list_PR_programs('');
 
@@ -78,11 +78,11 @@ function emtpy_localstorage_programs() {
 
 //Trigger on clicking the organization list
 $(document).on("click", "#org-program-listings li", function (e) {
-  let programId = $(this).attr("id");
-  if (programId) {
-    program_params = "?institute_id=" + programId;
-    list_PR_programs();
-  }
+  // let programId = $(this).attr("id");
+  // if (programId) {
+  //   program_params = "?institute_id=" + programId;
+  //   list_PR_programs();
+  // }
   searchprogram_param();
 });
 
@@ -132,60 +132,79 @@ function list_PR_Programs_Trigger(searchVal) {
   localStorage.setItem("pr_prlist_search", "");
   $("#progran_go_to_pageto").val("");
 
-  if (searchVal) {
-    if(program_params == ''){
-      searchVal = "?search=" + searchVal;
-    }else{
-      searchVal = "&search=" + searchVal;
-    }
+  // if (searchVal) {
+  //   if(program_params == ''){
+  //     searchVal = "?search=" + searchVal;
+  //   }else{
+  //     searchVal = "&search=" + searchVal;
+  //   }
     
-    $('#pr_resetButtonprograms').removeClass("d-none");
-  } else {
-    $('#pr_resetButtonprograms').addClass("d-none");
-  }
-  list_PR_programs(searchVal);
+  //   $('#pr_resetButtonprograms').removeClass("d-none");
+  // } else {
+  //   $('#pr_resetButtonprograms').addClass("d-none");
+  // }
+  // list_PR_programs(searchVal);
+  searchprogram_param();
+
 }
 
 
 function searchprogram_param(){
   var search_param = "";
-  var search_inp_val = document.getElementById("search_data").value;
+  var search_inp_val = document.getElementById("pr_searchprograms").value;
   if(search_inp_val !== ''){
       search_param += "?search="+search_inp_val;
   }
-  var courses_list_val = document.getElementById("courses_list").value;
+  var courses_list_val = document.getElementById("stream_list").value;
   if(courses_list_val !== ""){
       if(search_param == ""){
-          search_param += "?id="+courses_list_val;
+          search_param += "?stream_id="+courses_list_val;
       }else{
-          search_param += "&id="+courses_list_val;
+          search_param += "&stream_id="+courses_list_val;
       }
   }
-  var sort_recent_val = document.getElementById("sort_recent").value;
-  if(sort_recent_val !== ""){
+  var stream_recent_val = document.getElementById("courses_list").value;
+  if(stream_recent_val !== ""){
       if(search_param == ""){
-          search_param += "?status="+sort_recent_val;
+          search_param += "?course_type_id="+stream_recent_val;
       }else{
-          search_param += "&status="+sort_recent_val;
+          search_param += "&course_type_id="+stream_recent_val;
       }
   }
-  get_pagination(search_param);
+  var academic_year_val = document.getElementById("acc_year_list").value;
+  if(academic_year_val !== ""){
+      if(search_param == ""){
+          search_param += "?academic_year="+academic_year_val;
+      }else{
+          search_param += "&academic_year="+academic_year_val;
+      }
+  }
+
+  var institute_id_val = document.getElementById("orgid_includer").value;
+  if(institute_id_val !== ""){
+      if(search_param == ""){
+          search_param += "?institute_id_val="+academic_recent_val;
+      }else{
+          search_param += "&institute_id_val="+academic_recent_val;
+      }
+  }
+  list_PR_programs(search_param);
   //$(".btnReset").removeClass("d-none");
   //console.log(search_param);
   if(search_param != ""){
-    $(".btnReset").removeClass("d-none");
+    $(".pr_resetButtonprograms").removeClass("d-none");
   }
 }
 
 
 //To Paginate platform list Data
 function list_PR_programs(parameter) {
-  if (typeof parameter === 'undefined') {
-    parameter = '';
-  } else if (parameter === null) {
-    parameter = '';
-  }
-  console.log('parameter: ', parameter);
+  // if (typeof parameter === 'undefined') {
+  //   parameter = '';
+  // } else if (parameter === null) {
+  //   parameter = '';
+  // }
+  // console.log('parameter: ', parameter);
   let isFirst = true;
   var pr_prlist_pageNum = localStorage.getItem("pr_prlist_pageNum");
   //console.log('pr_prlist_pageNum', pr_prlist_pageNum);
@@ -206,7 +225,7 @@ function list_PR_programs(parameter) {
   }
   if ($("#program_pagination-container-goto").length > 0) {
     $('#program_pagination-container-goto').pagination({
-      dataSource: API_CMS_URL + 'program/list/' + program_params ,
+      dataSource: API_CMS_URL + 'program/list/' + parameter ,
       locator: 'data',
       totalNumberLocator: function (response) {
         setTimeout(function () {
@@ -687,48 +706,7 @@ function call_all_Courses() {
 }
 
 function call_all_AccadmeicYear() {
-  $.ajax({
-    url: API_BASE_URL + "accademic_year/details",
-    method: "GET",
-    type: 'GET',
-    cache: false,
-    processData: false,
-    headers: {
-      "Authorization": "Bearer " + getUserInfo().access_token,
-      "Content-Type": "application/json"
-    },
-    success: function (response) {
-      //console.log(response);
-      response = response.data;
-      let html = '';
-      if (response.length > 0) {
-        html = '<option value="">Select Academic Year</option>';
-        for (let i = 0; i < response.length; i++) {
-          html += '<option value="' + response[i]['id'] + '">' + response[i]['name'] + '</option>';
-        }
-
-      } else {
-        html = '<option value="">No Academic Year Found</option>';
-      }
-
-      $('#acc_year_list').html(html);
-
-      // $.fn.modal.Constructor.prototype.enforceFocus = function() {};
-      // $("#acc_year_list").select2({
-      //   templateResult: formatState,
-      //     width: '100%',
-      //   dropdownParent: $('#load_vhl_modal'),
-      // });
-    },
-    error: function (error) {
-      if (error.status === 401) {
-        alert("Session Expired, Please login again.");
-        logoutSession();
-      }
-      //toastr.error("Response Error: " + error.message);
-      console.log(error);
-    }
-  });
+  
 }
 
 
