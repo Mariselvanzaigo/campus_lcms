@@ -1,6 +1,39 @@
+var stream_list = function () {
+  var tmp_stream = null;
+  $.ajax({
+      'async': false,
+      url: API_BASE_URL + 'stream/details',
+      type: 'get',
+      global: false,
+      dataType: 'json',
+      headers: { "Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token },
+      success: function (response) {
+      tmp_stream = response?.data;
+      }
+  }); 
+  return tmp_stream;
+  }();
+  
+  var course_list = function () {
+  var tmp_course = null;
+  $.ajax({
+      'async': false,
+      url: API_BASE_URL + 'course_type/details',
+      type: 'get',
+      global: false,
+      dataType: 'json',
+      headers: { "Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token },
+      success: function (response) {
+      tmp_course = response?.data;
+      }
+  }); 
+  return tmp_course;
+  }();
+
+
 const programCallbacks = () => {
-  call_all_Stream();
-  call_all_Courses();
+  stream_list_select(stream_list, "");
+  course_list_select(course_list, "");
   call_all_AccadmeicYear();
   list_PR_Trigger("");
   list_PR_programs('');
@@ -18,6 +51,31 @@ const programCallbacks = () => {
 }
 
 
+
+function stream_list_select(stream_list_data, stream_selected_list){
+  $("#stream_list").empty();
+  var stream_list = `<option value="">Select Stream</option>`;
+  $.each(stream_list_data, function( i, val ) {
+    if (stream_selected_list === val.id) {
+      stream_list +=`<option value="${val.id}" selected>${val.name}</option>`;
+    }else{
+      stream_list +=`<option value="${val.id}">${val.name}</option>`;
+    }
+  });
+  $("#stream_list").append(stream_list);
+}
+function course_list_select(course_list_data, course_selected_list){
+  $("#courses_list").empty();
+  var course_list = `<option value="">Select Course Type</option>`;
+  $.each(course_list_data, function( i, val ) {
+    if (course_selected_list === val.id) {
+      course_list +=`<option value="${val.id}" selected>${val.name}</option>`;
+    }else{
+      course_list +=`<option value="${val.id}">${val.name}</option>`;
+    }
+  });
+  $("#courses_list").append(course_list);
+}
 
 /**
  * PROGRAM LIST AND FILTERS
@@ -78,12 +136,13 @@ function emtpy_localstorage_programs() {
 
 //Trigger on clicking the organization list
 $(document).on("click", "#org-program-listings li", function (e) {
-  // let programId = $(this).attr("id");
-  // if (programId) {
-  //   program_params = "?institute_id=" + programId;
-  //   list_PR_programs();
-  // }
-  searchprogram_param();
+  let programId = $(this).attr("id");
+  if (programId) {
+    document.getElementById("orgid_includer").value = programId;
+    searchprogram_param();  
+  }
+
+  
 });
 
 //Trigger on changing the Stream list
@@ -153,7 +212,7 @@ function searchprogram_param(){
   var search_param = "";
   var search_inp_val = document.getElementById("pr_searchprograms").value;
   if(search_inp_val !== ''){
-      search_param += "?search="+search_inp_val;
+      search_param += "?name="+search_inp_val;
   }
   var courses_list_val = document.getElementById("stream_list").value;
   if(courses_list_val !== ""){
@@ -183,9 +242,9 @@ function searchprogram_param(){
   var institute_id_val = document.getElementById("orgid_includer").value;
   if(institute_id_val !== ""){
       if(search_param == ""){
-          search_param += "?institute_id_val="+academic_recent_val;
+          search_param += "?institute_id="+institute_id_val;
       }else{
-          search_param += "&institute_id_val="+academic_recent_val;
+          search_param += "&institute_id="+institute_id_val;
       }
   }
   list_PR_programs(search_param);
@@ -615,95 +674,7 @@ function call_all_Stresm() {
 }
 
 
-function call_all_Stream() {
-  $.ajax({
-    url: API_BASE_URL + "stream/details",
-    method: "GET",
-    type: 'GET',
-    cache: false,
-    processData: false,
-    headers: {
-      "Authorization": "Bearer " + getUserInfo().access_token,
-      "Content-Type": "application/json"
-    },
-    success: function (response) {
-      //console.log(response);
-      response = response.data;
-      let html = '';
-      if (response.length > 0) {
-        html = '<option value="">Select Stream</option>';
-        for (let i = 0; i < response.length; i++) {
-          html += '<option value="' + response[i]['id'] + '">' + response[i]['name'] + '</option>';
-        }
 
-      } else {
-        html = '<option value="">No Stream Found</option>';
-      }
-
-      $('#stream_list').html(html);
-
-      // $.fn.modal.Constructor.prototype.enforceFocus = function() {};
-      // $("#stream_list").select2({
-      //   templateResult: formatState,
-      //     width: '100%',
-      //   dropdownParent: $('#load_vhl_modal'),
-      // });
-    },
-    error: function (error) {
-      if (error.status === 401) {
-        alert("Session Expired, Please login again.");
-        logoutSession();
-      }
-      //toastr.error("Response Error: " + error.message);
-      console.log(error);
-    }
-  });
-}
-
-function call_all_Courses() {
-  $.ajax({
-    url: API_BASE_URL + "course_type/details",
-    method: "GET",
-    type: 'GET',
-    cache: false,
-    processData: false,
-    headers: {
-      "Authorization": "Bearer " + getUserInfo().access_token,
-      "Content-Type": "application/json"
-    },
-    success: function (response) {
-      //console.log(response);
-      response = response.data;
-      let html = '';
-      if (response.length > 0) {
-        html = '<option value="">Select Course</option>';
-        for (let i = 0; i < response.length; i++) {
-          html += '<option value="' + response[i]['id'] + '">' + response[i]['name'] + '</option>';
-        }
-
-      } else {
-        html = '<option value="">No Course Found</option>';
-      }
-
-      $('#courses_list').html(html);
-
-      // $.fn.modal.Constructor.prototype.enforceFocus = function() {};
-      // $("#courses_list").select2({
-      //   templateResult: formatState,
-      //     width: '100%',
-      //   dropdownParent: $('#load_vhl_modal'),
-      // });
-    },
-    error: function (error) {
-      if (error.status === 401) {
-        alert("Session Expired, Please login again.");
-        logoutSession();
-      }
-      //toastr.error("Response Error: " + error.message);
-      console.log(error);
-    }
-  });
-}
 
 function call_all_AccadmeicYear() {
   
