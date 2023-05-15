@@ -89,7 +89,7 @@ function list_PR_batch(parameter) {
     }
     let batchids = '';
     if(batch_id && accyear_id){
-        batchids = batch_id + '/?academic_id='+ accyear_id;
+        batchids = batch_id + '/?program_id='+ accyear_id;
     }else if(batch_id) {
         batchids = batch_id + '/';
     }

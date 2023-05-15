@@ -28,7 +28,7 @@
             </div>
             <div class="topsearch relative mb-3">
               <input class="form-control form-control-dark w-100" type="text" placeholder="Search here"
-                aria-label="Search" id="pr_searchOrganization">
+                aria-label="Search" id="pr_searchOrganization" onchange="prorg_search_onblur()">
               <i class="fas fa-search" id="pr_cms-org_search"></i>
             </div>
             <div class="topsearch relative mb-3" style="height: 20px;">
@@ -82,21 +82,25 @@
           <div class="content-container">
             <div class="container p-3">
               <div class="searchbar">
-                <h4>SRM - University</h4>
+                <h4 id="institute_namer">All Programs</h4>
               </div>
 
               <div class="row mt-4 mb-4">
                 <div class="col-lg-5 col-md-5">
                   <div class="topsearch relative">
                     <input class="form-control form-control-dark w-100" type="text" placeholder="Program Name"
-                      aria-label="Search" id="search_data" onblur="searchCourseBlur()">
+                      aria-label="Search" id="pr_searchprograms" onchange="programs_search_onblur()">
                     <i class="fas fa-search"></i>
+                  </div>
+                  <div class="topsearch relative mb-3" style="height: 20px;">
+                    <a class="btn btn-sm btn-danger btnReset d-none" id="pr_resetButtonprograms"
+                      style="position:relative;color: white;float:right">Reset</a>
                   </div>
                 </div>
                 <div class="col-lg-3 col-md-3">
                   <div class="dropdown-select">
-                    <select class="sort-select" id="courses_list" name="courses_list" onchange="searchCourseBlur()">
-                      <option value="">Select Stream</option>
+                    <select class="sort-select" id="stream_list" name="stream_list" onchange="searchCourseBlur()">
+                      <!-- <option value="">Select Stream</option> -->
                     </select>
                   </div>
                 </div>
@@ -118,7 +122,7 @@
                 <div class="row data">
                   <div class="col-md-8">
                     <div class="dropdown-select">
-                      <select class="sort-select" id="courses_list" name="courses_list" onchange="searchCourseBlur()">
+                      <select class="sort-select" id="acc_year_list" name="acc_year_list" onchange="searchCourseBlur()">
                         <option value="">Academic Year</option>
                       </select>
                     </div>
@@ -221,3 +225,4 @@ $('.close-dot').on('click', function () {
   $('.data').hide()
 });
 </script>
+
