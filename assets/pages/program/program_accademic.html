@@ -197,3 +197,11 @@
         </div>
       </div>
       <!--delete modal end-->
+
+<script>
+  reload_js('/assets/pages/program/academic_list.js');
+  function reload_js(src) {
+    $('script[src="' + src + '"]').remove();
+    $('<script>').attr('src', src).appendTo('head');
+  }
+</script>
