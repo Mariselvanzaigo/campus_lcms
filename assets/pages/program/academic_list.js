@@ -215,12 +215,18 @@ function list_PR_academicData(acc_data) {
   if (acc_data.length > 0) {
     $.each(acc_data, function (index, element) {
 
-      console.log(dateFormat_slash(element.start_date));
+      let academic_linkto = '';
+      if(element.batch_count > 0){
+        academic_linkto = 'class="as_links" data-n-linkto="programsectionlist" data-n-url-batch_id="'+ acc_id +'" data-n-url-acc_yearid="'+ element.id +'"';
+      }else{
+        academic_linkto = 'class=""';
+      }
+      
       acctd += '<tr><td>'+  element.academic_name +'</td>';
       acctd += '<td>'+  element.year +'</td>';
       acctd += '<td>'+  dateFormat_slash(element.start_date) +'</td>';
       acctd += '<td>'+  dateFormat_slash(element.end_date) +'</td>';
-      acctd += '<td><span class="as_links" data-n-linkto="programsectionlist" data-n-url-batch_id="'+ acc_id +'" data-n-url-acc_yearid="'+ element.id +'">' + element.batch_count + '</span> </td>';
+      acctd += '<td><span '+ academic_linkto +'>' + element.batch_count + '</span> </td>';
       acctd += '<td class="action-icons">';
       acctd += '<span class="eye-icon"><img src="/assets/images/eyeicon.png"></span>';
       acctd += '<span class="edit-icon" data-n-linkto="createprogram" data-n-url-program_id="' + acc_id + '" data-n-url-page_from="programacademiclist"><img data-n-linkto="createprogram" data-n-url-program_id="' + acc_id + '" data-n-url-page_from="programacademiclist" src="/assets/images/edit.png"></span>';
