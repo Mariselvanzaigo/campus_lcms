@@ -158,7 +158,7 @@ function list_PR_academic(parameter) {
             if (isFirst) {
               isFirst = false;
             }
-            alert("Session Expired, Please login again.");
+            //alert("Session Expired, Please login again.");
           }
 
         },

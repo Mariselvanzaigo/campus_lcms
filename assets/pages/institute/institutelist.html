@@ -185,7 +185,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title h4" id="exampleModalXlLabel"></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close close_delete_modal_pop" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body p-4">
         <form method="get" class="pop-form">
@@ -198,7 +198,7 @@
           </div>
           <div class="row">
             <div class="col-12 pt-3 pb-3 wauto text-center"> 
-              <span class="dborder-btn nbtn"><a href="javascript:void(0)" data-bs-dismiss="modal" aria-label="Close">
+              <span class="dborder-btn nbtn"><a href="javascript:void(0)" class="close_delete_modal_pop" data-bs-dismiss="modal" aria-label="Close">
                 <button type="button">Cancel</button>
                 </a></span>
                 <span class="danger-btn nbtn"><a href="javascript:void(0)" >
@@ -479,7 +479,7 @@ function getOrglist(parameter){
             if(isFirst){
               isFirst = false;
             }
-            alert("Session Expired, Please login again.");
+            //alert("Session Expired, Please login again.");
           }
 
         },     
@@ -758,7 +758,7 @@ $(document).on("click", "#delete_popup_confirm", function(e){
         url: API_BASE_URL + "delete_organization/"+org_id+"/",
         type: 'DELETE',
         data: JSON.stringify({
-          "status": 2
+          "status": "2"
         }),
         headers: {
             "Authorization" : "Bearer " + getUserInfo().access_token,
@@ -1038,5 +1038,9 @@ function get_list( a, $parent , level_count_inc) {
 
 $(".closepreviewmodal").on("click", function(){
   $("#previewmodal").modal("hide");
+});
+
+$(document).on("click", ".close_delete_modal_pop", function(e){
+  $("#deletemodal").modal('toggle');
 });
 </script>

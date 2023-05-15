@@ -3,6 +3,7 @@ var program_param = getUrlParamquery();
 console.log(program_param);
 //var org_id = cms_ins_param.org_id;
 var program_id = program_param.program_id;
+var page_from = program_param.page_from;
 var stream_list = function () {
 var tmp_stream = null;
 $.ajax({
@@ -34,17 +35,131 @@ $.ajax({
 }); 
 return tmp_course;
 }();
+var academic_year_options = [
+    {"year":"2023-2024"},
+    {"year":"2024-2025"},
+    {"year":"2025-2026"},
+    {"year":"2026-2027"},
+    {"year":"2027-2028"},
+    {"year":"2028-2029"},
+    {"year":"2029-2030"},
+    {"year":"2030-2031"},
+    {"year":"2031-2032"},
+    {"year":"2032-2033"},
+    {"year":"2033-2034"},
+    {"year":"2034-2035"},
+    {"year":"2035-2036"},
+    {"year":"2036-2037"},
+    {"year":"2037-2038"},
+    {"year":"2038-2039"},
+    {"year":"2039-2040"},
+    {"year":"2040-2041"},
+    {"year":"2041-2042"},
+    {"year":"2042-2043"},
+    {"year":"2043-2044"},
+    {"year":"2044-2045"},
+    {"year":"2045-2046"},
+    {"year":"2046-2047"},
+    {"year":"2047-2048"},
+    {"year":"2048-2049"}
+];
+var program_data = {
+    "name": "test 2",
+    "stream_id": "787f2c09-4413-41b9-b7f7-c9ad970d2212",
+    "course_type_id": "4d02c9e2-2ea3-405f-a1bc-8d1057ac24b4",
+    "organization_id": "0dc23785-496e-47e6-8313-831cfbe67e12",
+    "institute_id": "12e3d1db-7e4f-4b46-92a2-e1c1f2b914a6",
+    "academic_years": [
+        {
+            "academic_name": "Academic Year 1",
+            "year": "2023-2024",
+            "start_date": "2023-04-25",
+            "end_date": "2024-03-20",
+            "batch_details": [
+                {
+                    "section_name": "Section 1",
+                    "batch_student_count": 250
+                },
+                {
+                    "section_name": "Section 1",
+                    "batch_student_count": 250
+                }
+            ]
+        },
+        {
+            "academic_name": "Academic Year 2",
+            "year": "2023-2024",
+            "start_date": "2023-03-25",
+            "end_date": "2024-02-20",
+            "batch_details": [
+                {
+                    "section_name": "Section 1",
+                    "batch_student_count": 250
+                },
+                {
+                    "section_name": "Section 2",
+                    "batch_student_count": 200
+                },
+                {
+                    "section_name": "Section 3",
+                    "batch_student_count": 210
+                }
+            ]
+        }
+    ]
+};
 $(document).ready(function(){
     if(program_id){
         $("#academic_container").empty();
+        $("#create_program_header").text("Edit Program");
+        $("#submit_program").text("Update");
+        //display_edit_program(program_data);
+        $.ajax({
+            url: API_CMS_URL + 'program/details/'+program_id,
+            type: "GET",
+            headers: {
+            "Authorization": "Bearer " + getUserInfo().access_token,
+            "Content-Type": "application/json"
+            },
+            success:function(response){
+            console.log(response)
+            if(response){
+                display_edit_program(response);
+            }
+            },
+            error:function(error){
+                if (error.status === 401) {
+                    alert("Session Expired, Please login again.");
+                    logoutSession();
+                  }
+                  //toastr.error("Response Error: " + error.message);
+                  console.log(error);
+            }
+        });
     }else{
         stream_list_select(stream_list, "");
         course_list_select(course_list, "");
         $("#academic_container").empty();
+        $("#create_program_header").text("Create Program");
+        $("#submit_program").text("Submit");
         add_academic_section("");
         // $("#noofacademicyear").val(1);
     }
 });
+function display_edit_program(program_data){
+    console.log(program_data);
+    $("#program_name").val(program_data.name);
+    $("#organization_id").val(program_data.organization_id);
+    $("#institute_id").val(program_data.institute_id);
+    console.log(stream_list);
+    stream_list_select(stream_list, program_data.stream_id);
+    course_list_select(course_list, program_data.course_type_id);
+    console.log(program_data.academic_years);
+    if(program_data.academic_years.length > 0){
+        add_academic_section(program_data.academic_years);
+    }
+
+}
 function add_academic(){
     add_academic_section();
     var total_academic_box = $(".academic_section_box").length;
@@ -60,7 +175,88 @@ function add_academic(){
 // }
 function add_academic_section(academic_data){
     if(academic_data){
+        var academic_template = "";
+        console.log(academic_year_options);
+        $.each( academic_data, function( i, val ) {
+            academic_template += `<div class="academic_section_box mt-3">
+                                        <div class="academic_box searchbar greybg p-3">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="academic_name_container mt-3">
+                                                        <input type="text" class="form-control academic_name_input academic_year_inp_1 d-none" id="academic_year" placeholder="Enter Academic Name" value="${val.academic_name}" onblur="totext(this);" maxlength="256">
+                                                        <h4 class="academic_name_element">${val.academic_name}<span class="ms-3 edit_icon" onclick="toinput(this);"><i class="fas fa-edit"></i></span></h4>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div class="mb-3">
+                                                        <label>Select Academic Year</label>
+                                                        <div class="dropdown-select bgwhite">
+                                                            <select class="sort-select form-control academic_year_list">`;
+                                                            academic_template +=`<option value="">Select Academic Year</option>`;
+                                                            $.each( academic_year_options, function( aci, acval ) {
+                                                                if(acval.year == val.year){
+                                                                    academic_template +=`<option value="${acval.year}" selected>${acval.year}</option>`;
+                                                                }else{
+                                                                    academic_template +=`<option value="${acval.year}">${acval.year}</option>`;
+                                                                }
+                                                            });
+                                                            academic_template +=`</select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div class="mb-3">
+                                                        <label>Start Date</label>
+                                                        <input class="form-control start_date" type="date" value="${val.start_date}" onclick="this.showPicker()" placeholder="">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div class="mb-3">
+                                                        <label>End Date</label>
+                                                        <input class="form-control end_date" type="date" value="${val.end_date}" onclick="this.showPicker()" placeholder="">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 cc-right">
+                                                    <div class="advance-close">
+                                                    <span class="close-dot delete_academic" onclick="delete_academic_section(this);"><a><i class="fas fa-trash"></i></a></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
+                                        <div class="greybg p-4">
+                                            <div class="section_container">`;
+                                            if(val.batch_details.length > 0){
+                                                $.each( val.batch_details, function( bai, baval ) {
+                                                    academic_template += `<div class="row section_box">
+                                                        <div class="col-md-6">
+                                                            <div class="mb-3">
+                                                                <label>Section Name</label>
+                                                                <input class="form-control section_name" value="${baval.section_name}" type="text" placeholder="Section Name">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <div class="mb-3">
+                                                                <label>No of Student</label>
+                                                                <input class="form-control noofstudents" value="${baval.batch_student_count}" type="number" placeholder="No of Student">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-2 col-md-2 cc-right pl-0">
+                                                            <div class="advance-close">
+                                                            <span class="close-dot" onclick="delete_section(this);"><a><i class="fas fa-times"></i></a></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-2 col-md-2"></div>
+                                                    </div>`;
+                                                });
+                                            }
+                        academic_template += `</div><p class="mt-3 disp_block">                                        
+                                                <h6><a class="orange-text" onclick="addSection(this)"><i class="fas fa-plus"></i> Add Section</a></h6>
+                                            </p>
+                                        </div>
+                                    </div>`;
+        });
+        $("#academic_container").append(academic_template)
     }else{
         var academic_template = `<div class="academic_section_box mt-3">
                                     <div class="academic_box searchbar greybg p-3">
@@ -200,11 +396,10 @@ function delete_academic_section(e){
     $("#noofacademicyear").val(total_academic_box);
 }
 function stream_list_select(stream_list_data, stream_selected_list){
-  
     $("#stream_list").empty();
     var stream_list = `<option value="">Select Stream</option>`;
     $.each(stream_list_data, function( i, val ) {
-      if (stream_selected_list && stream_selected_list.find(e => e.id === val.id)) {
+      if (stream_selected_list === val.id) {
         stream_list +=`<option value="${val.id}" selected>${val.name}</option>`;
       }else{
         stream_list +=`<option value="${val.id}">${val.name}</option>`;
@@ -213,11 +408,10 @@ function stream_list_select(stream_list_data, stream_selected_list){
     $("#stream_list").append(stream_list);
 }
 function course_list_select(course_list_data, course_selected_list){
-    
     $("#course_list").empty();
     var course_list = `<option value="">Select Course Type</option>`;
     $.each(course_list_data, function( i, val ) {
-      if (course_selected_list && course_selected_list.find(e => e.id === val.id)) {
+      if (course_selected_list === val.id) {
         course_list +=`<option value="${val.id}" selected>${val.name}</option>`;
       }else{
         course_list +=`<option value="${val.id}">${val.name}</option>`;
@@ -428,9 +622,9 @@ function submit_program(){
         var method = "POST";
         var type = "POST";
         if(program_id){
-            URL = API_BASE_URL + "program_create/"+program_id+"/";
-            method = "PUT";
-            type = "PUT";
+            URL = API_CMS_URL + "program/update/"+program_id+"/";
+            method = "PATCH";
+            type = "PATCH";
         }
         $.ajax({
         url: URL,
@@ -443,6 +637,10 @@ function submit_program(){
             "Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token
         },
         success: function (response) {
+            if(page_from){
+                $("#redirect_create_program").attr("data-n-linkto", page_from);
+            }
+            $("#redirect_create_program").trigger("click");
             current_element.removeAttr("disabled");
             if(method == "POST"){
                 toastr.success("Program created successfully.");

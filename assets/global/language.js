@@ -1,7 +1,7 @@
 var language = {
-  "login_title" : "Exper Login",
+  "login_title" : "Campus Login",
   "welcome_to" : "Welcome To",
-  "exper": "Exper",
+  "exper": "Campus",
   "content_authoring_system": "Content Authoring System",
   "campus": "Campus",
   "lbl_emailmobile": "Email Id / Mobile Number",

@@ -334,13 +334,13 @@ $(document).ready(function(){
 });
 /* Go to Page pagination Ends */    
 function logoutSession(){
-    // localStorage.removeItem("auth_lcms");
-    // localStorage.removeItem("auth_type_lcms");
-    // localStorage.removeItem("auth_user_lcms");
-    // localStorage.removeItem("auth_data_lcms");
-    // localStorage.removeItem("system_rights");
-    // console.log('SITE_URL_PROTOCOL custom.js', SITE_URL_PROTOCOL+"login");
-    // window.location.replace(SITE_URL_PROTOCOL+"login");
+    localStorage.removeItem("auth_lcms");
+    localStorage.removeItem("auth_type_lcms");
+    localStorage.removeItem("auth_user_lcms");
+    localStorage.removeItem("auth_data_lcms");
+    localStorage.removeItem("system_rights");
+    console.log('SITE_URL_PROTOCOL custom.js', SITE_URL_PROTOCOL+"login");
+    window.location.replace(SITE_URL_PROTOCOL+"login");
 }
 function parseString(str) {
   var result=str.replace('"','&quot;');

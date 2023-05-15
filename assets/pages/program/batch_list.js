@@ -160,7 +160,7 @@ function list_PR_batch(parameter) {
                         if (isFirst) {
                             isFirst = false;
                         }
-                        alert("Session Expired, Please login again.");
+                        //alert("Session Expired, Please login again.");
                     }
 
                 },
