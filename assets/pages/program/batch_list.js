@@ -221,8 +221,8 @@ function list_PR_batchData(batch_data) {
         $.each(batch_data, function (index, element) {
             batchtd += '<tr><td>' + element.batch_name + '</td>';
             batchtd += '<td>' + element.academic_year + '</td>';
-            batchtd += '<td>' + element.academic_start_date + '</td>';
-            batchtd += '<td>' + element.academic_end_date + '</td>';
+            batchtd += '<td>' + dateFormat_slash(element.academic_start_date) + '</td>';
+            batchtd += '<td>' + dateFormat_slash(element.academic_end_date) + '</td>';
             batchtd += '<td>' + element.batch_student_count + '</td>';
             batchtd += '<td class="action-icons">';
             batchtd += '<span class="eye-icon"><img src="/assets/images/eyeicon.png"></span>';
