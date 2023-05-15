@@ -83,41 +83,45 @@ $(document).on("click", "#org-program-listings li", function (e) {
     program_params = "?institute_id=" + programId;
     list_PR_programs();
   }
+  searchprogram_param();
 });
 
 //Trigger on changing the Stream list
 $(document).on("change", "#stream_list", function(e){
-  let streamId = $(this).attr('value');
-  let searchVal = $("#pr_searchprograms").val().trim();
-  if (streamId) {
-    if(searchVal == '' && program_params == ''){
-      program_params += "?stream_id=" + streamId;
-    }else{
-      program_params += "&stream_id=" + streamId;
-    }
+  // let streamId = $(this).attr('value');
+  // let searchVal = $("#pr_searchprograms").val().trim();
+  // if (streamId) {
+  //   if(searchVal == '' && program_params == ''){
+  //     program_params += "?stream_id=" + streamId;
+  //   }else{
+  //     program_params += "&stream_id=" + streamId;
+  //   }
     
-    list_PR_Programs_Trigger(searchVal);
-  }
+  //   list_PR_Programs_Trigger(searchVal);
+  // }
+
+  searchprogram_param();
 });
 
 //Trigger on changing the Stream list
 $(document).on("change", "#courses_list", function(e){
-  let courseId = $(this).attr('value');
-  let searchVal = $("#pr_searchprograms").val().trim();
-  if (courseId) {
-    if(searchVal == '' && program_params == ''){
-      program_params += "?course_id=" + courseId;
-    }else{
-      program_params += "&course_id=" + courseId;
-    }
+  // let courseId = $(this).attr('value');
+  // let searchVal = $("#pr_searchprograms").val().trim();
+  // if (courseId) {
+  //   if(searchVal == '' && program_params == ''){
+  //     program_params += "?course_id=" + courseId;
+  //   }else{
+  //     program_params += "&course_id=" + courseId;
+  //   }
     
-    list_PR_Programs_Trigger(searchVal);
-  }
+  //   list_PR_Programs_Trigger(searchVal);
+  // }
+  searchprogram_param();
 });
 
 //Trigger on changing the Stream list
 $(document).on("change", "#acc_year_list", function(e){
-  
+  searchprogram_param();
 });
 
 
@@ -140,6 +144,37 @@ function list_PR_Programs_Trigger(searchVal) {
     $('#pr_resetButtonprograms').addClass("d-none");
   }
   list_PR_programs(searchVal);
+}
+
+
+function searchprogram_param(){
+  var search_param = "";
+  var search_inp_val = document.getElementById("search_data").value;
+  if(search_inp_val !== ''){
+      search_param += "?search="+search_inp_val;
+  }
+  var courses_list_val = document.getElementById("courses_list").value;
+  if(courses_list_val !== ""){
+      if(search_param == ""){
+          search_param += "?id="+courses_list_val;
+      }else{
+          search_param += "&id="+courses_list_val;
+      }
+  }
+  var sort_recent_val = document.getElementById("sort_recent").value;
+  if(sort_recent_val !== ""){
+      if(search_param == ""){
+          search_param += "?status="+sort_recent_val;
+      }else{
+          search_param += "&status="+sort_recent_val;
+      }
+  }
+  get_pagination(search_param);
+  //$(".btnReset").removeClass("d-none");
+  //console.log(search_param);
+  if(search_param != ""){
+    $(".btnReset").removeClass("d-none");
+  }
 }
 
 
