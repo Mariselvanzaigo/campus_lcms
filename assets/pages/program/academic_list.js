@@ -230,7 +230,7 @@ function list_PR_academicData(acc_data) {
       acctd += '<td class="action-icons">';
       acctd += '<span class="eye-icon"><img src="/assets/images/eyeicon.png"></span>';
       acctd += '<span class="edit-icon" data-n-linkto="createprogram" data-n-url-program_id="' + acc_id + '" data-n-url-page_from="programacademiclist"><img data-n-linkto="createprogram" data-n-url-program_id="' + acc_id + '" data-n-url-page_from="programacademiclist" src="/assets/images/edit.png"></span>';
-      acctd += '<span class="delete-icon"><img   class="delete-academic" data-academicid="' + element.id + '" data-academicname="' + element.academic_name + '"  data-bs-toggle="modal" data-bs-target="#deletemodal" src="/assets/images/deleteicon.png"></span>';
+      acctd += '<span class="delete-icon"><img class="delete-academic" data-academicid="' + element.id + '" data-academicname="' + element.academic_name + '" src="/assets/images/deleteicon.png"></span>';
       acctd += '</td>';
       acctd += '</tr>';
     });
@@ -244,7 +244,7 @@ function list_PR_academicData(acc_data) {
 }
 
 
-$(document).on('click', '.delete-academic', function () {
+$(document).on('click', '.delete-academic', function (e) {
   e.stopImmediatePropagation();
   let academic_id = $(this).attr("data-academicid");
   let academic_name = $(this).attr("data-academicname");
@@ -255,8 +255,13 @@ $(document).on('click', '.delete-academic', function () {
   }
 });
 
+$(document).on("click", ".close_delete_modal_pop", function(e){
+  e.stopImmediatePropagation();
+  $("#academicmodal").modal('toggle');
+});
 
 $(document).on("click", "#delete_program_academic", function (e) {
+  e.stopImmediatePropagation();
   let academic_id = $("#delete_academic_id").val();
 
   if (academic_id != "" && academic_id != null && academic_id != undefined) {
