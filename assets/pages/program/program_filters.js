@@ -705,3 +705,19 @@ $(document).on("click", "#delete_program_prg", function (e) {
   }
 });
 
+
+//Set accordion item as active when click
+$(document).on('click', '.sub__program', function(e){
+  e.stopImmediatePropagation();
+  let currentItemid = $(this).attr('id');
+  if(currentItemid){
+    $('#prg_orglist_items li.sub__program').each(function(e){
+      if(currentItemid === $(this).attr('id')){
+        $(this).addClass('active');
+      }else{
+        $(this).removeClass('active');
+      }
+    });
+  }
+});
+
