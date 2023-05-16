@@ -56,33 +56,33 @@ function emtpy_localstorage_preorg() {
 */
 
 function list_accademic_Trigger(searchVal) {
-  
+
 
   localStorage.setItem("pr_acc_pageNum", "");
   localStorage.setItem("pr_acc_search", "");
   //$("#academic_go_to_pageto").val("");
 
-//   if (searchVal) {
-//     searchVal = "?search=" + searchVal;
-//     $('#pr_resetButtonaccdemic').removeClass("d-none");
-//   } else {
-//     $('#pr_resetButtonaccdemic').addClass("d-none");
-//   }
+  //   if (searchVal) {
+  //     searchVal = "?search=" + searchVal;
+  //     $('#pr_resetButtonaccdemic').removeClass("d-none");
+  //   } else {
+  //     $('#pr_resetButtonaccdemic').addClass("d-none");
+  //   }
   list_PR_academic(searchVal);
 }
 
-$(document).ready(function(){
+$(document).ready(function () {
   list_PR_academic("");
 });
 //To Paginate platform list Data
 function list_PR_academic(parameter) {
   if (typeof parameter === 'undefined') {
     parameter = '';
-    } else if (parameter === null) {
-        parameter = '';
-      }
+  } else if (parameter === null) {
+    parameter = '';
+  }
   let accids = '';
-  if(acc_id){
+  if (acc_id) {
     accids = acc_id + '/';
   }
   let isFirst = true;
@@ -106,7 +106,7 @@ function list_PR_academic(parameter) {
   }
   if ($("#acc_pagination-container-to").length > 0) {
     $('#acc_pagination-container-to').pagination({
-      dataSource: API_CMS_URL + 'program/academic_list/'+ accids ,
+      dataSource: API_CMS_URL + 'program/academic_list/' + accids,
       locator: 'data.academic_data',
       totalNumberLocator: function (response) {
         setTimeout(function () {
@@ -211,36 +211,81 @@ function list_PR_academicData(acc_data) {
       </tr>
   </thead>
   <tbody>`;
-  
+
   if (acc_data.length > 0) {
     $.each(acc_data, function (index, element) {
 
       let academic_linkto = '';
-      if(element.batch_count > 0){
-        academic_linkto = 'class="as_links" data-n-linkto="programsectionlist" data-n-url-batch_id="'+ acc_id +'" data-n-url-acc_yearid="'+ element.id +'"';
-      }else{
+      if (element.batch_count > 0) {
+        academic_linkto = 'class="as_links" data-n-linkto="programsectionlist" data-n-url-batch_id="' + acc_id + '" data-n-url-acc_yearid="' + element.id + '"';
+      } else {
         academic_linkto = 'class=""';
       }
-      
-      acctd += '<tr><td>'+  element.academic_name +'</td>';
-      acctd += '<td>'+  element.year +'</td>';
-      acctd += '<td>'+  dateFormat_slash(element.start_date) +'</td>';
-      acctd += '<td>'+  dateFormat_slash(element.end_date) +'</td>';
-      acctd += '<td><span '+ academic_linkto +'>' + element.batch_count + '</span> </td>';
+
+      acctd += '<tr><td>' + element.academic_name + '</td>';
+      acctd += '<td>' + element.year + '</td>';
+      acctd += '<td>' + dateFormat_slash(element.start_date) + '</td>';
+      acctd += '<td>' + dateFormat_slash(element.end_date) + '</td>';
+      acctd += '<td><span ' + academic_linkto + '>' + element.batch_count + '</span> </td>';
       acctd += '<td class="action-icons">';
       acctd += '<span class="eye-icon"><img src="/assets/images/eyeicon.png"></span>';
       acctd += '<span class="edit-icon" data-n-linkto="createprogram" data-n-url-program_id="' + acc_id + '" data-n-url-page_from="programacademiclist"><img data-n-linkto="createprogram" data-n-url-program_id="' + acc_id + '" data-n-url-page_from="programacademiclist" src="/assets/images/edit.png"></span>';
-      acctd += '<span class="delete-icon"><img src="/assets/images/deleteicon.png"></span>';
+      acctd += '<span class="delete-icon"><img   class="delete-academic" data-academicid="' + element.id + '" data-academicname="' + element.academic_name + '"  data-bs-toggle="modal" data-bs-target="#deletemodal" src="/assets/images/deleteicon.png"></span>';
       acctd += '</td>';
       acctd += '</tr>';
     });
-  }else{
+  } else {
     acctd += '<tr><td colspan="6"><div class="text-center"><b>No Data Found !</b></div></td>';
   }
 
   acctd += '</tbody></table>';
   acc_Element.append(acctd);
 
-  //data-bs-toggle="modal" data-bs-target="#deletemodal"
 }
- 
+
+
+$(document).on('click', '.delete-academic', function () {
+  e.stopImmediatePropagation();
+  let academic_id = $(this).attr("data-academicid");
+  let academic_name = $(this).attr("data-academicname");
+  if (academic_id != "" && academic_id != null && academic_id != undefined) {
+    $("#delete_module_name_msg").html(`<p> Are you sure you want to delete the academic: ${academic_name} ? </p>`);
+    $("#delete_academic_id").val(academic_id);
+    $("#academicmodal").modal('toggle');
+  }
+});
+
+
+$(document).on("click", "#delete_program_academic", function (e) {
+  let academic_id = $("#delete_academic_id").val();
+
+  if (academic_id != "" && academic_id != null && academic_id != undefined) {
+    $.ajax({
+      url: API_CMS_URL + "academic_year/delete/" + academic_id + "/",
+      type: "DELETE",
+      data: JSON.stringify({ "status": "2" }),
+      headers: {
+        "Authorization": "Bearer " + getUserInfo().access_token,
+        "Content-Type": "application/json"
+      },
+      success: function (response) {
+        $("#academicmodal").modal('toggle');
+        toastr.success("Academic Deleted Successfully.");
+        //var searchVal = $("#pr_searchprograms").val().trim();
+        list_PR_academic();
+      },
+      error: function (error) {
+        if (error.status === 401) {
+          alert("Session Expired, Please login again.");
+          logoutSession();
+        }
+        if (error.msg) {
+          toastr.error(error.msg);
+        } else {
+          toastr.error("Response Error: " + error.message);
+        }
+        console.log(error);
+      }
+    });
+  }
+});
