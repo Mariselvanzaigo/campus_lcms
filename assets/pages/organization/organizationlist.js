@@ -425,7 +425,9 @@ $(document).on("click", ".close_delete_modal_pop", function(e){
 });
 
 $(document).on("click", "#delete_popup_confirm", function(e){
+
     var org_id = $("#delete_org_id").val();
+    var current_element = $('[data-this_parent_id="'+org_id+'"]');
     var url = "";
     var data_send = "";
     var method = "";
@@ -438,14 +440,14 @@ $(document).on("click", "#delete_popup_confirm", function(e){
       });
       var method = "DELETE";
     }else if(delete_module_type == "institute"){
-      var URL = API_BASE_URL + "delete_institute/"+org_id+"/";
+      var URL = API_BASE_URL + "institute/delete/"+org_id+"/";
       var data_send = JSON.stringify({
         "status": "2"
       });
       var method = "DELETE";
     }else if(delete_module_type == "college"){
 
-      var URL = API_BASE_URL + "delete_institute/"+org_id+"/";
+      var URL = API_BASE_URL + "institute/delete/"+org_id+"/";
       var data_send = JSON.stringify({
         "status": "2"
       });
@@ -465,22 +467,18 @@ $(document).on("click", "#delete_popup_confirm", function(e){
           if(delete_module_type == "organization"){
             toastr.success("Organization Deleted Successfully.");
             var searchVal = $("#searchOrganization").val().trim();
-            getOrglistCall(searchVal);
+            getOrglistCall("");
           }else if(delete_module_type == "institute"){
-            if(page == "organization"){
-              getOrglistCall(searchVal);
-            }
-            var current_element = $(e).closest(`[data-this_parent_id='${org_id}']`);
-            console.log(current_element);
+            // if(page == "organization"){
+            //   getOrglistCall("");
+            // }
             current_element.remove();
             toastr.success("Institute Deleted Successfully.");
           }else if(delete_module_type == "college"){
-            if(page == "organization"){
-              getOrglistCall(searchVal);
-            }
+            // if(page == "organization"){
+            //   getOrglistCall("");
+            // }
             toastr.success("College Deleted Successfully.");
-            var current_element = $(e).closest(`[data-this_parent_id='${org_id}']`);
-            console.log(current_element);
             current_element.remove();
           }
         },
