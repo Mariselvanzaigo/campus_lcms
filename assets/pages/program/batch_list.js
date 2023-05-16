@@ -227,7 +227,7 @@ function list_PR_batchData(batch_data) {
             batchtd += '<td class="action-icons">';
             batchtd += '<span class="eye-icon"><img src="/assets/images/eyeicon.png"></span>';
             batchtd += '<span class="edit-icon" data-n-linkto="createprogram" data-n-url-program_id="' + batch_id + '" data-n-url-page_from="programsectionlist"><img data-n-linkto="createprogram" data-n-url-program_id="' + batch_id + '" data-n-url-page_from="programsectionlist" src="/assets/images/edit.png"></span>';
-            batchtd += '<span class="delete-icon"><img  class="delete-section" data-sectionid="' + element.id + '" data-sectionname="' + element.batch_name + '" src="/assets/images/deleteicon.png"></span>';
+            batchtd += '<span class="delete-icon"><img class="delete-section" data-sectionid="' + element.id + '" data-sectionname="' + element.batch_name + '" src="/assets/images/deleteicon.png"></span>';
             batchtd += '</td>';
             batchtd += '</tr>';
         });
@@ -241,7 +241,7 @@ function list_PR_batchData(batch_data) {
 }
 
 
-$(document).on('click', '.delete-section', function () {
+$(document).on('click', '.delete-section', function (e) {
     e.stopImmediatePropagation();
     var sec_id = $(this).attr("data-sectionid");
     var sec_name = $(this).attr("data-sectionname");
@@ -252,8 +252,13 @@ $(document).on('click', '.delete-section', function () {
     }
 });
 
+$(document).on("click", ".close_delete_modal_pop", function(e){
+    e.stopImmediatePropagation();
+    $("#sectionmodal").modal('toggle');
+});
 
 $(document).on("click", "#delete_program_section", function (e) {
+    e.stopImmediatePropagation();
     let sec_id = $("#delete_sec_id").val();
 
     if (sec_id != "" && sec_id != null && sec_id != undefined) {
