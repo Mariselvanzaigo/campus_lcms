@@ -131,7 +131,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title h4" id="exampleModalXlLabel"></h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close close_delete_modal_pop" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body p-4">
           <form method="get" class="pop-form">
@@ -143,7 +143,7 @@
             </div>
             <div class="row">
               <div class="col-12 pt-3 pb-3 wauto text-center"> 
-                <span class="dborder-btn nbtn"><a data-bs-dismiss="modal"><button type="button">Cancel</button></a></span>
+                <span class="dborder-btn nbtn"><button data-bs-dismiss="modal" class="close_delete_modal_pop" type="button">Cancel</button></span>
                   <span class="danger-btn nbtn"><button type="button" id="delete_program_section">Delete</button></span>                
               </div>
             </div>
@@ -158,12 +158,17 @@
     let batchid = '';
     var program_param = getUrlParamquery();
     batchid = program_param.batch_id;
+    accyearid = program_param.acc_yearid;
 
     if (batchid) {
       document.getElementById('sectiontab').setAttribute('data-n-url-batch_id', batchid);
       document.getElementById('academictab').setAttribute('data-n-url-acc_id', batchid);
       document.getElementById('sectionedit').setAttribute('data-n-url-program_id', batchid);
     }
+    if(accyearid){
+      document.getElementById('sectionedit').setAttribute('data-n-url-accyear_id', accyearid);
+    }
+    
 
     reload_js('/assets/pages/program/batch_list.js');
     function reload_js(src) {

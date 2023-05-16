@@ -176,6 +176,7 @@ $(document).on("click", "#org-program-listings li", function (e) {
     }
 
     document.getElementById("orgid_includer").value = programId;
+    document.getElementById("progorgcreate").setAttribute('data-n-url-ins_id', programId);
     searchprogram_param();
   }
 
@@ -414,7 +415,7 @@ function list_PR_ProgramData(prg_data) {
       prgtd += '<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton3" style="">';
       prgtd += '<li><a class="dropdown-item" href="#">View</a></li>';
       prgtd += '<li><a class="dropdown-item" data-n-linkto="createprogram" data-n-url-program_id="' + element.id + '" data-n-url-page_from="programlist">Edit</a></li>';
-      prgtd += '<li><a class="dropdown-item delete-program" data-bs-toggle="modal" data-bs-target="#deletemodal" data-programid="' + element.id + '" data-programname="' + element.program_name + '">Delete</a></li>';
+      prgtd += '<li><a href="javascript:void(0)" class="delete-program dropdown-item" data-programid="' + element.id + '" data-programname="' + element.program_name + '">Delete</a></li>';
       prgtd += '</ul>';
       prgtd += '</div>';
       prgtd += '</td>';
@@ -485,6 +486,7 @@ function emtpy_localstorage_preorg() {
 
 function list_PR_Trigger(searchVal) {
   $('#orgid_includer').val('');
+  $('#progorgcreate').attr('data-n-url-ins_id', '');
   $("#stream_list").val("");
   $("#courses_list").val("");
   $("#acc_year_list").val("");
@@ -653,24 +655,28 @@ function list_PR_OrganizaitonData(org_data) {
   }
 }
 
-$(document).on('click', '.delete-program', function () {
+$(document).on('click', '.delete-program', function (e) {
   e.stopImmediatePropagation();
   let prg_id = $(this).attr("data-programid");
   let prg_name = $(this).attr("data-programname");
   if (prg_id != "" && prg_id != null && prg_id != undefined) {
     $("#delete_module_name_msg").html(`<p> Are you sure you want to delete the program: ${prg_name} ? </p>`);
     $("#delete_prg_id").val(prg_id);
-    $("#programnmodal").modal('toggle');
+    $("#deletemodal").modal('toggle');
   }
 });
-
+$(document).on("click", ".close_delete_modal_pops", function(e){
+  e.stopImmediatePropagation();
+  $("#deletemodal").modal('toggle');
+});
 
 $(document).on("click", "#delete_program_prg", function (e) {
-  let prg_id = $("#delete_sec_id").val();
+  e.stopImmediatePropagation();
+  let prg_id = $("#delete_prg_id").val();
 
   if (prg_id != "" && prg_id != null && prg_id != undefined) {
     $.ajax({
-      url: API_CMS_URL + "program_delete/" + prg_id + "/",
+      url: API_CMS_URL + "only_program_delete/" + prg_id + "/",
       type: "DELETE",
       data: JSON.stringify({ "status": "2" }),
       headers: {
