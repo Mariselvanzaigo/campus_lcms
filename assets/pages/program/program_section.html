@@ -126,7 +126,7 @@
 
 
  <!--delete modal start-->
- <div class="modal fade" id="deletemodal" tabindex="-1" aria-labelledby="exampleModalXlLabel" style="display: none;" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+ <div class="modal fade" id="sectionmodal" tabindex="-1" aria-labelledby="exampleModalXlLabel" style="display: none;" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
@@ -136,19 +136,15 @@
         <div class="modal-body p-4">
           <form method="get" class="pop-form">
             <div class="row">
+              <input type="hidden" id="delete_sec_id" value=""/>
               <div class="col-md-12 text-center mb-2"> <img src="../assets/images/delete.png"> </div>
               <div class="col-md-12 text-center mb-2" id="delete_module_name_msg">
-                <p>Are you sure you want to delete it </p>
               </div>
             </div>
             <div class="row">
               <div class="col-12 pt-3 pb-3 wauto text-center"> 
-                <span class="dborder-btn nbtn"><a onclick="">
-                  <button type="button">Cancel</button>
-                  </a></span>
-                  <span class="danger-btn nbtn"><a onclick="">
-                <button type="button">Delete</button>
-                </a></span>                
+                <span class="dborder-btn nbtn"><a data-bs-dismiss="modal"><button type="button">Cancel</button></a></span>
+                  <span class="danger-btn nbtn"><button type="button" id="delete_program_section">Delete</button></span>                
               </div>
             </div>
           </form>
