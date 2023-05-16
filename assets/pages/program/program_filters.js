@@ -1,36 +1,36 @@
 var stream_list = function () {
   var tmp_stream = null;
   $.ajax({
-      'async': false,
-      url: API_BASE_URL + 'stream/details',
-      type: 'get',
-      global: false,
-      dataType: 'json',
-      headers: { "Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token },
-      success: function (response) {
+    'async': false,
+    url: API_BASE_URL + 'stream/details',
+    type: 'get',
+    global: false,
+    dataType: 'json',
+    headers: { "Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token },
+    success: function (response) {
       tmp_stream = response?.data;
-      }
-  }); 
+    }
+  });
   return tmp_stream;
-  }();
-  
-  var course_list = function () {
+}();
+
+var course_list = function () {
   var tmp_course = null;
   $.ajax({
-      'async': false,
-      url: API_BASE_URL + 'course_type/details',
-      type: 'get',
-      global: false,
-      dataType: 'json',
-      headers: { "Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token },
-      success: function (response) {
+    'async': false,
+    url: API_BASE_URL + 'course_type/details',
+    type: 'get',
+    global: false,
+    dataType: 'json',
+    headers: { "Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token },
+    success: function (response) {
       tmp_course = response?.data;
-      }
-  }); 
+    }
+  });
   return tmp_course;
-  }();
+}();
 
-$(document).ready(function(){
+$(document).ready(function () {
   stream_list_select(stream_list, "");
   course_list_select(course_list, "");
   call_all_AccadmeicYear();
@@ -48,46 +48,46 @@ $(document).ready(function(){
     programs_search_onblur();
   });
 });
- 
 
 
 
 
-function stream_list_select(stream_list_data, stream_selected_list){
+
+function stream_list_select(stream_list_data, stream_selected_list) {
   $("#stream_list").empty();
   var stream_list = `<option value="">Select Stream</option>`;
-  $.each(stream_list_data, function( i, val ) {
+  $.each(stream_list_data, function (i, val) {
     if (stream_selected_list === val.id) {
-      stream_list +=`<option value="${val.id}" selected>${val.name}</option>`;
-    }else{
-      stream_list +=`<option value="${val.id}">${val.name}</option>`;
+      stream_list += `<option value="${val.id}" selected>${val.name}</option>`;
+    } else {
+      stream_list += `<option value="${val.id}">${val.name}</option>`;
     }
   });
   $("#stream_list").append(stream_list);
 }
-function course_list_select(course_list_data, course_selected_list){
+function course_list_select(course_list_data, course_selected_list) {
   $("#courses_list").empty();
   var course_list = `<option value="">Select Course Type</option>`;
-  $.each(course_list_data, function( i, val ) {
+  $.each(course_list_data, function (i, val) {
     if (course_selected_list === val.id) {
-      course_list +=`<option value="${val.id}" selected>${val.name}</option>`;
-    }else{
-      course_list +=`<option value="${val.id}">${val.name}</option>`;
+      course_list += `<option value="${val.id}" selected>${val.name}</option>`;
+    } else {
+      course_list += `<option value="${val.id}">${val.name}</option>`;
     }
   });
   $("#courses_list").append(course_list);
 }
 
-function call_all_AccadmeicYear(){
+function call_all_AccadmeicYear() {
   $("#acc_year_list").empty();
   var course_list = `<option value="">Select Academic Year</option>`;
-  $.each(academic_year_options, function( i, val ) {
+  $.each(academic_year_options, function (i, val) {
     // if (course_selected_list === val.id) {
     //   course_list +=`<option value="${val.id}" selected>${val.name}</option>`;
     // }else{
     //   course_list +=`<option value="${val.id}">${val.name}</option>`;
     // }
-    course_list +=`<option value="${val.year}">${val.year}</option>`;
+    course_list += `<option value="${val.year}">${val.year}</option>`;
   });
   $("#acc_year_list").append(course_list);
 }
@@ -125,11 +125,12 @@ $(document).on("click", "#pr_resetButtonprograms", function () {
   localStorage.setItem("pr_prlist_search", "");
   $("#go_to_page2").val("");
   $("#stream_list").val("");
-   $("#courses_list").val("");
-   $("#acc_year_list").val("");
-   $("#pr_searchprograms").val("");
+  $("#courses_list").val("");
+  $("#acc_year_list").val("");
+  $("#pr_searchprograms").val("");
   $("#pr_resetButtonprograms").addClass("d-none");
- 
+  $('#institute_namer').text('All Programs');
+
   list_PR_Programs_Trigger("");
 });
 
@@ -165,25 +166,34 @@ $(document).on("click", "#org-program-listings li", function (e) {
     $("#progran_go_to_pageto").val("");
     $("#pr_resetButtonprograms").addClass("d-none");
 
+    let universityNames = $(this).closest('.accordion-item').find('button').text();
+    let universityEle = $('#institute_namer');
+
+    if (universityNames) {
+      universityEle.text(universityNames);
+    } else {
+      universityEle.text('All Programs');
+    }
+
     document.getElementById("orgid_includer").value = programId;
-    searchprogram_param();  
+    searchprogram_param();
   }
 
-  
+
 });
 
 //Trigger on changing the Stream list
-$(document).on("change", "#stream_list", function(e){
+$(document).on("change", "#stream_list", function (e) {
   searchprogram_param();
 });
 
 //Trigger on changing the Stream list
-$(document).on("change", "#courses_list", function(e){
+$(document).on("change", "#courses_list", function (e) {
   searchprogram_param();
 });
 
 //Trigger on changing the Stream list
-$(document).on("change", "#acc_year_list", function(e){
+$(document).on("change", "#acc_year_list", function (e) {
   searchprogram_param();
 });
 
@@ -194,68 +204,55 @@ function list_PR_Programs_Trigger(searchVal) {
   localStorage.setItem("pr_prlist_pageNum", "");
   localStorage.setItem("pr_prlist_search", "");
   $("#go_to_page2").val("");
-
-  // if (searchVal) {
-  //   if(program_params == ''){
-  //     searchVal = "?search=" + searchVal;
-  //   }else{
-  //     searchVal = "&search=" + searchVal;
-  //   }
-    
-  //   $('#pr_resetButtonprograms').removeClass("d-none");
-  // } else {
-  //   $('#pr_resetButtonprograms').addClass("d-none");
-  // }
-  // list_PR_programs(searchVal);
   searchprogram_param();
 
 }
 
 
-function searchprogram_param(){
+function searchprogram_param() {
   var search_param = "";
   var search_inp_val = document.getElementById("pr_searchprograms").value;
-  if(search_inp_val !== ''){
-      search_param += "?name="+search_inp_val;
+  if (search_inp_val !== '') {
+    search_param += "?name=" + search_inp_val;
   }
   var courses_list_val = document.getElementById("stream_list").value;
-  if(courses_list_val !== ""){
-      if(search_param == ""){
-          search_param += "?stream_id="+courses_list_val;
-      }else{
-          search_param += "&stream_id="+courses_list_val;
-      }
+  if (courses_list_val !== "") {
+    if (search_param == "") {
+      search_param += "?stream_id=" + courses_list_val;
+    } else {
+      search_param += "&stream_id=" + courses_list_val;
+    }
   }
   var stream_recent_val = document.getElementById("courses_list").value;
-  if(stream_recent_val !== ""){
-      if(search_param == ""){
-          search_param += "?course_type_id="+stream_recent_val;
-      }else{
-          search_param += "&course_type_id="+stream_recent_val;
-      }
+  if (stream_recent_val !== "") {
+    if (search_param == "") {
+      search_param += "?course_type_id=" + stream_recent_val;
+    } else {
+      search_param += "&course_type_id=" + stream_recent_val;
+    }
   }
   var academic_year_val = document.getElementById("acc_year_list").value;
-  if(academic_year_val !== ""){
-      if(search_param == ""){
-          search_param += "?academic_year="+academic_year_val;
-      }else{
-          search_param += "&academic_year="+academic_year_val;
-      }
+  if (academic_year_val !== "") {
+    if (search_param == "") {
+      search_param += "?academic_year=" + academic_year_val;
+    } else {
+      search_param += "&academic_year=" + academic_year_val;
+    }
   }
 
   //$(".btnReset").removeClass("d-none");
   //console.log(search_param);
-  if(search_param != ""){
+  if (search_param != "") {
     $("#pr_resetButtonprograms").removeClass("d-none");
   }
 
   var institute_id_val = document.getElementById("orgid_includer").value;
-  if(institute_id_val !== ""){
-      if(search_param == ""){
-          search_param += "?institute_id="+institute_id_val;
-      }else{
-          search_param += "&institute_id="+institute_id_val;
-      }
+  if (institute_id_val !== "") {
+    if (search_param == "") {
+      search_param += "?institute_id=" + institute_id_val;
+    } else {
+      search_param += "&institute_id=" + institute_id_val;
+    }
   }
   list_PR_programs(search_param);
 }
@@ -289,7 +286,7 @@ function list_PR_programs(parameter) {
   }
   if ($("#prorg_pagination-container-to").length > 0) {
     $('#prorg_pagination-container-to').pagination({
-      dataSource: API_CMS_URL + 'program/list/' + parameter ,
+      dataSource: API_CMS_URL + 'program/list/' + parameter,
       locator: 'data',
       totalNumberLocator: function (response) {
         setTimeout(function () {
@@ -394,23 +391,37 @@ function list_PR_ProgramData(prg_data) {
 
   if (prg_data.length > 0) {
     $.each(prg_data, function (index, element) {
+      let academic_linkto = '', batch_linkto = '';
+      if (element.academic_count > 0) {
+        academic_linkto = 'class="as_links" data-n-linkto="programacademiclist" data-n-url-acc_id="' + element.id + '"';
+      } else {
+        academic_linkto = 'class=""';
+      }
+      if (element.batch_count > 0) {
+        batch_linkto = 'class="as_links" data-n-linkto="programsectionlist" data-n-url-batch_id="' + element.id + '"';
+      } else {
+        batch_linkto = 'class=""';
+      }
+
       prgtd += '<tr><td>' + element.program_name + '</td>';
       prgtd += '<td>' + element.stream_name + '</td>';
       prgtd += '<td>' + element.course_type_name + '</td>';
-      prgtd += '<td><span class="as_links" data-n-linkto="programacademiclist" data-n-url-acc_id="' + element.id + '">' + element.academic_count + '</span> </td>';
-      prgtd += '<td><span class="as_links" data-n-linkto="programsectionlist" data-n-url-batch_id="' + element.id + '">' + element.batch_count + '</span> </td>';
+      prgtd += '<td><span ' + academic_linkto + '>' + element.academic_count + '</span> </td>';
+      prgtd += '<td><span ' + batch_linkto + '>' + element.batch_count + '</span> </td>';
       prgtd += '<td class="">';
       prgtd += '<div class="dropdown ahide">';
       prgtd += '<button class="btn dropdown-toggle dbtn" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button>';
       prgtd += '<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton3" style="">';
       prgtd += '<li><a class="dropdown-item" href="#">View</a></li>';
-      prgtd += '<li><a class="dropdown-item" data-n-linkto="createprogram" data-n-url-program_id="' + element.id + '" data-n-url-page_from="programlist" href="#">Edit</a></li>';
-      prgtd += '<li><a class="dropdown-item" href="#">Delete</a></li>';
+      prgtd += '<li><a class="dropdown-item" data-n-linkto="createprogram" data-n-url-program_id="' + element.id + '" data-n-url-page_from="programlist">Edit</a></li>';
+      prgtd += '<li><a class="dropdown-item delete-program" data-bs-toggle="modal" data-bs-target="#deletemodal" data-programid="' + element.id + '" data-programname="' + element.program_name + '">Delete</a></li>';
       prgtd += '</ul>';
       prgtd += '</div>';
       prgtd += '</td>';
       prgtd += '</tr>';
     });
+  } else {
+    prgtd += '<tr><td colspan="6"><div class="text-center"><b>No Data Found !</b></div></td>';
   }
 
   prgtd += '</tbody></table>';
@@ -423,12 +434,6 @@ function list_PR_ProgramData(prg_data) {
  * ORGANIZATION LIST FILTERS AND LISTS
  */
 
-// let pr_searchOrganization_inp = document.getElementById("pr_searchOrganization");
-// pr_searchOrganization_inp.addEventListener("keypress", function (event) {
-
-// });
-
-// let prorg_go_to_pageto_inp = document.getElementById("prorg_go_to_pageto");
 
 document.addEventListener("keypress", function (event) {
 
@@ -436,7 +441,7 @@ document.addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
       event.preventDefault();
       var searchVal = $("#pr_searchOrganization").val().trim();
-      
+
       list_PR_Trigger(searchVal);
 
     }
@@ -480,16 +485,17 @@ function emtpy_localstorage_preorg() {
 
 function list_PR_Trigger(searchVal) {
   $('#orgid_includer').val('');
-   $("#stream_list").val("");
-    $("#courses_list").val("");
-    $("#acc_year_list").val("");
-    $("#pr_searchprograms").val("");
-    localStorage.setItem("pr_prlist_pageNum", "");
-    localStorage.setItem("pr_prlist_search", "");
-    $("#progran_go_to_pageto").val("");
-    $("#pr_resetButtonprograms").addClass("d-none");
+  $("#stream_list").val("");
+  $("#courses_list").val("");
+  $("#acc_year_list").val("");
+  $("#pr_searchprograms").val("");
+  localStorage.setItem("pr_prlist_pageNum", "");
+  localStorage.setItem("pr_prlist_search", "");
+  $("#progran_go_to_pageto").val("");
+  $("#pr_resetButtonprograms").addClass("d-none");
+  $('#institute_namer').text('All Programs');
 
-    list_PR_programs('');
+  list_PR_programs('');
 
   console.log(searchVal);
 
@@ -647,54 +653,49 @@ function list_PR_OrganizaitonData(org_data) {
   }
 }
 
+$(document).on('click', '.delete-program', function () {
+  e.stopImmediatePropagation();
+  let prg_id = $(this).attr("data-programid");
+  let prg_name = $(this).attr("data-programname");
+  if (prg_id != "" && prg_id != null && prg_id != undefined) {
+    $("#delete_module_name_msg").html(`<p> Are you sure you want to delete the program: ${prg_name} ? </p>`);
+    $("#delete_prg_id").val(prg_id);
+    $("#programnmodal").modal('toggle');
+  }
+});
 
 
-function call_all_Stresm() {
-  $.ajax({
-    url: API_BASE_URL + "stream/details",
-    method: "GET",
-    type: 'GET',
-    cache: false,
-    processData: false,
-    headers: {
-      "Authorization": "Bearer " + getUserInfo().access_token,
-      "Content-Type": "application/json"
-    },
-    success: function (response) {
-      //console.log(response);
-      response = response.data;
-      let html = '';
-      if (response.length > 0) {
-        html = '<option value="">Select Stream</option>';
-        for (let i = 0; i < response.length; i++) {
-          html += '<option value="' + response[i]['id'] + '">' + response[i]['name'] + '</option>';
+$(document).on("click", "#delete_program_prg", function (e) {
+  let prg_id = $("#delete_sec_id").val();
+
+  if (prg_id != "" && prg_id != null && prg_id != undefined) {
+    $.ajax({
+      url: API_CMS_URL + "program_delete/" + prg_id + "/",
+      type: "DELETE",
+      data: JSON.stringify({ "status": "2" }),
+      headers: {
+        "Authorization": "Bearer " + getUserInfo().access_token,
+        "Content-Type": "application/json"
+      },
+      success: function (response) {
+        $("#programmodal").modal('toggle');
+        toastr.success("Program Deleted Successfully.");
+        var searchVal = $("#pr_searchprograms").val().trim();
+        list_PR_Programs_Trigger(searchVal);
+      },
+      error: function (error) {
+        if (error.status === 401) {
+          alert("Session Expired, Please login again.");
+          logoutSession();
         }
-
-      } else {
-        html = '<option value="">No Stream Found</option>';
+        if (error.msg) {
+          toastr.error(error.msg);
+        } else {
+          toastr.error("Response Error: " + error.message);
+        }
+        console.log(error);
       }
-
-      $('#stream_list').html(html);
-
-      // $.fn.modal.Constructor.prototype.enforceFocus = function() {};
-      // $("#stream_list").select2({
-      //   templateResult: formatState,
-      //     width: '100%',
-      //   dropdownParent: $('#load_vhl_modal'),
-      // });
-    },
-    error: function (error) {
-      if (error.status === 401) {
-        alert("Session Expired, Please login again.");
-        logoutSession();
-      }
-      //toastr.error("Response Error: " + error.message);
-      console.log(error);
-    }
-  });
-}
-
-
-
-
+    });
+  }
+});
 

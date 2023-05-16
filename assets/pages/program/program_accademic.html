@@ -15,7 +15,7 @@
       <div class="white-bg p-3">
         <div class="row">
           <div class="col-12 d-flex justify-content-between searchbar mb-3">
-            <h4>Program Details</h4>
+            <h4 class="light-grey">Program Details</h4>
             <span class="orange-btn nbtn">
               <button type="button" id="academicedit" class="btn btn-primary navigate_refresh" data-n-linkto="createprogram" data-n-url-program_id="" data-n-url-page_from="programacademiclist">
                 Edit
@@ -116,7 +116,7 @@
 
 
   <!--delete modal start-->
-  <div class="modal fade" id="deletemodal" tabindex="-1" aria-labelledby="exampleModalXlLabel" style="display: none;"
+  <div class="modal fade" id="academicmodal" tabindex="-1" aria-labelledby="exampleModalXlLabel" style="display: none;"
     aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -127,6 +127,7 @@
         <div class="modal-body p-4">
           <form method="get" class="pop-form">
             <div class="row">
+              <input type="hidden" id="delete_academic_id" value=""/>
               <div class="col-md-12 text-center mb-2"> <img src="../assets/images/delete.png"> </div>
               <div class="col-md-12 text-center mb-2" id="delete_module_name_msg">
                 <p>Are you sure you want to delete it </p>
@@ -134,12 +135,10 @@
             </div>
             <div class="row">
               <div class="col-12 pt-3 pb-3 wauto text-center">
-                <span class="dborder-btn nbtn"><a onclick="">
+                <span class="dborder-btn nbtn"><a data-bs-dismiss="modal">
                     <button type="button">Cancel</button>
                   </a></span>
-                <span class="danger-btn nbtn"><a onclick="">
-                    <button type="button">Delete</button>
-                  </a></span>
+                <span class="danger-btn nbtn"><button type="button" id="delete_program_academic">Delete</button></span>
               </div>
             </div>
           </form>

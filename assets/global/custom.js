@@ -389,3 +389,17 @@ var academic_year_options = [
   {"year":"2047-2048"},
   {"year":"2048-2049"}
 ];
+
+
+
+function dateFormat_slash(date){
+  // date - yyyy-mm-dd;
+  let formattedDate = date;
+  if(date && date != ""){
+    if(date.includes("-")){
+      let dateArray = date.split("-");
+      formattedDate = dateArray[2] + "/" + dateArray[1] + "/" + dateArray[0]; 
+    }
+  }
+ return formattedDate;
+}

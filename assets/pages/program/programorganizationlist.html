@@ -54,7 +54,7 @@
               </div>
 
               <!--------------pagination start--------------->
-              <div class="container-fluid pagination-cont cs-number p-0 OrglistPagination" style="display: none;">
+              <div class="container-fluid pagination-cont cs-number p-0 OrglistPagination mb-5" style="display: none;">
                 <div id="prorg_pagination-container-by" class="orglist__pagination"></div>
                 <div id="pagination-container-gotoby" class="goto_page d-none"><span class="goto_page_text">Go to
                     page</span>
@@ -194,6 +194,41 @@
   </div>
 
 </div>
+
+
+<!--delete modal start-->
+<div class="modal fade" id="programmodal" tabindex="-1" aria-labelledby="exampleModalXlLabel" style="display: none;"
+aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title h4" id="exampleModalXlLabel"></h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body p-4">
+      <form method="get" class="pop-form">
+        <div class="row">
+          <input type="hidden" id="delete_prg_id" value=""/>
+          <div class="col-md-12 text-center mb-2"> <img src="../assets/images/delete.png"> </div>
+          <div class="col-md-12 text-center mb-2" id="delete_module_name_msg">
+            
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 pt-3 pb-3 wauto text-center">
+            <span class="dborder-btn nbtn"><a data-bs-dismiss="modal">
+                <button type="button">Cancel</button>
+              </a></span>
+            <span class="danger-btn nbtn"><button type="button" id="delete_program_prg">Delete</button>
+              </span>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+<!--delete modal end-->
 
 
 <script>
