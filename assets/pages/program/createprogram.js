@@ -3,6 +3,7 @@ var program_param = getUrlParamquery();
 console.log(program_param);
 //var org_id = cms_ins_param.org_id;
 var program_id = program_param.program_id;
+var section_id = program_param.section_id;
 var page_from = program_param.page_from;
 var ins_id = program_param.ins_id;
 var stream_list = function () {
@@ -546,9 +547,14 @@ function submit_program(){
             "Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token
         },
         success: function (response) {
-            if(page_from){
-                $("#redirect_create_program").attr("data-n-linkto", page_from);
-            }
+                $("#redirect_create_program").attr("data-n-linkto", 'programlist');
+            // if(program_id && page_from == "programacademiclist"){
+            //     $("#redirect_create_program").attr("data-n-url-acc_id", program_id);
+            // }
+            // if(program_id && section_id && page_from == "programsectionlist"){
+            //     $("#redirect_create_program").attr("data-n-url-batch_id", program_id);
+            //     $("#redirect_create_program").attr("data-n-url-acc_yearid", section_id);
+            // }
             $("#redirect_create_program").trigger("click");
             current_element.removeAttr("disabled");
             if(method == "POST"){

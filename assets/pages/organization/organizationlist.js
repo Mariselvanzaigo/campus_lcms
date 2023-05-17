@@ -30,8 +30,8 @@ go_to_pageto_inp.addEventListener("keypress", function(event) {
   }
 });
 
-$(document).on("click", "#resetButtonOrglist", function(){
-
+$(document).on("click", "#resetButtonOrglist", function(e){
+e.stopImmediatePropagation();
   $("#searchOrganization").val("");
   //$("#search_data_sortby").val("");
 
@@ -284,10 +284,12 @@ var frmvalidatorfrm = $("#frmNewCmsOrg").validate({
     }
   }
 });
-$("#cancel_cms-org").click(function(){
+$("#cancel_cms-org").click(function(e){
+  e.stopImmediatePropagation();
   $("#close_cms-org").trigger("click");
 });
-$("#close_cms-org").click(function(){
+$("#close_cms-org").click(function(e){
+  e.stopImmediatePropagation();
   //$('#add-cms_org').prop('disabled', false);
   $( '#frmNewCmsOrg' ).each(function(){
       this.reset();
@@ -303,7 +305,8 @@ $("#close_cms-org").click(function(){
   $('#exampleModalXl').modal('hide');
 });
 
-$("#add_cms-org").on("click", function () {
+$("#add_cms-org").on("click", function (e) {
+  e.stopImmediatePropagation();
   var current_element = $(this);
   var data_organization_id = current_element.attr("data-org_id");
   current_element.prop('disabled', true);
@@ -362,7 +365,8 @@ $("#add_cms-org").on("click", function () {
   }
 });
 
-$(document).on("blur", "#create_org_organization_name", function () {
+$(document).on("blur", "#create_org_organization_name", function (e) {
+  e.stopImmediatePropagation();
   var str = $(this).val().trim();
   if(str){
     var acpref = str.substring(0, 4);
@@ -421,10 +425,12 @@ $(document).on("click", ".deleteOrganization", function(e){
   }
 });
 $(document).on("click", ".close_delete_modal_pop", function(e){
+  e.stopImmediatePropagation();
   $("#deletemodal").modal('toggle');
 });
 
 $(document).on("click", "#delete_popup_confirm", function(e){
+  e.stopImmediatePropagation();
 
     var org_id = $("#delete_org_id").val();
     var current_element = $('[data-this_parent_id="'+org_id+'"]');
@@ -497,7 +503,8 @@ $(document).on("click", "#delete_popup_confirm", function(e){
     });
   }
 });
-$(document).on("click", "#cms-org_list li", function(){
+$(document).on("click", "#cms-org_list li", function(e){
+  e.stopImmediatePropagation();
   $("#cms-org_list li").removeClass("active_org");
   $(this).addClass("active_org");
   var org_id = $(this).attr("data-org_id");
@@ -721,6 +728,7 @@ function get_list( a, $parent , level_count_inc) {
               newUlDIV.append(`<span class='expand_img_icon disp_in_block flt_right delete_module_temp'><img style='width:18px;margin-top: 6px;opacity: 0.7;' src='../assets/images/delete3.png' class='expand_icon' data-module_name="${input_value}" onclick="deleteModule(this, '${a[i].id.replace(/<[^>]*>?/gm, '').replace(/(\r\n|\n|\r)/gm, "").replace('...', '')}', 'college');"/></span>`);
               newUlDIV.append(`<span class='expand_img_icon disp_in_block flt_right delete_module_temp'><img style='width:18px;margin-top: 6px;opacity: 0.7;margin-right: 12px' src='../assets/images/edits.png' class='expand_icon' data-n-linkto='addcollege' data-n-url-page_from="organizationlist" data-n-url-ins_id="${a[i].parent_institute_id}" data-n-url-clg_id="${a[i].id}"/></span>`);
               newUlDIV.append(`<span class='expand_img_icon disp_in_block flt_right delete_module_temp'><img style='width:25px;margin-top: 8px;opacity: 0.7;margin-right: 12px' src='../assets/images/eyeicon.png' class='expand_icon' onclick="previewInstitute('${a[i].id}', 'college', '${a[i].parent_institute_id}', '${a[i].id}');"/></span>`);
+              newUlDIV.append("<span class='expand_img_icon disp_in_block flt_right' style='margin-top: 6px;padding: 5px 10px 5px 10px;margin-right: 5px;'><a href='javascript:void(0);' data-n-linkto='addcollege' data-n-url-ins_id='"+a[i].id+"' data-n-url-page_from='organizationlist' style='color: #F36A10;'><i class='fas fa-plus'></i> Add Group</a></span>");
               newDIV.append(newUlDIV);
           }
           if(level_count === 0){
@@ -741,9 +749,11 @@ function get_list( a, $parent , level_count_inc) {
     $parent.append(newDIV);
   }
 }
-$(".closepreviewmodal").on("click", function(){
+$(".closepreviewmodal").on("click", function(e){
+  e.stopImmediatePropagation();
   $("#previewmodal").modal("hide");
 });
-$("#prev-edit_icon").on("click", function(){
+$("#prev-edit_icon").on("click", function(e){
+  e.stopImmediatePropagation();
   $("#previewmodal").modal("hide");
 });
