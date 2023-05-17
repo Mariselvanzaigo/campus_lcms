@@ -600,9 +600,9 @@ function get_list( a, $parent , level_count_inc) {
             newDIV = $("<li class='module module_"+a[i].level+" main_mod "+has_child+" "+nondroppableelem+"' id='"+a[i].level+"' data-this_parent_id='"+a[i].id+"' data-parent_id='"+a[i].parent_institute_id+"' data-unique_id='module_"+a[i].level+a[i].id+"'></li>");
             
             newUl = $("<ul class='main_module module_opacity ul"+uni_mod_id_str+"' style='opacity:1'></ul>");
-            if (a[i].children && a[i].children.length == 0){
-              newUl.append("<li class='sub_module add_college_button add_collegemodule_"+a[i].level+" main_mod "+nondroppableelem_addCollege+"' id='"+a[i].level+"' data-parent_id='"+a[i].parent_institute_id+"'><div><span class='module_input disp_in_block flt_left' style='padding: 10px;margin-left: 40px;'><a href='javascript:void(0);' data-n-linkto='addcollege'data-n-url-page_from='institutelist' data-n-url-ins_id='"+a[i].id+"' style='color: #F36A10;'><i class='fas fa-plus'></i> Add College</a></span></div></li>");
-            }
+            // if (a[i].children && a[i].children.length == 0){
+            //   newUl.append("<li class='sub_module add_college_button add_collegemodule_"+a[i].level+" main_mod "+nondroppableelem_addCollege+"' id='"+a[i].level+"' data-parent_id='"+a[i].parent_institute_id+"'><div><span class='module_input disp_in_block flt_left' style='padding: 10px;margin-left: 40px;'><a href='javascript:void(0);' data-n-linkto='addcollege'data-n-url-page_from='institutelist' data-n-url-ins_id='"+a[i].id+"' style='color: #F36A10;'><i class='fas fa-plus'></i> Add College</a></span></div></li>");
+            // }
             newUlDIV = $("<div id='"+uni_mod_id_str+"'></div>");
             newUlDIV.append("<span class='course_img_icon disp_in_block flt_left' style='"+drag_drop_prevent_click+"'><img src='../assets/images/dotline-icon.png' class='course_icon'/></span>");
             newUlDIV.append("<span class='module_input disp_in_block flt_left' style='"+prevent_click+"'><input type='text' class='input_module_fld' id='module_inp' placeholder='Add Module Name' onChange='check_value(this);' value='"+input_value+"'onblur='totextCMS(this);' style='display: none;' maxlength='256'  data-ins_id='"+a[i].id+"'/><p data-ins_id='"+a[i].id+"' id='module_module_"+a[i].level+"' data-prev_val='"+input_value+"' data-mod_type='"+mod_type+"' data-can_edit='"+can_edit+"'>"+input_value_substr+edit_icon_img+"</p></span>");

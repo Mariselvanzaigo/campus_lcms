@@ -4,6 +4,7 @@ console.log(program_param);
 //var org_id = cms_ins_param.org_id;
 var program_id = program_param.program_id;
 var page_from = program_param.page_from;
+var ins_id = program_param.ins_id;
 var stream_list = function () {
 var tmp_stream = null;
 $.ajax({
@@ -505,16 +506,27 @@ function submit_program(){
     console.log(total_error);
     if(total_error == 0){
 
-        var formData = new FormData();
-        formData.append("name", $("#program_name").val());
-        formData.append("stream_id", $("#stream_list").val());
-        formData.append("course_type_id", $("#course_list").val());
-        formData.append("academic_years",  JSON.stringify(academic_years));
-        var academic_data = ({"name": $("#program_name").val(), 
+        // var formData = new FormData();
+        // formData.append("name", $("#program_name").val());
+        // formData.append("stream_id", $("#stream_list").val());
+        // formData.append("course_type_id", $("#course_list").val());
+        // formData.append("academic_years",  JSON.stringify(academic_years));
+        // console.log(ins_id);
+        if(ins_id){
+            var academic_data = ({"name": $("#program_name").val(), 
+                                "stream_id": $("#stream_list").val(), 
+                                "course_type_id": $("#course_list").val(), 
+                                "institute_id" : ins_id,
+                                "academic_years": academic_years
+                            });
+        }else{
+
+            var academic_data = ({"name": $("#program_name").val(), 
                             "stream_id": $("#stream_list").val(), 
                             "course_type_id": $("#course_list").val(), 
                             "academic_years": academic_years
                         });
+        }
         var URL = API_CMS_URL + "program_create/";
         var method = "POST";
         var type = "POST";

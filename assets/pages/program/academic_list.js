@@ -228,7 +228,7 @@ function list_PR_academicData(acc_data) {
       acctd += '<td>' + dateFormat_slash(element.end_date) + '</td>';
       acctd += '<td><span ' + academic_linkto + '>' + element.batch_count + '</span> </td>';
       acctd += '<td class="action-icons">';
-      acctd += '<span class="eye-icon"><img src="/assets/images/eyeicon.png"></span>';
+      //acctd += '<span class="eye-icon"><img src="/assets/images/eyeicon.png"></span>';
       acctd += '<span class="edit-icon" data-n-linkto="createprogram" data-n-url-program_id="' + acc_id + '" data-n-url-page_from="programacademiclist"><img data-n-linkto="createprogram" data-n-url-program_id="' + acc_id + '" data-n-url-page_from="programacademiclist" src="/assets/images/edit.png"></span>';
       acctd += '<span class="delete-icon"><img class="delete-academic" data-academicid="' + element.id + '" data-academicname="' + element.academic_name + '" src="/assets/images/deleteicon.png"></span>';
       acctd += '</td>';

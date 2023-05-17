@@ -225,7 +225,7 @@ function list_PR_batchData(batch_data) {
             batchtd += '<td>' + dateFormat_slash(element.academic_end_date) + '</td>';
             batchtd += '<td>' + element.batch_student_count + '</td>';
             batchtd += '<td class="action-icons">';
-            batchtd += '<span class="eye-icon"><img src="/assets/images/eyeicon.png"></span>';
+            //batchtd += '<span class="eye-icon"><img src="/assets/images/eyeicon.png"></span>';
             batchtd += '<span class="edit-icon" data-n-linkto="createprogram" data-n-url-program_id="' + batch_id + '" data-n-url-page_from="programsectionlist"><img data-n-linkto="createprogram" data-n-url-program_id="' + batch_id + '" data-n-url-page_from="programsectionlist" src="/assets/images/edit.png"></span>';
             batchtd += '<span class="delete-icon"><img class="delete-section" data-sectionid="' + element.id + '" data-sectionname="' + element.batch_name + '" src="/assets/images/deleteicon.png"></span>';
             batchtd += '</td>';
