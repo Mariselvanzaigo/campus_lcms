@@ -6206,7 +6206,7 @@ video {
 
 
 
-
+/*************sidebar toggle effect start*************/
 
 /* -- Slideout Sidebar -- */
 .slideout-sidebar {
@@ -6486,6 +6486,8 @@ span.as_links {
 	background: #ccc;
 	color: #20204F;
 }
+
+/*************sidebar toggle effect end*************/
 
 .advance-search a {
 	color: #fff !important;
