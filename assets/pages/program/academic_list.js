@@ -207,7 +207,7 @@ function list_PR_academicData(acc_data) {
           <th>Start Date</th>
           <th>End Date</th>
           <th>Section</th>
-          <th>&nbsp;</th>
+          <th>Action</th>
       </tr>
   </thead>
   <tbody>`;
@@ -215,12 +215,19 @@ function list_PR_academicData(acc_data) {
   if (acc_data.length > 0) {
     $.each(acc_data, function (index, element) {
 
+      console.log("elementelementelement", element)
       let academic_linkto = '';
       if (element.batch_count > 0) {
-        academic_linkto = 'class="as_links" data-n-linkto="programsectionlist" data-n-url-batch_id="' + acc_id + '" data-n-url-acc_yearid="' + element.id + '"';
+        academic_linkto = 'class="" data-n-url-batch_id="' + acc_id + '" data-n-url-acc_yearid="' + element.id + '"';
       } else {
         academic_linkto = 'class=""';
       }
+
+      //  console.log("saravana batch count" , element.batch_count)
+      //  console.log("saravana batch details" , element.batch_details)
+
+
+
 
       acctd += '<tr><td>' + element.academic_name + '</td>';
       acctd += '<td>' + element.year + '</td>';
@@ -231,6 +238,34 @@ function list_PR_academicData(acc_data) {
       acctd += '<span class="eye-icon"><img src="/assets/images/eyeicon.png"></span>';
       acctd += '<span class="edit-icon" data-n-linkto="createprogram" data-n-url-program_id="' + acc_id + '" data-n-url-page_from="programacademiclist"><img data-n-linkto="createprogram" data-n-url-program_id="' + acc_id + '" data-n-url-page_from="programacademiclist" src="/assets/images/edit.png"></span>';
       acctd += '<span class="delete-icon"><img class="delete-academic" data-academicid="' + element.id + '" data-academicname="' + element.academic_name + '" src="/assets/images/deleteicon.png"></span>';
+      acctd += '<span class="details-icon collapsed" id="details-icon" data-toggle="collapse" data-target="#academic' + index + '" class="accordion-toggle btn btn-default btn-xs"></span>';
+      acctd += '</td>';
+      acctd += '</tr>';
+      acctd += '<tr>';
+      acctd += '<td colspan="12" class="hiddenRow">';
+      acctd += '<div class="accordian-body collapse" id="academic' + index + '">';
+      acctd += '<table class="table table-bordered responsive mb-0 "><thead><tr>';
+      acctd += '<th>Section Name</th>';
+      acctd += '<th>Batch Student count</th>'
+      acctd += '</tr></thead>';
+      acctd += '<tbody>';
+      let batch_details_view = element.batch_details;
+      if (batch_details_view.length > 0) {
+        $.each(batch_details_view, function (index, element) {
+          console.log("batch_details_view", element)
+          acctd += '<tr>';
+          acctd += '<td>' + element.section_name + '</td>';
+          // acctd += '<td>' + element.batch_student_count + '</td>'
+          acctd += '<td>' + 0 + '</td>'
+          acctd += '</tr>';
+        });
+
+      } else {
+        acctd += '<tr><td colspan="2"><div class="text-center"><b>No Data Found !</b></div></td>';
+      }
+      acctd += '</tbody>';
+      acctd += '</table>';
+      acctd += '</div>';
       acctd += '</td>';
       acctd += '</tr>';
     });
@@ -255,7 +290,7 @@ $(document).on('click', '.delete-academic', function (e) {
   }
 });
 
-$(document).on("click", ".close_delete_modal_pop", function(e){
+$(document).on("click", ".close_delete_modal_pop", function (e) {
   e.stopImmediatePropagation();
   $("#academicmodal").modal('toggle');
 });
