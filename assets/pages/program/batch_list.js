@@ -1,10 +1,10 @@
-var batch_id = '', accyear_id='';
+var batch_id = '', accyear_id = '';
 var program_param = getUrlParamquery();
 batch_id = program_param.batch_id;
 accyear_id = program_param.acc_yearid;
 
 
-$(document).ready(function(){
+$(document).ready(function () {
     list_batch_Trigger("");
 });
 
@@ -86,9 +86,9 @@ function list_PR_batch(parameter) {
         parameter = '';
     }
     let batchids = '';
-    if(batch_id && accyear_id){
-        batchids = batch_id + '/?academic_id='+ accyear_id;
-    }else if(batch_id) {
+    if (batch_id && accyear_id) {
+        batchids = batch_id + '/?academic_id=' + accyear_id;
+    } else if (batch_id) {
         batchids = batch_id + '/';
     }
     let isFirst = true;
@@ -227,17 +227,67 @@ function list_PR_batchData(batch_data) {
             batchtd += '<td class="action-icons">';
             batchtd += '<span class="eye-icon"><img src="/assets/images/eyeicon.png"></span>';
             batchtd += '<span class="edit-icon" data-n-linkto="createprogram" data-n-url-program_id="' + batch_id + '" data-n-url-page_from="programsectionlist"><img data-n-linkto="createprogram" data-n-url-program_id="' + batch_id + '" data-n-url-page_from="programsectionlist" src="/assets/images/edit.png"></span>';
-            batchtd += '<span class="delete-icon"><img src="/assets/images/deleteicon.png"></span>';
+            batchtd += '<span class="delete-icon"><img class="delete-section" data-sectionid="' + element.id + '" data-sectionname="' + element.batch_name + '" src="/assets/images/deleteicon.png"></span>';
             batchtd += '</td>';
             batchtd += '</tr>';
         });
-    }else{
+    } else {
         acctd += '<tr><td colspan="6"><div class="text-center"><b>No Data Found !</b></div></td>';
     }
 
     batchtd += '</tbody></table>';
     batch_Element.append(batchtd);
 
-
-    //data-bs-toggle="modal" data-bs-target="#deletemodal"
 }
+
+
+$(document).on('click', '.delete-section', function (e) {
+    e.stopImmediatePropagation();
+    var sec_id = $(this).attr("data-sectionid");
+    var sec_name = $(this).attr("data-sectionname");
+    if (sec_id != "" && sec_id != null && sec_id != undefined) {
+        $("#delete_module_name_msg").html(`<p> Are you sure you want to delete the section: ${sec_name} ? </p>`);
+        $("#delete_sec_id").val(sec_id);
+        $("#sectionmodal").modal('toggle');
+    }
+});
+
+$(document).on("click", ".close_delete_modal_pop", function(e){
+    e.stopImmediatePropagation();
+    $("#sectionmodal").modal('toggle');
+});
+
+$(document).on("click", "#delete_program_section", function (e) {
+    e.stopImmediatePropagation();
+    let sec_id = $("#delete_sec_id").val();
+
+    if (sec_id != "" && sec_id != null && sec_id != undefined) {
+        $.ajax({
+            url: API_CMS_URL + "section/delete/" + sec_id + "/",
+            type: "DELETE",
+            data: JSON.stringify({ "status": "2" }),
+            headers: {
+                "Authorization": "Bearer " + getUserInfo().access_token,
+                "Content-Type": "application/json"
+            },
+            success: function (response) {
+                $("#sectionmodal").modal('toggle');
+                toastr.success("Section Deleted Successfully.");
+                //var searchVal = $("#pr_searchprograms").val().trim();
+                list_batch_Trigger();
+            },
+            error: function (error) {
+                if (error.status === 401) {
+                    alert("Session Expired, Please login again.");
+                    logoutSession();
+                }
+                if (error.msg) {
+                    toastr.error(error.msg);
+                } else {
+                    toastr.error("Response Error: " + error.message);
+                }
+                console.log(error);
+            }
+        });
+    }
+});

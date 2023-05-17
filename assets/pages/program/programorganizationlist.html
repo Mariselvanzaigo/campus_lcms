@@ -9,7 +9,7 @@
         <!-- <button type="button" class="btn btn-primary" data-n-linkto="createprogram" data-n-url-program_id="bb647114-bfbb-476f-a7ff-d5c85067d923">
           <i class="fas fa-plus"></i> Edit Program
         </button> -->
-        <button type="button" class="btn btn-primary" data-n-linkto="createprogram">
+        <button type="button" id="progorgcreate" data-n-url-ins_id="" class="btn btn-primary" data-n-linkto="createprogram">
           <i class="fas fa-plus"></i> Create Program
         </button>
       </span>
@@ -194,6 +194,41 @@
   </div>
 
 </div>
+
+
+<!--delete modal start-->
+<div class="modal fade" id="deletemodal" tabindex="-1" aria-labelledby="exampleModalXlLabel" style="display: none;"
+aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title h4" id="exampleModalXlLabel"></h5>
+      <button type="button" class="btn-close close_delete_modal_pops" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body p-4">
+      <form method="get" class="pop-form">
+        <div class="row">
+          <input type="hidden" id="delete_prg_id" value=""/>
+          <div class="col-md-12 text-center mb-2"> <img src="../assets/images/delete.png"> </div>
+          <div class="col-md-12 text-center mb-2" id="delete_module_name_msg">
+            
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 pt-3 pb-3 wauto text-center">
+            <span class="dborder-btn nbtn">
+                <button data-bs-dismiss="modal" class="close_delete_modal_pops" type="button">Cancel</button>
+              </span>
+            <span class="danger-btn nbtn"><button type="button" id="delete_program_prg">Delete</button>
+              </span>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+<!--delete modal end-->
 
 
 <script>
