@@ -164,6 +164,8 @@ function getOrglist(parameter){
         $("#orglist-loader").addClass("disp_none");
         $("#cms-org_list").removeClass("disp_none");
         $("#cms-org_list").addClass("disp_block");
+        $("#no_records_org_main_img").removeClass("d-none");
+        $("#no_records_org_main_p").removeClass("d-none");
         $("#no_records_org_main_p").text("No Records have been found. Click the button below to create one.");
         $("#add_org_button_main").html(`<i class="fas fa-plus"></i> Add Organization`);
         $("#add_org_button_main").removeAttr("data-n-linkto");
@@ -180,18 +182,18 @@ function getOrglist(parameter){
           //$(".questionPagination").attr("style", "display:none");
           if(parameter != ""){
             $("#nodataFound_orglist").attr("style", "display:block");
-            $("#no_records_org_main_img").addClass("d-none");
-            $("#no_records_org_main_p").addClass("d-none");
+            // $("#no_records_org_main_img").removeClass("d-none");
+            // $("#no_records_org_main_p").removeClass("d-none");
             //$("#add_org_container_main").addClass("d-none");
           }else{
             $("#nodataFound_orglist").attr("style", "display:block");
-            $("#no_records_org_main_img").removeClass("d-none");
-            $("#no_records_org_main_p").removeClass("d-none");
+            // $("#no_records_org_main_img").removeClass("d-none");
+            // $("#no_records_org_main_p").removeClass("d-none");
             //$("#add_org_container_main").removeClass("d-none"); 
           }
         }else{
-          $("#no_records_org_main_img").addClass("d-none");
-          $("#no_records_org_main_p").addClass("d-none");
+          //$("#no_records_org_main_img").addClass("d-none");
+          //$("#no_records_org_main_p").addClass("d-none");
           //$(".questionPagination").attr("style", "display:block");
           $("#nodataFound_orglist").attr("style", "display:none");
         }

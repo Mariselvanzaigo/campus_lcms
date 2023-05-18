@@ -4,11 +4,11 @@
         <div class="col-12 title-head mb-3">
           <h2>Organization <dfn data-info="Lorem ipsum dolor sit amet, perspiciatis consectetur dolor."><i class="fas fa-info-circle"></i></dfn></h2>
           <input type="hidden" data-flinkto="courses" id="courses_page">
-          <span class="orange-btn nbtn">
+          <!-- <span class="orange-btn nbtn">
             <button type="button" class="btn btn-primary navigate_refresh" id="add_org_button_top" data-n-url-page_from="organizationlist" data-bs-toggle="modal" data-bs-target="#exampleModalXl">
               <i class="fas fa-plus"></i> Add Organization
             </button>
-          </span>
+          </span> -->
         </div>
       </div>
 
@@ -17,7 +17,12 @@
             <div class="white-bg h-100 p-3"> 
               <div class="searchbar d-flex justify-content-between mb-3">
                 <h4>Organization List</h4>
-                <a class="gplus add-cms_org" id="add-cms_org_plusbutton" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#exampleModalXl"><i class="fas fa-plus"></i></a>
+                <span class="orange-btn nbtn">
+                  <button type="button" class="btn btn-primary" id="add-cms_org_plusbutton" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#exampleModalXl">
+                    <i class="fas fa-plus"></i> Add Organization
+                  </button>
+                </span>
+                <!-- <a class="gplus add-cms_org" id="add-cms_org_plusbutton" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#exampleModalXl"><i class="fas fa-plus"></i></a> -->
               </div>
               <div class="topsearch relative mb-3">
                 <input class="form-control form-control-dark w-100" type="text" placeholder="Search Organization" aria-label="Search" id="searchOrganization">
@@ -139,7 +144,14 @@
                                 <i class="fas fa-plus"></i> Add Organization
                               </button>
                             </span>
-                        </div>
+                        </div><div class="col-12 title-head justify-content-center mb-3" id="add_ins_container_main">
+                          <span><i class="fas fa-plus"></i><a href="javascript:void(0);" class="as_links" data-n-link-to="addinstitute" data-n-type="group"> Add Group </a> or <a href="javascript:void(0);" class="as_links" data-n-link-to="addinstitute" data-n-type="college"> College Branch </a><span id="org_name_text"></span></span>
+                          <!-- <span class="orange-btn">
+                            <button type="button" class="btn btn-primary add-cms_org"  id="add_ins_button_main" data-n-url-page_from="organizationlist" data-bs-toggle="modal" data-bs-target="#exampleModalXl">
+                              <i class="fas fa-plus"></i> Add Organization
+                            </button>
+                          </span> -->
+                      </div>
                 </div>
             </div>
              <!--no record end-->

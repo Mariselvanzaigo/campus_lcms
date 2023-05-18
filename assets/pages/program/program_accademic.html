@@ -60,11 +60,11 @@
                   </div>
                 </div>
 
-                <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"
+                <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"
                   rel="stylesheet" />
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
                 <script
-                  src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+                  src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 
 
 
@@ -276,22 +276,9 @@
   <!--delete modal end-->
 
   <script>
-    let accid = '';
-    var program_param = getUrlParamquery();
-    accid = program_param.acc_id;
-
-    if (accid) {
-      document.getElementById('sectiontab').setAttribute('data-n-url-batch_id', accid);
-      document.getElementById('academictab').setAttribute('data-n-url-acc_id', accid);
-      document.getElementById('academicedit').setAttribute('data-n-url-program_id', accid);
-    }
-
     reload_js('/assets/pages/program/academic_list.js');
     function reload_js(src) {
       $('script[src="' + src + '"]').remove();
       $('<script>').attr('src', src).appendTo('head');
     }
-
-
-
   </script>

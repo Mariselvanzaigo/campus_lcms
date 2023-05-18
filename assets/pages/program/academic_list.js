@@ -2,74 +2,12 @@ var acc_id = '';
 var program_param = getUrlParamquery();
 acc_id = program_param.acc_id;
 
-/**
- * ACADEMIC FILTERS AND LISTS
- */
-
-
-
-
-/*
-let pr_searchaccdemic_inp = document.getElementById("pr_searchaccdemic");
-pr_searchaccdemic_inp.addEventListener("keypress", function (event) {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    var searchVal = $("#pr_searchaccdemic").val().trim();
-    list_PR_Trigger(searchVal);
-  }
-});
-
-let academic_go_to_pageto_inp = document.getElementById("academic_go_to_pageto");
-academic_go_to_pageto_inp.addEventListener("keypress", function (event) {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    $("#academic_gotoques").trigger("click");
-  }
-});
-
-$(document).on("click", "#pr_resetButtonaccdemic", function () {
-
-  $("#pr_searchaccdemic").val("");
-  //$("#search_data_sortby").val("");
-
-  localStorage.setItem("pr_acc_pageNum", "");
-  localStorage.setItem("pr_orgl_search", "");
-  $("#academic_go_to_pageto").val("");
-  list_PR_Trigger("");
-});
-window.onbeforeunload = function (e) {
-  window.onunload = function () {
-    emtpy_localstorage_preorg();
-  }
-  return undefined;
-};
-
-function prorg_search_onblur() {
-  var searchVal = $("#pr_searchaccdemic").val().trim();
-  list_PR_Trigger(searchVal);
+if (acc_id) {
+  document.getElementById('sectiontab').setAttribute('data-n-url-batch_id', acc_id);
+  document.getElementById('academictab').setAttribute('data-n-url-acc_id', acc_id);
+  document.getElementById('academicedit').setAttribute('data-n-url-program_id', acc_id);
 }
-function emtpy_localstorage_preorg() {
-  localStorage.setItem("pr_acc_pageNum", "");
-  localStorage.setItem("pr_orgl_search", "");
-  $("#academic_go_to_pageto").val("");
-}
-*/
 
-function list_accademic_Trigger(searchVal) {
-
-
-  localStorage.setItem("pr_acc_pageNum", "");
-  localStorage.setItem("pr_acc_search", "");
-  //$("#academic_go_to_pageto").val("");
-
-  //   if (searchVal) {
-  //     searchVal = "?search=" + searchVal;
-  //     $('#pr_resetButtonaccdemic').removeClass("d-none");
-  //   } else {
-  //     $('#pr_resetButtonaccdemic').addClass("d-none");
-  //   }
-  list_PR_academic(searchVal);
-}
 
 $(document).ready(function () {
   list_PR_academic("");
@@ -81,7 +19,7 @@ function list_PR_academic(parameter) {
   } else if (parameter === null) {
     parameter = '';
   }
-  let accids = '';
+  var accids = '';
   if (acc_id) {
     accids = acc_id + '/';
   }
@@ -312,7 +250,7 @@ $(document).on("click", "#delete_program_academic", function (e) {
         $("#academicmodal").modal('toggle');
         toastr.success("Academic Deleted Successfully.");
         //var searchVal = $("#pr_searchprograms").val().trim();
-        list_PR_academic();
+        list_PR_academic("");
       },
       error: function (error) {
         if (error.status === 401) {
