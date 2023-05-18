@@ -1,7 +1,8 @@
 
 var selector = ".org-list ul li a";
 
-$(selector).on("click", function () {
+$(selector).on("click", function (e) {
+  e.stopImmediatePropagation();
   $(selector).removeClass("active");
   $(this).addClass("active");
 });
@@ -30,7 +31,8 @@ go_to_pageto_inp.addEventListener("keypress", function(event) {
   }
 });
 
-$(document).on("click", "#resetButtonOrglist", function(){
+$(document).on("click", "#resetButtonOrglist", function(e){
+  e.stopImmediatePropagation();
 
   $("#searchOrganization").val("");
   //$("#search_data_sortby").val("");
@@ -162,8 +164,8 @@ function getOrglist(parameter){
         }
         $("#orglist-loader").removeClass("disp_block");
         $("#orglist-loader").addClass("disp_none");
-        $("#cms-org_list").removeClass("disp_none");
-        $("#cms-org_list").addClass("disp_block");
+        $("#cms-ins_list").removeClass("disp_none");
+        $("#cms-ins_list").addClass("disp_block");
         $("#no_records_org_main_p").text("No Records have been found. Click the button below to create one.");
         $("#add_org_button_main").html(`<i class="fas fa-plus"></i> Add Institute`);
         $("#add_org_button_top").html(`<i class="fas fa-plus"></i> Add Institute`);
@@ -203,11 +205,11 @@ function getOrglist(parameter){
 }
 
 function getOrglistData(data){
-  $("#cms-org_list").empty();
+  $("#cms-ins_list").empty();
   if(data){
     $.each( data, function( i, val ) {
       var org_institute_count = val.institute_count < 10 ? "0"+val.institute_count : val.institute_count;
-      $("#cms-org_list").append(`<li data-org_id="${val.institute_id}" data-org_institute_count="${val.institute_count}"><a href="javascript:void(0);">${val.institute_name} </a><div class="d-flex justify-content-between align-items-center side-icons"><span>${org_institute_count}</span><span class="cursor-pointer"><img style="width:18px;margin-top: 0px;opacity: 0.7;" src="../assets/images/edits.png" class="editOrganization" data-n-linkto="addinstitute" data-n-url-page_from="institutelist" data-n-url-ins_id="${val.institute_id}"></span><span class="cursor-pointer"><img style="width:16px; margin:6px;" src="../assets/images/deleteicon.png" class="deleteOrganization" title="Delete" data-org_id="${val.institute_id}" data-org_name="${val.institute_name}""></span></div></li>`);
+      $("#cms-ins_list").append(`<li data-org_id="${val.institute_id}" data-org_institute_count="${val.institute_count}"><a href="javascript:void(0);">${val.institute_name} </a><div class="d-flex justify-content-between align-items-center side-icons"><span>${org_institute_count}</span><span class="cursor-pointer"><img style="width:18px;margin-top: 0px;opacity: 0.7;" src="../assets/images/edits.png" class="editOrganization" data-n-linkto="addinstitute" data-n-url-page_from="institutelist" data-n-url-ins_id="${val.institute_id}"></span><span class="cursor-pointer"><img style="width:16px; margin:6px;" src="../assets/images/deleteicon.png" class="deleteOrganization" title="Delete" data-org_id="${val.institute_id}" data-org_name="${val.institute_name}""></span></div></li>`);
     });
   }
 }
@@ -276,10 +278,12 @@ var frmvalidatorfrm = $("#frmNewCmsOrg").validate({
     }
   }
 });
-$("#cancel_cms-org").click(function(){
+$("#cancel_cms-org").click(function(e){
+  e.stopImmediatePropagation();
   $("#close_cms-org").trigger("click");
 });
-$("#close_cms-org").click(function(){
+$("#close_cms-org").click(function(e){
+  e.stopImmediatePropagation();
   //$('#add-cms_org').prop('disabled', false);
   $( '#frmNewCmsOrg' ).each(function(){
       this.reset();
@@ -295,7 +299,8 @@ $("#close_cms-org").click(function(){
   $('#exampleModalXl').modal('hide');
 });
 
-$("#add_cms-org").on("click", function () {
+$("#add_cms-org").on("click", function (e) {
+  e.stopImmediatePropagation();
   var current_element = $(this);
   var data_organization_id = current_element.attr("data-org_id");
   current_element.prop('disabled', true);
@@ -354,7 +359,8 @@ $("#add_cms-org").on("click", function () {
   }
 });
 
-$(document).on("blur", "#create_org_organization_name", function () {
+$(document).on("blur", "#create_org_organization_name", function (e) {
+  e.stopImmediatePropagation();
   var str = $(this).val().trim();
   if(str){
     var acpref = str.substring(0, 4);
@@ -366,7 +372,7 @@ $(document).on("blur", "#create_org_organization_name", function () {
   var org_id = $(this).attr("data-org_id");
   console.log(org_id);
   if(org_id != "" && org_id != null && org_id != undefined){
-    $("#cms-org_list li").removeClass("active_org");
+    $("#cms-ins_list li").removeClass("active_org");
     $(this).closest("li").addClass("active_org");
     $.ajax({
       url: API_BASE_URL + 'single_organization_details/'+org_id,
@@ -411,6 +417,7 @@ $(document).on("click", ".deleteOrganization", function(e){
   }
 });
 $(document).on("click", "#delete_popup_confirm", function(e){
+  e.stopImmediatePropagation();
     var org_id = $("#delete_org_id").val();
     if(org_id != "" && org_id != null && org_id != undefined){
       var formData = new FormData();
@@ -446,8 +453,9 @@ $(document).on("click", "#delete_popup_confirm", function(e){
     });
   }
 });
-$(document).on("click", "#cms-org_list li", function(){
-  $("#cms-org_list li").removeClass("active_org");
+$(document).on("click", "#cms-ins_list li", function(e){
+  e.stopImmediatePropagation();
+  $("#cms-ins_list li").removeClass("active_org");
   $(this).addClass("active_org");
   var org_id = $(this).attr("data-org_id");
   var org_institute_count = $(this).attr("data-org_institute_count");
@@ -490,9 +498,9 @@ $(document).on("click", "#cms-org_list li", function(){
             parent_div.append(newDIV); 
             var outerHtml = parent_div.prop('outerHTML');
             document.getElementById("cms_institute_modules").innerHTML = outerHtml;
-            setTimeout(function(){
-              callNestedSort();
-            }, 1000);
+            // setTimeout(function(){
+            //   callNestedSort();
+            // }, 1000);
             $("#cms_institute_module-loader").addClass("d-none");
             $("#cms_institute_modules").removeClass("d-none");
         }
@@ -600,9 +608,9 @@ function get_list( a, $parent , level_count_inc) {
             newDIV = $("<li class='module module_"+a[i].level+" main_mod "+has_child+" "+nondroppableelem+"' id='"+a[i].level+"' data-this_parent_id='"+a[i].id+"' data-parent_id='"+a[i].parent_institute_id+"' data-unique_id='module_"+a[i].level+a[i].id+"'></li>");
             
             newUl = $("<ul class='main_module module_opacity ul"+uni_mod_id_str+"' style='opacity:1'></ul>");
-            if (a[i].children && a[i].children.length == 0){
-              newUl.append("<li class='sub_module add_college_button add_collegemodule_"+a[i].level+" main_mod "+nondroppableelem_addCollege+"' id='"+a[i].level+"' data-parent_id='"+a[i].parent_institute_id+"'><div><span class='module_input disp_in_block flt_left' style='padding: 10px;margin-left: 40px;'><a href='javascript:void(0);' data-n-linkto='addcollege'data-n-url-page_from='institutelist' data-n-url-ins_id='"+a[i].id+"' style='color: #F36A10;'><i class='fas fa-plus'></i> Add College</a></span></div></li>");
-            }
+            // if (a[i].children && a[i].children.length == 0){
+            //   newUl.append("<li class='sub_module add_college_button add_collegemodule_"+a[i].level+" main_mod "+nondroppableelem_addCollege+"' id='"+a[i].level+"' data-parent_id='"+a[i].parent_institute_id+"'><div><span class='module_input disp_in_block flt_left' style='padding: 10px;margin-left: 40px;'><a href='javascript:void(0);' data-n-linkto='addcollege'data-n-url-page_from='institutelist' data-n-url-ins_id='"+a[i].id+"' style='color: #F36A10;'><i class='fas fa-plus'></i> Add College</a></span></div></li>");
+            // }
             newUlDIV = $("<div id='"+uni_mod_id_str+"'></div>");
             newUlDIV.append("<span class='course_img_icon disp_in_block flt_left' style='"+drag_drop_prevent_click+"'><img src='../assets/images/dotline-icon.png' class='course_icon'/></span>");
             newUlDIV.append("<span class='module_input disp_in_block flt_left' style='"+prevent_click+"'><input type='text' class='input_module_fld' id='module_inp' placeholder='Add Module Name' onChange='check_value(this);' value='"+input_value+"'onblur='totextCMS(this);' style='display: none;' maxlength='256'  data-ins_id='"+a[i].id+"'/><p data-ins_id='"+a[i].id+"' id='module_module_"+a[i].level+"' data-prev_val='"+input_value+"' data-mod_type='"+mod_type+"' data-can_edit='"+can_edit+"'>"+input_value_substr+edit_icon_img+"</p></span>");
@@ -614,7 +622,7 @@ function get_list( a, $parent , level_count_inc) {
             newUlDIV.append(`<span class='expand_img_icon disp_in_block flt_right delete_module_temp'><img style='width:18px;margin-top: 6px;opacity: 0.7;margin-right: 12px' src='../assets/images/delete3.png' class='expand_icon' onclick="deleteModule(this, '${a[i].id.replace(/<[^>]*>?/gm, '').replace(/(\r\n|\n|\r)/gm, "").replace('...', '')}', 'Module');"/></span>`);
             newUlDIV.append(`<span class='expand_img_icon disp_in_block flt_right delete_module_temp'><img style='width:18px;margin-top: 6px;opacity: 0.7;margin-right: 12px' src='../assets/images/edits.png' class='expand_icon' data-n-linkto='addinstitute' data-n-url-page_from='institutelist' data-n-url-org_id="${org_id}" data-n-url-ins_id="${a[i].id}"/></span>`);
             newUlDIV.append(`<span class='expand_img_icon disp_in_block flt_right delete_module_temp'><img style='width:25px;margin-top: 8px;opacity: 0.7;margin-right: 12px' src='../assets/images/eyeicon.png' class='expand_icon' onclick="previewInstitute('${a[i].id}');"/></span>`);
-            newUlDIV.append("<span class='expand_img_icon disp_in_block flt_right' style='margin-top: 6px;padding: 5px 10px 5px 10px;margin-right: 5px;'><a href='javascript:void(0);' data-n-linkto='addcollege' data-n-url-ins_id='"+a[i].id+"' data-n-url-page_from='organizationlist' style='color: #F36A10;'><i class='fas fa-plus'></i> Add College</a></span>");
+            newUlDIV.append("<span class='expand_img_icon disp_in_block flt_right' style='margin-top: 6px;padding: 5px 10px 5px 10px;margin-right: 5px;'><a href='javascript:void(0);' data-n-linkto='addcollege' data-n-url-ins_id='"+a[i].id+"' data-n-url-page_from='institutelist' style='color: #F36A10;'><i class='fas fa-plus'></i> Add College</a></span>");
             newDIV.append(newUlDIV);
           }else{
             console.log("children");
@@ -676,6 +684,7 @@ function get_list( a, $parent , level_count_inc) {
               newUlDIV.append(`<span class='expand_img_icon disp_in_block flt_right delete_module_temp'><img style='width:18px;margin-top: 6px;opacity: 0.7;margin-right: 12px' src='../assets/images/delete3.png' class='expand_icon' onclick="deleteModule(this, '${a[i].id.replace(/<[^>]*>?/gm, '').replace(/(\r\n|\n|\r)/gm, "").replace('...', '')}', 'Module');"/></span>`);
               newUlDIV.append(`<span class='expand_img_icon disp_in_block flt_right delete_module_temp'><img style='width:18px;margin-top: 6px;opacity: 0.7;margin-right: 12px' src='../assets/images/edits.png' class='expand_icon' data-n-linkto='addcollege' data-n-url-page_from='institutelist' data-n-url-ins_id="${a[i].parent_institute_id}" data-n-url-clg_id="${a[i].id}"/></span>`);
               newUlDIV.append(`<span class='expand_img_icon disp_in_block flt_right delete_module_temp'><img style='width:25px;margin-top: 8px;opacity: 0.7;margin-right: 12px' src='../assets/images/eyeicon.png' class='expand_icon' onclick="previewInstitute('${a[i].id}');"/></span>`);
+              newUlDIV.append("<span class='expand_img_icon disp_in_block flt_right' style='margin-top: 6px;padding: 5px 10px 5px 10px;margin-right: 5px;'><a href='javascript:void(0);' data-n-linkto='addcollege' data-n-url-type='group' data-n-url-ins_id='"+a[i].id+"' data-n-url-page_from='institutelist' style='color: #F36A10;'><i class='fas fa-plus'></i> Add Group</a></span>");
               newDIV.append(newUlDIV);
           }
           if(level_count === 0){
@@ -697,10 +706,12 @@ function get_list( a, $parent , level_count_inc) {
   }
 }
 
-$(".closepreviewmodal").on("click", function(){
+$(".closepreviewmodal").on("click", function(e){
+  e.stopImmediatePropagation();
   $("#previewmodal").modal("hide");
 });
 
 $(document).on("click", ".close_delete_modal_pop", function(e){
+  e.stopImmediatePropagation();
   $("#deletemodal").modal('toggle');
 });

@@ -35,7 +35,8 @@ $(document).ready(function () {
   course_list_select(course_list, "");
   call_all_AccadmeicYear();
   list_PR_Trigger("");
-  list_PR_programs('');
+  //list_PR_programs('');
+  list_PR_Programs_Trigger("");
 
   $('#pr_searchOrganization').on('blur', function (e) {
     e.stopImmediatePropagation();

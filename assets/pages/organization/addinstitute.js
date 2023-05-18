@@ -64,6 +64,7 @@ var course_list = function () {
 $(document).ready(function(){
   if(page_from){
     $("#toOrganizationList").attr("data-n-linkto", page_from);
+    $(".cancelredirect").attr("data-n-linkto", page_from);
   }
   //hideStage(1);showStage(3);
   if(ins_id){

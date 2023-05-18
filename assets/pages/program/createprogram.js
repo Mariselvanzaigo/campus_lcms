@@ -3,7 +3,9 @@ var program_param = getUrlParamquery();
 console.log(program_param);
 //var org_id = cms_ins_param.org_id;
 var program_id = program_param.program_id;
+var section_id = program_param.section_id;
 var page_from = program_param.page_from;
+var ins_id = program_param.ins_id;
 var stream_list = function () {
 var tmp_stream = null;
 $.ajax({
@@ -505,16 +507,27 @@ function submit_program(){
     console.log(total_error);
     if(total_error == 0){
 
-        var formData = new FormData();
-        formData.append("name", $("#program_name").val());
-        formData.append("stream_id", $("#stream_list").val());
-        formData.append("course_type_id", $("#course_list").val());
-        formData.append("academic_years",  JSON.stringify(academic_years));
-        var academic_data = ({"name": $("#program_name").val(), 
+        // var formData = new FormData();
+        // formData.append("name", $("#program_name").val());
+        // formData.append("stream_id", $("#stream_list").val());
+        // formData.append("course_type_id", $("#course_list").val());
+        // formData.append("academic_years",  JSON.stringify(academic_years));
+        // console.log(ins_id);
+        if(ins_id){
+            var academic_data = ({"name": $("#program_name").val(), 
+                                "stream_id": $("#stream_list").val(), 
+                                "course_type_id": $("#course_list").val(), 
+                                "institute_id" : ins_id,
+                                "academic_years": academic_years
+                            });
+        }else{
+
+            var academic_data = ({"name": $("#program_name").val(), 
                             "stream_id": $("#stream_list").val(), 
                             "course_type_id": $("#course_list").val(), 
                             "academic_years": academic_years
                         });
+        }
         var URL = API_CMS_URL + "program_create/";
         var method = "POST";
         var type = "POST";
@@ -534,9 +547,14 @@ function submit_program(){
             "Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token
         },
         success: function (response) {
-            if(page_from){
-                $("#redirect_create_program").attr("data-n-linkto", page_from);
-            }
+                $("#redirect_create_program").attr("data-n-linkto", 'programlist');
+            // if(program_id && page_from == "programacademiclist"){
+            //     $("#redirect_create_program").attr("data-n-url-acc_id", program_id);
+            // }
+            // if(program_id && section_id && page_from == "programsectionlist"){
+            //     $("#redirect_create_program").attr("data-n-url-batch_id", program_id);
+            //     $("#redirect_create_program").attr("data-n-url-acc_yearid", section_id);
+            // }
             $("#redirect_create_program").trigger("click");
             current_element.removeAttr("disabled");
             if(method == "POST"){
