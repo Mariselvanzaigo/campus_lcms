@@ -400,7 +400,7 @@ function list_PR_ProgramData(prg_data) {
         academic_linkto = 'class=""';
       }
       if (element.batch_count > 0) {
-        batch_linkto = 'class="as_links" data-n-linkto="programsectionlist" data-n-url-batch_id="' + element.id + '"';
+        batch_linkto = 'class=""  data-n-url-batch_id="' + element.id + '"';
       } else {
         batch_linkto = 'class=""';
       }
@@ -414,7 +414,7 @@ function list_PR_ProgramData(prg_data) {
       prgtd += '<div class="dropdown ahide">';
       prgtd += '<button class="btn dropdown-toggle dbtn" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button>';
       prgtd += '<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton3" style="">';
-      prgtd += '<li><a class="dropdown-item" href="#">View</a></li>';
+      prgtd += '<li><a class="dropdown-item" data-n-linkto="programsectionview" data-n-url-program_id="' + element.id + '">View</a></li>';
       prgtd += '<li><a class="dropdown-item" data-n-linkto="createprogram" data-n-url-program_id="' + element.id + '" data-n-url-page_from="programlist">Edit</a></li>';
       prgtd += '<li><a href="javascript:void(0)" class="delete-program dropdown-item" data-programid="' + element.id + '" data-programname="' + element.program_name + '">Delete</a></li>';
       prgtd += '</ul>';
