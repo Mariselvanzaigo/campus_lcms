@@ -133,10 +133,17 @@ function list_PR_academic(parameter) {
   }
 }
 
+
+
+
+
+
+
 function list_PR_academicData(acc_data) {
   let acc_Element = $('#academic_table_container');
+  //console.log("acc_Elementacc_Element", acc_Element)
   acc_Element.empty();
-  console.log('org_data: ', acc_data);
+  //console.log('org_data: ', acc_data);
   let acctd = `<table class="table table-bordered responsive">
   <thead>
       <tr>
@@ -153,7 +160,7 @@ function list_PR_academicData(acc_data) {
   if (acc_data.length > 0) {
     $.each(acc_data, function (index, element) {
 
-      console.log("elementelementelement", element)
+      // console.log("elementelementelement", element)
       let academic_linkto = '';
       if (element.batch_count > 0) {
         academic_linkto = 'class="" data-n-url-batch_id="' + acc_id + '" data-n-url-acc_yearid="' + element.id + '"';
@@ -176,12 +183,12 @@ function list_PR_academicData(acc_data) {
       //acctd += '<span class="eye-icon"><img src="/assets/images/eyeicon.png"></span>';
       acctd += '<span class="edit-icon" data-n-linkto="createprogram" data-n-url-program_id="' + acc_id + '" data-n-url-page_from="programacademiclist"><img data-n-linkto="createprogram" data-n-url-program_id="' + acc_id + '" data-n-url-page_from="programacademiclist" src="/assets/images/edit.png"></span>';
       acctd += '<span class="delete-icon"><img class="delete-academic" data-academicid="' + element.id + '" data-academicname="' + element.academic_name + '" src="/assets/images/deleteicon.png"></span>';
-      acctd += '<span class="details-icon collapsed" id="details-icon" data-toggle="collapse" data-target="#academic' + index + '" class="accordion-toggle btn btn-default btn-xs"></span>';
+      acctd += '<span class="details-icon outer-table" id="details-icon-' + index + '" ></span>';
       acctd += '</td>';
       acctd += '</tr>';
       acctd += '<tr>';
-      acctd += '<td colspan="12" class="hiddenRow">';
-      acctd += '<div class="accordian-body collapse" id="academic' + index + '">';
+      acctd += '<td colspan="12" style="display:none" class=" inner-table p-0" id="add-table-' + index + '">';
+      acctd += '<div class="accordian-body">';
       acctd += '<table class="table table-bordered responsive mb-0 "><thead><tr>';
       acctd += '<th>Section Name</th>';
       acctd += '<th>Batch Student count</th>'
@@ -190,7 +197,6 @@ function list_PR_academicData(acc_data) {
       let batch_details_view = element.batch_details;
       if (batch_details_view.length > 0) {
         $.each(batch_details_view, function (index, element) {
-          console.log("batch_details_view", element)
           acctd += '<tr>';
           acctd += '<td>' + element.section_name + '</td>';
           // acctd += '<td>' + element.batch_student_count + '</td>'
@@ -215,7 +221,24 @@ function list_PR_academicData(acc_data) {
   acc_Element.append(acctd);
 
 }
-
+//accordion js start
+$(document).on('click', '.outer-table', function (e) {
+  let getIdFromTable = e.target.id.split("-");
+  let IndexId = getIdFromTable[2];
+  let elementInnerTable = document.getElementById(`add-table-${IndexId}`);
+  //console.log(elementInnerTable);
+ 
+    if($(elementInnerTable).css('display') == 'none'){
+      $(elementInnerTable).show(700);
+      $(this).addClass("details-icon-up")
+      $(this).removeClass("details-icon")
+    } else {
+      $(elementInnerTable).hide(300);
+      $(this).addClass("details-icon")
+      $(this).removeClass("details-icon-up")
+    }
+})
+//accordion js End
 
 $(document).on('click', '.delete-academic', function (e) {
   e.stopImmediatePropagation();

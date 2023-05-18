@@ -6470,14 +6470,17 @@ span.as_links {
 	color: #7B61FF;
 	text-decoration: underline;
 }
-a.as_links{
+
+a.as_links {
 	cursor: pointer;
 	color: #ff4d0f;
-    text-decoration: underline !important;
+	text-decoration: underline !important;
 }
-.orng_span{
+
+.orng_span {
 	color: #280f4f;
 }
+
 .slideout-sidebar .accordion-body li:hover {
 	background: #E5E5E9;
 	color: #20204F;
@@ -6771,16 +6774,24 @@ h4.light-grey {
 	width: 22px;
 	margin-left: 10px;
 }
- .collapsed{  
-	background-image: url(../images/arrow_down_icon_1.png) !important ;
 
-	background-size: 25px;
-    padding: 3px 14px;
-    background-repeat: no-repeat;
-    margin-left: 10px;}
-.details-icon { 
-	background-image: url(../images/arrow_up_icon_1.png) ;
-	background-size: 25px;
-    padding: 3px 14px;
-    background-repeat: no-repeat;
-    margin-left: 10px;}
+.details-icon-up {
+
+	background-image: url(../images/arrow_up_icon_1.png);
+	background-size: 20px;
+	padding: 10px 14px;
+	background-repeat: no-repeat;
+	margin-left: 10px;
+	background-position: right;
+	float: right;
+}
+
+.details-icon {
+	background-image: url(../images/arrow_down_icon_1.png);
+	background-size: 20px;
+	padding: 10px 14px;
+	background-repeat: no-repeat;
+	margin-left: 10px;
+	background-position: right;
+	float: right;
+}
