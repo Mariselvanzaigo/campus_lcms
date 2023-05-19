@@ -27,15 +27,15 @@
         <div class="add-details">
 
           <div class="row">
-            <div class="col-md-4 mb-3">
+            <div class="col-md-4">
               <label>Program Name</label>
               <p id="prg__name"></p>
             </div>
-            <div class="col-md-4 mb-3">
+            <div class="col-md-4 ">
               <label>Stream</label>
               <p id="stream__name"></p>
             </div>
-            <div class="col-md-4 mb-3">
+            <div class="col-md-4 ">
               <label>Course</label>
               <p id="course__name"></p>
             </div>
@@ -43,10 +43,11 @@
 
           <!----tab section start---->
           <div class="container-fluid p-0">
-            <div class="tabs white-bg mt-3">
+            <div class="tabs white-bg ">
               <input type="radio" name="tabs" id="tab1" checked="checked" onclick="searchCertificateParam()">
-              <label for="tab1" id="academictab" data-n-linkto="programacademiclist" data-n-url-acc_id="">Academic Year
-                Information</label>
+              <label for="tab1" class="d-none" id="academictab" data-n-url-acc_id="">
+                Academic Year Information
+              </label>
               <div class="tab p-0" id="academic-container">
 
 
@@ -55,20 +56,19 @@
                     Information...</span></div>
                 <!--------------loader end--------------->
                 <div class="row" id="">
-                  <div class="table-section add-details mt-4" id="academic_table_container">
+                  <div class="table-section add-details" id="academic_table_container">
 
                   </div>
                 </div>
 
                 <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"
-                  rel="stylesheet" />
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-                <script
-                  src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+                  rel="stylesheet" /> -->
+                <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+               <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 
 
 
-              <!-- <div class="row">
+                <!-- <div class="row">
 
                 <table class="table table-bordered responsive">
                   <thead>
@@ -214,8 +214,9 @@
               </div>
 
               <input type="radio" name="tabs" id="tab2">
-              <label id="sectiontab" data-n-linkto="programsectionlist" data-n-url-batch_id=""
-                for="tab2">Section</label>
+              <label id="sectiontab" data-n-url-batch_id="" for="tab2">
+                <!-- Section -->
+              </label>
               <div class="tab p-0">
               </div>
             </div>
@@ -224,7 +225,7 @@
           <div class="d-flex justify-content-between mt-3">
             <div>
               <span class="blue-border-btn">
-                <button type="button" class="btn btn-primary">
+                <button type="button" class="btn btn-primary" data-n-linkto="programlist">
                   Back
                 </button>
               </span>
@@ -282,3 +283,4 @@
       $('<script>').attr('src', src).appendTo('head');
     }
   </script>
+  

@@ -54,6 +54,11 @@ const menuSchema = {
     url: "/program/section",
   },
 
+  programsectionview: {
+    template: "/assets/pages/program/program_view.html",
+    url: "/program/program_view",
+  },
+
   courseslist: {
     template: "/assets/pages/courses/courses.html",
     // callback: organizationList,
