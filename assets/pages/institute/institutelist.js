@@ -622,7 +622,9 @@ function get_list( a, $parent , level_count_inc) {
             newUlDIV.append(`<span class='expand_img_icon disp_in_block flt_right delete_module_temp'><img style='width:18px;margin-top: 6px;opacity: 0.7;margin-right: 12px' src='../assets/images/delete3.png' class='expand_icon' onclick="deleteModule(this, '${a[i].id.replace(/<[^>]*>?/gm, '').replace(/(\r\n|\n|\r)/gm, "").replace('...', '')}', 'Module');"/></span>`);
             newUlDIV.append(`<span class='expand_img_icon disp_in_block flt_right delete_module_temp'><img style='width:18px;margin-top: 6px;opacity: 0.7;margin-right: 12px' src='../assets/images/edits.png' class='expand_icon' data-n-linkto='addinstitute' data-n-url-page_from='institutelist' data-n-url-org_id="${org_id}" data-n-url-ins_id="${a[i].id}"/></span>`);
             newUlDIV.append(`<span class='expand_img_icon disp_in_block flt_right delete_module_temp'><img style='width:25px;margin-top: 8px;opacity: 0.7;margin-right: 12px' src='../assets/images/eyeicon.png' class='expand_icon' onclick="previewInstitute('${a[i].id}');"/></span>`);
-            newUlDIV.append("<span class='expand_img_icon disp_in_block flt_right' style='margin-top: 6px;padding: 5px 10px 5px 10px;margin-right: 5px;'><a href='javascript:void(0);' data-n-linkto='addcollege' data-n-url-ins_id='"+a[i].id+"' data-n-url-page_from='institutelist' style='color: #F36A10;'><i class='fas fa-plus'></i> Add College</a></span>");
+            if(a[i].type == "group"){
+              newUlDIV.append(`<span class='expand_img_icon disp_in_block flt_right' style='margin-top: 6px;padding: 5px 10px 5px 10px;margin-right: 5px;'><a href="javascript:void(0);" class="as_links" data-n-linkto="addinstitute" data-n-url-type="group"><i class="fas fa-plus"></i> Add Group </a> or <a href="javascript:void(0);" class="as_links" data-n-linkto="addinstitute" data-n-url-type="college"> College Branch </a><span id="org_name_text"></span></span>`);
+            }
             newDIV.append(newUlDIV);
           }else{
             console.log("children");

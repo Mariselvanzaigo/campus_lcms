@@ -223,19 +223,20 @@ function list_PR_academicData(acc_data) {
 }
 //accordion js start
 $(document).on('click', '.outer-table', function (e) {
+  e.stopImmediatePropagation();
   let getIdFromTable = e.target.id.split("-");
   let IndexId = getIdFromTable[2];
   let elementInnerTable = document.getElementById(`add-table-${IndexId}`);
   //console.log(elementInnerTable);
  
     if($(elementInnerTable).css('display') == 'none'){
+      $(this).addClass("details-icon-up");
+      $(this).removeClass("details-icon");
       $(elementInnerTable).show(700);
-      $(this).addClass("details-icon-up")
-      $(this).removeClass("details-icon")
     } else {
+      $(this).addClass("details-icon");
+      $(this).removeClass("details-icon-up");
       $(elementInnerTable).hide(300);
-      $(this).addClass("details-icon")
-      $(this).removeClass("details-icon-up")
     }
 })
 //accordion js End
