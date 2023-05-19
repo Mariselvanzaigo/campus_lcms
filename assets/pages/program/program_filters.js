@@ -36,7 +36,7 @@ $(document).ready(function () {
   call_all_AccadmeicYear();
   list_PR_Trigger("");
   //list_PR_programs('');
-  list_PR_Programs_Trigger("");
+  //list_PR_Programs_Trigger("");
 
   $('#pr_searchOrganization').on('blur', function (e) {
     e.stopImmediatePropagation();
@@ -103,13 +103,13 @@ let program_params = '';
 
 document.addEventListener("keypress", function (event) {
 
-  if (event.target.id === 'pr_searchprograms') {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      var searchVal = $("#pr_searchprograms").val().trim();
-      list_PR_Programs_Trigger(searchVal);
-    }
-  }
+  // if (event.target.id === 'pr_searchprograms') {
+  //   if (event.key === "Enter") {
+  //     event.preventDefault();
+  //     var searchVal = $("#pr_searchprograms").val().trim();
+  //     list_PR_Programs_Trigger(searchVal);
+  //   }
+  // }
 
   if (event.target.id === 'go_to_page2') {
     if (event.key === "Enter") {
@@ -120,7 +120,8 @@ document.addEventListener("keypress", function (event) {
 
 });
 
-$(document).on("click", "#pr_resetButtonprograms", function () {
+$(document).on("click", "#pr_resetButtonprograms", function (e) {
+  e.stopImmediatePropagation();
 
   localStorage.setItem("pr_prlist_pageNum", "");
   localStorage.setItem("pr_prlist_search", "");
@@ -155,6 +156,7 @@ function emtpy_localstorage_programs() {
 
 //Trigger on clicking the organization list
 $(document).on("click", "#org-program-listings li", function (e) {
+  e.stopImmediatePropagation();
   let programId = $(this).attr("id");
   if (programId) {
     //$('#pr_resetButtonprograms').trigger('click');
@@ -186,16 +188,19 @@ $(document).on("click", "#org-program-listings li", function (e) {
 
 //Trigger on changing the Stream list
 $(document).on("change", "#stream_list", function (e) {
+  e.stopImmediatePropagation();
   searchprogram_param();
 });
 
 //Trigger on changing the Stream list
 $(document).on("change", "#courses_list", function (e) {
+  e.stopImmediatePropagation();
   searchprogram_param();
 });
 
 //Trigger on changing the Stream list
 $(document).on("change", "#acc_year_list", function (e) {
+  e.stopImmediatePropagation();
   searchprogram_param();
 });
 
@@ -458,8 +463,8 @@ document.addEventListener("keypress", function (event) {
 
 });
 
-$(document).on("click", "#pr_resetButtonOrglist", function () {
-
+$(document).on("click", "#pr_resetButtonOrglist", function (e) {
+e.stopImmediatePropagation();
   $("#pr_searchOrganization").val("");
   //$("#search_data_sortby").val("");
 
@@ -518,6 +523,10 @@ function list_PR_Trigger(searchVal) {
 
 //To Paginate platform list Data
 function list_PR_Organizaiton(parameter) {
+  $("#prg_orglist-loader").removeClass("disp_none");
+  $("#prg_orglist_items").removeClass("disp_block");
+  $("#prg_orglist_items").addClass("disp_none");
+  $("#nodataFound_porglist").addClass("d-none");
   let isFirst = true;
   var pr_orgl_pageNum = localStorage.getItem("pr_orgl_pageNum");
   //console.log('pr_orgl_pageNum', pr_orgl_pageNum);
@@ -609,6 +618,28 @@ function list_PR_Organizaiton(parameter) {
         $("#prg_orglist_items").removeClass("disp_none");
         $("#prg_orglist_items").addClass("disp_block");
 
+        if(data.length === 0){
+          //$(".questionPagination").attr("style", "display:none");
+          if(parameter != ""){
+            $("#nodataFound_porglist").removeClass("d-none");
+            $("#prg_orglist_items").addClass("d-none");
+            // $("#no_records_org_main_img").removeClass("d-none");
+            // $("#no_records_org_main_p").removeClass("d-none");
+            //$("#add_org_container_main").addClass("d-none");
+          }else{
+            $("#nodataFound_porglist").removeClass("d-none");
+            $("#prg_orglist_items").addClass("d-none");
+            // $("#no_records_org_main_img").removeClass("d-none");
+            // $("#no_records_org_main_p").removeClass("d-none");
+            //$("#add_org_container_main").removeClass("d-none"); 
+          }
+        }else{
+          //$("#no_records_org_main_img").addClass("d-none");
+          //$("#no_records_org_main_p").addClass("d-none");
+          //$(".questionPagination").attr("style", "display:block");
+            $("#nodataFound_porglist").addClass("d-none");
+            $("#prg_orglist_items").removeClass("d-none");
+        }
         $("#prorg_pagination-container-by ul li").click(function () {
           $("#prorg_go_to_pageto").val("");
         });
