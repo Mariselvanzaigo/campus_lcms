@@ -26,6 +26,7 @@ class Auth {
    localStorage.removeItem("auth_user_lcms");
    localStorage.removeItem("auth_data_lcms");
    localStorage.removeItem("system_rights");
+   localStorage.removeItem("csc_token");
    window.location.replace(SITE_URL_PROTOCOL+"login");
  }
 }

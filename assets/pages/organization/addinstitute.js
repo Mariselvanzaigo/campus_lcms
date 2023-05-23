@@ -12,6 +12,10 @@ var page_from = cms_ins_param.page_from;
 var ins_type = cms_ins_param.type;
 var csc_token = localStorage.getItem("csc_token");
 if(!csc_token){
+  get_csc_accesstoken();
+}
+function get_csc_accesstoken(){
+alert(1);
   $.ajax({
     url: 'https://www.universal-tutorial.com/api/getaccesstoken',
     type: 'GET',
@@ -116,7 +120,7 @@ $(document).ready(function(){
     $("#toOrganizationList").attr("data-n-linkto", page_from);
     $(".cancelredirect").attr("data-n-linkto", page_from);
   }
-  //hideStage(1);showStage(3);
+  hideStage(1);showStage(3);
   if(ins_id){
     $("#save_manage_academic").attr("data-status", "Updated");
     $("#save_institute").text("Update & Next");
@@ -286,6 +290,9 @@ $(document).ready(function(){
           }
         }
       }); 
+    }else{
+      course_list_select(course_list, "");
+      stream_list_select(stream_list, "");
     }
     getOrganizationDropdown(org_list, org_id);
     initiateMobilenumberwithRegion("ins_phone_no");
@@ -344,6 +351,14 @@ function get_country(country_name, field){
     },
     error: function(error){
       console.log(error);
+
+      var errorJson = jQuery.parseJSON(error.responseText);
+      console.log(errorJson);
+      if(errorJson.error.name == "TokenExpiredError"){
+        localStorage.removeItem("csc_token");
+        get_csc_accesstoken();
+      }
+
     }
   }); 
 }
@@ -1452,6 +1467,7 @@ $("#preview_institute").on("click", function(){
   $("#prev-user_city_state_zip").text("");
   $("#prev-user_description").text("");
   $("#prev-user_email_id").text("");
+  $("#prev-user_phone_no").text("");
   if(ins_id){
     $.ajax({
       url: API_BASE_URL + 'institute/details/'+ins_id+'/',
@@ -1465,15 +1481,21 @@ $("#preview_institute").on("click", function(){
         if(response){
           //prev-stream_list
             var ins_city_state_zip = response.city ? response.city: "";
+            console.log(ins_city_state_zip);
             if(ins_city_state_zip){
-              ins_city_state_zip+= ", "+response.state ? response.state : "";
+              ins_city_state_zip += response.state ? ", " + response.state : "";
             }else{
-              ins_city_state_zip+= response.state ? response.state : "";
+              ins_city_state_zip += response.state ? response.state : "";
             }
             if(ins_city_state_zip){
-              ins_city_state_zip+= " "+response.zip_code ? response.zip_code : "";
+              ins_city_state_zip += response.country ? ", " + response.country : "";
             }else{
-              ins_city_state_zip+= response.zip_code ? response.zip_code : "";
+              ins_city_state_zip += response.country ? response.country : "";
+            }
+            if(ins_city_state_zip){
+              ins_city_state_zip += response.zip_code ? " - "+response.zip_code : "";
+            }else{
+              ins_city_state_zip += response.zip_code ? response.zip_code : "";
             }
             var mobile_number = "";
             if(response.phone_number){
@@ -1493,6 +1515,7 @@ $("#preview_institute").on("click", function(){
             $("#prev-ins_address_line_2").text(response.address_line_2 ? response.address_line_2 : "");
             $("#prev-ins_city_state_zip").text(ins_city_state_zip);
             $("#prev-ins_email_id").text(response.email_id ? response.email_id : "");
+            $("#prev-ins_email_id").attr("title", response.email_id ? response.email_id : "");
             $("#prev-ins_phone_no").text(mobile_number);
             if(response.member_details.length > 0){
               $.each(response.member_details, function( i, val ) {
@@ -1503,12 +1526,17 @@ $("#preview_institute").on("click", function(){
                   }
                   var user_city_state_zip = val.city ? val.city: "";
                   if(user_city_state_zip){
-                    user_city_state_zip+= ", "+val.state ? val.state : "";
+                    user_city_state_zip+= val.state ? ", "+val.state : "";
                   }else{
                     user_city_state_zip+= val.state ? val.state : "";
                   }
                   if(user_city_state_zip){
-                    user_city_state_zip+= " "+val.zip_code ? val.zip_code : "";
+                    user_city_state_zip+= val.country ? ", "+val.country : "";
+                  }else{
+                    user_city_state_zip+= val.country ? val.country : "";
+                  }
+                  if(user_city_state_zip){
+                    user_city_state_zip+= val.zip_code ? " - "+val.zip_code : "";
                   }else{
                     user_city_state_zip+= val.zip_code ? val.zip_code : "";
                   }var user_mobile_number = "";
@@ -1527,6 +1555,8 @@ $("#preview_institute").on("click", function(){
                   $("#prev-user_city_state_zip").text(user_city_state_zip);
                   $("#prev-user_description").text(val.description ? val.description : "");
                   $("#prev-user_email_id").text(val.email_id ? val.email_id : "");
+                  $("#prev-user_email_id").attr("title", val.email_id ? val.email_id : "");
+                  $("#prev-user_phone_no").text(val.phone_number ? val.phone_number : "");
                 }
               });
             }
