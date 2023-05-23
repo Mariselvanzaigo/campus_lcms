@@ -339,6 +339,7 @@ function logoutSession(){
     localStorage.removeItem("auth_user_lcms");
     localStorage.removeItem("auth_data_lcms");
     localStorage.removeItem("system_rights");
+    localStorage.removeItem("csc_token");
     console.log('SITE_URL_PROTOCOL custom.js', SITE_URL_PROTOCOL+"login");
     window.location.replace(SITE_URL_PROTOCOL+"login");
 }

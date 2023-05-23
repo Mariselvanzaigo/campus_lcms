@@ -6708,7 +6708,20 @@ a.as_links {
 .ins_email_prev {
 	overflow-wrap: anywhere;
 }
-
+.ins_email_prev a{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+.user_email_prev a{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
 .edit_icon {
 	cursor: pointer;
 }
