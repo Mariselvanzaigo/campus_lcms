@@ -128,6 +128,7 @@ const getPageURLAndQueryParams = () => {
 }
 
 const getPageNameByURL = (url) => {
+  console.log(url);
   //here key contains menu name & value contains template name & url
   for(const [key, value] of Object.entries(menuSchema)){
     if(value.url === url){

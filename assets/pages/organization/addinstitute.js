@@ -120,7 +120,7 @@ $(document).ready(function(){
     $("#toOrganizationList").attr("data-n-linkto", page_from);
     $(".cancelredirect").attr("data-n-linkto", page_from);
   }
-  hideStage(1);showStage(3);
+  //hideStage(1);showStage(3);
   if(ins_id){
     $("#save_manage_academic").attr("data-status", "Updated");
     $("#save_institute").text("Update & Next");
