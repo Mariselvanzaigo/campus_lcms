@@ -6,8 +6,33 @@ var cms_ins_param = getUrlParamquery();
 console.log(cms_ins_param);
 var org_id = cms_ins_param.org_id;
 var ins_id = cms_ins_param.ins_id;
+var parent_id = cms_ins_param.parent_id;
 var user_id = cms_ins_param.user_id;
 var page_from = cms_ins_param.page_from;
+var ins_type = cms_ins_param.type;
+var csc_token = localStorage.getItem("csc_token");
+if(!csc_token){
+  get_csc_accesstoken();
+}
+function get_csc_accesstoken(){
+alert(1);
+  $.ajax({
+    url: 'https://www.universal-tutorial.com/api/getaccesstoken',
+    type: 'GET',
+    dataType: 'json',
+    headers: { "Accept": "application/json;", 
+    "api-token": "7KLcA2sWSe4hh3xi9ou-vIY8mV5Q6E1Dom5fFerfiwy-j6xlk15z8Urd8ujKUtZ081c", 
+    "user-email": "mari.s@zaigoinfotech.com" },
+    success: function (response) {
+      console.log(response);
+      localStorage.setItem("csc_token", response.auth_token);
+      csc_token = response.auth_token;
+    },
+    error: function(error){
+      console.log(error);
+    }
+  }); 
+}
 $("<link/>", {
   rel: "stylesheet",
   type: "text/css",
@@ -62,18 +87,54 @@ var course_list = function () {
   return tmp_course;
 }();
 $(document).ready(function(){
+  $("#ins_country").select2({
+    templateResult: formatState,
+    width: '100%'
+  });
+  $("#ins_state").select2({
+    templateResult: formatState,
+    width: '100%'
+  });
+  $("#ins_city").select2({
+    templateResult: formatState,
+    width: '100%'
+  });
+  $("#user_country").select2({
+    templateResult: formatState,
+    width: '100%'
+  });
+  $("#user_state").select2({
+    templateResult: formatState,
+    width: '100%'
+  });
+  $("#user_city").select2({
+    templateResult: formatState,
+    width: '100%'
+  });
+  if(ins_type == "group"){
+    $("#institute_label").text("Group name");
+  }else if(ins_type == "college"){
+    $("#institute_label").text("College name");
+  }
   if(page_from){
     $("#toOrganizationList").attr("data-n-linkto", page_from);
+    $(".cancelredirect").attr("data-n-linkto", page_from);
   }
   //hideStage(1);showStage(3);
   if(ins_id){
     $("#save_manage_academic").attr("data-status", "Updated");
     $("#save_institute").text("Update & Next");
-    $("#stage_head_1").text("Edit Institute");
-    $("#stage_head_2").text("Edit Admin");
-    $("#stage-1-step small").text("Edit Institute");
-    $("#stage-2-step small").text("Edit Admin");
-    $("#header_breadcrumbs").text("Organization / Edit Institute");
+    if(ins_type == "group"){
+      $("#stage_head_1").text("Edit Group");
+      $("#stage-1-step small").text("Edit Group");
+      $("#header_breadcrumbs").text("Organization / Edit Group");
+    }else{
+      $("#stage_head_1").text("Edit College");
+      $("#stage-1-step small").text("Edit College");
+      $("#header_breadcrumbs").text("Organization / Edit College");
+    }
+    // $("#stage_head_2").text("Edit Admin");
+    // $("#stage-2-step small").text("Edit Admin");
     $.ajax({
       url: API_BASE_URL + 'institute/details/'+ins_id+'/',
       type: "GET",
@@ -82,7 +143,6 @@ $(document).ready(function(){
         "Content-Type": "application/json"
       },
       success:function(response){
-        console.log(response)
         if(response){
             $("#ins_name").val(response.name ? response.name : "");
             $("#ins_website").val(response.website ? response.website : "");
@@ -92,6 +152,15 @@ $(document).ready(function(){
             $("#ins_city").val(response.city ? response.city : "");
             $("#ins_state").val(response.state ? response.state : "");
             $("#ins_country").val(response.country ? response.country : "");
+            var country = response.country ? response.country : "";
+            var state = response.state ? response.state : "";
+            var city = response.city ? response.city : "";
+
+            if(csc_token){
+              get_country(country, "ins");
+              get_state(country,state, "ins");
+              get_city(state, city, "ins");
+            }
             $("#ins_zip_code").val(response.zip_code ? response.zip_code : "");
             $("#ins_registration_details").val(response.registration_details ? response.registration_details : "");
             $("#ins_recogonition_details").val(response.recognition_detail ? response.recognition_detail : "");
@@ -134,7 +203,7 @@ $(document).ready(function(){
                 if(i == 0){
                   if(val.id){
                     user_id = val.id;
-                    var refresh = window.location.protocol + "//" + window.location.host + window.location.pathname + '?org_id='+org_id+'&ins_id='+ins_id+'&user_id='+user_id+"&page_from="+page_from;    
+                    var refresh = window.location.protocol + "//" + window.location.host + window.location.pathname + '?org_id='+org_id+'&ins_id='+ins_id+'&parent_id='+parent_id+"&page_from="+page_from+"&type="+ins_type;    
                     window.history.pushState({ path: refresh }, '', refresh);
                   }
                   insertMobilenumberwithRegion(val.mobile_number, val.region_code, "user_phone_no");
@@ -143,9 +212,16 @@ $(document).ready(function(){
                   $("#user_email_id").val(val.email_id ? val.email_id : "");
                   $("#user_address_line_1").val(val.apartment_suit_unit ? val.apartment_suit_unit : "");
                   $("#user_address_line_2").val(val.street_address ? val.street_address : "");
-                  $("#user_city").val(val.city ? val.city : "");
-                  $("#user_state").val(val.state ? val.state : "");
-                  $("#user_country").val(val.country ? val.country : "");
+                  // $("#user_city").val(val.city ? val.city : "");
+                  // $("#user_state").val(val.state ? val.state : "");
+                  // $("#user_country").val(val.country ? val.country : "");
+
+                  var user_country = val.country ? val.country : "";
+                  var user_state = val.state ? val.state : "";
+                  var user_city = val.city ? val.city : "";
+                  get_country(user_country, "user");
+                  get_state(user_country,user_state, "user");
+                  get_city(user_state, user_city, "user");
                   $("#user_zip_code").val(val.zip_code ? val.zip_code : "");
                   $("#user_qualification").val(val.qualification ? val.qualification : "");
                   $("#user_description").val(val.description ? val.description : "");
@@ -176,18 +252,196 @@ $(document).ready(function(){
   }else{
     $("#save_manage_academic").attr("data-status", "Saved");
     $("#save_institute").text("Save & Next");
-    $("#stage_head_1").text("Create Institute");
-    $("#stage_head_2").text("Create Admin");
+    // $("#stage_head_2").text("Create Admin");
     $("#stage-1-step small").text("Create Institute");
-    $("#stage-2-step small").text("Create Admin");
-    $("#header_breadcrumbs").text("Organization / Add Institute");
+    // $("#stage-2-step small").text("Create Admin");
+    if(ins_type == "group"){
+      $("#stage_head_1").text("Create Group");
+      $("#stage-1-step small").text("Create Group");
+      $("#header_breadcrumbs").text("Organization / Add Group");
+    }else{
+      $("#stage_head_1").text("Create College");
+      $("#stage-1-step small").text("Create College");
+      $("#header_breadcrumbs").text("Organization / Add College");
+    }
+
+    if(csc_token){
+      get_country("", "ins");
+      get_state("", "", "ins");
+      get_city("", "ins");
+      get_country("", "user");
+      get_state("", "", "user");
+      get_city("", "user");
+    }
+
+    if(parent_id){
+      $.ajax({
+        url: API_BASE_URL + 'stream/course/details/'+parent_id+'/',
+        type: 'get',
+        dataType: 'json',
+        headers: { "Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + getUserInfo().access_token },
+        success: function (response) {
+          console.log(response.course_type_list.length);
+          if(response.course_type_list.length > 0){
+            course_list_select_byval(course_list, response.course_type_list);
+          }
+          if(response.stream_list.length > 0){
+            stream_list_select_byval(stream_list, response.stream_list);
+          }
+        }
+      }); 
+    }else{
+      course_list_select(course_list, "");
+      stream_list_select(stream_list, "");
+    }
     getOrganizationDropdown(org_list, org_id);
     initiateMobilenumberwithRegion("ins_phone_no");
     initiateMobilenumberwithRegion("user_phone_no");
-    stream_list_select(stream_list, "");
-    course_list_select(course_list, "");
   }
 });
+$(document).on("change", "#ins_country", function(){
+  var country_name = $(this).val();
+  console.log(country_name);
+  get_state(country_name, "", "ins");
+});
+$(document).on("change", "#ins_state", function(){
+  var state_name = $(this).val();
+  console.log(state_name);
+  get_city(state_name, "", "ins");
+});
+$(document).on("change", "#user_country", function(){
+  var country_name = $(this).val();
+  console.log(country_name);
+  get_state(country_name, "", "user");
+});
+$(document).on("change", "#user_state", function(){
+  var state_name = $(this).val();
+  console.log(state_name);
+  get_city(state_name, "", "user");
+});
+function get_country(country_name, field){
+  $.ajax({
+    url: 'https://www.universal-tutorial.com/api/countries/',
+    type: 'GET',
+    dataType: 'json',
+    headers: { "Accept": "application/json;", "Authorization": "Bearer "+csc_token},
+    success: function (response) {
+      console.log(response);
+
+      $("#"+field+"_country").empty();
+      if(response.length > 0){
+        var selected = "";
+        var country_options = '<option value="">Select Country</option>';
+          $.each( response, function( i, val ) {
+            if(country_name && country_name.toLowerCase() == val.country_name.toLowerCase()){
+              selected = "selected";
+            }else{
+              selected = "";
+            }
+            country_options += `<option value="${val.country_name}"  ${selected}>${val.country_name}</option>`;
+          });
+          $("#"+field+"_country").append(country_options);
+          $("#"+field+"_country").select2({
+            templateResult: formatState,
+            width: '100%'
+          });
+      }
+
+
+    },
+    error: function(error){
+      console.log(error);
+
+      var errorJson = jQuery.parseJSON(error.responseText);
+      console.log(errorJson);
+      if(errorJson.error.name == "TokenExpiredError"){
+        localStorage.removeItem("csc_token");
+        get_csc_accesstoken();
+      }
+
+    }
+  }); 
+}
+function get_state(country_name, state_name, field){
+  if(country_name){
+    $.ajax({
+      url: 'https://www.universal-tutorial.com/api/states/'+country_name,
+      type: 'GET',
+      dataType: 'json',
+      headers: { "Accept": "application/json;", "Authorization": "Bearer "+csc_token},
+      success: function (response) {
+        console.log(response);
+        $("#"+field+"_state").removeAttr("disabled");
+        $("#"+field+"_state").empty();
+        if(response.length > 0){
+          var selected = "";
+          var state_options = '<option value="">Select State</option>';
+            $.each( response, function( i, val ) {
+              if(state_name && state_name.toLowerCase() == val.state_name.toLowerCase()){
+                selected = "selected";
+              }else{
+                selected = "";
+              }
+              state_options += `<option value="${val.state_name}"  ${selected}>${val.state_name}</option>`;
+            });
+            $("#"+field+"_state").append(state_options);
+            $("#"+field+"_state").select2({
+              templateResult: formatState,
+              width: '100%'
+            });
+        }
+
+
+      },
+      error: function(error){
+        $("#"+field+"_state").attr("disabled", true);
+        console.log(error);
+      }
+    }); 
+  }else{
+    $("#"+field+"_state").attr("disabled", true);
+  }
+}
+function get_city(state_name, city_name, field){
+  if(state_name){
+    $.ajax({
+      url: 'https://www.universal-tutorial.com/api/cities/'+state_name,
+      type: 'GET',
+      dataType: 'json',
+      headers: { "Accept": "application/json;", "Authorization": "Bearer "+csc_token},
+      success: function (response) {
+        console.log(response);
+        $("#"+field+"_city").removeAttr("disabled");
+        $("#"+field+"_city").empty();
+        if(response.length > 0){
+          var selected = "";
+          var city_options = '<option value="">Select City</option>';
+            $.each( response, function( i, val ) {
+              if(city_name && city_name.toLowerCase() == val.city_name.toLowerCase()){
+                selected = "selected";
+              }else{
+                selected = "";
+              }
+              city_options += `<option value="${val.city_name}"  ${selected}>${val.city_name}</option>`;
+            });
+            $("#"+field+"_city").append(city_options);
+            $("#"+field+"_city").select2({
+              templateResult: formatState,
+              width: '100%'
+            });
+        }
+
+
+      },
+      error: function(error){
+        $("#"+field+"_city").attr("disabled", true);
+        console.log(error);
+      }
+    }); 
+  }else{
+    $("#"+field+"_city").attr("disabled", true);
+  }
+}
 function initiateMobilenumberwithRegion(field_id){
   var input = document.getElementById(field_id);
   window.intlTelInput(input, {
@@ -231,17 +485,6 @@ function getOrganizationDropdown(org_list, org_id){
         }
         organization_options += `<option value="${val.id}" data-org_code="${val.organization_code}" ${selected}>${val.organization_name}</option>`;
       });
-
-      function formatState (state) {
-        if (!state.id) {
-          return state.text;
-        }
-        var baseUrl = "/user/pages/images/flags";
-        var $state = $(
-          '<span>' + state.text + '</span>'
-        );
-        return $state;
-      };
       $("#ins_organization").append(organization_options);
       $("#ins_organization").select2({
         templateResult: formatState,
@@ -598,6 +841,9 @@ $("#save_institute").on("click", function () {
     formData.append("country", $("#ins_country").val() ? $("#ins_country").val() : "");
     formData.append("zip_code", $("#ins_zip_code").val() ? $("#ins_zip_code").val() : "");
     formData.append("organization_id", org_id);
+    if(parent_id){
+      formData.append("parent_id", parent_id);
+    }
     formData.append("registration_details", $("#ins_registration_details").val() ? $("#ins_registration_details").val() : "");
     formData.append("recognition_detail", $("#ins_recogonition_details").val() ? $("#ins_recogonition_details").val() : "");
     //console.log(files);
@@ -614,6 +860,11 @@ $("#save_institute").on("click", function () {
         //formData.append("image_name", file.name);
         formData.append("cover_image", file);
       });
+    }
+    if(ins_type == "group"){
+      formData.append("institute_type", "group");
+    }else if(ins_type == "college"){
+      formData.append("institute_type", "college");
     }
     var URL = API_BASE_URL + "institute_create/";
     var method = "POST";
@@ -636,9 +887,9 @@ $("#save_institute").on("click", function () {
       },
       success: function (response) {
         ins_id = response.institute_id;
-        var user_param = "";
+        var user_param = "&page_from="+page_from+"&type="+ins_type;
         if(user_id){
-          user_param = "&user_id="+user_id;
+          user_param += "&user_id="+user_id;
         }
         var refresh = window.location.protocol + "//" + window.location.host + window.location.pathname + '?org_id='+org_id+'&ins_id='+ins_id+user_param;    
         window.history.pushState({ path: refresh }, '', refresh);
@@ -889,7 +1140,7 @@ $("#save_user_details").on("click", function () {
       },
       success: function (response) {
         user_id = response.member_id;
-        var refresh = window.location.protocol + "//" + window.location.host + window.location.pathname + '?org_id='+org_id+'&ins_id='+ins_id+'&user_id='+user_id+"&page_from="+page_from;    
+        var refresh = window.location.protocol + "//" + window.location.host + window.location.pathname + '?org_id='+org_id+'&ins_id='+ins_id+'&user_id='+user_id+"&page_from="+page_from+"&type="+ins_type;    
         window.history.pushState({ path: refresh }, '', refresh);
         current_element.removeAttr("disabled");
         hideStage(2);showStage(3);
@@ -931,12 +1182,50 @@ function stream_list_select(stream_list_data, stream_selected_list){
   });
   $("#ins_stream_list").append(stream_list);
 }
+function stream_list_select_byval(stream_list_data, stream_selected_list){
+  
+  $("#ins_stream_list").empty();
+  var stream_list = "";
+  $.each(stream_list_data, function( i, val ) {
+    if (stream_selected_list && stream_selected_list.find(e => e === val.id)) {
+      stream_list +=`<div class="mb-3 relative">
+                      <input type="checkbox" class="form-check-input stream_options" id="${val.id}" data-item_name="${val.name}" tabindex="${i}" checked>
+                      <label for="${val.id}" class="form-label stream_options_label">${val.name}</label>
+                    </div>`;
+    }else{
+      stream_list +=`<div class="mb-3 relative">
+                      <input type="checkbox" class="form-check-input stream_options" id="${val.id}" data-item_name="${val.name}" tabindex="${i}">
+                      <label for="${val.id}" class="form-label stream_options_label">${val.name}</label>
+                    </div>`;
+    }
+  });
+  $("#ins_stream_list").append(stream_list);
+}
 function course_list_select(course_list_data, course_selected_list){
   
   $("#ins_course_list").empty();
   var course_list = "";
   $.each(course_list_data, function( i, val ) {
     if (course_selected_list && course_selected_list.find(e => e.id === val.id)) {
+      course_list +=`<div class="mb-3 relative">
+                    <input type="checkbox" class="form-check-input course_options" id="${val.id}" data-item_name="${val.name}" tabindex="${i}" checked>
+                    <label for="${val.id}" class="form-label course_options_label">${val.name}</label>
+                  </div>`;
+    }else{
+      course_list +=`<div class="mb-3 relative">
+        <input type="checkbox" class="form-check-input course_options" id="${val.id}" data-item_name="${val.name}" tabindex="${i}">
+        <label for="${val.id}" class="form-label course_options_label">${val.name}</label>
+      </div>`;
+    }
+  });
+  $("#ins_course_list").append(course_list);
+}
+function course_list_select_byval(course_list_data, course_selected_list){
+  
+  $("#ins_course_list").empty();
+  var course_list = "";
+  $.each(course_list_data, function( i, val ) {
+    if (course_selected_list && course_selected_list.find(e => e === val.id)) {
       course_list +=`<div class="mb-3 relative">
                     <input type="checkbox" class="form-check-input course_options" id="${val.id}" data-item_name="${val.name}" tabindex="${i}" checked>
                     <label for="${val.id}" class="form-label course_options_label">${val.name}</label>
@@ -1178,6 +1467,7 @@ $("#preview_institute").on("click", function(){
   $("#prev-user_city_state_zip").text("");
   $("#prev-user_description").text("");
   $("#prev-user_email_id").text("");
+  $("#prev-user_phone_no").text("");
   if(ins_id){
     $.ajax({
       url: API_BASE_URL + 'institute/details/'+ins_id+'/',
@@ -1191,15 +1481,21 @@ $("#preview_institute").on("click", function(){
         if(response){
           //prev-stream_list
             var ins_city_state_zip = response.city ? response.city: "";
+            console.log(ins_city_state_zip);
             if(ins_city_state_zip){
-              ins_city_state_zip+= ", "+response.state ? response.state : "";
+              ins_city_state_zip += response.state ? ", " + response.state : "";
             }else{
-              ins_city_state_zip+= response.state ? response.state : "";
+              ins_city_state_zip += response.state ? response.state : "";
             }
             if(ins_city_state_zip){
-              ins_city_state_zip+= " "+response.zip_code ? response.zip_code : "";
+              ins_city_state_zip += response.country ? ", " + response.country : "";
             }else{
-              ins_city_state_zip+= response.zip_code ? response.zip_code : "";
+              ins_city_state_zip += response.country ? response.country : "";
+            }
+            if(ins_city_state_zip){
+              ins_city_state_zip += response.zip_code ? " - "+response.zip_code : "";
+            }else{
+              ins_city_state_zip += response.zip_code ? response.zip_code : "";
             }
             var mobile_number = "";
             if(response.phone_number){
@@ -1219,6 +1515,7 @@ $("#preview_institute").on("click", function(){
             $("#prev-ins_address_line_2").text(response.address_line_2 ? response.address_line_2 : "");
             $("#prev-ins_city_state_zip").text(ins_city_state_zip);
             $("#prev-ins_email_id").text(response.email_id ? response.email_id : "");
+            $("#prev-ins_email_id").attr("title", response.email_id ? response.email_id : "");
             $("#prev-ins_phone_no").text(mobile_number);
             if(response.member_details.length > 0){
               $.each(response.member_details, function( i, val ) {
@@ -1229,12 +1526,17 @@ $("#preview_institute").on("click", function(){
                   }
                   var user_city_state_zip = val.city ? val.city: "";
                   if(user_city_state_zip){
-                    user_city_state_zip+= ", "+val.state ? val.state : "";
+                    user_city_state_zip+= val.state ? ", "+val.state : "";
                   }else{
                     user_city_state_zip+= val.state ? val.state : "";
                   }
                   if(user_city_state_zip){
-                    user_city_state_zip+= " "+val.zip_code ? val.zip_code : "";
+                    user_city_state_zip+= val.country ? ", "+val.country : "";
+                  }else{
+                    user_city_state_zip+= val.country ? val.country : "";
+                  }
+                  if(user_city_state_zip){
+                    user_city_state_zip+= val.zip_code ? " - "+val.zip_code : "";
                   }else{
                     user_city_state_zip+= val.zip_code ? val.zip_code : "";
                   }var user_mobile_number = "";
@@ -1253,6 +1555,8 @@ $("#preview_institute").on("click", function(){
                   $("#prev-user_city_state_zip").text(user_city_state_zip);
                   $("#prev-user_description").text(val.description ? val.description : "");
                   $("#prev-user_email_id").text(val.email_id ? val.email_id : "");
+                  $("#prev-user_email_id").attr("title", val.email_id ? val.email_id : "");
+                  $("#prev-user_phone_no").text(val.phone_number ? val.phone_number : "");
                 }
               });
             }

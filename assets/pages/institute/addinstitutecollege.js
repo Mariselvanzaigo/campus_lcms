@@ -9,6 +9,7 @@ var ins_id = cms_ins_param.ins_id;
 var clg_id = cms_ins_param.clg_id;
 var user_id = cms_ins_param.user_id;
 var page_from = cms_ins_param.page_from;
+var page_type = cms_ins_param.type;
 
 var stream_list = function () {
   var tmp_stream = null;
@@ -46,15 +47,26 @@ $(document).ready(function(){
 
   if(page_from){
     $("#toOrganizationList").attr("data-n-linkto", page_from);
+    $(".cancelredirect").attr("data-n-linkto", page_from);
   }
   if(clg_id){
     $("#save_manage_academic").attr("data-status", "Updated");
     $("#save_institute").text("Update & Next");
-    $("#stage_head_1").text("Edit College");
-    $("#stage_head_2").text("Edit Admin");
-    $("#stage-1-step small").text("Edit College");
-    $("#stage-2-step small").text("Edit Admin");
-    $("#header_breadcrumbs").text("Organization / Institute / Edit College");
+    if(page_type && page_type == "group"){
+      $("#stage_head_1").text("Edit Group");
+      $("#stage_head_2").text("Edit Admin");
+      $("#stage-1-step small").text("Edit Group");
+      $("#stage-2-step small").text("Edit Admin");
+      $("#header_breadcrumbs").text("Organization / Institute / College/ Edit Group");
+      $("#institute_name_label").text("Group Name");
+    }else{
+      $("#stage_head_1").text("Edit College");
+      $("#stage_head_2").text("Edit Admin");
+      $("#stage-1-step small").text("Edit College");
+      $("#stage-2-step small").text("Edit Admin");
+      $("#header_breadcrumbs").text("Organization / Institute / Edit College");
+      $("#institute_name_label").text("College Name");
+    }
     $.ajax({
       url: API_BASE_URL + 'institute/details/'+clg_id+'/',
       type: "GET",
@@ -150,11 +162,22 @@ $(document).ready(function(){
   }else{
     $("#save_institute").text("Save & Next");
     $("#save_manage_academic").attr("data-status", "Saved");
-    $("#stage_head_1").text("Create College");
-    $("#stage_head_2").text("Create Admin");
-    $("#stage-1-step small").text("Create College");
-    $("#stage-2-step small").text("Create Admin");
-    $("#header_breadcrumbs").text("Organization / Institute / Add College");
+
+    if(page_type && page_type == "group"){
+      $("#stage_head_1").text("Create Group");
+      $("#stage_head_2").text("Create Admin");
+      $("#stage-1-step small").text("Create Group");
+      $("#stage-2-step small").text("Create Admin");
+      $("#header_breadcrumbs").text("Organization / Institute / College / Add Group");
+      $("#institute_name_label").text("Group Name");
+    }else{
+      $("#stage_head_1").text("Create College");
+      $("#stage_head_2").text("Create Admin");
+      $("#stage-1-step small").text("Create College");
+      $("#stage-2-step small").text("Create Admin");
+      $("#header_breadcrumbs").text("Organization / Institute / Add College");
+      $("#institute_name_label").text("College Name");
+    }
     initiateMobilenumberwithRegion("ins_phone_no");
     initiateMobilenumberwithRegion("user_phone_no");
     stream_list_select(stream_list, "");
@@ -191,6 +214,7 @@ function insertMobilenumberwithRegion(mobile_number, region_code, field_id){
 }
 //dropzone delete icon click function
 $(document).on("click", ".delete_file", function(e){
+  e.stopImmediatePropagation();
   var name =  $(this).attr("data-file_prop_name");
     $("#mAlertURLcourseMadeForname").text("Are you sure want to delete "+name+"?");
     if(name == "Logo"){
@@ -203,7 +227,8 @@ $(document).on("click", ".delete_file", function(e){
   });
 
 //delete file confirmation popup
-$("#mAlertDeletecourseMadeFor").on("click", function(){
+$("#mAlertDeletecourseMadeFor").on("click", function(e){
+  e.stopImmediatePropagation();
   var deleteFor = $("#mAlertdeleteFor").val();
   if(deleteFor == "org_logo"){
       updateCourseSettingsFile("org_logo", null); 
@@ -470,7 +495,8 @@ var frmvalidatorfrm = $("#frmNewCmsIns").validate({
   }
 });
 
-$("#save_institute").on("click", function () {
+$("#save_institute").on("click", function (e) {
+  e.stopImmediatePropagation();
   var current_element = $(this);
   current_element.prop('disabled', true);
 
@@ -734,7 +760,8 @@ var frmvalidatorfrmUser = $("#frmNewCmsUser").validate({
   }
 });
 
-$("#save_user_details").on("click", function () {
+$("#save_user_details").on("click", function (e) {
+  e.stopImmediatePropagation();
   var current_element = $(this);
   current_element.prop('disabled', true);
 
@@ -895,6 +922,7 @@ $("#stream_search").on("propertychange input", function(e){
 });
 
 $("#course_search").on("propertychange input", function(e){
+  e.stopImmediatePropagation();
   var valueChanged = false;
 
   if (e.type=='propertychange') {
@@ -947,10 +975,12 @@ var frmvalidatorfrmStream = $("#frmNewCmsStream").validate({
     $(element).removeClass("is-invalid");
   }
 });
-$("#cancel_cms-stream").click(function(){
+$("#cancel_cms-stream").click(function(e){
+  e.stopImmediatePropagation();
   $("#close_cms-stream").trigger("click");
 });
-$("#close_cms-stream").click(function(){
+$("#close_cms-stream").click(function(e){
+  e.stopImmediatePropagation();
   //$('#add-cms_org').prop('disabled', false);
   $( '#frmNewCmsStream' ).each(function(){
       this.reset();
@@ -958,13 +988,13 @@ $("#close_cms-stream").click(function(){
       $('#frmNewCmsStream .form-control').removeClass('is-invalid');
       $('#ins_stream_name').val('');
   });
-
   $("#add_cms-stream").text("Add");
   $("#add_cms-stream").attr("data-org_id", "");
   $('#addstreammodal').modal('hide');
 });
 
-$("#add_cms-stream").on("click", function () {
+$("#add_cms-stream").on("click", function (e) {
+  e.stopImmediatePropagation();
   var current_element = $(this);
   current_element.prop('disabled', true);
   var isValidForm = frmvalidatorfrmStream.form();
@@ -1019,7 +1049,8 @@ $("#add_cms-stream").on("click", function () {
   }
 });
 
-$("#save_manage_academic").on("click", function () {
+$("#save_manage_academic").on("click", function (e) {
+  e.stopImmediatePropagation();
   var current_element = $(this);
   current_element.prop('disabled', true);
   var stream_selected_checkbox = [];
@@ -1083,7 +1114,8 @@ $("#save_manage_academic").on("click", function () {
   }
 });
 
-$("#preview_institute").on("click", function(){
+$("#preview_institute").on("click", function(e){
+  e.stopImmediatePropagation();
   $("#prev-org_logo").attr("src", "");
   $("#prev-org_name").text("");
   $("#prev-ins_name").text("");
@@ -1206,7 +1238,8 @@ $("#preview_institute").on("click", function(){
     });
   }
 });
-$("#prev-edit_icon").on("click", function(){
+$("#prev-edit_icon").on("click", function(e){
+  e.stopImmediatePropagation();
   hideStage(3);showStage(1);
 })
 /*** Manage Academic section Ends ***/

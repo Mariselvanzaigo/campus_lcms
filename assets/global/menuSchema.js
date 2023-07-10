@@ -53,11 +53,11 @@ const menuSchema = {
     //callback: batch_Callbacks,
     url: "/program/section",
   },
-  // programcreate: {
-  //   template: "/assets/pages/program/createprogram.html",
-  //   //callback: batch_Callbacks,
-  //   url: "/program/createEdit",
-  // },
+
+  programsectionview: {
+    template: "/assets/pages/program/program_view.html",
+    url: "/program/program_view",
+  },
 
   courseslist: {
     template: "/assets/pages/courses/courses.html",

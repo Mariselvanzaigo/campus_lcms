@@ -21,7 +21,7 @@
     <link href="../assets/global/mediaquery.css" rel="stylesheet" />
     <link href="../assets/global/fileup.css" rel="stylesheet" />
     <link href="../assets/global/toastr/toastr.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.tutorialjinni.com/intl-tel-input/17.0.8/css/intlTelInput.css"/>
+    <link rel="stylesheet" href="../assets/global/intlTelInput.css"/>
     <script defer src="../assets/global/language.js"></script>
     <script defer src="../assets/global/auth.js"></script>
   </head>
@@ -48,22 +48,22 @@
               <span class="mx-2">Roles</span></a>
           </li> -->
           <li>
-            <a data-n-linkto="" class="navlink">
+            <a href="javascript:void(0);" class="navlink">
             <img class="menuicon" src="../assets/images/roles.svg" alt="" />
             <span class="mx-2">Roles</span></a>
           </li>
-          <li data-n-linkto="organizationlist">
+          <li data-n-linkto="organizationlist" onclick="emptylocalStorageOrgList();">
               <a data-n-linkto="organizationlist" class="navlink organizationlist">
               <img data-n-linkto="organizationlist" class="menuicon" src="../assets/images/org.svg" alt="organizationlist" />
               <span data-n-linkto="organizationlist" class="mx-2">Organization</span></a>
           </li>
-          <li data-n-linkto="institutelist">
+          <!-- <li data-n-linkto="institutelist">
             <a data-n-linkto="institutelist" class="navlink institutelist">
             <img data-n-linkto="institutelist" class="menuicon" src="../assets/images/institute.svg" alt="institutelist" />
             <span data-n-linkto="institutelist" class="mx-2">Institute</span></a>
-          </li>
+          </li> -->
           <li data-n-linkto="programlist">
-            <a  data-n-linkto="programlist" class="navlink programorganizationlist">
+            <a  data-n-linkto="programlist" class="navlink programlist">
             <img  data-n-linkto="programlist" class="menuicon" src="../assets/images/program.svg" alt="" />
             <span  data-n-linkto="programlist" class="mx-2">Program</span></a>
           </li>
@@ -79,13 +79,13 @@
               <img class="menuicon" src="../assets/images/course.svg" alt="Chapters" />
               <span class="mx-2">Modules</span></a>
           </li> -->
-          <li data-n-linkto="courseslist">
-              <a data-n-linkto="courseslist" class="navlink courses">
-              <img data-n-linkto="courseslist" class="menuicon" src="../assets/images/course.svg" alt="course" />
-              <span data-n-linkto="courseslist" class="mx-2">Course</span></a>
+          <li >
+              <a href="javascript:void(0);">
+              <img class="menuicon" src="../assets/images/course.svg" alt="course" />
+              <span class="mx-2">Course</span></a>
           </li> 
           <li>
-            <a href="organization/organizationlist" data-flinkto="" class="navlink">
+            <a href="javascript:void(0);" >
             <img class="menuicon" src="../assets/images/compentency.svg" alt="" />
             <span class="mx-2">Competency</span></a>
           </li>         
@@ -311,8 +311,8 @@
     <script src="../assets/global/ckeditor/ckeditor.js"></script>
     <script src="../assets/global/mcelib/jquery.tinymce.min.js"></script>
     <script src="../assets/global/mcelib/tinymce.min.js"></script>
-    <link href="../assets/pages/course/course.css" rel="stylesheet" />
-    <link href="../assets/pages/courses/courses.css" rel="stylesheet" />
+    <link href="../assets/global/course.css" rel="stylesheet" />
+    <link href="../assets/global/courses.css" rel="stylesheet" />
     <script src="../assets/global/callbackFunctions.js"></script>
     <script src="../assets/global/fileup.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
@@ -368,6 +368,12 @@
         });
         $(".view_profile_header").attr("data-user_profile_id", getUserInfo().id);
       });
+
+      function emptylocalStorageOrgList(){
+        localStorage.setItem("orgl_pageNum", "");
+        localStorage.setItem("orgl_search", "");
+        $("#go_to_pageto").val(""); 
+      }
       </script>
   </body>
 </html>

@@ -2,74 +2,12 @@ var acc_id = '';
 var program_param = getUrlParamquery();
 acc_id = program_param.acc_id;
 
-/**
- * ACADEMIC FILTERS AND LISTS
- */
-
-
-
-
-/*
-let pr_searchaccdemic_inp = document.getElementById("pr_searchaccdemic");
-pr_searchaccdemic_inp.addEventListener("keypress", function (event) {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    var searchVal = $("#pr_searchaccdemic").val().trim();
-    list_PR_Trigger(searchVal);
-  }
-});
-
-let academic_go_to_pageto_inp = document.getElementById("academic_go_to_pageto");
-academic_go_to_pageto_inp.addEventListener("keypress", function (event) {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    $("#academic_gotoques").trigger("click");
-  }
-});
-
-$(document).on("click", "#pr_resetButtonaccdemic", function () {
-
-  $("#pr_searchaccdemic").val("");
-  //$("#search_data_sortby").val("");
-
-  localStorage.setItem("pr_acc_pageNum", "");
-  localStorage.setItem("pr_orgl_search", "");
-  $("#academic_go_to_pageto").val("");
-  list_PR_Trigger("");
-});
-window.onbeforeunload = function (e) {
-  window.onunload = function () {
-    emtpy_localstorage_preorg();
-  }
-  return undefined;
-};
-
-function prorg_search_onblur() {
-  var searchVal = $("#pr_searchaccdemic").val().trim();
-  list_PR_Trigger(searchVal);
+if (acc_id) {
+  document.getElementById('sectiontab').setAttribute('data-n-url-batch_id', acc_id);
+  document.getElementById('academictab').setAttribute('data-n-url-acc_id', acc_id);
+  document.getElementById('academicedit').setAttribute('data-n-url-program_id', acc_id);
 }
-function emtpy_localstorage_preorg() {
-  localStorage.setItem("pr_acc_pageNum", "");
-  localStorage.setItem("pr_orgl_search", "");
-  $("#academic_go_to_pageto").val("");
-}
-*/
 
-function list_accademic_Trigger(searchVal) {
-
-
-  localStorage.setItem("pr_acc_pageNum", "");
-  localStorage.setItem("pr_acc_search", "");
-  //$("#academic_go_to_pageto").val("");
-
-  //   if (searchVal) {
-  //     searchVal = "?search=" + searchVal;
-  //     $('#pr_resetButtonaccdemic').removeClass("d-none");
-  //   } else {
-  //     $('#pr_resetButtonaccdemic').addClass("d-none");
-  //   }
-  list_PR_academic(searchVal);
-}
 
 $(document).ready(function () {
   list_PR_academic("");
@@ -81,7 +19,7 @@ function list_PR_academic(parameter) {
   } else if (parameter === null) {
     parameter = '';
   }
-  let accids = '';
+  var accids = '';
   if (acc_id) {
     accids = acc_id + '/';
   }
@@ -195,10 +133,17 @@ function list_PR_academic(parameter) {
   }
 }
 
+
+
+
+
+
+
 function list_PR_academicData(acc_data) {
   let acc_Element = $('#academic_table_container');
+  //console.log("acc_Elementacc_Element", acc_Element)
   acc_Element.empty();
-  console.log('org_data: ', acc_data);
+  //console.log('org_data: ', acc_data);
   let acctd = `<table class="table table-bordered responsive">
   <thead>
       <tr>
@@ -207,7 +152,7 @@ function list_PR_academicData(acc_data) {
           <th>Start Date</th>
           <th>End Date</th>
           <th>Section</th>
-          <th>&nbsp;</th>
+          <th>Action</th>
       </tr>
   </thead>
   <tbody>`;
@@ -215,12 +160,19 @@ function list_PR_academicData(acc_data) {
   if (acc_data.length > 0) {
     $.each(acc_data, function (index, element) {
 
+      // console.log("elementelementelement", element)
       let academic_linkto = '';
       if (element.batch_count > 0) {
-        academic_linkto = 'class="as_links" data-n-linkto="programsectionlist" data-n-url-batch_id="' + acc_id + '" data-n-url-acc_yearid="' + element.id + '"';
+        academic_linkto = 'class="" data-n-url-batch_id="' + acc_id + '" data-n-url-acc_yearid="' + element.id + '"';
       } else {
         academic_linkto = 'class=""';
       }
+
+      //  console.log("saravana batch count" , element.batch_count)
+      //  console.log("saravana batch details" , element.batch_details)
+
+
+
 
       acctd += '<tr><td>' + element.academic_name + '</td>';
       acctd += '<td>' + element.year + '</td>';
@@ -228,9 +180,36 @@ function list_PR_academicData(acc_data) {
       acctd += '<td>' + dateFormat_slash(element.end_date) + '</td>';
       acctd += '<td><span ' + academic_linkto + '>' + element.batch_count + '</span> </td>';
       acctd += '<td class="action-icons">';
-      acctd += '<span class="eye-icon"><img src="/assets/images/eyeicon.png"></span>';
+      //acctd += '<span class="eye-icon"><img src="/assets/images/eyeicon.png"></span>';
       acctd += '<span class="edit-icon" data-n-linkto="createprogram" data-n-url-program_id="' + acc_id + '" data-n-url-page_from="programacademiclist"><img data-n-linkto="createprogram" data-n-url-program_id="' + acc_id + '" data-n-url-page_from="programacademiclist" src="/assets/images/edit.png"></span>';
       acctd += '<span class="delete-icon"><img class="delete-academic" data-academicid="' + element.id + '" data-academicname="' + element.academic_name + '" src="/assets/images/deleteicon.png"></span>';
+      acctd += '<span class="details-icon outer-table" id="details-icon-' + index + '" ></span>';
+      acctd += '</td>';
+      acctd += '</tr>';
+      acctd += '<tr>';
+      acctd += '<td colspan="12" style="display:none" class=" inner-table p-0" id="add-table-' + index + '">';
+      acctd += '<div class="accordian-body">';
+      acctd += '<table class="table table-bordered responsive mb-0 "><thead><tr>';
+      acctd += '<th>Section Name</th>';
+      acctd += '<th>Batch Student count</th>'
+      acctd += '</tr></thead>';
+      acctd += '<tbody>';
+      let batch_details_view = element.batch_details;
+      if (batch_details_view.length > 0) {
+        $.each(batch_details_view, function (index, element) {
+          acctd += '<tr>';
+          acctd += '<td>' + element.section_name + '</td>';
+          // acctd += '<td>' + element.batch_student_count + '</td>'
+          acctd += '<td>' + 0 + '</td>'
+          acctd += '</tr>';
+        });
+
+      } else {
+        acctd += '<tr><td colspan="2"><div class="text-center"><b>No Data Found !</b></div></td>';
+      }
+      acctd += '</tbody>';
+      acctd += '</table>';
+      acctd += '</div>';
       acctd += '</td>';
       acctd += '</tr>';
     });
@@ -242,7 +221,25 @@ function list_PR_academicData(acc_data) {
   acc_Element.append(acctd);
 
 }
-
+//accordion js start
+$(document).on('click', '.outer-table', function (e) {
+  e.stopImmediatePropagation();
+  let getIdFromTable = e.target.id.split("-");
+  let IndexId = getIdFromTable[2];
+  let elementInnerTable = document.getElementById(`add-table-${IndexId}`);
+  //console.log(elementInnerTable);
+ 
+    if($(elementInnerTable).css('display') == 'none'){
+      $(this).addClass("details-icon-up");
+      $(this).removeClass("details-icon");
+      $(elementInnerTable).show(700);
+    } else {
+      $(this).addClass("details-icon");
+      $(this).removeClass("details-icon-up");
+      $(elementInnerTable).hide(300);
+    }
+})
+//accordion js End
 
 $(document).on('click', '.delete-academic', function (e) {
   e.stopImmediatePropagation();
@@ -255,7 +252,7 @@ $(document).on('click', '.delete-academic', function (e) {
   }
 });
 
-$(document).on("click", ".close_delete_modal_pop", function(e){
+$(document).on("click", ".close_delete_modal_pop", function (e) {
   e.stopImmediatePropagation();
   $("#academicmodal").modal('toggle');
 });
@@ -277,7 +274,7 @@ $(document).on("click", "#delete_program_academic", function (e) {
         $("#academicmodal").modal('toggle');
         toastr.success("Academic Deleted Successfully.");
         //var searchVal = $("#pr_searchprograms").val().trim();
-        list_PR_academic();
+        list_PR_academic("");
       },
       error: function (error) {
         if (error.status === 401) {

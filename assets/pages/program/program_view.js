@@ -40,7 +40,7 @@ return tmp_course;
 $(document).ready(function(){
     if(program_id){
         $("#academic_container").empty();
-        $("#create_program_header").text("Edit Program");
+       
         $("#submit_program").text("Update");
         //display_edit_program(program_data);
         $.ajax({
@@ -76,10 +76,13 @@ $(document).ready(function(){
     }
 });
 function display_edit_program(program_data){
-    console.log(program_data);
+    // console.log("sasaas",program_data.stream_name);
+    // console.log("course_type_name", course_type_name);
     $("#program_name").val(program_data.name);
     $("#organization_id").val(program_data.organization_id);
     $("#institute_id").val(program_data.institute_id);
+    $('#stream_name_id').val(program_data.stream_name);
+    $('#course_type_name_id').val(program_data.course_type_name);
     console.log(stream_list);
     stream_list_select(stream_list, program_data.stream_id);
     course_list_select(course_list, program_data.course_type_id);
@@ -103,53 +106,36 @@ function add_academic(){
 
 // }
 function add_academic_section(academic_data){
+
     if(academic_data){
         var academic_template = "";
         console.log(academic_year_options);
+       
         $.each( academic_data, function( i, val ) {
+            console.log("saran-year",val.year);
+         
             academic_template += `<div class="academic_section_box mt-3">
                                         <div class="academic_box searchbar greybg p-3">
                                             <div class="row">
-                                                <div class="col-md-4">
+                                                <div class="col-md-6">
                                                     <div class="academic_name_container mt-3">
                                                         <input type="text" class="form-control academic_name_input academic_year_inp_1 d-none" id="academic_year" placeholder="Enter Academic Name" value="${val.academic_name}" onblur="totext(this);" maxlength="256">
-                                                        <h4 class="academic_name_element">${val.academic_name}<span class="ms-3 edit_icon" onclick="toinput(this);"><i class="fas fa-edit"></i></span></h4>
+                                                        <h4 class="academic_name_element">${val.academic_name}</h4>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2">
                                                     <div class="mb-3">
                                                         <label>Select Academic Year</label>
-                                                        <div class="dropdown-select bgwhite">
-                                                            <select class="sort-select form-control academic_year_list">`;
-                                                            academic_template +=`<option value="">Select Academic Year</option>`;
-                                                            $.each( academic_year_options, function( aci, acval ) {
-                                                                if(acval.year == val.year){
-                                                                    academic_template +=`<option value="${acval.year}" selected>${acval.year}</option>`;
-                                                                }else{
-                                                                    academic_template +=`<option value="${acval.year}">${acval.year}</option>`;
-                                                                }
-                                                            });
-                                                            academic_template +=`</select>
-                                                        </div>
+                                                        <input disabled class="form-control " type="text" id="myText" value="${val.year}">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2">
                                                     <div class="mb-3">
                                                         <label>Start Date</label>
-                                                        <input class="form-control start_date" type="date" value="${val.start_date}" onclick="this.showPicker()" placeholder="">
+                                                        <input class="form-control start_date" type="date" disabled value="${val.start_date}" onclick="this.showPicker()" placeholder="">
                                                     </div>
                                                 </div>
-                                                <div class="col-md-2">
-                                                    <div class="mb-3">
-                                                        <label>End Date</label>
-                                                        <input class="form-control end_date" type="date" value="${val.end_date}" min="${val.start_date}" onclick="this.showPicker()" placeholder="">
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-2 col-md-2 cc-right">
-                                                    <div class="advance-close">
-                                                    <span class="close-dot delete_academic" onclick="delete_academic_section(this);"><a><i class="fas fa-trash"></i></a></span>
-                                                    </div>
-                                                </div>
+                                                
                                             </div>
                                         </div>
 
@@ -161,21 +147,15 @@ function add_academic_section(academic_data){
                                                         <div class="col-md-6">
                                                             <div class="mb-3">
                                                                 <label>Section Name</label>
-                                                                <input class="form-control section_name" value="${baval.section_name}" type="text" placeholder="Section Name">
+                                                                <input class="form-control section_name" disabled value="${baval.section_name}" type="text" placeholder="Section Name">
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-2 col-md-2 cc-right pl-0">
-                                                            <div class="advance-close">
-                                                            <span class="close-dot" onclick="delete_section(this);"><a><i class="fas fa-times"></i></a></span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-2 col-md-2"></div>
+                                                       
+                                                       
                                                     </div>`;
                                                 });
                                             }
-                        academic_template += `</div><p class="mt-3 disp_block">                                        
-                                                <h6><a class="orange-text" onclick="addSection(this)"><i class="fas fa-plus"></i> Add Section</a></h6>
-                                            </p>
+                        academic_template += `</div>
                                         </div>
                                     </div>`;
         });
@@ -188,7 +168,7 @@ function add_academic_section(academic_data){
                                             <div class="col-md-4">
                                                 <div class="academic_name_container mt-3">
                                                     <input type="text" class="form-control academic_name_input academic_year_inp_1 d-none" id="academic_year" placeholder="Enter Academic Name" value="" onblur="totext(this);" maxlength="256">
-                                                    <h4 class="academic_name_element">Academic Name<span class="ms-3 edit_icon" onclick="toinput(this);"><i class="fas fa-edit"></i></span></h4>
+                                                    <h4 class="academic_name_element">Academic Name</h4>
                                                 </div>
                                             </div>
                                             <div class="col-md-2">
@@ -210,17 +190,7 @@ function add_academic_section(academic_data){
                                                     <input class="form-control start_date" type="date" onclick="this.showPicker()" placeholder="">
                                                 </div>
                                             </div>
-                                            <div class="col-md-2">
-                                                <div class="mb-3">
-                                                    <label>Start Date</label>
-                                                    <input class="form-control end_date" type="date" onclick="this.showPicker()" placeholder="">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-2 col-md-2 cc-right">
-                                                <div class="advance-close">
-                                                <span class="close-dot delete_academic" onclick="delete_academic_section(this);"><a><i class="fas fa-trash"></i></a></span>
-                                                </div>
-                                            </div>
+                                          
                                         </div>
                                     </div>
 
@@ -231,6 +201,12 @@ function add_academic_section(academic_data){
                                                     <div class="mb-3">
                                                         <label>Section Name</label>
                                                         <input class="form-control section_name" type="text" placeholder="Section Name">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div class="mb-3">
+                                                        <label>No of Student</label>
+                                                        <input class="form-control noofstudents" type="number" placeholder="No of Student">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 cc-right pl-0">
@@ -250,35 +226,12 @@ function add_academic_section(academic_data){
     }
 
 }
-
-//start date change validate end date
-$(document).on("change", ".start_date", function(e){
-    // e.stopImmediatePropagation();
-      var start_date = $(this).val();
-      if(start_date){
-          $(this).closest(".row").find(".end_date").attr("min", start_date);
-
-          var start_date_val = new Date(start_date);
-          start_date_val.setDate(start_date_val.getDate() + 330);
-          var end_date = start_date_val.toInputFormat();
-          $(this).closest(".row").find(".end_date").val(end_date);
-      }
-    //   var end_date   = $(this).closest(".row").find(".end_date").val();
-    //   if(start_date !== '' && end_date !== ''){
-    //       var sdate = new Date(start_date[2], start_date[1] - 1, start_date[0]);
-    //       var edate = new Date(end_date[2], end_date[1] - 1, end_date[0]);
-    //       if (start_date > end_date){
-    //           $("#end_date").val("");
-    //           toastr.error("End Date should be greater than start date");
-    //       }
-    //   }
-  });
 function addSection(e){
     var academic_section_template = `<div class="row section_box">
                                         <div class="col-md-6">
                                             <div class="mb-3">
                                                 <label>Section Name</label>
-                                                <input class="form-control section_name" type="text" placeholder="Section Name">
+                                                <input class="form-control section_name" disabled type="text" placeholder="Section Name">
                                             </div>
                                         </div>
                                         <div class="col-md-2">
@@ -315,7 +268,7 @@ function delete_academic_section(e){
 }
 function stream_list_select(stream_list_data, stream_selected_list){
     $("#stream_list").empty();
-    var stream_list = `<option value="">Select Stream</option>`;
+    var stream_list = `<option value="">Select Stream </option>`;
     $.each(stream_list_data, function( i, val ) {
       if (stream_selected_list === val.id) {
         stream_list +=`<option value="${val.id}" selected>${val.name}</option>`;
@@ -347,7 +300,7 @@ function totext(e){
     $(e).closest(".academic_name_container").next().remove();
     $(e).removeClass("is-invalid");
     if(e.value.trim() != ""){
-        $(e).closest(".academic_name_container").find(".academic_name_element").html(e.value.trim()+`<span class="ms-3 edit_icon" onclick="toinput(this);"><i class="fas fa-edit"></i></span>`);
+        $(e).closest(".academic_name_container").find(".academic_name_element").html(e.value.trim()+``);
         $(e).closest(".academic_name_container").find(".academic_name_element").removeClass("d-none");
         $(e).closest(".academic_name_container").find(".academic_name_input").addClass("d-none");
     }else{
@@ -450,8 +403,8 @@ function submit_program(){
             $(element).find(".start_date").removeClass("is-invalid");
             $(element).find(".start_date_error").remove();
 
-            $(element).find(".end_date").removeClass("is-invalid");
-            $(element).find(".end_date_error").remove();
+            // $(element).find(".end_date").removeClass("is-invalid");
+            // $(element).find(".end_date_error").remove();
 
             var academic_name = $(element).find(".academic_name_input").val().trim();
             if(academic_name == ""){
@@ -473,12 +426,12 @@ function submit_program(){
                 $(element).find(".start_date").addClass("is-invalid");
                 $(element).find(".start_date").after(`<em for="start_date" class="start_date_error error help-block">Select Start Date</em>`);
             }
-            var end_date = $(element).find(".end_date").val();
-            if(end_date == ""){
-                total_error++;
-                $(element).find(".end_date").addClass("is-invalid");
-                $(element).find(".end_date").after(`<em for="end_date" class="end_date_error error help-block">Select End Date</em>`);
-            }
+            // var end_date = $(element).find(".end_date").val();
+            // if(end_date == ""){
+            //     total_error++;
+            //     $(element).find(".end_date").addClass("is-invalid");
+            //     $(element).find(".end_date").after(`<em for="end_date" class="end_date_error error help-block">Select End Date</em>`);
+            // }
             var section_boxlen = $(element).find(".section_box").length;
 
             $(element).find(".section_container_error").remove();

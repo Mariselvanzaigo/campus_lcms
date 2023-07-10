@@ -2,7 +2,7 @@
 
     <div class="row">
       <div class="col-12 title-head mb-3">
-        <h2 id="header_breadcrumbs">Organization / Add Institute</h2>                
+        <h2 id="header_breadcrumbs">Organization / Add Group</h2>                
         <span class="orange-btn nbtn">
             <button type="button" class="btn btn-primary d-none" id="preview_institute" data-bs-toggle="modal" data-bs-target="#previewmodal">
               Preview
@@ -16,19 +16,19 @@
         <div class="col-md-12">
           <div class="white-bg p-3 relative"> 
             <div class="searchbar mt-3">
-              <h4 id="stage_head_1" class="stage_head">Create Institution</h4>
-              <h4 id="stage_head_2" class="stage_head d-none">Create Admin</h4>
+              <h4 id="stage_head_1" class="stage_head">Create Group</h4>
+              <h4 id="stage_head_2" class="stage_head d-none">Create Principal</h4>
               <h4 id="stage_head_3" class="stage_head d-none">Manage Academics</h4>
             </div>
             <div class="s-stepper">
                 <div data-target="#stage1" id="stage-1-step" class="s-step active">
                     <span class="s-step-counter"></span>
-                    <small>Create institution</small>
+                    <small>Create Group</small>
                     <span><i class="fas fa-angle-double-right"></i></span>
                 </div>
                 <div data-target="#stage2" id="stage-2-step" class="s-step">
                     <span class="s-step-counter"></span>
-                    <small>Create Admin</small>
+                    <small>Create Principal</small>
                     <span><i class="fas fa-angle-double-right"></i></span>
                 </div>
                 <div data-target="#stage3" id="stage-3-step" class="s-step">
@@ -137,7 +137,7 @@
                             <div class="row">
                               <div class="col-md-12">
                                   <div class="mt-3 mb-3">
-                                      <label>Institution name</label>
+                                      <label id="institute_label">Institution name</label>
                                       <input type="text" class="form-control" id="ins_name" name="ins_name" placeholder="Enter Institute Name">
                                   </div>
                               </div>
@@ -172,24 +172,54 @@
                                     <input type="text" class="form-control" id="ins_address_line_2" name="ins_address_line_2" placeholder="Enter Address Line 2">
                                   </div>
                               </div>
-                              <div class="col-md-6">
-                                  <div class="mb-3">
-                                    <label>City</label>
-                                    <input type="text" class="form-control" id="ins_city" name="ins_city" placeholder="Enter City">
-                                  </div>
-                              </div>
-                              <div class="col-md-6">
-                                  <div class="mb-3">
-                                    <label>State</label>
-                                    <input type="text" class="form-control" id="ins_state" name="ins_state" placeholder="Enter State">
-                                  </div>
-                              </div>
-                              <div class="col-md-6">
+                              <!-- <div class="col-md-6">
                                   <div class="mb-3">
                                     <label>Country</label>
                                     <input type="text" class="form-control" id="ins_country" name="ins_country" placeholder="Enter Country">
                                   </div>
+                              </div> -->
+
+                              <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label>Country</label>
+                                    <div class="dropdown-select org_list_container">
+                                      <select class="sort-select form-control"  id="ins_country" name="ins_country" >
+                                      </select>
+                                    </div>
+                                </div>
                               </div>
+                              <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label>State</label>
+                                    <div class="dropdown-select org_list_container">
+                                      <select class="sort-select form-control" disabled="true" id="ins_state" name="ins_state">
+                                        <option value="">Select State</option>
+                                      </select>
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label>City</label>
+                                    <div class="dropdown-select org_list_container">
+                                      <select class="sort-select form-control" disabled="true" id="ins_city" name="ins_city">
+                                        <option value="">Select City</option>
+                                      </select>
+                                    </div>
+                                </div>
+                              </div>
+                              <!-- <div class="col-md-6">
+                                  <div class="mb-3">
+                                    <label>State</label>
+                                    <input type="text" class="form-control" id="ins_state" name="ins_state" placeholder="Enter State">
+                                  </div>
+                              </div> -->
+                              <!-- <div class="col-md-6">
+                                  <div class="mb-3">
+                                    <label>City</label>
+                                    <input type="text" class="form-control" id="ins_city" name="ins_city" placeholder="Enter City">
+                                  </div>
+                              </div> -->
                               <div class="col-md-6">
                                   <div class="mb-3">
                                     <label>Zip Code</label>
@@ -200,7 +230,7 @@
                                   <div class="mb-3">
                                       <label>Organization</label>
                                       <div class="dropdown-select org_list_container">
-                                        <select class="sort-select form-control" id="ins_organization" name="ins_organization" onchange="getSetOrgCode(event);">
+                                        <select class="sort-select form-control" disabled="true" id="ins_organization" name="ins_organization" onchange="getSetOrgCode(event);">
                                         </select>
                                       </div>
                                       <!-- <input type="text" class="form-control" id="ins_organization" name="ins_organization" placeholder="Enter your text here"> -->
@@ -212,7 +242,7 @@
                                       <input type="text" class="form-control" id="ins_organization_code" name="ins_organization_code" placeholder="Enter Organization Code" disabled="true">
                                   </div>
                               </div>
-                              <div class="col-md-6">
+                              <!-- <div class="col-md-6">
                                   <div class="mb-3">
                                       <label>Registration Details</label>
                                       <input type="text" class="form-control" id="ins_registration_details" name="ins_registration_details" placeholder="Enter Registration Details">
@@ -223,7 +253,7 @@
                                       <label>Regoconition Details</label>
                                       <textarea id="ins_recogonition_details" name="ins_recogonition_details" class="form-control" maxlength="256" placeholder="Enter Regoconition Details"></textarea>
                                   </div>
-                              </div>
+                              </div> -->
                             </div>  
                           </form>
                          
@@ -233,7 +263,7 @@
                     <div class="d-flex justify-content-between mt-3">
                         <div>
                             <span class="blue-border-btn">
-                                <button type="button" class="btn btn-primary">
+                                <button type="button" class="btn btn-primary cancelredirect">
                                   Cancel
                                 </button>
                             </span>
@@ -343,22 +373,33 @@
                                   </div>
                               </div>
                               <div class="col-md-6">
-                                  <div class="mb-3">
-                                    <label>City</label>
-                                    <input type="text" class="form-control" id="user_city" name="user_city" placeholder="Enter City">
-                                  </div>
-                              </div>
-                              <div class="col-md-6">
-                                  <div class="mb-3">
-                                    <label>State</label>
-                                    <input type="text" class="form-control" id="user_state" name="user_state" placeholder="Enter State">
-                                  </div>
-                              </div>
-                              <div class="col-md-6">
-                                  <div class="mb-3">
+                                <div class="mb-3">
                                     <label>Country</label>
-                                    <input type="text" class="form-control" id="user_country" name="user_country" placeholder="Enter Country">
-                                  </div>
+                                    <div class="dropdown-select org_list_container">
+                                      <select class="sort-select form-control"  id="user_country" name="user_country" >
+                                      </select>
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label>State</label>
+                                    <div class="dropdown-select org_list_container">
+                                      <select class="sort-select form-control" disabled="true" id="user_state" name="user_state">
+                                        <option value="">Select State</option>
+                                      </select>
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label>City</label>
+                                    <div class="dropdown-select org_list_container">
+                                      <select class="sort-select form-control" disabled="true" id="user_city" name="user_city">
+                                        <option value="">Select City</option>
+                                      </select>
+                                    </div>
+                                </div>
                               </div>
                               <div class="col-md-6">
                                   <div class="mb-3">
@@ -386,7 +427,7 @@
                    <div class="d-flex justify-content-between mt-3">
                     <div>
                         <span class="blue-border-btn">
-                            <button type="button" class="btn btn-primary">
+                            <button type="button" class="btn btn-primary cancelredirect">
                               Cancel
                             </button>
                         </span>
@@ -417,7 +458,7 @@
                                 <span style="white-space: nowrap;"><a class="orange-text" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#addstreammodal"><i class="fas fa-plus"></i> Add</a></span>
                             </div>
                               <div id="ins_stream_list">
-                                  <div class="mb-3 relative">
+                                  <!-- <div class="mb-3 relative">
                                     <input type="checkbox" class="form-check-input" id="one" tabindex="3">
                                     <label for="one" class="form-label">Medical</label>
                                   </div>
@@ -440,7 +481,7 @@
                                   <div class="mb-3 relative">
                                     <input type="checkbox" class="form-check-input" id="three3" tabindex="3">
                                     <label for="three3" class="form-label">Nursing</label>
-                                  </div>
+                                  </div> -->
                                 </div>
                            </div>
                         </div>
@@ -454,7 +495,7 @@
                                  <input class="form-control form-control-dark w-100" type="text" placeholder="Enter Course Name" aria-label="Search" id="course_search">
                              </div>
                                   <div id="ins_course_list">
-                                   <div class="mb-3 relative">
+                                   <!-- <div class="mb-3 relative">
                                      <input type="checkbox" class="form-check-input" id="one" tabindex="3">
                                      <label for="one" class="form-label">Medical</label>
                                    </div>
@@ -477,7 +518,7 @@
                                    <div class="mb-3 relative">
                                      <input type="checkbox" class="form-check-input" id="three3" tabindex="3">
                                      <label for="three3" class="form-label">Nursing</label>
-                                   </div>
+                                   </div> -->
                                 </div>
                             </div>
                          </div>
@@ -485,7 +526,7 @@
                     <div class="d-flex justify-content-between mt-3">
                         <div>
                             <span class="blue-border-btn">
-                                <button type="button" class="btn btn-primary">
+                                <button type="button" class="btn btn-primary cancelredirect">
                                   Cancel
                                 </button>
                             </span>
@@ -527,7 +568,7 @@
               <input type="text" class="form-control" id="ins_stream_name" name="ins_stream_name" placeholder="Stream Name">
             </div>
             <div class="mb-3 mt-5 d-flex justify-content-end align-items-center">
-              <div class="blue-border-btn"><button type="button" class="btn btn-primary" id="cancel_cms-stream">Cancle</button></div>
+              <div class="blue-border-btn"><button type="button" class="btn btn-primary" id="cancel_cms-stream">Cancel</button></div>
               <div class="orange-btn"><button type="submit" class="btn btn-primary ms-4" id="add_cms-stream">Add</button></div>
            </div>
         </form>
@@ -620,7 +661,7 @@
                         <img id="prev-user_profile_image" src="../assets/images/profile.png" alt="" />
                     </div>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-6">
                     <div class="org-details">
                         <h4 id="prev-user_name_qualification">Sri Harsha raj Kumar [ B.E ,ME,B.Ed ]</h4>
                         <p id="prev-user_role_ins">Principal</p>
@@ -635,7 +676,7 @@
                       <p class="org-phone user_phone_prev"><a href="javascript:void(0);" style="color:#344B6C;" id="prev-user_phone_no">044 2635 2563</a></p>
                   </div>
                 </div>
-                <div class="col-md-1"></div>
+                <!-- <div class="col-md-1"></div> -->
             </div>
             <div class="row">
               <div class="col-md-1"></div>
@@ -649,12 +690,14 @@
               <div class="col-md-1"></div>
             </div>
             <div>
-              <div class="row">
-                <div class="col-md-1"></div>
-                <div class="col-md-10 org-title mt-3 mb-3 p-2">
-                  <h4>Manage Academic</h4>
+              <div class="org-title mt-3 mb-3 p-2">
+                <div class="row">
+                  <div class="col-md-1"></div>
+                  <div class="col-md-10">
+                    <h4>Manage Academic</h4>
+                  </div>
+                  <div class="col-md-1"></div>
                 </div>
-                <div class="col-md-1"></div>
               </div>
             </div>
             <div class="row">

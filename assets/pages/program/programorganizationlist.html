@@ -46,7 +46,7 @@
               <!-----------Platform view start---------------->
 
               <!--------------loader start--------------->
-              <div class="row loader disp_block" id="prg_orglist-loader"><span>Loading Organization List</span></div>
+              <div class="row loader disp_block" id="prg_orglist-loader"><span>Loading Organization List..</span></div>
               <!--------------loader end--------------->
 
               <div class="accordion" id="prg_orglist_items">
@@ -67,16 +67,21 @@
               </div>
               <!--------------pagination end--------------->
 
-              <!--------------No records found start--------------->
-              <div id="nodataFound_platformlist" style="display: none;">
-                <div class="row">
-                  <div class="col-12 title-head no-record mb-3 text-center">
-                    <p><span class="text-danger">No Records Found!</span></p>
-                  </div>
+              <!--no record start-->
+              <div class="no-record h-100 d-flex align-items-center white-bg p-5 justify-content-center text-center d-none" id="nodataFound_porglist">
+                <div>
+                    <img src="../assets/images/norecord.png" alt="Exper" />
+                    <p >No Records have been found.</p>
+                        <!-- <div class="col-12 title-head justify-content-center mb-3">
+                            <span class="orange-btn">
+                              <button type="button" class="btn btn-primary"  data-n-url-page_from="organizationlist" data-bs-toggle="modal" data-bs-target="#exampleModalXl">
+                                <i class="fas fa-plus"></i> Add Organization
+                              </button>
+                            </span>
+                        </div> -->
                 </div>
               </div>
-              <!--------------No records found end--------------->
-
+              <!--no record end-->
               <!---------Platform view end-------->
             </div>
 
@@ -90,15 +95,11 @@
               </div>
 
               <div class="row mt-4 mb-4">
-                <div class="col-lg-5 col-md-5">
+                <div class="col-lg-3 col-md-3">
                   <div class="topsearch relative">
                     <input class="form-control form-control-dark w-100" type="text" placeholder="Program Name"
                       aria-label="Search" id="pr_searchprograms" onchange="programs_search_onblur()">
                     <i class="fas fa-search"></i>
-                  </div>
-                  <div class="topsearch relative mb-3" style="height: 20px;">
-                    <a class="btn btn-sm btn-danger btnReset d-none" id="pr_resetButtonprograms"
-                      style="position:relative;color: white;float:right">Reset</a>
                   </div>
                 </div>
                 <div class="col-lg-3 col-md-3">
@@ -111,26 +112,29 @@
                 <div class="col-lg-3 col-md-3">
                   <div class="dropdown-select">
                     <select class="sort-select" id="courses_list" name="courses_list">
-                      
                     </select>
                   </div>
                 </div>
-                <div class="col-lg-1 col-md-1 cc-right pl-0">
+                <div class="col-lg-3 col-md-3">
+                  <div class="dropdown-select">
+                    <select class="sort-select" id="acc_year_list" name="acc_year_list">
+                      
+                    </select>
+                  </div>
+                  <div class="topsearch relative mb-3 mt-2" style="height: 20px;">
+                    <a class="btn btn-sm btn-danger btnReset d-none" id="pr_resetButtonprograms"
+                      style="position:relative;color: white;float:right">Reset</a>
+                  </div>
+                </div>
+                <!-- <div class="col-lg-1 col-md-1 cc-right pl-0">
                   <div class="advance-search">
                     <span class="dot"><a><i class="fas fa-search-plus"></i></a></span>
                   </div>
-                </div>
+                </div> -->
               </div>
 
-              <div class="academic-year-section">
+              <!-- <div class="academic-year-section">
                 <div class="row data">
-                  <div class="col-md-8">
-                    <div class="dropdown-select">
-                      <select class="sort-select" id="acc_year_list" name="acc_year_list">
-                        
-                      </select>
-                    </div>
-                  </div>
                   <div class="col-md-3">
                     <div class="s-search d-none">
                       <input type="submit" value="Search">
@@ -142,7 +146,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
               <input type="hidden" value="" id="orgid_includer" />
               <div id="program_container">
 
